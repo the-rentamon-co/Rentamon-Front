@@ -1,0 +1,26 @@
+.datepicker-plot-area .datepicker-day-view .table-days td {
+    height: 70px;
+}
+
+
+.datepicker-plot-area .datepicker-day-view .table-days td span {
+    height: 100%;
+}
+
+
+.datepicker-plot-area .datepicker-day-view .month-grid-box {
+    height: auto;
+}
+
+
+.datepicker-plot-area {
+    font-size: 16px;
+}
+
+table {
+    font-size: 16px;
+}
+
+.datepicker-plot-area .datepicker-day-view .table-days td span.other-month {
+    color: #DBDAD7;
+}
