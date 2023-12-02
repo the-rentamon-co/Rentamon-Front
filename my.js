@@ -11,6 +11,86 @@ function persianToInteger(persianString) {
 
   return parseInt(arabicString, 10);
 }
+
+function jabamaStatus(jabama) {
+  if (jabama["status"] === "disabledByHost") {
+    return "blocked";
+  } else if (jabama["status"] === "reserved") {
+    return "booked";
+  } else if (jabama["status"] === "available") {
+    return "unblocked";
+  }
+}
+
+function jajigaStatus(jajiga) {
+  if (
+    jajiga["books_count"] === 0 &&
+    jajiga["disable_count"] === 1 &&
+    jajiga["unavailable_type"] === "disabled"
+  ) {
+    return "blocked";
+  } else if (
+    jajiga["books_count"] === 1 &&
+    jajiga["disable_count"] === 1 &&
+    jajiga["unavailable_type"] === ""
+  ) {
+    return "booked";
+  } else if (jajiga["books_count"] === 0 && jajiga["disable_count"] === 0) {
+    return "unblocked";
+  }
+}
+
+function shabStatus(shab) {
+  if (
+    shab["available_units_count"] === 1 &&
+    shab["is_disabled"] === true &&
+    shab["is_non_bookable"] === true &&
+    shab["is_unavailable"] === false
+  ) {
+    return "blocked";
+  } else if (
+    shab["available_units_count"] === 0 &&
+    shab["is_disabled"] === true &&
+    shab["is_non_bookable"] === true &&
+    shab["is_unavailable"] === false
+  ) {
+    return "booked";
+  } else if (
+    shab["available_units_count"] === 1 &&
+    shab["is_disabled"] === false &&
+    shab["is_non_bookable"] === false &&
+    shab["is_unavailable"] === false
+  ) {
+    return "unblocked";
+  }
+}
+
+function mizboonStatus(mizboon) {
+  if (mizboon["booked"] === 0 && mizboon["closed" === 1]) {
+    return "blocked";
+  } else if (mizboon["booked"] === 1 && mizboon["closed" === 1]) {
+    return "booked";
+  } else if (mizboon["booked"] === 0 && mizboon["closed" === 0]) {
+    return "unblocked";
+  }
+}
+
+function otagakStatus(otaghak) {
+  if (
+    otaghak["isBlocked"] === true &&
+    otaghak["blockedType"] === "blockedManually"
+  ) {
+    return "blocked";
+  } else if (otaghak["isBlocked"] === true && otaghak["blockedType"] === 2) {
+    return "booked";
+  } else if (
+    otaghak["isBlocked"] === false &&
+    otaghak["blockedType"] === null
+  ) {
+    return "unblocked";
+  }
+}
+
 $(document).ready(function () {
   $(".inline").pDatepicker({
     initialValue: false,
