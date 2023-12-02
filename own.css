@@ -22,5 +22,5 @@ table {
 }
 
 .datepicker-plot-area .datepicker-day-view .table-days td span.other-month {
-    color: white !important;
+    color: white;
 }
