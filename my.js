@@ -1,4 +1,16 @@
 var daysPicked = [];
+function persianToInteger(persianString) {
+  const persianNumerals = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+
+  const convertDigit = (digit) => persianNumerals.indexOf(digit);
+
+  const arabicString = persianString
+    .split("")
+    .map((char) => (persianNumerals.includes(char) ? convertDigit(char) : char))
+    .join("");
+
+  return parseInt(arabicString, 10);
+}
 $(document).ready(function () {
   $(".inline").pDatepicker({
     initialValue: false,
@@ -76,8 +88,108 @@ $(document).ready(function () {
 
 `,
   });
-});
 
+  // Set the timezone to Tehran
+  const tehranTimeZone = "Asia/Tehran";
+
+  // Create a new Date object
+  const currentDate = new Date();
+
+  // Get the timestamp for the current date in Tehran timezone
+  const tehranTimestamp = currentDate.toLocaleString("en-US", {
+    timeZone: tehranTimeZone,
+  });
+
+  const tehran = new Date(tehranTimestamp);
+
+  const tehranzeroo = tehran.setHours(0, 0, 0, 0);
+
+  const todayTD = document.querySelector(`td[data-unix="${tehranzeroo}"] span`);
+
+  const todayDate = persianToInteger(todayTD.textContent);
+
+  // Sample URLs for demonstration purposes
+  const days = document.querySelectorAll(".table-days span:not(.other-month)");
+
+  const url1 =
+    "https://classiccowl.chbk.run/jabama/calendar?room=109108&start_date=1402-9-1&end_date=1402-10-01";
+  const url2 =
+    "https://classiccowl.chbk.run/mizboon/calendar?rental_id=10922&from=1402-09-01&to=1402-09-30";
+  const url3 =
+    "https://classiccowl.chbk.run/otaghak/calendar?roomId=55614&startDate=1402-09-01&endDate=1402-09-30";
+  const url4 = "https://classiccowl.chbk.run/jajiga/calendar?room_id=3142341";
+  const url5 =
+    "https://classiccowl.chbk.run/shab/calendar?room=9094&from_date=1402-09-01&to_date=1402-09-31";
+  // jabama status "available" / not
+  // mizbon closed 0 / 1
+  // otagak isBlocked true / false
+  // jajiga disable_count 0 / 1
+  // shab is_disabled ture / false
+
+  // Array of URLs
+  const urls = [url1, url2, url3, url4, url5];
+
+  // Function to perform a fetch for a single URL
+  const fetchData = async (url) => {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  };
+
+  // Array to store the promises returned by fetchData
+  const fetchPromises = urls.map((url) => fetchData(url));
+
+  // Use Promise.all to wait for all promises to resolve
+  Promise.all(fetchPromises)
+    .then((results) => {
+      // Handle the results here
+
+      // console.log(results[0][0]["status"])
+      // console.log(results[1][0]["closed"])
+      // console.log(results[2][0]["isBlocked"])
+      // console.log(results[3][0]["disable_count"])
+      // console.log(results[4][0]["status"])
+      // console.log(results);
+      // console.log(today);
+
+      for (var i = 1; i < todayDate; i++) {
+        results[3].unshift({ disable_count: null });
+      }
+      console.log(results);
+
+      for (let i = 0; i < 30; i++) {
+        if (
+          results[0][i]["status"] !== "available" &&
+          results[1][i]["closed"] === 1 &&
+          results[2][i]["isBlocked"] === true &&
+          results[3][i]["disable_count"] === 1 &&
+          results[4][i]["is_disabled"] === true
+        ) {
+          if (i + 1 < todayDate) {
+            days[i].style.color = "#DBDAD7";
+          } else {
+            days[i].style.background = "#FF9E6A";
+          }
+        } else if (
+          results[0][i]["status"] !== "available" ||
+          results[1][i]["closed"] === 1 ||
+          results[2][i]["isBlocked"] === true ||
+          results[3][i]["disable_count"] === 1 ||
+          results[4][i]["is_disabled"] === true
+        ) {
+          if (i + 1 < todayDate) {
+            days[i].style.color = "#DBDAD7";
+          } else {
+            days[i].style.background = "#7CE656";
+          }
+        }
+      }
+    })
+    .catch((error) => {
+      // Handle errors here
+      console.error(error);
+    });
+});
 //   $(".inline").pDatepicker({
 //     inline: true,
 //     resoinsive: true,
