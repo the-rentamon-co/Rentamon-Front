@@ -24,3 +24,14 @@ table {
 .datepicker-plot-area .datepicker-day-view .table-days td span.other-month {
     color: white;
 }
+
+.passed-days {
+    color: #DBDAD7;
+}
+
+.blocked-days {
+    background-color: #FF9E6A;
+}
+.booked-days{
+    background-color: #7ce656;
+}
