@@ -38,11 +38,11 @@
 
 .blocked-days {
     background-color: #FF9E6A !important;
-    border-radius: 2px 2px 0px 0px;
+    border-radius: 2px 2px 0px 0px !important;
 }
 
 .reserved {
-    border-radius: 0px 0px 2px 2px;
+    border-radius: 0px 0px 2px 2px !important;
 }
 
 .booked-days {
