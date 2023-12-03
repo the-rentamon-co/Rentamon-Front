@@ -1,19 +1,19 @@
-.datepicker-plot-area .datepicker-day-view .table-days td {
+.datepicker-plot-area-inline-view .datepicker-day-view .table-days td {
     height: 70px;
 }
 
 
-.datepicker-plot-area .datepicker-day-view .table-days td span {
+.datepicker-plot-area-inline-view .datepicker-day-view .table-days td span {
     height: 50%;
 }
 
 
-.datepicker-plot-area .datepicker-day-view .month-grid-box {
+.datepicker-plot-area-inline-view .datepicker-day-view .month-grid-box {
     height: auto;
 }
 
 
-.datepicker-plot-area {
+.datepicker-plot-area-inline-view {
     font-size: 16px;
     font-family: vazir;
 }
@@ -23,7 +23,7 @@ table {
     font-family: vazir;
 }
 
-.datepicker-plot-area .datepicker-day-view .table-days td span.other-month {
+.datepicker-plot-area-inline-view .datepicker-day-view .table-days td span.other-month {
     color: white;
 }
 
@@ -56,8 +56,8 @@ table {
     height: 40px;
 }
 
-.datepicker-plot-area .datepicker-day-view .table-days td.disabled span,
-.datepicker-plot-area .datepicker-year-view .year-item-disable,
-.datepicker-plot-area .datepicker-month-view .month-item-disable {
+.datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span,
+.datepicker-plot-area-inline-view .datepicker-year-view .year-item-disable,
+.datepicker-plot-area-inline-view .datepicker-month-view .month-item-disable {
     background-color: #fff;
 }
