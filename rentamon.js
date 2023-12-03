@@ -243,13 +243,13 @@ $(document).ready(function () {
       for (var i = 1; i < todayDate; i++) {
         results[3].unshift({ disable_count: null });
       }
-      console.log(results);
+      // console.log(results);
 
-      console.log(jabamaStatus(results[0][19]));
-      console.log(mizboonStatus(results[1][19]));
-      console.log(otagakStatus(results[2][19]));
-      console.log(jajigaStatus(results[3][19]));
-      console.log(shabStatus(results[4][19]));
+      // console.log(jabamaStatus(results[0][19]));
+      // console.log(mizboonStatus(results[1][19]));
+      // console.log(otagakStatus(results[2][19]));
+      // console.log(jajigaStatus(results[3][19]));
+      // console.log(shabStatus(results[4][19]));
 
       for (let i = 0; i < 30; i++) {
         var status = {
