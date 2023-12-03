@@ -26,12 +26,13 @@ table {
 }
 
 .passed-days {
-    color: #DBDAD7;
+    color: #DBDAD7 !important;
 }
 
 .blocked-days {
-    background-color: #FF9E6A;
+    background-color: #FF9E6A !important;
 }
-.booked-days{
-    background-color: #7ce656;
+
+.booked-days {
+    background-color: #7ce656 !important;
 }
