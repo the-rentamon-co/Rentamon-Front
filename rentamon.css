@@ -1,3 +1,12 @@
+/* Added CSS by Faghih */
+
+.datepicker-plot-area-inline-view .datepicker-day-view .table-days td {
+    height: 70px !important;
+    border-radius: 5px; /* Add 5px radius to cells */
+    padding: 1px; /* Add 1px padding to cells */
+}
+/* End of added CSS by Faghih */
+
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td {
     height: 70px !important;
 }
