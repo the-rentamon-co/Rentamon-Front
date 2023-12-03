@@ -1,6 +1,7 @@
 var daysPicked = [];
 
 $(".inline").pDatepicker({
+  onlySelectOnDate: true,
   initialValue: false,
   dayPicker: {
     enabled: true,
@@ -59,7 +60,7 @@ $(".inline").pDatepicker({
   <tr>
   {{#.}}
   {{#enabled}}
-  <td data-unix="{{dataUnix}}" ><span  class="{{#otherMonth}}other-month{{/otherMonth}} {{#selected}}selected{{/selected}}">{{title}}</span></td>
+  <td data-unix="{{dataUnix}}" class="disabled"><span  class="{{#otherMonth}}other-month{{/otherMonth}} {{#selected}}selected{{/selected}}">{{title}}</span><span class="reserved"></span></td>
   {{/enabled}}
   {{^enabled}}
   <td data-unix="{{dataUnix}}" class="disabled"><span class="day{{#otherMonth}}other-month{{/otherMonth}}">{{title}}</span></td>
@@ -91,7 +92,6 @@ function persianToInteger(persianString) {
 }
 
 function jabamaStatus(jabama) {
-  console.log(jabama);
   if (jabama["status"] === "disabledByHost") {
     return "blocked";
   } else if (jabama["status"] === "reserved") {
@@ -102,8 +102,6 @@ function jabamaStatus(jabama) {
 }
 
 function jajigaStatus(jajiga) {
-  console.log(jajiga);
-
   if (
     jajiga["books_count"] === 0 &&
     jajiga["disable_count"] === 1 &&
@@ -122,7 +120,6 @@ function jajigaStatus(jajiga) {
 }
 
 function shabStatus(shab) {
-  console.log(shab);
   if (
     shab["available_units_count"] === 1 &&
     shab["is_disabled"] === true &&
@@ -148,7 +145,6 @@ function shabStatus(shab) {
 }
 
 function mizboonStatus(mizboon) {
-  console.log(mizboon);
   if (mizboon["booked"] === 0 && mizboon["closed"] === 1) {
     return "blocked";
   } else if (mizboon["booked"] === 1 && mizboon["closed"] === 1) {
@@ -159,8 +155,6 @@ function mizboonStatus(mizboon) {
 }
 
 function otagakStatus(otaghak) {
-  console.log(otaghak);
-
   if (
     otaghak["isBlocked"] === true &&
     otaghak["blockedType"] === "BlockedManually"
@@ -202,7 +196,9 @@ $(document).ready(function () {
   const todayDate = persianToInteger(todayTD.textContent);
 
   // Sample URLs for demonstration purposes
-  const days = document.querySelectorAll(".table-days span:not(.other-month)");
+  const days = document.querySelectorAll(
+    ".table-days span:not(.other-month):not(.reserved)"
+  );
 
   const url1 =
     "https://classiccowl.chbk.run/jabama/calendar?room=109108&start_date=1402-9-1&end_date=1402-10-01";
@@ -262,6 +258,7 @@ $(document).ready(function () {
 
         if (i + 1 < todayDate) {
           days[i].classList.add("passed-days");
+          days[i].nextSibling.classList.add("passed-days");
         } else if (
           status["jabamaStatus"] === "blocked" &&
           status["mizboonStatus"] === "blocked" &&
@@ -270,6 +267,7 @@ $(document).ready(function () {
           status["shabStatus"] === "blocked"
         ) {
           days[i].classList.add("blocked-days");
+          days[i].nextSibling.classList.add("blocked-days");
         } else if (
           status["jabamaStatus"] === "booked" ||
           status["mizboonStatus"] === "booked" ||
@@ -278,36 +276,15 @@ $(document).ready(function () {
           status["shabStatus"] === "booked"
         ) {
           days[i].classList.add("booked-days");
+          days[i].nextSibling.classList.add("booked-days");
+
+          const website = Object.keys(status).find(
+            (key) => status[key] === "booked"
+          );
+
+          days[i].nextSibling.innerHTML = website;
         }
       }
-
-      // for (let i = 0; i < 30; i++) {
-      //   if (
-      //     results[0][i]["status"] !== "available" &&
-      //     results[1][i]["closed"] === 1 &&
-      //     results[2][i]["isBlocked"] === true &&
-      //     results[3][i]["disable_count"] === 1 &&
-      //     results[4][i]["is_disabled"] === true
-      //   ) {
-      //     if (i + 1 < todayDate) {
-      //       days[i].classList.add("passed-days");
-      //     } else {
-      //       days[i].classList.add("blocked-days");
-      //     }
-      //   } else if (
-      //     results[0][i]["status"] !== "available" ||
-      //     results[1][i]["closed"] === 1 ||
-      //     results[2][i]["isBlocked"] === true ||
-      //     results[3][i]["disable_count"] === 1 ||
-      //     results[4][i]["is_disabled"] === true
-      //   ) {
-      //     if (i + 1 < todayDate) {
-      //       days[i].classList.add("passed-days");
-      //     } else {
-      //       days[i].classList.add("blocked-days");
-      //     }
-      //   }
-      // }
     })
     .catch((error) => {
       console.error(error);

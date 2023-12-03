@@ -4,7 +4,7 @@
 
 
 .datepicker-plot-area .datepicker-day-view .table-days td span {
-    height: 100%;
+    height: 50%;
 }
 
 
@@ -35,4 +35,16 @@ table {
 
 .booked-days {
     background-color: #7ce656 !important;
+}
+
+.disabled {
+    pointer-events: none;
+    background-color: #fff;
+    color: #333;
+    border: 0;
+    text-shadow: none;
+}
+
+.disabled span:not(.other-month) {
+    color: black !important;
 }
