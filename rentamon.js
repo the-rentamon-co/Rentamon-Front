@@ -162,7 +162,7 @@ function otagakStatus(otaghak) {
     return "blocked";
   } else if (
     otaghak["isBlocked"] === true &&
-    otaghak["blockedType"] === "Booked"
+    otaghak["blockedType"] === "BlockedByBooking"
   ) {
     return "booked";
   } else if (
