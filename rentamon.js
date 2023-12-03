@@ -233,6 +233,12 @@ $(document).ready(function () {
       }
       console.log(results);
 
+      console.log(jabamaStatus(results[0][19]));
+      console.log(mizboonStatus(results[1][19]));
+      console.log(otagakStatus(results[2][19]));
+      console.log(jajigaStatus(results[3][19]));
+      console.log(shab(results[4][19]));
+
       for (let i = 0; i < 30; i++) {
         if (
           results[0][i]["status"] !== "available" &&
