@@ -91,6 +91,7 @@ function persianToInteger(persianString) {
 }
 
 function jabamaStatus(jabama) {
+  console.log(jabama);
   if (jabama["status"] === "disabledByHost") {
     return "blocked";
   } else if (jabama["status"] === "reserved") {
@@ -101,6 +102,8 @@ function jabamaStatus(jabama) {
 }
 
 function jajigaStatus(jajiga) {
+  console.log(jajiga);
+
   if (
     jajiga["books_count"] === 0 &&
     jajiga["disable_count"] === 1 &&
@@ -119,6 +122,7 @@ function jajigaStatus(jajiga) {
 }
 
 function shabStatus(shab) {
+  console.log(shab);
   if (
     shab["available_units_count"] === 1 &&
     shab["is_disabled"] === true &&
@@ -144,6 +148,7 @@ function shabStatus(shab) {
 }
 
 function mizboonStatus(mizboon) {
+  console.log(mizboon);
   if (mizboon["booked"] === 0 && mizboon["closed" === 1]) {
     return "blocked";
   } else if (mizboon["booked"] === 1 && mizboon["closed" === 1]) {
@@ -154,6 +159,8 @@ function mizboonStatus(mizboon) {
 }
 
 function otagakStatus(otaghak) {
+  console.log(otaghak);
+
   if (
     otaghak["isBlocked"] === true &&
     otaghak["blockedType"] === "blockedManually"
@@ -237,7 +244,7 @@ $(document).ready(function () {
       console.log(mizboonStatus(results[1][19]));
       console.log(otagakStatus(results[2][19]));
       console.log(jajigaStatus(results[3][19]));
-      console.log(shab(results[4][19]));
+      console.log(shabStatus(results[4][19]));
 
       for (let i = 0; i < 30; i++) {
         if (
