@@ -252,6 +252,31 @@ $(document).ready(function () {
       console.log(shabStatus(results[4][19]));
 
       for (let i = 0; i < 30; i++) {
+        var status = {
+          jabamaStatus: jabamaStatus(results[0][i]),
+          mizboonStatus: mizboonStatus(results[1][i]),
+          otagakStatus: otagakStatus(results[2][i]),
+          jajigaStatus: jajigaStatus(results[3][i]),
+          shabStatus: shabStatus(results[4][i]),
+        };
+        console.log("test for status");
+        console.log(status);
+
+        // if (
+        //   jabamaStatus(results[0][i]) === "blocked" ||
+        //   mizboonStatus(results[1][i]) === "blocked" ||
+        //   otagakStatus(results[2][i]) === "blocked" ||
+        //   jajigaStatus(results[3][i]) === "blocked" ||
+        //   shabStatus(results[4][i]) === "blocked"
+        // ) {
+        //   days[i].classList.add("blocked-days");
+        // }
+        // else if(
+
+        // )
+      }
+
+      for (let i = 0; i < 30; i++) {
         if (
           results[0][i]["status"] !== "available" &&
           results[1][i]["closed"] === 1 &&
