@@ -2,15 +2,11 @@
 
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td {
     height: 70px !important;
-    border-radius: 5px; /* Add 5px radius to cells */
-    padding: 1px; /* Add 1px padding to cells */
+    /* Add 1px padding to cells */
+    padding: 1px;
 }
+
 /* End of added CSS by Faghih */
-
-.datepicker-plot-area-inline-view .datepicker-day-view .table-days td {
-    height: 70px !important;
-}
-
 
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td span {
     height: 50% !important;
@@ -45,7 +41,7 @@
     border-radius: 2px 2px 0px 0px;
 }
 
-.reserved{
+.reserved {
     border-radius: 0px 0px 2px 2px;
 }
 
