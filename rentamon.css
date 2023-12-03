@@ -15,10 +15,12 @@
 
 .datepicker-plot-area {
     font-size: 16px;
+    font-family: vazir;
 }
 
 table {
     font-size: 16px;
+    font-family: vazir;
 }
 
 .datepicker-plot-area .datepicker-day-view .table-days td span.other-month {
