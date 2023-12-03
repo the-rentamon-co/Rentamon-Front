@@ -259,50 +259,55 @@ $(document).ready(function () {
           jajigaStatus: jajigaStatus(results[3][i]),
           shabStatus: shabStatus(results[4][i]),
         };
-        console.log("test for status");
-        console.log(status);
 
-        // if (
-        //   jabamaStatus(results[0][i]) === "blocked" ||
-        //   mizboonStatus(results[1][i]) === "blocked" ||
-        //   otagakStatus(results[2][i]) === "blocked" ||
-        //   jajigaStatus(results[3][i]) === "blocked" ||
-        //   shabStatus(results[4][i]) === "blocked"
-        // ) {
-        //   days[i].classList.add("blocked-days");
-        // }
-        // else if(
-
-        // )
-      }
-
-      for (let i = 0; i < 30; i++) {
-        if (
-          results[0][i]["status"] !== "available" &&
-          results[1][i]["closed"] === 1 &&
-          results[2][i]["isBlocked"] === true &&
-          results[3][i]["disable_count"] === 1 &&
-          results[4][i]["is_disabled"] === true
-        ) {
-          if (i + 1 < todayDate) {
-            days[i].classList.add("passed-days");
-          } else {
-            days[i].classList.add("blocked-days");
-          }
+        if (i + 1 < todayDate) {
+          days[i].classList.add("passed-days");
         } else if (
-          results[0][i]["status"] !== "available" ||
-          results[1][i]["closed"] === 1 ||
-          results[2][i]["isBlocked"] === true ||
-          results[3][i]["disable_count"] === 1 ||
-          results[4][i]["is_disabled"] === true
+          status["jabamaStatus"] === "blocked" ||
+          status["mizboonStatus"] === "blocked" ||
+          status["otagakStatus"] === "blocked" ||
+          status["jajigaStatus"] === "blocked" ||
+          status["shabStatus"] === "blocked"
         ) {
-          if (i + 1 < todayDate) {
-            days[i].classList.add("passed-days");
-          } else {
-            days[i].classList.add("blocked-days");
-          }
+          days[i].classList.add("blocked-days");
+        } else if (
+          status["jabamaStatus"] === "booked" ||
+          status["mizboonStatus"] === "booked" ||
+          status["otagakStatus"] === "booked" ||
+          status["jajigaStatus"] === "booked" ||
+          status["shabStatus"] === "booked"
+        ) {
+          days[i].classList.add("booked-days");
         }
       }
+
+      // for (let i = 0; i < 30; i++) {
+      //   if (
+      //     results[0][i]["status"] !== "available" &&
+      //     results[1][i]["closed"] === 1 &&
+      //     results[2][i]["isBlocked"] === true &&
+      //     results[3][i]["disable_count"] === 1 &&
+      //     results[4][i]["is_disabled"] === true
+      //   ) {
+      //     if (i + 1 < todayDate) {
+      //       days[i].classList.add("passed-days");
+      //     } else {
+      //       days[i].classList.add("blocked-days");
+      //     }
+      //   } else if (
+      //     results[0][i]["status"] !== "available" ||
+      //     results[1][i]["closed"] === 1 ||
+      //     results[2][i]["isBlocked"] === true ||
+      //     results[3][i]["disable_count"] === 1 ||
+      //     results[4][i]["is_disabled"] === true
+      //   ) {
+      //     if (i + 1 < todayDate) {
+      //       days[i].classList.add("passed-days");
+      //     } else {
+      //       days[i].classList.add("blocked-days");
+      //     }
+      //   }
+      // }
     })
     .catch((error) => {
       console.error(error);
