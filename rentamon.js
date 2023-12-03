@@ -191,13 +191,15 @@ $(document).ready(function () {
 
   const tehranzeroo = tehran.setHours(0, 0, 0, 0);
 
-  const todayTD = document.querySelector(`td[data-unix="${tehranzeroo}"] span`);
+  const todayTD = document.querySelector(
+    `.datepicker-plot-area-inline-view td[data-unix="${tehranzeroo}"] span`
+  );
 
   const todayDate = persianToInteger(todayTD.textContent);
 
   // Sample URLs for demonstration purposes
   const days = document.querySelectorAll(
-    ".table-days span:not(.other-month):not(.reserved)"
+    ".datepicker-plot-area-inline-view .table-days span:not(.other-month):not(.reserved)"
   );
 
   const url1 =
