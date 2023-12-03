@@ -263,10 +263,10 @@ $(document).ready(function () {
         if (i + 1 < todayDate) {
           days[i].classList.add("passed-days");
         } else if (
-          status["jabamaStatus"] === "blocked" ||
-          status["mizboonStatus"] === "blocked" ||
-          status["otagakStatus"] === "blocked" ||
-          status["jajigaStatus"] === "blocked" ||
+          status["jabamaStatus"] === "blocked" &&
+          status["mizboonStatus"] === "blocked" &&
+          status["otagakStatus"] === "blocked" &&
+          status["jajigaStatus"] === "blocked" &&
           status["shabStatus"] === "blocked"
         ) {
           days[i].classList.add("blocked-days");
