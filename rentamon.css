@@ -48,3 +48,14 @@ table {
 .disabled span:not(.other-month) {
     color: black !important;
 }
+
+.header-row {
+
+    height: 40px;
+}
+
+.datepicker-plot-area .datepicker-day-view .table-days td.disabled span,
+.datepicker-plot-area .datepicker-year-view .year-item-disable,
+.datepicker-plot-area .datepicker-month-view .month-item-disable {
+    background-color: #fff !important;
+}
