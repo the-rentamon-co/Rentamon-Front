@@ -46,11 +46,11 @@ $(".inline").pDatepicker({
   <div class="title"></div>
   <div class="header-row">
   <div class="header-row-cell">شنبه</div>
-  <div class="header-row-cell">یک شنبه</div>
-  <div class="header-row-cell">دو شنبه</div>
-  <div class="header-row-cell">سه شنبه</div>
-  <div class="header-row-cell">چهار شنبه</div>
-  <div class="header-row-cell">پنج شنبه</div>
+  <div class="header-row-cell">یک</div>
+  <div class="header-row-cell">دو</div>
+  <div class="header-row-cell">سه</div>
+  <div class="header-row-cell">چهار</div>
+  <div class="header-row-cell">پنج</div>
   <div class="header-row-cell">جمعه</div>
   </div>
   </div>
