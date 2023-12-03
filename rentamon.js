@@ -149,11 +149,11 @@ function shabStatus(shab) {
 
 function mizboonStatus(mizboon) {
   console.log(mizboon);
-  if (mizboon["booked"] === 0 && mizboon["closed" === 1]) {
+  if (mizboon["booked"] === 0 && mizboon["closed"] === 1) {
     return "blocked";
-  } else if (mizboon["booked"] === 1 && mizboon["closed" === 1]) {
+  } else if (mizboon["booked"] === 1 && mizboon["closed"] === 1) {
     return "booked";
-  } else if (mizboon["booked"] === 0 && mizboon["closed" === 0]) {
+  } else if (mizboon["booked"] === 0 && mizboon["closed"] === 0) {
     return "unblocked";
   }
 }
@@ -163,16 +163,21 @@ function otagakStatus(otaghak) {
 
   if (
     otaghak["isBlocked"] === true &&
-    otaghak["blockedType"] === "blockedManually"
+    otaghak["blockedType"] === "BlockedManually"
   ) {
     return "blocked";
-  } else if (otaghak["isBlocked"] === true && otaghak["blockedType"] === 2) {
+  } else if (
+    otaghak["isBlocked"] === true &&
+    otaghak["blockedType"] === "Booked"
+  ) {
     return "booked";
   } else if (
     otaghak["isBlocked"] === false &&
     otaghak["blockedType"] === null
   ) {
     return "unblocked";
+  } else {
+    return "notsure";
   }
 }
 
