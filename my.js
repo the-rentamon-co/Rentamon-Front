@@ -1,4 +1,82 @@
 var daysPicked = [];
+
+$(".inline").pDatepicker({
+  initialValue: false,
+  dayPicker: {
+    enabled: true,
+    titleFormat: "YYYY MMMM",
+  },
+  monthPicker: {
+    enabled: false,
+    titleFormat: "YYYY",
+  },
+  yearPicker: {
+    enabled: false,
+    titleFormat: "YYYY",
+  },
+  inline: true,
+
+  navigator: {
+    scroll: {
+      enabled: false,
+    },
+  },
+
+  format: "YYYY-MM-DD",
+
+  resoinsive: true,
+
+  template: `<div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
+  {{#navigator.enabled}}
+  <div class="navigator">
+  <div class="datepicker-header">
+  <div class="btn btn-next">></div>
+  <div class="btn btn-switch">{{ navigator.switch.text }}</div>
+  <div class="btn btn-prev"><</div>
+  </div>
+  </div>
+  {{/navigator.enabled}}
+  <div class="datepicker-grid-view" >
+  {{#days.enabled}}
+  {{#days.viewMode}}
+  <div class="datepicker-day-view" >
+  <div class="month-grid-box">
+  <div class="header">
+  <div class="title"></div>
+  <div class="header-row">
+  <div class="header-row-cell">شنبه</div>
+  <div class="header-row-cell">یک شنبه</div>
+  <div class="header-row-cell">دو شنبه</div>
+  <div class="header-row-cell">سه شنبه</div>
+  <div class="header-row-cell">چهار شنبه</div>
+  <div class="header-row-cell">پنج شنبه</div>
+  <div class="header-row-cell">جمعه</div>
+  </div>
+  </div>
+  <table cellspacing="0" class="table-days">
+  <tbody>
+  {{#days.list}}
+  <tr>
+  {{#.}}
+  {{#enabled}}
+  <td data-unix="{{dataUnix}}" ><span  class="{{#otherMonth}}other-month{{/otherMonth}} {{#selected}}selected{{/selected}}">{{title}}</span></td>
+  {{/enabled}}
+  {{^enabled}}
+  <td data-unix="{{dataUnix}}" class="disabled"><span class="day{{#otherMonth}}other-month{{/otherMonth}}">{{title}}</span></td>
+  {{/enabled}}
+
+  {{/.}}
+  </tr>
+  {{/days.list}}
+  </tbody>
+  </table>
+  </div>
+  </div>
+  {{/days.viewMode}}
+  {{/days.enabled}}
+
+`,
+});
 function persianToInteger(persianString) {
   const persianNumerals = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
 
@@ -92,83 +170,6 @@ function otagakStatus(otaghak) {
 }
 
 $(document).ready(function () {
-  $(".inline").pDatepicker({
-    initialValue: false,
-    dayPicker: {
-      enabled: true,
-      titleFormat: "YYYY MMMM",
-    },
-    monthPicker: {
-      enabled: false,
-      titleFormat: "YYYY",
-    },
-    yearPicker: {
-      enabled: false,
-      titleFormat: "YYYY",
-    },
-    inline: true,
-
-    navigator: {
-      scroll: {
-        enabled: false,
-      },
-    },
-
-    format: "YYYY-MM-DD",
-
-    resoinsive: true,
-    template: `<div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
-        {{#navigator.enabled}}
-        <div class="navigator">
-        <div class="datepicker-header">
-        <div class="btn btn-next">></div>
-        <div class="btn btn-switch">{{ navigator.switch.text }}</div>
-        <div class="btn btn-prev"><</div>
-        </div>
-        </div>
-        {{/navigator.enabled}}
-        <div class="datepicker-grid-view" >
-        {{#days.enabled}}
-        {{#days.viewMode}}
-        <div class="datepicker-day-view" >
-        <div class="month-grid-box">
-        <div class="header">
-        <div class="title"></div>
-        <div class="header-row">
-        <div class="header-row-cell">شنبه</div>
-        <div class="header-row-cell">یک شنبه</div>
-        <div class="header-row-cell">دو شنبه</div>
-        <div class="header-row-cell">سه شنبه</div>
-        <div class="header-row-cell">چهار شنبه</div>
-        <div class="header-row-cell">پنج شنبه</div>
-        <div class="header-row-cell">جمعه</div>
-        </div>
-        </div>
-        <table cellspacing="0" class="table-days">
-        <tbody>
-        {{#days.list}}
-        <tr>
-        {{#.}}
-        {{#enabled}}
-        <td data-unix="{{dataUnix}}" ><span  class="{{#otherMonth}}other-month{{/otherMonth}} {{#selected}}selected{{/selected}}">{{title}}</span></td>
-        {{/enabled}}
-        {{^enabled}}
-        <td data-unix="{{dataUnix}}" class="disabled"><span class="day{{#otherMonth}}other-month{{/otherMonth}}">{{title}}</span></td>
-        {{/enabled}}
-   
-        {{/.}}
-        </tr>
-        {{/days.list}}
-        </tbody>
-        </table>
-        </div>
-        </div>
-        {{/days.viewMode}}
-        {{/days.enabled}}
-
-`,
-  });
-
   // Set the timezone to Tehran
   const tehranTimeZone = "Asia/Tehran";
 
@@ -200,11 +201,6 @@ $(document).ready(function () {
   const url4 = "https://classiccowl.chbk.run/jajiga/calendar?room_id=3142341";
   const url5 =
     "https://classiccowl.chbk.run/shab/calendar?room=9094&from_date=1402-09-01&to_date=1402-09-31";
-  // jabama status "available" / not
-  // mizbon closed 0 / 1
-  // otagak isBlocked true / false
-  // jajiga disable_count 0 / 1
-  // shab is_disabled ture / false
 
   // Array of URLs
   const urls = [url1, url2, url3, url4, url5];
@@ -246,9 +242,9 @@ $(document).ready(function () {
           results[4][i]["is_disabled"] === true
         ) {
           if (i + 1 < todayDate) {
-            days[i].style.color = "#DBDAD7";
+            days[i].classList.add("passed-days");
           } else {
-            days[i].style.background = "#FF9E6A";
+            days[i].classList.add("blocked-days");
           }
         } else if (
           results[0][i]["status"] !== "available" ||
@@ -258,15 +254,14 @@ $(document).ready(function () {
           results[4][i]["is_disabled"] === true
         ) {
           if (i + 1 < todayDate) {
-            days[i].style.color = "#DBDAD7";
+            days[i].classList.add("passed-days");
           } else {
-            days[i].style.background = "#7CE656";
+            days[i].classList.add("blocked-days");
           }
         }
       }
     })
     .catch((error) => {
-      // Handle errors here
       console.error(error);
     });
 });
