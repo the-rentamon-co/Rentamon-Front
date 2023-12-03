@@ -60,3 +60,7 @@
 .datepicker-plot-area-inline-view .datepicker-month-view .month-item-disable {
     background-color: #fff;
 }
+
+.datepicker-plot-area-inline-view .datepicker-day-view .month-grid-box .header .header-row-cell {
+    font-family: vazir !important;
+}
