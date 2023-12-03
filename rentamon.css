@@ -57,5 +57,5 @@ table {
 .datepicker-plot-area .datepicker-day-view .table-days td.disabled span,
 .datepicker-plot-area .datepicker-year-view .year-item-disable,
 .datepicker-plot-area .datepicker-month-view .month-item-disable {
-    background-color: #fff !important;
+    background-color: #fff;
 }
