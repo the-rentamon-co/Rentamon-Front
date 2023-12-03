@@ -57,7 +57,7 @@
     text-shadow: none;
 }
 
-.datepicker-plot-area-inline-view .disabled span:not(.other-month) {
+.datepicker-plot-area-inline-view .disabled span:not(.other-month):not(.passed-days) {
     color: black !important;
 }
 
