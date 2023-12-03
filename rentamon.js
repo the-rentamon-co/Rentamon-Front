@@ -110,7 +110,7 @@ function jajigaStatus(jajiga) {
   } else if (
     jajiga["books_count"] === 1 &&
     jajiga["disable_count"] === 1 &&
-    jajiga["unavailable_type"] === ""
+    jajiga["unavailable_type"] === "booked"
   ) {
     return "booked";
   } else if (jajiga["books_count"] === 0 && jajiga["disable_count"] === 0) {
