@@ -90,6 +90,8 @@ function jabamaStatus(jabama) {
     return "booked";
   } else if (jabama["status"] === "available") {
     return "unblocked";
+  } else {
+    return "not sure";
   }
 }
 
@@ -108,6 +110,8 @@ function jajigaStatus(jajiga) {
     return "booked";
   } else if (jajiga["books_count"] === 0 && jajiga["disable_count"] === 0) {
     return "unblocked";
+  } else {
+    return "not sure";
   }
 }
 
@@ -133,6 +137,8 @@ function shabStatus(shab) {
     shab["is_unavailable"] === false
   ) {
     return "unblocked";
+  } else {
+    return "not sure";
   }
 }
 
@@ -143,6 +149,8 @@ function mizboonStatus(mizboon) {
     return "booked";
   } else if (mizboon["booked"] === 0 && mizboon["closed"] === 0) {
     return "unblocked";
+  } else {
+    return "not sure";
   }
 }
 
