@@ -438,7 +438,7 @@ $(document).ready(function () {
           days[i].parentElement.classList.add("disabled");
           days[i].parentElement.classList.add("passed-days");
         } else if (
-          // status["jabamaStatus"] === "blocked" &&
+          status["jabamaStatus"] === "blocked" &&
           status["mizboonStatus"] === "blocked" &&
           status["otagakStatus"] === "blocked" &&
           status["jajigaStatus"] === "blocked" &&
