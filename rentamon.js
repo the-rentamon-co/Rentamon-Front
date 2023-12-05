@@ -29,7 +29,7 @@ $(".inline").pDatepicker({
 
   template: `<div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
   <div class="month">{{ navigator.switch.text }}</div>
-  <div class="datepicker-grid-view" >.
+  <div class="datepicker-grid-view" >
   {{#days.enabled}}
   {{#days.viewMode}}
   <div class="datepicker-day-view" >
