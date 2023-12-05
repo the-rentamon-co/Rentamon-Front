@@ -1,7 +1,4 @@
-var daysPicked = [];
-
 $(".inline").pDatepicker({
-  onlySelectOnDate: true,
   initialValue: false,
   dayPicker: {
     enabled: true,
@@ -16,8 +13,11 @@ $(".inline").pDatepicker({
     titleFormat: "YYYY",
   },
   inline: true,
+  minDate: new persianDate().month(9).startOf("month"),
+  maxDate: new persianDate().month(9).endOf("month"),
 
   navigator: {
+    enabled: true,
     scroll: {
       enabled: false,
     },
@@ -28,16 +28,8 @@ $(".inline").pDatepicker({
   resoinsive: true,
 
   template: `<div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
-  {{#navigator.enabled}}
-  <div class="navigator">
-  <div class="datepicker-header">
-  <div class="btn btn-next">></div>
-  <div class="btn btn-switch">{{ navigator.switch.text }}</div>
-  <div class="btn btn-prev"><</div>
-  </div>
-  </div>
-  {{/navigator.enabled}}
-  <div class="datepicker-grid-view" >
+  <div class="month">{{ navigator.switch.text }}</div>
+  <div class="datepicker-grid-view" >.
   {{#days.enabled}}
   {{#days.viewMode}}
   <div class="datepicker-day-view" >
@@ -54,16 +46,16 @@ $(".inline").pDatepicker({
   <div class="header-row-cell">جمعه</div>
   </div>
   </div>
-  <table cellspacing="0" class="table-days">
+  <table cellspacing="1" class="table-days">
   <tbody>
   {{#days.list}}
   <tr>
   {{#.}}
   {{#enabled}}
-  <td data-unix="{{dataUnix}}" class="disabled"><span  class="{{#otherMonth}}other-month{{/otherMonth}} {{#selected}}selected{{/selected}}">{{title}}</span><span class="reserved"></span></td>
+  <td data-unix="{{dataUnix}}" ><span  class="{{#otherMonth}}other-month{{/otherMonth}} {{#selected}}selected{{/selected}}">{{title}}</span><span class="reserved"></span></td>
   {{/enabled}}
   {{^enabled}}
-  <td data-unix="{{dataUnix}}" class="disabled"><span class="day{{#otherMonth}}other-month{{/otherMonth}}">{{title}}</span></td>
+  <td data-unix="{{dataUnix}}" class="disabled"><span class="{{#otherMonth}}other-month{{/otherMonth}}">{{title}}</span><span class="reserved {{#otherMonth}}other-month{{/otherMonth}}"></span></td>
   {{/enabled}}
 
   {{/.}}
@@ -176,13 +168,188 @@ function otagakStatus(otaghak) {
 }
 
 $(document).ready(function () {
-  // Set the timezone to Tehran
+  $(document).off();
+
+  document.querySelector(".block").addEventListener("click", () => {
+    var selected = document.querySelectorAll(".selected");
+    var selectedDate = [];
+    if (selected.length > 0) {
+      selected.forEach((z) => {
+        z.classList.remove("selected");
+        selectedDate.push(
+          new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+            "YYYY-MM-DD"
+          )
+        );
+      });
+
+      $.ajax({
+        url: "https://classiccowl.chbk.run/otaghak",
+        method: "GET",
+        data: {
+          room: 55614,
+          unblockDays: null,
+          blockDays: selectedDate.join(","),
+        },
+        success: function (response) {
+          console.log("otaghak response:", response);
+        },
+        error: function (error) {
+          console.error("otaghak error:", error);
+        },
+      });
+
+      $.ajax({
+        url: "https://classiccowl.chbk.run/jabama/disable",
+        method: "GET",
+        data: { days: selectedDate.join(",") },
+        success: function (response) {
+          console.log("jabama response:", response);
+        },
+        error: function (error) {
+          console.error("jabama error:", error);
+        },
+      });
+
+      $.ajax({
+        url: "https://classiccowl.chbk.run/jajiga",
+        method: "GET",
+        data: {
+          dates: selectedDate.join(","),
+          room_id: 3142341,
+          disable_count: 1,
+        },
+        success: function (response) {
+          console.log("jajiga response:", response);
+        },
+        error: function (error) {
+          console.error("jajiga error:", error);
+        },
+      });
+
+      $.ajax({
+        url: "https://classiccowl.chbk.run/shab",
+        method: "GET",
+        data: { dates: selectedDate.join(","), disabled: 1 },
+        success: function (response) {
+          console.log("shab response:", response);
+        },
+        error: function (error) {
+          console.error("shab error:", error);
+        },
+      });
+
+      $.ajax({
+        url: "https://classiccowl.chbk.run/mizboon/close",
+        method: "GET",
+        data: { days: selectedDate.join(","), rental_id: 10922 },
+        success: function (response) {
+          console.log("mizboon response:", response);
+        },
+        error: function (error) {
+          console.error("mizboon error:", error);
+        },
+      });
+
+      alert("✅ ممنون!\nتغییرات اعمال شد.");
+      window.location.reload();
+    } else {
+      alert("هنوز روزی انتخاب نکردی");
+    }
+  });
+
+  document.querySelector(".unblock").addEventListener("click", () => {
+    var selected = document.querySelectorAll(".selected");
+    var selectedDate = [];
+    if (selected.length > 0) {
+      selected.forEach((z) => {
+        z.classList.remove("selected");
+        selectedDate.push(
+          new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+            "YYYY-MM-DD"
+          )
+        );
+      });
+
+      $.ajax({
+        url: "https://classiccowl.chbk.run/otaghak",
+        method: "GET",
+        data: {
+          room: 55614,
+          unblockDays: selectedDate.join(","),
+          blockDays: null,
+        },
+        success: function (response) {
+          console.log("otaghak response:", response);
+        },
+        error: function (error) {
+          console.error("otaghak error:", error);
+        },
+      });
+
+      $.ajax({
+        url: "https://classiccowl.chbk.run/jabama/enable",
+        method: "GET",
+        data: { days: selectedDate.join(",") },
+        success: function (response) {
+          console.log("jabama response:", response);
+        },
+        error: function (error) {
+          console.error("jabama error:", error);
+        },
+      });
+
+      $.ajax({
+        url: "https://classiccowl.chbk.run/jajiga",
+        method: "GET",
+        data: {
+          dates: selectedDate.join(","),
+          room_id: 3142341,
+          disable_count: 0,
+        },
+        success: function (response) {
+          console.log("jajiga response:", response);
+        },
+        error: function (error) {
+          console.error("jajiga error:", error);
+        },
+      });
+
+      $.ajax({
+        url: "https://classiccowl.chbk.run/shab",
+        method: "GET",
+        data: { dates: selectedDate.join(","), disabled: 0 },
+        success: function (response) {
+          console.log("shab response:", response);
+        },
+        error: function (error) {
+          console.error("shab error:", error);
+        },
+      });
+
+      $.ajax({
+        url: "https://classiccowl.chbk.run/mizboon/unclose",
+        method: "GET",
+        data: { days: selectedDate.join(","), rental_id: 10922 },
+        success: function (response) {
+          console.log("mizboon response:", response);
+        },
+        error: function (error) {
+          console.error("mizboon error:", error);
+        },
+      });
+
+      alert("✅ ممنون!\nتغییرات اعمال شد.");
+      window.location.reload();
+    } else {
+      alert("هنوز روزی انتخاب نکردی");
+    }
+  });
+
   const tehranTimeZone = "Asia/Tehran";
 
-  // Create a new Date object
   const currentDate = new Date();
 
-  // Get the timestamp for the current date in Tehran timezone
   const tehranTimestamp = currentDate.toLocaleString("en-US", {
     timeZone: tehranTimeZone,
   });
@@ -197,7 +364,6 @@ $(document).ready(function () {
 
   const todayDate = persianToInteger(todayTD.textContent);
 
-  // Sample URLs for demonstration purposes
   const days = document.querySelectorAll(
     ".datepicker-plot-area-inline-view .table-days span:not(.other-month):not(.reserved)"
   );
@@ -212,42 +378,21 @@ $(document).ready(function () {
   const url5 =
     "https://classiccowl.chbk.run/shab/calendar?room=9094&from_date=1402-09-01&to_date=1402-09-31";
 
-  // Array of URLs
   const urls = [url1, url2, url3, url4, url5];
 
-  // Function to perform a fetch for a single URL
   const fetchData = async (url) => {
     const response = await fetch(url);
     const data = await response.json();
     return data;
   };
 
-  // Array to store the promises returned by fetchData
   const fetchPromises = urls.map((url) => fetchData(url));
 
-  // Use Promise.all to wait for all promises to resolve
   Promise.all(fetchPromises)
     .then((results) => {
-      // Handle the results here
-
-      // console.log(results[0][0]["status"])
-      // console.log(results[1][0]["closed"])
-      // console.log(results[2][0]["isBlocked"])
-      // console.log(results[3][0]["disable_count"])
-      // console.log(results[4][0]["status"])
-      // console.log(results);
-      // console.log(today);
-
       for (var i = 1; i < todayDate; i++) {
         results[3].unshift({ disable_count: null });
       }
-      // console.log(results);
-
-      // console.log(jabamaStatus(results[0][19]));
-      // console.log(mizboonStatus(results[1][19]));
-      // console.log(otagakStatus(results[2][19]));
-      // console.log(jajigaStatus(results[3][19]));
-      // console.log(shabStatus(results[4][19]));
 
       for (let i = 0; i < 30; i++) {
         var status = {
@@ -258,9 +403,11 @@ $(document).ready(function () {
           shabStatus: shabStatus(results[4][i]),
         };
 
+        console.log(i, status);
+
         if (i + 1 < todayDate) {
-          days[i].classList.add("passed-days");
-          days[i].nextSibling.classList.add("passed-days");
+          days[i].parentElement.classList.add("disabled");
+          days[i].parentElement.classList.add("passed-days");
         } else if (
           status["jabamaStatus"] === "blocked" &&
           status["mizboonStatus"] === "blocked" &&
@@ -268,8 +415,7 @@ $(document).ready(function () {
           status["jajigaStatus"] === "blocked" &&
           status["shabStatus"] === "blocked"
         ) {
-          days[i].classList.add("blocked-days");
-          days[i].nextSibling.classList.add("blocked-days");
+          days[i].parentElement.classList.add("blocked-days");
         } else if (
           status["jabamaStatus"] === "booked" ||
           status["mizboonStatus"] === "booked" ||
@@ -277,8 +423,7 @@ $(document).ready(function () {
           status["jajigaStatus"] === "booked" ||
           status["shabStatus"] === "booked"
         ) {
-          days[i].classList.add("booked-days");
-          days[i].nextSibling.classList.add("booked-days");
+          days[i].parentElement.classList.add("booked-days");
 
           const website = Object.keys(status).find(
             (key) => status[key] === "booked"
@@ -287,129 +432,22 @@ $(document).ready(function () {
           days[i].nextSibling.innerHTML = website;
         }
       }
+
+      const availableDays = document.querySelectorAll(
+        ".datepicker-day-view td:not(.disabled)"
+      );
+      availableDays.forEach((day) => {
+        day.addEventListener("click", (e) => {
+          console.log(e);
+          if (e.target.parentElement.tagName === "TD") {
+            e.target.parentElement.classList.toggle("selected");
+          } else if (e.target.tagName === "TD") {
+            e.target.classList.toggle("selected");
+          }
+        });
+      });
     })
     .catch((error) => {
       console.error(error);
     });
 });
-//   $(".inline").pDatepicker({
-//     inline: true,
-//     resoinsive: true,
-//     format: "",
-//     viewMode: "day",
-//     initialValue: true,
-//     minDate: null,
-//     maxDate: null,
-//     autoClose: false,
-//     position: "auto",
-//     altFormat: "",
-//     altField: "#altfieldExample",
-//     onlyTimePicker: false,
-//     onlySelectOnDate: false,
-//     calendarType: "persian",
-//     inputDelay: "",
-//     observer: false,
-//     calendar: {
-//       persian: {
-//         locale: "fa",
-//         showHint: false,
-//         leapYearMode: "algorithmic",
-//       },
-//       gregorian: {
-//         locale: "fa",
-//         showHint: false,
-//       },
-//     },
-//     navigator: {
-//       enabled: true,
-//       scroll: {
-//         enabled: false,
-//       },
-//       text: {
-//         btnNextText: "<",
-//         btnPrevText: ">",
-//       },
-//     },
-//     toolbox: {
-//       enabled: false,
-//       calendarSwitch: {
-//         enabled: false,
-//         format: "",
-//       },
-//       todayButton: {
-//         enabled: false,
-//         text: {
-//           fa: "",
-//           en: "",
-//         },
-//       },
-//       submitButton: {
-//         enabled: false,
-//         text: {
-//           fa: "",
-//           en: "",
-//         },
-//       },
-//       text: {
-//         btnToday: "امروز",
-//       },
-//     },
-//     timePicker: {
-//       enabled: false,
-//       step: "",
-//       hour: {
-//         enabled: false,
-//         step: null,
-//       },
-//       minute: {
-//         enabled: false,
-//         step: null,
-//       },
-//       second: {
-//         enabled: false,
-//         step: null,
-//       },
-//       meridian: {
-//         enabled: false,
-//       },
-//     },
-//     dayPicker: {
-//       enabled: true,
-//       titleFormat: "YYYY MMMM",
-//     },
-//     monthPicker: {
-//       enabled: false,
-//       titleFormat: "YYYY",
-//     },
-//     yearPicker: {
-//       enabled: false,
-//       titleFormat: "YYYY",
-//     },
-//     responsive: true,
-//   });
-
-//   dayPicker: {
-//     enabled: true,
-//     titleFormat: "YYYY MMMM",
-//   },
-//   responsive: true,
-//   // inline: true,
-//   // observer: false,
-//   navigator: {
-//     scroll: {
-//       enabled: false,
-//     },
-//     text: {
-//       btnNextText: ">",
-//       btnPrevText: "<",
-//     },
-//   },
-//   initialValue: false,
-//   format: "YYYY-MM-DD",
-//   autoClose: true,
-
-//   onSelect: function (unix) {
-//     daysPicked.push($(".dayPicker").val());
-
-//     console.log($(".dayPicker").val());
-//   },
