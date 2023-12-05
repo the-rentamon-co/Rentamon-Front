@@ -420,7 +420,7 @@ $(document).ready(function () {
           // status["jabamaStatus"] === "blocked" &&
           status["mizboonStatus"] === "blocked" &&
           status["otagakStatus"] === "blocked" &&
-          status["jajigaStatus"] === "blocked" &&
+          // status["jajigaStatus"] === "blocked" &&
           status["shabStatus"] === "blocked"
         ) {
           days[i].parentElement.classList.add("blocked-days");
