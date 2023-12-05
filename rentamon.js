@@ -2,7 +2,7 @@ $(".inline").pDatepicker({
   initialValue: false,
   dayPicker: {
     enabled: true,
-    titleFormat: "YYYY MMMM",
+    titleFormat: "MMMM YYYY",
   },
   monthPicker: {
     enabled: false,
