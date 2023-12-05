@@ -84,94 +84,114 @@ function persianToInteger(persianString) {
 }
 
 function jabamaStatus(jabama) {
-  if (jabama["status"] === "disabledByHost") {
-    return "blocked";
-  } else if (jabama["status"] === "reserved") {
-    return "booked";
-  } else if (jabama["status"] === "available") {
-    return "unblocked";
+  if (jabama) {
+    if (jabama["status"] === "disabledByHost") {
+      return "blocked";
+    } else if (jabama["status"] === "reserved") {
+      return "booked";
+    } else if (jabama["status"] === "available") {
+      return "unblocked";
+    } else {
+      return "not sure";
+    }
   } else {
     return "not sure";
   }
 }
 
 function jajigaStatus(jajiga) {
-  if (
-    jajiga["books_count"] === 0 &&
-    jajiga["disable_count"] === 1 &&
-    jajiga["unavailable_type"] === "disabled"
-  ) {
-    return "blocked";
-  } else if (
-    jajiga["books_count"] === 1 &&
-    jajiga["disable_count"] === 1 &&
-    jajiga["unavailable_type"] === "booked"
-  ) {
-    return "booked";
-  } else if (jajiga["books_count"] === 0 && jajiga["disable_count"] === 0) {
-    return "unblocked";
+  if (jajiga) {
+    if (
+      jajiga["books_count"] === 0 &&
+      jajiga["disable_count"] === 1 &&
+      jajiga["unavailable_type"] === "disabled"
+    ) {
+      return "blocked";
+    } else if (
+      jajiga["books_count"] === 1 &&
+      jajiga["disable_count"] === 1 &&
+      jajiga["unavailable_type"] === "booked"
+    ) {
+      return "booked";
+    } else if (jajiga["books_count"] === 0 && jajiga["disable_count"] === 0) {
+      return "unblocked";
+    } else {
+      return "not sure";
+    }
   } else {
     return "not sure";
   }
 }
 
 function shabStatus(shab) {
-  if (
-    shab["available_units_count"] === 1 &&
-    shab["is_disabled"] === true &&
-    shab["is_non_bookable"] === true &&
-    shab["is_unavailable"] === false
-  ) {
-    return "blocked";
-  } else if (
-    shab["available_units_count"] === 0 &&
-    shab["is_disabled"] === true &&
-    shab["is_non_bookable"] === true &&
-    shab["is_unavailable"] === false
-  ) {
-    return "booked";
-  } else if (
-    shab["available_units_count"] === 1 &&
-    shab["is_disabled"] === false &&
-    shab["is_non_bookable"] === false &&
-    shab["is_unavailable"] === false
-  ) {
-    return "unblocked";
+  if (shab) {
+    if (
+      shab["available_units_count"] === 1 &&
+      shab["is_disabled"] === true &&
+      shab["is_non_bookable"] === true &&
+      shab["is_unavailable"] === false
+    ) {
+      return "blocked";
+    } else if (
+      shab["available_units_count"] === 0 &&
+      shab["is_disabled"] === true &&
+      shab["is_non_bookable"] === true &&
+      shab["is_unavailable"] === false
+    ) {
+      return "booked";
+    } else if (
+      shab["available_units_count"] === 1 &&
+      shab["is_disabled"] === false &&
+      shab["is_non_bookable"] === false &&
+      shab["is_unavailable"] === false
+    ) {
+      return "unblocked";
+    } else {
+      return "not sure";
+    }
   } else {
     return "not sure";
   }
 }
 
 function mizboonStatus(mizboon) {
-  if (mizboon["booked"] === 0 && mizboon["closed"] === 1) {
-    return "blocked";
-  } else if (mizboon["booked"] === 1 && mizboon["closed"] === 1) {
-    return "booked";
-  } else if (mizboon["booked"] === 0 && mizboon["closed"] === 0) {
-    return "unblocked";
+  if (mizboon) {
+    if (mizboon["booked"] === 0 && mizboon["closed"] === 1) {
+      return "blocked";
+    } else if (mizboon["booked"] === 1 && mizboon["closed"] === 1) {
+      return "booked";
+    } else if (mizboon["booked"] === 0 && mizboon["closed"] === 0) {
+      return "unblocked";
+    } else {
+      return "not sure";
+    }
   } else {
     return "not sure";
   }
 }
 
 function otagakStatus(otaghak) {
-  if (
-    otaghak["isBlocked"] === true &&
-    otaghak["blockedType"] === "BlockedManually"
-  ) {
-    return "blocked";
-  } else if (
-    otaghak["isBlocked"] === true &&
-    otaghak["blockedType"] === "BlockedByBooking"
-  ) {
-    return "booked";
-  } else if (
-    otaghak["isBlocked"] === false &&
-    otaghak["blockedType"] === null
-  ) {
-    return "unblocked";
+  if (otaghak) {
+    if (
+      otaghak["isBlocked"] === true &&
+      otaghak["blockedType"] === "BlockedManually"
+    ) {
+      return "blocked";
+    } else if (
+      otaghak["isBlocked"] === true &&
+      otaghak["blockedType"] === "BlockedByBooking"
+    ) {
+      return "booked";
+    } else if (
+      otaghak["isBlocked"] === false &&
+      otaghak["blockedType"] === null
+    ) {
+      return "unblocked";
+    } else {
+      return "not sure";
+    }
   } else {
-    return "notsure";
+    return "not sure";
   }
 }
 
@@ -398,6 +418,7 @@ $(document).ready(function () {
 
   Promise.all(fetchPromises)
     .then((results) => {
+      console.log(results);
       for (var i = 1; i < todayDate; i++) {
         results[3].unshift({ disable_count: null });
       }
@@ -420,7 +441,7 @@ $(document).ready(function () {
           // status["jabamaStatus"] === "blocked" &&
           status["mizboonStatus"] === "blocked" &&
           status["otagakStatus"] === "blocked" &&
-          // status["jajigaStatus"] === "blocked" &&
+          status["jajigaStatus"] === "blocked" &&
           status["shabStatus"] === "blocked"
         ) {
           days[i].parentElement.classList.add("blocked-days");
