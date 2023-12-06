@@ -69,7 +69,7 @@ const fetchData = async (url) => {
 const messages = {
   blockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   unblockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
-  notSelectedDay: "✅ ممنون!\nتغییرات اعمال شد.",
+  notSelectedDay: "هنوز روزی انتخاب نکردی",
 };
 
 function persianToInteger(persianString) {
