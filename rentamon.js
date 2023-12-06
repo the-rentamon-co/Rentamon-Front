@@ -1,4 +1,4 @@
-const MAINURL = "https://classiccowl.chbk.run";
+const mainApiUrl = "https://classiccowl.chbk.run";
 
 const tehranTimeZone = "Asia/Tehran";
 
@@ -14,40 +14,40 @@ const tehranzeroo = tehran.setHours(0, 0, 0, 0);
 
 const routes = {
   otaghak: {
-    block: MAINURL + "/otaghak",
-    unblock: MAINURL + "/otaghak",
+    block: mainApiUrl + "/otaghak",
+    unblock: mainApiUrl + "/otaghak",
     calendar:
-      MAINURL +
+      mainApiUrl +
       "/otaghak/calendar?roomId=55614&startDate=1402-09-01&endDate=1402-09-30",
   },
 
   jabama: {
-    block: MAINURL + "/jabama/disable",
-    unblock: MAINURL + "/jabama/enable",
+    block: mainApiUrl + "/jabama/disable",
+    unblock: mainApiUrl + "/jabama/enable",
     calendar:
-      MAINURL +
+      mainApiUrl +
       "/jabama/calendar?room=109108&start_date=1402-9-1&end_date=1402-10-01",
   },
 
   jajiga: {
-    block: MAINURL + "/jajiga",
-    unblock: MAINURL + "/jajiga",
-    calendar: MAINURL + "/jajiga/calendar?room_id=3142341",
+    block: mainApiUrl + "/jajiga",
+    unblock: mainApiUrl + "/jajiga",
+    calendar: mainApiUrl + "/jajiga/calendar?room_id=3142341",
   },
 
   shab: {
-    block: MAINURL + "/shab",
-    unblock: MAINURL + "/shab",
+    block: mainApiUrl + "/shab",
+    unblock: mainApiUrl + "/shab",
     calendar:
-      MAINURL +
+      mainApiUrl +
       "/shab/calendar?room=9094&from_date=1402-09-01&to_date=1402-09-31",
   },
 
   mizboon: {
-    block: MAINURL + "/mizboon/close",
-    unblock: MAINURL + "/mizboon/unclose",
+    block: mainApiUrl + "/mizboon/close",
+    unblock: mainApiUrl + "/mizboon/unclose",
     calendar:
-      MAINURL +
+      mainApiUrl +
       "/mizboon/calendar?rental_id=10922&from=1402-09-01&to=1402-09-30",
   },
 };
