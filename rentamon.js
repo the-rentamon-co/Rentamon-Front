@@ -1,75 +1,77 @@
-$(".inline").pDatepicker({
-  initialValue: false,
-  dayPicker: {
-    enabled: true,
-    titleFormat: "MMMM YYYY",
-  },
-  monthPicker: {
-    enabled: false,
-    titleFormat: "YYYY",
-  },
-  yearPicker: {
-    enabled: false,
-    titleFormat: "YYYY",
-  },
-  inline: true,
-  minDate: new persianDate().month(9).startOf("month"),
-  maxDate: new persianDate().month(9).endOf("month"),
+const MAINURL = "https://classiccowl.chbk.run";
 
-  navigator: {
-    enabled: true,
-    scroll: {
-      enabled: false,
-    },
-  },
+const tehranTimeZone = "Asia/Tehran";
 
-  format: "YYYY-MM-DD",
+const currentDate = new Date();
 
-  resoinsive: true,
-
-  template: `<div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
-  <div class="month">{{ navigator.switch.text }}</div>
-  <div class="datepicker-grid-view" >
-  {{#days.enabled}}
-  {{#days.viewMode}}
-  <div class="datepicker-day-view" >
-  <div class="month-grid-box">
-  <div class="header">
-  <div class="title"></div>
-  <div class="header-row">
-  <div class="header-row-cell">شنبه</div>
-  <div class="header-row-cell">یک</div>
-  <div class="header-row-cell">دو</div>
-  <div class="header-row-cell">سه</div>
-  <div class="header-row-cell">چهار</div>
-  <div class="header-row-cell">پنج</div>
-  <div class="header-row-cell">جمعه</div>
-  </div>
-  </div>
-  <table cellspacing="1" class="table-days">
-  <tbody>
-  {{#days.list}}
-  <tr>
-  {{#.}}
-  {{#enabled}}
-  <td data-unix="{{dataUnix}}" ><span  class="{{#otherMonth}}other-month{{/otherMonth}} {{#selected}}selected{{/selected}}">{{title}}</span><span class="reserved"></span></td>
-  {{/enabled}}
-  {{^enabled}}
-  <td data-unix="{{dataUnix}}" class="disabled"><span class="{{#otherMonth}}other-month{{/otherMonth}}">{{title}}</span><span class="reserved {{#otherMonth}}other-month{{/otherMonth}}"></span></td>
-  {{/enabled}}
-
-  {{/.}}
-  </tr>
-  {{/days.list}}
-  </tbody>
-  </table>
-  </div>
-  </div>
-  {{/days.viewMode}}
-  {{/days.enabled}}
-
-`,
+const tehranTimestamp = currentDate.toLocaleString("en-US", {
+  timeZone: tehranTimeZone,
 });
+
+const tehran = new Date(tehranTimestamp);
+
+const tehranzeroo = tehran.setHours(0, 0, 0, 0);
+
+const routes = {
+  otaghak: {
+    block: MAINURL + "/otaghak",
+    unblock: MAINURL + "/otaghak",
+    calendar:
+      MAINURL +
+      "/otaghak/calendar?roomId=55614&startDate=1402-09-01&endDate=1402-09-30",
+  },
+
+  jabama: {
+    block: MAINURL + "/jabama/disable",
+    unblock: MAINURL + "/jabama/enable",
+    calendar:
+      MAINURL +
+      "/jabama/calendar?room=109108&start_date=1402-9-1&end_date=1402-10-01",
+  },
+
+  jajiga: {
+    block: MAINURL + "/jajiga",
+    unblock: MAINURL + "/jajiga",
+    calendar: MAINURL + "/jajiga/calendar?room_id=3142341",
+  },
+
+  shab: {
+    block: MAINURL + "/shab",
+    unblock: MAINURL + "/shab",
+    calendar:
+      MAINURL +
+      "/shab/calendar?room=9094&from_date=1402-09-01&to_date=1402-09-31",
+  },
+
+  mizboon: {
+    block: MAINURL + "/mizboon/close",
+    unblock: MAINURL + "/mizboon/unclose",
+    calendar:
+      MAINURL +
+      "/mizboon/calendar?rental_id=10922&from=1402-09-01&to=1402-09-30",
+  },
+};
+
+const urls = [
+  routes.jabama.calendar,
+  routes.mizboon.calendar,
+  routes.otaghak.calendar,
+  routes.jajiga.calendar,
+  routes.shab.calendar,
+];
+
+const fetchData = async (url) => {
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
+
+const messages = {
+  blockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
+  unblockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
+  notSelectedDay: "✅ ممنون!\nتغییرات اعمال شد.",
+};
+
 function persianToInteger(persianString) {
   const persianNumerals = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
 
@@ -195,196 +197,221 @@ function otagakStatus(otaghak) {
   }
 }
 
+function rentamonApiCaller(website, data, action, method = "GET") {
+  $.ajax({
+    url: routes[website][action],
+    method: method,
+    data: data,
+    success: function (response) {
+      console.log(website, response);
+    },
+    error: function (error) {
+      console.error(website, error);
+    },
+  });
+}
+
+function blockBtnClicked() {
+  var selected = document.querySelectorAll(".selected");
+  var selectedDate = [];
+  if (selected.length > 0) {
+    selected.forEach((z) => {
+      z.classList.remove("selected");
+      selectedDate.push(
+        new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+          "YYYY-MM-DD"
+        )
+      );
+    });
+
+    rentamonApiCaller(
+      (website = "jabama"),
+      (data = { days: selectedDate.join(",") }),
+      (action = "block")
+    );
+
+    rentamonApiCaller(
+      (website = "jajiga"),
+      (data = {
+        dates: selectedDate.join(","),
+        room_id: 3142341,
+        disable_count: 1,
+      }),
+      (action = "block")
+    );
+
+    rentamonApiCaller(
+      (website = "shab"),
+      (data = { dates: selectedDate.join(","), disabled: 1 }),
+      (action = "block")
+    );
+
+    rentamonApiCaller(
+      (website = "mizboon"),
+      (data = { days: selectedDate.join(","), rental_id: 10922 }),
+      (action = "block")
+    );
+
+    rentamonApiCaller(
+      (website = "otaghak"),
+      (data = {
+        room: 55614,
+        unblockDays: null,
+        blockDays: selectedDate.join(","),
+      }),
+      (action = "block")
+    );
+    alert(messages.blockDaySuccess);
+    window.location.reload();
+  } else {
+    alert(messages.notSelectedDay);
+  }
+}
+
+function unblockBtnClicked() {
+  var selected = document.querySelectorAll(".selected");
+  var selectedDate = [];
+  if (selected.length > 0) {
+    selected.forEach((z) => {
+      z.classList.remove("selected");
+      selectedDate.push(
+        new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+          "YYYY-MM-DD"
+        )
+      );
+    });
+
+    rentamonApiCaller(
+      (website = "jabama"),
+      (data = { days: selectedDate.join(",") }),
+      (action = "unblock")
+    );
+
+    rentamonApiCaller(
+      (website = "jajiga"),
+      (data = {
+        dates: selectedDate.join(","),
+        room_id: 3142341,
+        disable_count: 0,
+      }),
+      (action = "unblock")
+    );
+
+    rentamonApiCaller(
+      (website = "shab"),
+      (data = { dates: selectedDate.join(","), disabled: 0 }),
+      (action = "unblock")
+    );
+
+    rentamonApiCaller(
+      (website = "mizboon"),
+      (data = { days: selectedDate.join(","), rental_id: 10922 }),
+      (action = "unblock")
+    );
+
+    rentamonApiCaller(
+      (website = "otaghak"),
+      (data = {
+        room: 55614,
+        unblockDays: selectedDate.join(","),
+        blockDays: null,
+      }),
+      (action = "unblock")
+    );
+
+    alert(messages.unblockDaySuccess);
+    window.location.reload();
+  } else {
+    alert(messages.notSelectedDay);
+  }
+}
+
+$(".inline").pDatepicker({
+  initialValue: false,
+  dayPicker: {
+    enabled: true,
+    titleFormat: "MMMM YYYY",
+  },
+  monthPicker: {
+    enabled: false,
+    titleFormat: "YYYY",
+  },
+  yearPicker: {
+    enabled: false,
+    titleFormat: "YYYY",
+  },
+  inline: true,
+  minDate: new persianDate().month(9).startOf("month"),
+  maxDate: new persianDate().month(9).endOf("month"),
+
+  navigator: {
+    enabled: true,
+    scroll: {
+      enabled: false,
+    },
+  },
+
+  format: "YYYY-MM-DD",
+
+  resoinsive: true,
+
+  template: `
+  <div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
+  <div class="month">{{ navigator.switch.text }}</div>
+  <div class="datepicker-grid-view">
+    {{#days.enabled}} {{#days.viewMode}}
+    <div class="datepicker-day-view">
+      <div class="month-grid-box">
+        <div class="header">
+          <div class="title"></div>
+          <div class="header-row">
+            <div class="header-row-cell">شنبه</div>
+            <div class="header-row-cell">یک</div>
+            <div class="header-row-cell">دو</div>
+            <div class="header-row-cell">سه</div>
+            <div class="header-row-cell">چهار</div>
+            <div class="header-row-cell">پنج</div>
+            <div class="header-row-cell">جمعه</div>
+          </div>
+        </div>
+        <table cellspacing="1" class="table-days">
+          <tbody>
+            {{#days.list}}
+            <tr>
+              {{#.}} {{#enabled}}
+              <td data-unix="{{dataUnix}}">
+                <span
+                  class="{{#otherMonth}}other-month{{/otherMonth}} {{#selected}}selected{{/selected}}"
+                  >{{title}}</span
+                ><span class="reserved"></span>
+              </td>
+              {{/enabled}} {{^enabled}}
+              <td data-unix="{{dataUnix}}" class="disabled">
+                <span class="{{#otherMonth}}other-month{{/otherMonth}}"
+                  >{{title}}</span
+                ><span
+                  class="reserved {{#otherMonth}}other-month{{/otherMonth}}"
+                ></span>
+              </td>
+              {{/enabled}} {{/.}}
+            </tr>
+            {{/days.list}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {{/days.viewMode}} {{/days.enabled}}
+  </div>
+</div>
+`,
+});
+
 $(document).ready(function () {
   $(document).off();
-
-  document.querySelector(".block").addEventListener("click", () => {
-    var selected = document.querySelectorAll(".selected");
-    var selectedDate = [];
-    if (selected.length > 0) {
-      selected.forEach((z) => {
-        z.classList.remove("selected");
-        selectedDate.push(
-          new persianDate(parseInt(z.getAttribute("data-unix"))).format(
-            "YYYY-MM-DD"
-          )
-        );
-      });
-
-      $.ajax({
-        url: "https://classiccowl.chbk.run/otaghak",
-        method: "GET",
-        data: {
-          room: 55614,
-          unblockDays: null,
-          blockDays: selectedDate.join(","),
-        },
-        success: function (response) {
-          console.log("otaghak response:", response);
-        },
-        error: function (error) {
-          console.error("otaghak error:", error);
-        },
-      });
-
-      $.ajax({
-        url: "https://classiccowl.chbk.run/jabama/disable",
-        method: "GET",
-        data: { days: selectedDate.join(",") },
-        success: function (response) {
-          console.log("jabama response:", response);
-        },
-        error: function (error) {
-          console.error("jabama error:", error);
-        },
-      });
-
-      $.ajax({
-        url: "https://classiccowl.chbk.run/jajiga",
-        method: "GET",
-        data: {
-          dates: selectedDate.join(","),
-          room_id: 3142341,
-          disable_count: 1,
-        },
-        success: function (response) {
-          console.log("jajiga response:", response);
-        },
-        error: function (error) {
-          console.error("jajiga error:", error);
-        },
-      });
-
-      $.ajax({
-        url: "https://classiccowl.chbk.run/shab",
-        method: "GET",
-        data: { dates: selectedDate.join(","), disabled: 1 },
-        success: function (response) {
-          console.log("shab response:", response);
-        },
-        error: function (error) {
-          console.error("shab error:", error);
-        },
-      });
-
-      $.ajax({
-        url: "https://classiccowl.chbk.run/mizboon/close",
-        method: "GET",
-        data: { days: selectedDate.join(","), rental_id: 10922 },
-        success: function (response) {
-          console.log("mizboon response:", response);
-        },
-        error: function (error) {
-          console.error("mizboon error:", error);
-        },
-      });
-
-      alert("✅ ممنون!\nتغییرات اعمال شد.");
-      window.location.reload();
-    } else {
-      alert("هنوز روزی انتخاب نکردی");
-    }
-  });
-
-  document.querySelector(".unblock").addEventListener("click", () => {
-    var selected = document.querySelectorAll(".selected");
-    var selectedDate = [];
-    if (selected.length > 0) {
-      selected.forEach((z) => {
-        z.classList.remove("selected");
-        selectedDate.push(
-          new persianDate(parseInt(z.getAttribute("data-unix"))).format(
-            "YYYY-MM-DD"
-          )
-        );
-      });
-
-      $.ajax({
-        url: "https://classiccowl.chbk.run/otaghak",
-        method: "GET",
-        data: {
-          room: 55614,
-          unblockDays: selectedDate.join(","),
-          blockDays: null,
-        },
-        success: function (response) {
-          console.log("otaghak response:", response);
-        },
-        error: function (error) {
-          console.error("otaghak error:", error);
-        },
-      });
-
-      $.ajax({
-        url: "https://classiccowl.chbk.run/jabama/enable",
-        method: "GET",
-        data: { days: selectedDate.join(",") },
-        success: function (response) {
-          console.log("jabama response:", response);
-        },
-        error: function (error) {
-          console.error("jabama error:", error);
-        },
-      });
-
-      $.ajax({
-        url: "https://classiccowl.chbk.run/jajiga",
-        method: "GET",
-        data: {
-          dates: selectedDate.join(","),
-          room_id: 3142341,
-          disable_count: 0,
-        },
-        success: function (response) {
-          console.log("jajiga response:", response);
-        },
-        error: function (error) {
-          console.error("jajiga error:", error);
-        },
-      });
-
-      $.ajax({
-        url: "https://classiccowl.chbk.run/shab",
-        method: "GET",
-        data: { dates: selectedDate.join(","), disabled: 0 },
-        success: function (response) {
-          console.log("shab response:", response);
-        },
-        error: function (error) {
-          console.error("shab error:", error);
-        },
-      });
-
-      $.ajax({
-        url: "https://classiccowl.chbk.run/mizboon/unclose",
-        method: "GET",
-        data: { days: selectedDate.join(","), rental_id: 10922 },
-        success: function (response) {
-          console.log("mizboon response:", response);
-        },
-        error: function (error) {
-          console.error("mizboon error:", error);
-        },
-      });
-
-      alert("✅ ممنون!\nتغییرات اعمال شد.");
-      window.location.reload();
-    } else {
-      alert("هنوز روزی انتخاب نکردی");
-    }
-  });
-
-  const tehranTimeZone = "Asia/Tehran";
-
-  const currentDate = new Date();
-
-  const tehranTimestamp = currentDate.toLocaleString("en-US", {
-    timeZone: tehranTimeZone,
-  });
-
-  const tehran = new Date(tehranTimestamp);
-
-  const tehranzeroo = tehran.setHours(0, 0, 0, 0);
+  document.querySelector(".block").addEventListener("click", blockBtnClicked);
+  document
+    .querySelector(".unblock")
+    .addEventListener("click", unblockBtnClicked);
 
   const todayTD = document.querySelector(
     `.datepicker-plot-area-inline-view td[data-unix="${tehranzeroo}"] span`
@@ -395,24 +422,6 @@ $(document).ready(function () {
   const days = document.querySelectorAll(
     ".datepicker-plot-area-inline-view .table-days span:not(.other-month):not(.reserved)"
   );
-
-  const url1 =
-    "https://classiccowl.chbk.run/jabama/calendar?room=109108&start_date=1402-9-1&end_date=1402-10-01";
-  const url2 =
-    "https://classiccowl.chbk.run/mizboon/calendar?rental_id=10922&from=1402-09-01&to=1402-09-30";
-  const url3 =
-    "https://classiccowl.chbk.run/otaghak/calendar?roomId=55614&startDate=1402-09-01&endDate=1402-09-30";
-  const url4 = "https://classiccowl.chbk.run/jajiga/calendar?room_id=3142341";
-  const url5 =
-    "https://classiccowl.chbk.run/shab/calendar?room=9094&from_date=1402-09-01&to_date=1402-09-31";
-
-  const urls = [url1, url2, url3, url4, url5];
-
-  const fetchData = async (url) => {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-  };
 
   const fetchPromises = urls.map((url) => fetchData(url));
 
@@ -435,16 +444,7 @@ $(document).ready(function () {
         console.log(i, status);
 
         if (i + 1 < todayDate) {
-          days[i].parentElement.classList.add("disabled");
-          days[i].parentElement.classList.add("passed-days");
-        } else if (
-          status["jabamaStatus"] === "blocked" &&
-          status["mizboonStatus"] === "blocked" &&
-          status["otagakStatus"] === "blocked" &&
-          status["jajigaStatus"] === "blocked" &&
-          status["shabStatus"] === "blocked"
-        ) {
-          days[i].parentElement.classList.add("blocked-days");
+          days[i].parentElement.classList.add("passed-days", "disabled");
         } else if (
           status["jabamaStatus"] === "booked" ||
           status["mizboonStatus"] === "booked" ||
@@ -453,21 +453,25 @@ $(document).ready(function () {
           status["shabStatus"] === "booked"
         ) {
           days[i].parentElement.classList.add("booked-days");
-
           const website = Object.keys(status).find(
             (key) => status[key] === "booked"
           );
-
           days[i].nextSibling.innerHTML = website;
+        } else if (
+          status["jabamaStatus"] === "blocked" &&
+          status["mizboonStatus"] === "blocked" &&
+          status["otagakStatus"] === "blocked" &&
+          status["jajigaStatus"] === "blocked" &&
+          status["shabStatus"] === "blocked"
+        ) {
+          days[i].parentElement.classList.add("blocked-days");
         }
       }
-
       const availableDays = document.querySelectorAll(
         ".datepicker-day-view td:not(.disabled)"
       );
       availableDays.forEach((day) => {
         day.addEventListener("click", (e) => {
-          console.log(e);
           if (e.target.parentElement.tagName === "TD") {
             e.target.parentElement.classList.toggle("selected");
           } else if (e.target.tagName === "TD") {
