@@ -105,7 +105,7 @@ input[type="radio"] {
     margin-right: 5px;
     accent-color: #8165D6;
     block-size: 2rem;
-    
+
     /* Adjust as needed */
 }
 
@@ -116,6 +116,7 @@ label {
     direction: rtl;
     font-size: 20px;
     font-family: vazirmatn;
+    color: #E4DEFE;
     /* Adjust as needed */
 }
 
@@ -127,4 +128,3 @@ button.submit {
     border-radius: 5px;
     /* Adjust as needed */
 }
-
