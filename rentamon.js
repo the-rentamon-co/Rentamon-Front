@@ -283,7 +283,7 @@ function unblockBtnClicked() {
 
     rentamonApiCaller(
       (website = "jabama"),
-      (data = { days: selectedDate.join(",") }),
+      (data = { roomId: 109108, days: selectedDate.join(",") }),
       (action = "unblock")
     );
 
@@ -299,7 +299,7 @@ function unblockBtnClicked() {
 
     rentamonApiCaller(
       (website = "shab"),
-      (data = { dates: selectedDate.join(","), disabled: 0 }),
+      (data = { roomId: 9094, dates: selectedDate.join(","), disabled: 1 }),
       (action = "unblock")
     );
 
