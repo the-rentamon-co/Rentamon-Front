@@ -28,6 +28,7 @@
     font-size: 16px !important;
     font-family: vazirmatn !important;
     height: 460px;
+    padding-top: 10px
 }
 
 .datepicker-plot-area-inline-view table {
@@ -68,6 +69,13 @@ button.unblock {
     border-radius: 5px;
 }
 
+td.passed-days span:nth-child(1){
+    border-radius: 5px 5px 0px 0px;
+}
+
+td.passed-days span:nth-child(2){
+    border-radius: 0px 0px 5px 5px;
+}
 /* .btnActionCont {
     width: 40%;
     display: flex;
