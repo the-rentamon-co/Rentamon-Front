@@ -111,7 +111,7 @@ function jajigaStatus(jajiga) {
       return "blocked";
     } else if (
       jajiga["books_count"] === 1 &&
-      jajiga["disable_count"] === 1 &&
+      jajiga["disable_count"] === 0 &&
       jajiga["unavailable_type"] === "booked"
     ) {
       return "booked";
