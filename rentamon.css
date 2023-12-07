@@ -69,13 +69,14 @@ button.unblock {
     border-radius: 5px;
 }
 
-td.passed-days span:nth-child(1){
-    border-radius: 5px 5px 0px 0px;
+td.passed-days span:nth-child(1) {
+    border-radius: 5px 5px 0px 0px !important;
 }
 
-td.passed-days span:nth-child(2){
-    border-radius: 0px 0px 5px 5px;
+td.passed-days span:nth-child(2) {
+    border-radius: 0px 0px 5px 5px !important;
 }
+
 /* .btnActionCont {
     width: 40%;
     display: flex;
@@ -87,9 +88,6 @@ td.passed-days span:nth-child(2){
     justify-content: space-around;
 
 }
-
-
-
 
 .btnActionCont button {
     width: 100%;
