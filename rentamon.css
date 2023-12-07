@@ -3,6 +3,7 @@
     height: 70px !important;
     border-radius: 5px;
     padding: 1px;
+    width: 14% !important;
 }
 
 /* End of added CSS by Faghih */
@@ -66,16 +67,64 @@ button.unblock {
     border-radius: 5px;
 }
 
-.btnActionCont {
-    width: 100%;
+/* .btnActionCont {
+    width: 40%;
     display: flex;
     justify-content: space-between;
+} */
+.btnActionCont {
+    width: 100%;
+    display: grid;
+    justify-content: space-around;
+
 }
 
+
+
+
 .btnActionCont button {
-    width: 40%;
+    width: 100%;
     margin: 0;
     padding: 10px;
     box-sizing: border-box;
     margin-top: 40px;
 }
+
+
+
+.form {
+    width: 100%;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+    accent-color: #8165D6;
+    block-size: 2rem;
+    
+    /* Adjust as needed */
+}
+
+label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    direction: rtl;
+    font-size: 20px;
+    font-family: vazirmatn;
+    /* Adjust as needed */
+}
+
+button.submit {
+    margin-top: 10px;
+    font-size: 20px;
+    font-family: vazirmatn;
+    border: 0px;
+    border-radius: 5px;
+    /* Adjust as needed */
+}
+

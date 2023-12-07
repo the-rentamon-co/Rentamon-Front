@@ -50,6 +50,11 @@ const routes = {
       mainApiUrl +
       "/mizboon/calendar?rental_id=10922&from=1402-09-01&to=1402-09-30",
   },
+
+  other: {
+    blockUnblock: mainApiUrl + "/other",
+    calendar: mainApiUrl + "/other/calendar",
+  },
 };
 
 const urls = [
@@ -58,6 +63,7 @@ const urls = [
   routes.otaghak.calendar,
   routes.jajiga.calendar,
   routes.shab.calendar,
+  routes.other.calendar,
 ];
 
 const fetchData = async (url) => {
@@ -69,6 +75,7 @@ const fetchData = async (url) => {
 const messages = {
   blockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   unblockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
+  reserveDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   notSelectedDay: "هنوز روزی انتخاب نکردی",
 };
 
@@ -111,12 +118,24 @@ function jajigaStatus(jajiga) {
       return "blocked";
     } else if (
       jajiga["books_count"] === 1 &&
-      jajiga["disable_count"] === 1 &&
+      jajiga["disable_count"] === 0 &&
       jajiga["unavailable_type"] === "booked"
     ) {
       return "booked";
     } else if (jajiga["books_count"] === 0 && jajiga["disable_count"] === 0) {
       return "unblocked";
+    } else {
+      return "not sure";
+    }
+  } else {
+    return "not sure";
+  }
+}
+
+function otherStatus(other) {
+  if (other) {
+    if (other["status"] === "booked") {
+      return "booked";
     } else {
       return "not sure";
     }
@@ -270,6 +289,8 @@ function blockBtnClicked() {
 
 function unblockBtnClicked() {
   var selected = document.querySelectorAll(".selected");
+
+  console.log(selected);
   var selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
@@ -318,9 +339,102 @@ function unblockBtnClicked() {
       }),
       (action = "unblock")
     );
+    rentamonApiCaller(
+      (website = "other"),
+      (data = {
+        action: "available",
+        days: selectedDate.join(","),
+      }),
+      (action = "blockUnblock")
+    );
 
     alert(messages.unblockDaySuccess);
     window.location.reload();
+  } else {
+    alert(messages.notSelectedDay);
+  }
+}
+
+function reserveOther() {
+  var selected = document.querySelectorAll(".selected");
+  var selectedDate = [];
+  if (selected.length > 0) {
+    selected.forEach((z) => {
+      z.classList.remove("selected");
+      selectedDate.push(
+        new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+          "YYYY-MM-DD"
+        )
+      );
+    });
+
+    rentamonApiCaller(
+      (website = "jabama"),
+      (data = { roomId: 109108, days: selectedDate.join(",") }),
+      (action = "block")
+    );
+
+    rentamonApiCaller(
+      (website = "jajiga"),
+      (data = {
+        dates: selectedDate.join(","),
+        room_id: 3142341,
+        disable_count: 1,
+      }),
+      (action = "block")
+    );
+
+    rentamonApiCaller(
+      (website = "shab"),
+      (data = { roomId: 9094, dates: selectedDate.join(","), disabled: 1 }),
+      (action = "block")
+    );
+
+    rentamonApiCaller(
+      (website = "mizboon"),
+      (data = { days: selectedDate.join(","), rental_id: 10922 }),
+      (action = "block")
+    );
+
+    rentamonApiCaller(
+      (website = "otaghak"),
+      (data = {
+        room: 55614,
+        unblockDays: null,
+        blockDays: selectedDate.join(","),
+      }),
+      (action = "block")
+    );
+
+    rentamonApiCaller(
+      (website = "other"),
+      (data = {
+        action: "book",
+        days: selectedDate.join(","),
+      }),
+      (action = "blockUnblock")
+    );
+    alert(messages.reserveDaySuccess);
+    window.location.reload();
+  } else {
+    alert(messages.notSelectedDay);
+  }
+}
+
+function checkAction() {
+  let action = document.querySelector('input[name="block"]:checked');
+  console.log(action);
+  if (action) {
+    if (action.value === "block") {
+      // alert("block");
+      blockBtnClicked();
+    } else if (action.value === "reserve") {
+      // alert("reserve");
+      reserveOther();
+    } else if (action.value === "unblock") {
+      // alert("unblock");
+      unblockBtnClicked();
+    }
   } else {
     alert(messages.notSelectedDay);
   }
@@ -408,10 +522,12 @@ $(".inline").pDatepicker({
 
 $(document).ready(function () {
   $(document).off();
-  document.querySelector(".block").addEventListener("click", blockBtnClicked);
-  document
-    .querySelector(".unblock")
-    .addEventListener("click", unblockBtnClicked);
+
+  document.querySelector(".submit").addEventListener("click", checkAction);
+  // document.querySelector(".block").addEventListener("click", blockBtnClicked);
+  // document
+  //   .querySelector(".unblock")
+  //   .addEventListener("click", unblockBtnClicked);
 
   const todayTD = document.querySelector(
     `.datepicker-plot-area-inline-view td[data-unix="${tehranzeroo}"] span`
@@ -439,8 +555,17 @@ $(document).ready(function () {
           otagakStatus: otagakStatus(results[2][i]),
           jajigaStatus: jajigaStatus(results[3][i]),
           shabStatus: shabStatus(results[4][i]),
+          otherStatus: otherStatus(results[5][i]),
         };
 
+        var names = {
+          jabamaStatus: "جاباما",
+          mizboonStatus: "میزبون",
+          otagakStatus: "اتاقک",
+          jajigaStatus: "جاجیگا",
+          shabStatus: "شب",
+          otherStatus: "رزرو",
+        };
         console.log(i, status);
 
         if (i + 1 < todayDate) {
@@ -450,13 +575,14 @@ $(document).ready(function () {
           status["mizboonStatus"] === "booked" ||
           status["otagakStatus"] === "booked" ||
           status["jajigaStatus"] === "booked" ||
-          status["shabStatus"] === "booked"
+          status["shabStatus"] === "booked" ||
+          status["otherStatus"] === "booked"
         ) {
           days[i].parentElement.classList.add("booked-days");
           const website = Object.keys(status).find(
             (key) => status[key] === "booked"
           );
-          days[i].nextSibling.innerHTML = website;
+          days[i].nextSibling.innerHTML = names[website];
         } else if (
           status["jabamaStatus"] === "blocked" &&
           status["mizboonStatus"] === "blocked" &&
