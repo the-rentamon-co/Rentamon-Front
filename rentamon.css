@@ -103,6 +103,8 @@ button.unblock {
 
 input[type="radio"] {
     accent-color: #8165D6;
+    height: 18px;
+    width: 18px;
 
 }
 
@@ -115,7 +117,6 @@ label {
     font-family: vazirmatn;
     color: #E4DEFE;
     gap: 10px
-
 }
 
 button.submit {
