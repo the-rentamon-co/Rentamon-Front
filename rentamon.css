@@ -102,11 +102,8 @@ button.unblock {
 }
 
 input[type="radio"] {
-    margin-right: 5px;
     accent-color: #8165D6;
-    block-size: 2rem;
 
-    /* Adjust as needed */
 }
 
 label {
@@ -117,7 +114,8 @@ label {
     font-size: 20px;
     font-family: vazirmatn;
     color: #E4DEFE;
-    /* Adjust as needed */
+    gap: 10px
+
 }
 
 button.submit {
@@ -126,5 +124,5 @@ button.submit {
     font-family: vazirmatn;
     border: 0px;
     border-radius: 5px;
-    /* Adjust as needed */
+
 }
