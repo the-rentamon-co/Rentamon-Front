@@ -299,7 +299,7 @@ function unblockBtnClicked() {
 
     rentamonApiCaller(
       (website = "shab"),
-      (data = { roomId: 9094, dates: selectedDate.join(","), disabled: 1 }),
+      (data = { roomId: 9094, dates: selectedDate.join(","), disabled: 0 }),
       (action = "unblock")
     );
 
