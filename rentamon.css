@@ -27,6 +27,7 @@
 .datepicker-plot-area-inline-view {
     font-size: 16px !important;
     font-family: vazirmatn !important;
+    height: 460px;
 }
 
 .datepicker-plot-area-inline-view table {
