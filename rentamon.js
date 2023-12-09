@@ -686,7 +686,7 @@ $(document).ready(function () {
           days[i].nextSibling.innerHTML = names[website]["fa"];
 
           for (const web in tobeDisabled) {
-            if (web !== names[website]["en"]) {
+            if (web !== names[website]["en"] && status[website] !== "blocked") {
               tobeDisabled[web](
                 new persianDate(
                   parseInt(days[i].parentElement.getAttribute("data-unix"))
