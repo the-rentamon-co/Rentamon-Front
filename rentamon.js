@@ -685,9 +685,9 @@ $(document).ready(function () {
           );
           days[i].nextSibling.innerHTML = names[website]["fa"];
 
-          for (const website in tobeDisabled) {
-            if (website !== names[website]["en"]) {
-              tobeDisabled[website](
+          for (const web in tobeDisabled) {
+            if (web !== names[website]["en"]) {
+              tobeDisabled[web](
                 new persianDate(
                   parseInt(days[i].parentElement.getAttribute("data-unix"))
                 ).format("YYYY-MM-DD")
