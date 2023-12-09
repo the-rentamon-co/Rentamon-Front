@@ -19,6 +19,7 @@ const routes = {
     calendar:
       mainApiUrl +
       "/otaghak/calendar?roomId=55614&startDate=1402-09-01&endDate=1402-09-30",
+    room: 55614
   },
 
   jabama: {
@@ -27,12 +28,14 @@ const routes = {
     calendar:
       mainApiUrl +
       "/jabama/calendar?room=109108&start_date=1402-9-1&end_date=1402-10-01",
+      room: 109108
   },
 
   jajiga: {
     block: mainApiUrl + "/jajiga",
     unblock: mainApiUrl + "/jajiga",
     calendar: mainApiUrl + "/jajiga/calendar?room_id=3142341",
+    room: 3142341
   },
 
   shab: {
@@ -41,6 +44,7 @@ const routes = {
     calendar:
       mainApiUrl +
       "/shab/calendar?room=9094&from_date=1402-09-01&to_date=1402-09-31",
+      room: 9094
   },
 
   mizboon: {
@@ -49,6 +53,7 @@ const routes = {
     calendar:
       mainApiUrl +
       "/mizboon/calendar?rental_id=10922&from=1402-09-01&to=1402-09-30",
+      room: 10922
   },
 
   other: {
@@ -245,7 +250,7 @@ function blockBtnClicked() {
 
     rentamonApiCaller(
       (website = "jabama"),
-      (data = { roomId: 109108, days: selectedDate.join(",") }),
+      (data = { roomId: routes['jabama']['room'], days: selectedDate.join(",") }),
       (action = "block")
     );
 
@@ -253,7 +258,7 @@ function blockBtnClicked() {
       (website = "jajiga"),
       (data = {
         dates: selectedDate.join(","),
-        room_id: 3142341,
+        room_id: routes['jajiga']['room'],
         disable_count: 1,
       }),
       (action = "block")
@@ -261,20 +266,20 @@ function blockBtnClicked() {
 
     rentamonApiCaller(
       (website = "shab"),
-      (data = { roomId: 9094, dates: selectedDate.join(","), disabled: 1 }),
+      (data = { roomId: routes['shab']['room'], dates: selectedDate.join(","), disabled: 1 }),
       (action = "block")
     );
 
     rentamonApiCaller(
       (website = "mizboon"),
-      (data = { days: selectedDate.join(","), rental_id: 10922 }),
+      (data = { days: selectedDate.join(","), rental_id: routes['mizboon']['room'] }),
       (action = "block")
     );
 
     rentamonApiCaller(
       (website = "otaghak"),
       (data = {
-        room: 55614,
+        room: routes['otaghak']['room'],
         unblockDays: null,
         blockDays: selectedDate.join(","),
       }),
@@ -304,7 +309,7 @@ function unblockBtnClicked() {
 
     rentamonApiCaller(
       (website = "jabama"),
-      (data = { roomId: 109108, days: selectedDate.join(",") }),
+      (data = { roomId: routes['jabama']['room'], days: selectedDate.join(",") }),
       (action = "unblock")
     );
 
@@ -312,7 +317,7 @@ function unblockBtnClicked() {
       (website = "jajiga"),
       (data = {
         dates: selectedDate.join(","),
-        room_id: 3142341,
+        room_id: routes['jajiga']['room'],
         disable_count: 0,
       }),
       (action = "unblock")
@@ -320,20 +325,20 @@ function unblockBtnClicked() {
 
     rentamonApiCaller(
       (website = "shab"),
-      (data = { roomId: 9094, dates: selectedDate.join(","), disabled: 0 }),
+      (data = { roomId: routes['shab']['room'], dates: selectedDate.join(","), disabled: 0 }),
       (action = "unblock")
     );
 
     rentamonApiCaller(
       (website = "mizboon"),
-      (data = { days: selectedDate.join(","), rental_id: 10922 }),
+      (data = { days: selectedDate.join(","), rental_id: routes['mizboon']['room'] }),
       (action = "unblock")
     );
 
     rentamonApiCaller(
       (website = "otaghak"),
       (data = {
-        room: 55614,
+        room: routes['otaghak']['room'],
         unblockDays: selectedDate.join(","),
         blockDays: null,
       }),
