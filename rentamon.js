@@ -19,7 +19,7 @@ const routes = {
     calendar:
       mainApiUrl +
       "/otaghak/calendar?roomId=55614&startDate=1402-09-01&endDate=1402-09-30",
-    room: 55614
+    room: 55614,
   },
 
   jabama: {
@@ -28,14 +28,14 @@ const routes = {
     calendar:
       mainApiUrl +
       "/jabama/calendar?room=109108&start_date=1402-9-1&end_date=1402-10-01",
-      room: 109108
+    room: 109108,
   },
 
   jajiga: {
     block: mainApiUrl + "/jajiga",
     unblock: mainApiUrl + "/jajiga",
     calendar: mainApiUrl + "/jajiga/calendar?room_id=3142341",
-    room: 3142341
+    room: 3142341,
   },
 
   shab: {
@@ -44,7 +44,7 @@ const routes = {
     calendar:
       mainApiUrl +
       "/shab/calendar?room=9094&from_date=1402-09-01&to_date=1402-09-31",
-      room: 9094
+    room: 9094,
   },
 
   mizboon: {
@@ -53,7 +53,7 @@ const routes = {
     calendar:
       mainApiUrl +
       "/mizboon/calendar?rental_id=10922&from=1402-09-01&to=1402-09-30",
-      room: 10922
+    room: 10922,
   },
 
   other: {
@@ -250,7 +250,10 @@ function blockBtnClicked() {
 
     rentamonApiCaller(
       (website = "jabama"),
-      (data = { roomId: routes['jabama']['room'], days: selectedDate.join(",") }),
+      (data = {
+        roomId: routes["jabama"]["room"],
+        days: selectedDate.join(","),
+      }),
       (action = "block")
     );
 
@@ -258,7 +261,7 @@ function blockBtnClicked() {
       (website = "jajiga"),
       (data = {
         dates: selectedDate.join(","),
-        room_id: routes['jajiga']['room'],
+        room_id: routes["jajiga"]["room"],
         disable_count: 1,
       }),
       (action = "block")
@@ -266,20 +269,27 @@ function blockBtnClicked() {
 
     rentamonApiCaller(
       (website = "shab"),
-      (data = { roomId: routes['shab']['room'], dates: selectedDate.join(","), disabled: 1 }),
+      (data = {
+        roomId: routes["shab"]["room"],
+        dates: selectedDate.join(","),
+        disabled: 1,
+      }),
       (action = "block")
     );
 
     rentamonApiCaller(
       (website = "mizboon"),
-      (data = { days: selectedDate.join(","), rental_id: routes['mizboon']['room'] }),
+      (data = {
+        days: selectedDate.join(","),
+        rental_id: routes["mizboon"]["room"],
+      }),
       (action = "block")
     );
 
     rentamonApiCaller(
       (website = "otaghak"),
       (data = {
-        room: routes['otaghak']['room'],
+        room: routes["otaghak"]["room"],
         unblockDays: null,
         blockDays: selectedDate.join(","),
       }),
@@ -309,7 +319,10 @@ function unblockBtnClicked() {
 
     rentamonApiCaller(
       (website = "jabama"),
-      (data = { roomId: routes['jabama']['room'], days: selectedDate.join(",") }),
+      (data = {
+        roomId: routes["jabama"]["room"],
+        days: selectedDate.join(","),
+      }),
       (action = "unblock")
     );
 
@@ -317,7 +330,7 @@ function unblockBtnClicked() {
       (website = "jajiga"),
       (data = {
         dates: selectedDate.join(","),
-        room_id: routes['jajiga']['room'],
+        room_id: routes["jajiga"]["room"],
         disable_count: 0,
       }),
       (action = "unblock")
@@ -325,20 +338,27 @@ function unblockBtnClicked() {
 
     rentamonApiCaller(
       (website = "shab"),
-      (data = { roomId: routes['shab']['room'], dates: selectedDate.join(","), disabled: 0 }),
+      (data = {
+        roomId: routes["shab"]["room"],
+        dates: selectedDate.join(","),
+        disabled: 0,
+      }),
       (action = "unblock")
     );
 
     rentamonApiCaller(
       (website = "mizboon"),
-      (data = { days: selectedDate.join(","), rental_id: routes['mizboon']['room'] }),
+      (data = {
+        days: selectedDate.join(","),
+        rental_id: routes["mizboon"]["room"],
+      }),
       (action = "unblock")
     );
 
     rentamonApiCaller(
       (website = "otaghak"),
       (data = {
-        room: routes['otaghak']['room'],
+        room: routes["otaghak"]["room"],
         unblockDays: selectedDate.join(","),
         blockDays: null,
       }),
@@ -375,7 +395,10 @@ function reserveOther() {
 
     rentamonApiCaller(
       (website = "jabama"),
-      (data = { roomId: routes['jabama']['room'], days: selectedDate.join(",") }),
+      (data = {
+        roomId: routes["jabama"]["room"],
+        days: selectedDate.join(","),
+      }),
       (action = "block")
     );
 
@@ -383,7 +406,7 @@ function reserveOther() {
       (website = "jajiga"),
       (data = {
         dates: selectedDate.join(","),
-        room_id: routes['jajiga']['room'],
+        room_id: routes["jajiga"]["room"],
         disable_count: 1,
       }),
       (action = "block")
@@ -391,20 +414,27 @@ function reserveOther() {
 
     rentamonApiCaller(
       (website = "shab"),
-      (data = { roomId: routes['shab']['room'], dates: selectedDate.join(","), disabled: 1 }),
+      (data = {
+        roomId: routes["shab"]["room"],
+        dates: selectedDate.join(","),
+        disabled: 1,
+      }),
       (action = "block")
     );
 
     rentamonApiCaller(
       (website = "mizboon"),
-      (data = { days: selectedDate.join(","), rental_id: routes['mizboon']['room'] }),
+      (data = {
+        days: selectedDate.join(","),
+        rental_id: routes["mizboon"]["room"],
+      }),
       (action = "block")
     );
 
     rentamonApiCaller(
       (website = "otaghak"),
       (data = {
-        room: routes['otaghak']['room'],
+        room: routes["otaghak"]["room"],
         unblockDays: null,
         blockDays: selectedDate.join(","),
       }),
@@ -444,6 +474,62 @@ function checkAction() {
     alert(messages.notSelectedDay);
   }
 }
+
+const tobeDisabled = {
+  jabama: (single) => {
+    rentamonApiCaller(
+      (website = "jabama"),
+      (data = {
+        roomId: routes["jabama"]["room"],
+        days: single,
+      }),
+      (action = "block")
+    );
+  },
+  jajiga: (single) => {
+    rentamonApiCaller(
+      (website = "jajiga"),
+      (data = {
+        dates: single,
+        room_id: routes["jajiga"]["room"],
+        disable_count: 1,
+      }),
+      (action = "block")
+    );
+  },
+  shab: (single) => {
+    rentamonApiCaller(
+      (website = "shab"),
+      (data = {
+        roomId: routes["shab"]["room"],
+        dates: single,
+        disabled: 1,
+      }),
+      (action = "block")
+    );
+  },
+  mizboon: (single) => {
+    rentamonApiCaller(
+      (website = "mizboon"),
+      (data = {
+        days: single,
+        rental_id: routes["mizboon"]["room"],
+      }),
+      (action = "block")
+    );
+  },
+  otaghak: (single) => {
+    rentamonApiCaller(
+      (website = "otaghak"),
+      (data = {
+        room: routes["otaghak"]["room"],
+        unblockDays: null,
+        blockDays: single,
+      }),
+      (action = "block")
+    );
+  },
+};
 
 $(".inline").pDatepicker({
   initialValue: false,
@@ -575,12 +661,12 @@ $(document).ready(function () {
         };
 
         var names = {
-          jabamaStatus: "جاباما",
-          mizboonStatus: "میزبون",
-          otagakStatus: "اتاقک",
-          jajigaStatus: "جاجیگا",
-          shabStatus: "شب",
-          otherStatus: "رزرو",
+          jabamaStatus: { fa: "جاباما", en: "jabama" },
+          mizboonStatus: { fa: "میزبون", en: "mizbon" },
+          otagakStatus: { fa: "اتاقک", en: "otaghak" },
+          jajigaStatus: { fa: "جاجیگا", en: "jajiga" },
+          shabStatus: { fa: "شب", en: "shab" },
+          otherStatus: { fa: "رزرو", en: "other" },
         };
         console.log(`🢆 .............. 1402/09/${i + 1} .............. 🢆`);
         console.table(status);
@@ -597,7 +683,17 @@ $(document).ready(function () {
           const website = Object.keys(status).find(
             (key) => status[key] === "booked"
           );
-          days[i].nextSibling.innerHTML = names[website];
+          days[i].nextSibling.innerHTML = names[website]["fa"];
+
+          for (const website in tobeDisabled) {
+            if (website !== names[website]["en"]) {
+              tobeDisabled[website](
+                new persianDate(
+                  parseInt(days[i].parentElement.getAttribute("data-unix"))
+                ).format("YYYY-MM-DD")
+              );
+            }
+          }
         } else if (
           status["jabamaStatus"] === "blocked" &&
           status["mizboonStatus"] === "blocked" &&
