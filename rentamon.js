@@ -549,6 +549,17 @@ $(document).ready(function () {
       }
 
       for (let i = 0; i < 30; i++) {
+        if (i + 1 < todayDate) {
+          days[i].parentElement.classList.add("passed-days", "disabled");
+          console.log(
+            `🢆 .............. 1402/09/${
+              i + 1
+            } .............. 🢆 \n  .................. passed .................. `
+          );
+
+          continue;
+        }
+
         var status = {
           jabamaStatus: jabamaStatus(results[0][i]),
           mizboonStatus: mizboonStatus(results[1][i]),
@@ -569,9 +580,7 @@ $(document).ready(function () {
         console.log(`🢆 .............. 1402/09/${i + 1} .............. 🢆`);
         console.table(status);
 
-        if (i + 1 < todayDate) {
-          days[i].parentElement.classList.add("passed-days", "disabled");
-        } else if (
+        if (
           status["jabamaStatus"] === "booked" ||
           status["mizboonStatus"] === "booked" ||
           status["otagakStatus"] === "booked" ||
