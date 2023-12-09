@@ -566,7 +566,7 @@ $(document).ready(function () {
           shabStatus: "شب",
           otherStatus: "رزرو",
         };
-        console.log(i, status);
+        console.table(status);
 
         if (i + 1 < todayDate) {
           days[i].parentElement.classList.add("passed-days", "disabled");
