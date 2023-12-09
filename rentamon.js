@@ -375,7 +375,7 @@ function reserveOther() {
 
     rentamonApiCaller(
       (website = "jabama"),
-      (data = { roomId: 109108, days: selectedDate.join(",") }),
+      (data = { roomId: routes['jabama']['room'], days: selectedDate.join(",") }),
       (action = "block")
     );
 
@@ -383,7 +383,7 @@ function reserveOther() {
       (website = "jajiga"),
       (data = {
         dates: selectedDate.join(","),
-        room_id: 3142341,
+        room_id: routes['jajiga']['room'],
         disable_count: 1,
       }),
       (action = "block")
@@ -391,20 +391,20 @@ function reserveOther() {
 
     rentamonApiCaller(
       (website = "shab"),
-      (data = { roomId: 9094, dates: selectedDate.join(","), disabled: 1 }),
+      (data = { roomId: routes['shab']['room'], dates: selectedDate.join(","), disabled: 1 }),
       (action = "block")
     );
 
     rentamonApiCaller(
       (website = "mizboon"),
-      (data = { days: selectedDate.join(","), rental_id: 10922 }),
+      (data = { days: selectedDate.join(","), rental_id: routes['mizboon']['room'] }),
       (action = "block")
     );
 
     rentamonApiCaller(
       (website = "otaghak"),
       (data = {
-        room: 55614,
+        room: routes['otaghak']['room'],
         unblockDays: null,
         blockDays: selectedDate.join(","),
       }),
