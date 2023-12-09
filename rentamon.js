@@ -566,6 +566,7 @@ $(document).ready(function () {
           shabStatus: "شب",
           otherStatus: "رزرو",
         };
+        console.log(`🢆 .............. 1402/09/${i + 1} .............. 🢆`);
         console.table(status);
 
         if (i + 1 < todayDate) {
