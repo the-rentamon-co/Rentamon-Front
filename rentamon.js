@@ -671,7 +671,16 @@ $(document).ready(function () {
         let price = convertToPersianNumber(
           parseInt(results[0][i]["price"]).toLocaleString().replace(/,/g, "/")
         );
+
+        if (
+          parseInt(results[0][i]["price"]) >
+          parseInt(results[0][i]["discountedPrice"])
+        ) {
+          days[i].parentElement.style.border = "2px solid #8165D6";
+        }
+
         days[i].parentElement.querySelector(".price").innerHTML = price;
+        console.log(days[i].parentElement);
 
         var names = {
           jabamaStatus: { fa: "جاباما", en: "jabama" },
@@ -700,15 +709,15 @@ $(document).ready(function () {
           days[i].parentElement.querySelector(".reserved").innerHTML =
             names[website]["fa"];
 
-          for (const web in tobeDisabled) {
-            if (web !== names[website]["en"] && status[website] !== "blocked") {
-              tobeDisabled[web](
-                new persianDate(
-                  parseInt(days[i].parentElement.getAttribute("data-unix"))
-                ).format("YYYY-MM-DD")
-              );
-            }
-          }
+          // for (const web in tobeDisabled) {
+          //   if (web !== names[website]["en"] && status[website] !== "blocked") {
+          //     tobeDisabled[web](
+          //       new persianDate(
+          //         parseInt(days[i].parentElement.getAttribute("data-unix"))
+          //       ).format("YYYY-MM-DD")
+          //     );
+          //   }
+          // }
         } else if (
           status["jabamaStatus"] === "blocked" &&
           status["mizboonStatus"] === "blocked" &&
@@ -718,6 +727,7 @@ $(document).ready(function () {
         ) {
           days[i].parentElement.classList.add("blocked-days");
           days[i].parentElement.querySelector(".price").innerHTML = "";
+          days[i].parentElement.style.border = "0px solid";
         }
       }
       const availableDays = document.querySelectorAll(
