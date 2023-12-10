@@ -707,7 +707,7 @@ $(document).ready(function () {
         };
 
         let price = convertToPersianNumber(
-          parseInt(results[0][i]["price"]).toLocaleString().replace(/,/g, "/")
+          parseInt(results[0][i]["discountedPrice"]).toLocaleString().replace(/,/g, "/")
         );
 
         if (
