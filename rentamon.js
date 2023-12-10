@@ -588,7 +588,7 @@ $(".inline").pDatepicker({
                 <span
                   class="{{#otherMonth}}other-month{{/otherMonth}} {{#selected}}selected{{/selected}}"
                   >{{title}}</span
-                ><span class="reserved"></span>
+                ><span class="reserved"></span><span class="price"></span>
               </td>
               {{/enabled}} {{^enabled}}
               <td data-unix="{{dataUnix}}" class="disabled">
@@ -596,7 +596,7 @@ $(".inline").pDatepicker({
                   >{{title}}</span
                 ><span
                   class="reserved {{#otherMonth}}other-month{{/otherMonth}}"
-                ></span>
+                ></span><span class="price {{#otherMonth}}other-month{{/otherMonth}}"></span>
               </td>
               {{/enabled}} {{/.}}
             </tr>
@@ -627,8 +627,10 @@ $(document).ready(function () {
   const todayDate = persianToInteger(todayTD.textContent);
 
   const days = document.querySelectorAll(
-    ".datepicker-plot-area-inline-view .table-days span:not(.other-month):not(.reserved)"
+    ".datepicker-plot-area-inline-view .table-days span:not(.other-month):not(.reserved):not(.price)"
   );
+
+  console.log(days);
 
   const fetchPromises = urls.map((url) => fetchData(url));
 
@@ -660,6 +662,11 @@ $(document).ready(function () {
           otherStatus: otherStatus(results[5][i]),
         };
 
+        let price = parseInt(results[3][i]["price"])
+          .toLocaleString()
+          .replace(/,/g, "/");
+        days[i].parentElement.querySelector(".price").innerHTML = price;
+
         var names = {
           jabamaStatus: { fa: "جاباما", en: "jabama" },
           mizboonStatus: { fa: "میزبون", en: "mizbon" },
@@ -683,7 +690,9 @@ $(document).ready(function () {
           const website = Object.keys(status).find(
             (key) => status[key] === "booked"
           );
-          days[i].nextSibling.innerHTML = names[website]["fa"];
+
+          days[i].parentElement.querySelector(".reserved").innerHTML =
+            names[website]["fa"];
 
           for (const web in tobeDisabled) {
             if (web !== names[website]["en"] && status[website] !== "blocked") {
@@ -702,6 +711,7 @@ $(document).ready(function () {
           status["shabStatus"] === "blocked"
         ) {
           days[i].parentElement.classList.add("blocked-days");
+          days[i].parentElement.querySelector(".price").innerHTML = "";
         }
       }
       const availableDays = document.querySelectorAll(

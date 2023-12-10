@@ -15,7 +15,7 @@
 
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td span,
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td:not(.disabled) span:hover {
-    height: 50% !important;
+    height: 33% !important;
     background-color: inherit;
     color: inherit;
 }
@@ -71,11 +71,11 @@ button.unblock {
     border-radius: 5px;
 }
 
-td.passed-days span:nth-child(1) {
+td.passed-days span:first-child {
     border-radius: 5px 5px 0px 0px !important;
 }
 
-td.passed-days span:nth-child(2) {
+td.passed-days span:last-child {
     border-radius: 0px 0px 5px 5px !important;
 }
 
