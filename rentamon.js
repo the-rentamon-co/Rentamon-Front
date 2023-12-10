@@ -551,27 +551,29 @@ function discountBtnClicked() {
         )
       );
     });
+
+    console.log(selectedDate);
+    $.ajax({
+      url: mainApiUrl + "/test",
+      method: "GET",
+      data: {
+        otagh: routes["otaghak"]["room"],
+        jabama: routes["jabama"]["room"],
+        days: selectedDate.join(","),
+      },
+      success: function (response) {
+        console.log(response);
+      },
+      error: function (error) {
+        console.error(error);
+      },
+    });
+    alert(messages.reserveDaySuccess);
+    // window.location.reload();
+  } else {
+    alert(messages.notSelectedDay);
   }
-
-  console.log(selectedDate)
-  $.ajax({
-    url: mainApiUrl + "/test",
-    method: "GET",
-    data: {
-      otagh: routes["otaghak"]["room"],
-      jabama: routes["jabama"]["room"],
-      days: selectedDate,
-    },
-    success: function (response) {
-      console.log(website, response);
-    },
-    error: function (error) {
-      console.error(website, error);
-    },
-  });
 }
-
-
 
 $(".inline").pDatepicker({
   initialValue: false,
