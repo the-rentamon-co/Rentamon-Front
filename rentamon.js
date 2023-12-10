@@ -97,6 +97,12 @@ function persianToInteger(persianString) {
   return parseInt(arabicString, 10);
 }
 
+function convertToPersianNumber(number) {
+  const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+
+  return number.replace(/\d/g, (digit) => persianDigits[digit]);
+}
+
 function jabamaStatus(jabama) {
   if (jabama) {
     if (jabama["status"] === "disabledByHost") {
@@ -662,9 +668,9 @@ $(document).ready(function () {
           otherStatus: otherStatus(results[5][i]),
         };
 
-        let price = parseInt(results[0][i]["price"])
-          .toLocaleString()
-          .replace(/,/g, "/");
+        let price = convertToPersianNumber(
+          parseInt(results[0][i]["price"]).toLocaleString().replace(/,/g, "/")
+        );
         days[i].parentElement.querySelector(".price").innerHTML = price;
 
         var names = {
