@@ -662,7 +662,7 @@ $(document).ready(function () {
           otherStatus: otherStatus(results[5][i]),
         };
 
-        let price = parseInt(results[3][i]["price"])
+        let price = parseInt(results[0][i]["price"])
           .toLocaleString()
           .replace(/,/g, "/");
         days[i].parentElement.querySelector(".price").innerHTML = price;
