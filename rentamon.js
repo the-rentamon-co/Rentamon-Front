@@ -483,36 +483,6 @@ function checkAction() {
   }
 }
 
-function discountBtnClicked() {
-  var selected = document.querySelectorAll(".selected");
-  var selectedDate = [];
-  if (selected.length > 0) {
-    selected.forEach((z) => {
-      z.classList.remove("selected");
-      selectedDate.push(
-        new persianDate(parseInt(z.getAttribute("data-unix"))).format(
-          "YYYY-MM-DD"
-        )
-      );
-    });
-  }
-  $.ajax({
-    url: mainApiUrl + "/test",
-    method: "GET",
-    data: {
-      otagh: routes["otaghak"]["room"],
-      jabama: routes["jabama"]["room"],
-      days: selectedDate,
-    },
-    success: function (response) {
-      console.log(website, response);
-    },
-    error: function (error) {
-      console.error(website, error);
-    },
-  });
-}
-
 const tobeDisabled = {
   jabama: (single) => {
     rentamonApiCaller(
@@ -568,6 +538,40 @@ const tobeDisabled = {
     );
   },
 };
+
+function discountBtnClicked() {
+  var selected = document.querySelectorAll(".selected");
+  var selectedDate = [];
+  if (selected.length > 0) {
+    selected.forEach((z) => {
+      z.classList.remove("selected");
+      selectedDate.push(
+        new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+          "YYYY-MM-DD"
+        )
+      );
+    });
+  }
+
+  console.log(selectedDate)
+  $.ajax({
+    url: mainApiUrl + "/test",
+    method: "GET",
+    data: {
+      otagh: routes["otaghak"]["room"],
+      jabama: routes["jabama"]["room"],
+      days: selectedDate,
+    },
+    success: function (response) {
+      console.log(website, response);
+    },
+    error: function (error) {
+      console.error(website, error);
+    },
+  });
+}
+
+
 
 $(".inline").pDatepicker({
   initialValue: false,
@@ -712,7 +716,7 @@ $(document).ready(function () {
         }
 
         days[i].parentElement.querySelector(".price").innerHTML = price;
-        console.log(days[i].parentElement);
+        // console.log(days[i].parentElement);
 
         var names = {
           jabamaStatus: { fa: "جاباما", en: "jabama" },
@@ -741,15 +745,15 @@ $(document).ready(function () {
           days[i].parentElement.querySelector(".reserved").innerHTML =
             names[website]["fa"];
 
-          // for (const web in tobeDisabled) {
-          //   if (web !== names[website]["en"] && status[website] !== "blocked") {
-          //     tobeDisabled[web](
-          //       new persianDate(
-          //         parseInt(days[i].parentElement.getAttribute("data-unix"))
-          //       ).format("YYYY-MM-DD")
-          //     );
-          //   }
-          // }
+          for (const web in tobeDisabled) {
+            if (web !== names[website]["en"] && status[website] !== "blocked") {
+              tobeDisabled[web](
+                new persianDate(
+                  parseInt(days[i].parentElement.getAttribute("data-unix"))
+                ).format("YYYY-MM-DD")
+              );
+            }
+          }
         } else if (
           status["jabamaStatus"] === "blocked" &&
           status["mizboonStatus"] === "blocked" &&
