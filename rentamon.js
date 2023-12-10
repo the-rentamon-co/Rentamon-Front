@@ -475,10 +475,42 @@ function checkAction() {
     } else if (action.value === "unblock") {
       // alert("unblock");
       unblockBtnClicked();
+    } else if (action.value === "discount") {
+      discountBtnClicked();
     }
   } else {
     alert(messages.notSelectedDay);
   }
+}
+
+function discountBtnClicked() {
+  var selected = document.querySelectorAll(".selected");
+  var selectedDate = [];
+  if (selected.length > 0) {
+    selected.forEach((z) => {
+      z.classList.remove("selected");
+      selectedDate.push(
+        new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+          "YYYY-MM-DD"
+        )
+      );
+    });
+  }
+  $.ajax({
+    url: mainApiUrl + "/test",
+    method: get,
+    data: {
+      otagh: routes["otaghak"]["room"],
+      jabama: routes["jabama"]["room"],
+      days: selectedDate,
+    },
+    success: function (response) {
+      console.log(website, response);
+    },
+    error: function (error) {
+      console.error(website, error);
+    },
+  });
 }
 
 const tobeDisabled = {
