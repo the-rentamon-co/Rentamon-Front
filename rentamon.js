@@ -498,7 +498,7 @@ function discountBtnClicked() {
   }
   $.ajax({
     url: mainApiUrl + "/test",
-    method: get,
+    method: "GET",
     data: {
       otagh: routes["otaghak"]["room"],
       jabama: routes["jabama"]["room"],
