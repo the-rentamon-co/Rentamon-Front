@@ -475,9 +475,11 @@ function checkAction() {
     } else if (action.value === "unblock") {
       // alert("unblock");
       unblockBtnClicked();
-    } else if (action.value === "discount") {
-      discountBtnClicked();
     }
+    // else if (action.value === "discount") {
+
+    //   // discountBtnClicked();
+    // }
   } else {
     alert(messages.notSelectedDay);
   }
@@ -659,6 +661,17 @@ $(document).ready(function () {
   $(document).off();
 
   document.querySelector(".submit").addEventListener("click", checkAction);
+  document.querySelectorAll('input[name="block"]').forEach((elem) => {
+    elem.addEventListener("change", (e) => {
+      if (e.target.className === "discount") {
+        const actionBtn = document.querySelector(".btnActionCont button");
+        actionBtn.className = "discount-submit";
+        actionBtn.addEventListener("click", discountBtnClicked);
+      } else {
+        document.querySelector(".btnActionCont button").className = "submit";
+      }
+    });
+  });
 
   const todayTD = document.querySelector(
     `.datepicker-plot-area-inline-view td[data-unix="${tehranzeroo}"] span`
@@ -697,13 +710,11 @@ $(document).ready(function () {
           shabStatus: shabStatus(results[4][i]),
           otherStatus: otherStatus(results[5][i]),
         };
-        
-        let raw =  parseInt(parseInt(results[0][i]["discountedPrice"]) / 10000)
+
+        let raw = parseInt(parseInt(results[0][i]["discountedPrice"]) / 10000);
 
         let price = convertToPersianNumber(
-          raw
-            .toLocaleString()
-            .replace(/,/g, "/")
+          raw.toLocaleString().replace(/,/g, "/")
         );
 
         if (
