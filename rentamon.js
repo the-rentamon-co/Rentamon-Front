@@ -693,10 +693,8 @@ $(document).ready(function () {
               i + 1
             } .............. 🢆 \n  .................. passed .................. `
           );
-
           continue;
         }
-
         var status = {
           jabamaStatus: jabamaStatus(results[0][i]),
           mizboonStatus: mizboonStatus(results[1][i]),
@@ -707,7 +705,9 @@ $(document).ready(function () {
         };
 
         let price = convertToPersianNumber(
-          parseInt(results[0][i]["discountedPrice"]).toLocaleString().replace(/,/g, "/")
+          parseInt(results[0][i]["discountedPrice"])
+            .toLocaleString()
+            .replace(/,/g, "/")
         );
 
         if (
@@ -716,7 +716,6 @@ $(document).ready(function () {
         ) {
           days[i].parentElement.style.border = "2px solid #8165D6";
         }
-
         days[i].parentElement.querySelector(".price").innerHTML = price;
         // console.log(days[i].parentElement);
 
@@ -748,7 +747,10 @@ $(document).ready(function () {
             names[website]["fa"];
 
           for (const web in tobeDisabled) {
-            if (web !== names[website]["en"] && status[website] !== "blocked") {
+            if (
+              web !== names[website]["en"] &&
+              (status[website] !== "booked" || status[website] !== "blocked")
+            ) {
               tobeDisabled[web](
                 new persianDate(
                   parseInt(days[i].parentElement.getAttribute("data-unix"))
