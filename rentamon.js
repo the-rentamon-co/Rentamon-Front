@@ -1,17 +1,11 @@
 const mainApiUrl = "https://classiccowl.chbk.run";
-
 const tehranTimeZone = "Asia/Tehran";
-
 const currentDate = new Date();
-
 const tehranTimestamp = currentDate.toLocaleString("en-US", {
   timeZone: tehranTimeZone,
 });
-
 const tehran = new Date(tehranTimestamp);
-
 const tehranzeroo = tehran.setHours(0, 0, 0, 0);
-
 const routes = {
   otaghak: {
     block: mainApiUrl + "/otaghak",
@@ -21,7 +15,6 @@ const routes = {
       "/otaghak/calendar?roomId=55614&startDate=1402-09-01&endDate=1402-09-30",
     room: 55614,
   },
-
   jabama: {
     block: mainApiUrl + "/jabama/disable",
     unblock: mainApiUrl + "/jabama/enable",
@@ -30,14 +23,12 @@ const routes = {
       "/jabama/calendar?room=109108&start_date=1402-9-1&end_date=1402-10-01",
     room: 109108,
   },
-
   jajiga: {
     block: mainApiUrl + "/jajiga",
     unblock: mainApiUrl + "/jajiga",
     calendar: mainApiUrl + "/jajiga/calendar?room_id=3142341",
     room: 3142341,
   },
-
   shab: {
     block: mainApiUrl + "/shab",
     unblock: mainApiUrl + "/shab",
@@ -46,7 +37,6 @@ const routes = {
       "/shab/calendar?room=9094&from_date=1402-09-01&to_date=1402-09-31",
     room: 9094,
   },
-
   mizboon: {
     block: mainApiUrl + "/mizboon/close",
     unblock: mainApiUrl + "/mizboon/unclose",
@@ -55,13 +45,11 @@ const routes = {
       "/mizboon/calendar?rental_id=10922&from=1402-09-01&to=1402-09-30",
     room: 10922,
   },
-
   other: {
     blockUnblock: mainApiUrl + "/other",
     calendar: mainApiUrl + "/other/calendar",
   },
 };
-
 const urls = [
   routes.jabama.calendar,
   routes.mizboon.calendar,
@@ -70,39 +58,30 @@ const urls = [
   routes.shab.calendar,
   routes.other.calendar,
 ];
-
-const fetchData = async (url) => {
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;
-};
-
 const messages = {
   blockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   unblockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   reserveDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   notSelectedDay: "هنوز روزی انتخاب نکردی",
 };
-
+const fetchData = async (url) => {
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
 function persianToInteger(persianString) {
   const persianNumerals = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-
   const convertDigit = (digit) => persianNumerals.indexOf(digit);
-
   const arabicString = persianString
     .split("")
     .map((char) => (persianNumerals.includes(char) ? convertDigit(char) : char))
     .join("");
-
   return parseInt(arabicString, 10);
 }
-
 function convertToPersianNumber(number) {
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-
   return number.replace(/\d/g, (digit) => persianDigits[digit]);
 }
-
 function jabamaStatus(jabama) {
   if (jabama) {
     if (jabama["status"] === "disabledByHost") {
@@ -118,7 +97,6 @@ function jabamaStatus(jabama) {
     return "not sure";
   }
 }
-
 function jajigaStatus(jajiga) {
   if (jajiga) {
     if (
@@ -142,7 +120,6 @@ function jajigaStatus(jajiga) {
     return "not sure";
   }
 }
-
 function otherStatus(other) {
   if (other) {
     if (other["status"] === "booked") {
@@ -154,7 +131,6 @@ function otherStatus(other) {
     return "not sure";
   }
 }
-
 function shabStatus(shab) {
   if (shab) {
     if (
@@ -185,7 +161,6 @@ function shabStatus(shab) {
     return "not sure";
   }
 }
-
 function mizboonStatus(mizboon) {
   if (mizboon) {
     if (mizboon["booked"] === 0 && mizboon["closed"] === 1) {
@@ -201,7 +176,6 @@ function mizboonStatus(mizboon) {
     return "not sure";
   }
 }
-
 function otagakStatus(otaghak) {
   if (otaghak) {
     if (
@@ -226,7 +200,6 @@ function otagakStatus(otaghak) {
     return "not sure";
   }
 }
-
 function rentamonApiCaller(website, data, action, method = "GET") {
   $.ajax({
     url: routes[website][action],
@@ -240,7 +213,6 @@ function rentamonApiCaller(website, data, action, method = "GET") {
     },
   });
 }
-
 function blockBtnClicked() {
   var selected = document.querySelectorAll(".selected");
   var selectedDate = [];
@@ -253,7 +225,6 @@ function blockBtnClicked() {
         )
       );
     });
-
     rentamonApiCaller(
       (website = "jabama"),
       (data = {
@@ -262,7 +233,6 @@ function blockBtnClicked() {
       }),
       (action = "block")
     );
-
     rentamonApiCaller(
       (website = "jajiga"),
       (data = {
@@ -272,7 +242,6 @@ function blockBtnClicked() {
       }),
       (action = "block")
     );
-
     rentamonApiCaller(
       (website = "shab"),
       (data = {
@@ -282,7 +251,6 @@ function blockBtnClicked() {
       }),
       (action = "block")
     );
-
     rentamonApiCaller(
       (website = "mizboon"),
       (data = {
@@ -291,7 +259,6 @@ function blockBtnClicked() {
       }),
       (action = "block")
     );
-
     rentamonApiCaller(
       (website = "otaghak"),
       (data = {
@@ -307,11 +274,8 @@ function blockBtnClicked() {
     alert(messages.notSelectedDay);
   }
 }
-
 function unblockBtnClicked() {
   var selected = document.querySelectorAll(".selected");
-
-  console.log(selected);
   var selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
@@ -322,7 +286,6 @@ function unblockBtnClicked() {
         )
       );
     });
-
     rentamonApiCaller(
       (website = "jabama"),
       (data = {
@@ -331,7 +294,6 @@ function unblockBtnClicked() {
       }),
       (action = "unblock")
     );
-
     rentamonApiCaller(
       (website = "jajiga"),
       (data = {
@@ -341,7 +303,6 @@ function unblockBtnClicked() {
       }),
       (action = "unblock")
     );
-
     rentamonApiCaller(
       (website = "shab"),
       (data = {
@@ -351,7 +312,6 @@ function unblockBtnClicked() {
       }),
       (action = "unblock")
     );
-
     rentamonApiCaller(
       (website = "mizboon"),
       (data = {
@@ -360,7 +320,6 @@ function unblockBtnClicked() {
       }),
       (action = "unblock")
     );
-
     rentamonApiCaller(
       (website = "otaghak"),
       (data = {
@@ -378,14 +337,12 @@ function unblockBtnClicked() {
       }),
       (action = "blockUnblock")
     );
-
     alert(messages.unblockDaySuccess);
     window.location.reload();
   } else {
     alert(messages.notSelectedDay);
   }
 }
-
 function reserveOther() {
   var selected = document.querySelectorAll(".selected");
   var selectedDate = [];
@@ -398,7 +355,6 @@ function reserveOther() {
         )
       );
     });
-
     rentamonApiCaller(
       (website = "jabama"),
       (data = {
@@ -407,7 +363,6 @@ function reserveOther() {
       }),
       (action = "block")
     );
-
     rentamonApiCaller(
       (website = "jajiga"),
       (data = {
@@ -417,7 +372,6 @@ function reserveOther() {
       }),
       (action = "block")
     );
-
     rentamonApiCaller(
       (website = "shab"),
       (data = {
@@ -427,7 +381,6 @@ function reserveOther() {
       }),
       (action = "block")
     );
-
     rentamonApiCaller(
       (website = "mizboon"),
       (data = {
@@ -436,7 +389,6 @@ function reserveOther() {
       }),
       (action = "block")
     );
-
     rentamonApiCaller(
       (website = "otaghak"),
       (data = {
@@ -446,7 +398,6 @@ function reserveOther() {
       }),
       (action = "block")
     );
-
     rentamonApiCaller(
       (website = "other"),
       (data = {
@@ -461,10 +412,8 @@ function reserveOther() {
     alert(messages.notSelectedDay);
   }
 }
-
 function checkAction() {
   let action = document.querySelector('input[name="block"]:checked');
-  console.log(action);
   if (action) {
     if (action.value === "block") {
       // alert("block");
@@ -477,14 +426,12 @@ function checkAction() {
       unblockBtnClicked();
     }
     // else if (action.value === "discount") {
-
     //   // discountBtnClicked();
     // }
   } else {
     alert(messages.notSelectedDay);
   }
 }
-
 const tobeDisabled = {
   jabama: (single) => {
     rentamonApiCaller(
@@ -540,7 +487,6 @@ const tobeDisabled = {
     );
   },
 };
-
 function discountBtnClicked() {
   var selected = document.querySelectorAll(".selected");
   var selectedDate = [];
@@ -553,8 +499,6 @@ function discountBtnClicked() {
         )
       );
     });
-
-    console.log(selectedDate);
     $.ajax({
       url: mainApiUrl + "/test",
       method: "GET",
@@ -576,7 +520,6 @@ function discountBtnClicked() {
     // alert(messages.notSelectedDay);
   }
 }
-
 $(".inline").pDatepicker({
   initialValue: false,
   dayPicker: {
@@ -594,18 +537,14 @@ $(".inline").pDatepicker({
   inline: true,
   minDate: new persianDate().month(9).startOf("month"),
   maxDate: new persianDate().month(9).endOf("month"),
-
   navigator: {
     enabled: true,
     scroll: {
       enabled: false,
     },
   },
-
   format: "YYYY-MM-DD",
-
   resoinsive: true,
-
   template: `
   <div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
   <div class="month">{{ navigator.switch.text }}</div>
@@ -656,10 +595,8 @@ $(".inline").pDatepicker({
 </div>
 `,
 });
-
 $(document).ready(function () {
   $(document).off();
-
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
     elem.addEventListener("change", (e) => {
@@ -675,26 +612,20 @@ $(document).ready(function () {
       }
     });
   });
-
   const todayTD = document.querySelector(
     `.datepicker-plot-area-inline-view td[data-unix="${tehranzeroo}"] span`
   );
-
   const todayDate = persianToInteger(todayTD.textContent);
-
   const days = document.querySelectorAll(
     ".datepicker-plot-area-inline-view .table-days span:not(.other-month):not(.reserved):not(.price)"
   );
-
   const fetchPromises = urls.map((url) => fetchData(url));
-
   Promise.all(fetchPromises)
     .then((results) => {
       console.log(results);
       for (var i = 1; i < todayDate; i++) {
         results[3].unshift({ disable_count: null });
       }
-
       for (let i = 0; i < 30; i++) {
         if (i + 1 < todayDate) {
           days[i].parentElement.classList.add("passed-days", "disabled");
@@ -713,13 +644,10 @@ $(document).ready(function () {
           shabStatus: shabStatus(results[4][i]),
           otherStatus: otherStatus(results[5][i]),
         };
-
         let raw = parseInt(parseInt(results[0][i]["discountedPrice"]) / 10000);
-
         let price = convertToPersianNumber(
           raw.toLocaleString().replace(/,/g, "/")
         );
-
         if (
           parseInt(results[0][i]["price"]) >
           parseInt(results[0][i]["discountedPrice"])
@@ -727,7 +655,6 @@ $(document).ready(function () {
           days[i].parentElement.style.border = "2px solid #8165D6";
         }
         days[i].parentElement.querySelector(".price").innerHTML = price;
-
         var names = {
           jabamaStatus: { fa: "جاباما", en: "jabama" },
           mizboonStatus: { fa: "میزبون", en: "mizbon" },
@@ -738,7 +665,6 @@ $(document).ready(function () {
         };
         console.log(`🢆 .............. 1402/09/${i + 1} .............. 🢆`);
         console.table(status);
-
         if (
           status["jabamaStatus"] === "booked" ||
           status["mizboonStatus"] === "booked" ||
@@ -753,7 +679,6 @@ $(document).ready(function () {
           );
           days[i].parentElement.querySelector(".reserved").innerHTML =
             names[website]["fa"];
-
           for (const web in tobeDisabled) {
             if (
               web !== names[website]["en"] &&
