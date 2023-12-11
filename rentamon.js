@@ -659,10 +659,6 @@ $(document).ready(function () {
   $(document).off();
 
   document.querySelector(".submit").addEventListener("click", checkAction);
-  // document.querySelector(".block").addEventListener("click", blockBtnClicked);
-  // document
-  //   .querySelector(".unblock")
-  //   .addEventListener("click", unblockBtnClicked);
 
   const todayTD = document.querySelector(
     `.datepicker-plot-area-inline-view td[data-unix="${tehranzeroo}"] span`
@@ -715,7 +711,6 @@ $(document).ready(function () {
           days[i].parentElement.style.border = "2px solid #8165D6";
         }
         days[i].parentElement.querySelector(".price").innerHTML = price;
-        // console.log(days[i].parentElement);
 
         var names = {
           jabamaStatus: { fa: "جاباما", en: "jabama" },
@@ -740,19 +735,14 @@ $(document).ready(function () {
           const website = Object.keys(status).find(
             (key) => status[key] === "booked"
           );
-          console.log("website", website)
-
           days[i].parentElement.querySelector(".reserved").innerHTML =
             names[website]["fa"];
 
           for (const web in tobeDisabled) {
-            console.log("web", web)
-            console.log("first: ",web!==names[website]["en"]);
-            console.log("second: ",status[website] !== "booked");
-            console.log("third: ",status[website] !== "blocked");
             if (
               web !== names[website]["en"] &&
-              (status[website] !== "booked" && status[website] !== "blocked")
+              status[website] !== "booked" &&
+              status[website] !== "blocked"
             ) {
               tobeDisabled[web](
                 new persianDate(
