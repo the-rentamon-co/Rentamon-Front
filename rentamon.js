@@ -663,12 +663,15 @@ $(document).ready(function () {
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
     elem.addEventListener("change", (e) => {
+      const actionBtn = document.querySelector(".btnActionCont button");
       if (e.target.className === "discount") {
-        const actionBtn = document.querySelector(".btnActionCont button");
+        actionBtn.removeEventListener("click", checkAction);
         actionBtn.className = "discount-submit";
         actionBtn.addEventListener("click", discountBtnClicked);
       } else {
+        actionBtn.addEventListener("click", checkAction);
         document.querySelector(".btnActionCont button").className = "submit";
+        actionBtn.removeEventListener("click", discountBtnClicked);
       }
     });
   });
