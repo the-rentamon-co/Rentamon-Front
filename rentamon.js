@@ -674,8 +674,6 @@ $(document).ready(function () {
     ".datepicker-plot-area-inline-view .table-days span:not(.other-month):not(.reserved):not(.price)"
   );
 
-  console.log(days);
-
   const fetchPromises = urls.map((url) => fetchData(url));
 
   Promise.all(fetchPromises)
@@ -742,14 +740,19 @@ $(document).ready(function () {
           const website = Object.keys(status).find(
             (key) => status[key] === "booked"
           );
+          console.log("website", website)
 
           days[i].parentElement.querySelector(".reserved").innerHTML =
             names[website]["fa"];
 
           for (const web in tobeDisabled) {
+            console.log("web", web)
+            console.log("first: ",web!==names[website]["en"]);
+            console.log("second: ",status[website] !== "booked");
+            console.log("third: ",status[website] !== "blocked");
             if (
               web !== names[website]["en"] &&
-              (status[website] !== "booked" || status[website] !== "blocked")
+              (status[website] !== "booked" && status[website] !== "blocked")
             ) {
               tobeDisabled[web](
                 new persianDate(
