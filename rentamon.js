@@ -570,10 +570,10 @@ function discountBtnClicked() {
         console.error(error);
       },
     });
-    alert(messages.reserveDaySuccess);
+    // alert(messages.reserveDaySuccess);
     // window.location.reload();
   } else {
-    alert(messages.notSelectedDay);
+    // alert(messages.notSelectedDay);
   }
 }
 
