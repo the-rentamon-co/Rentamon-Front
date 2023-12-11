@@ -697,9 +697,9 @@ $(document).ready(function () {
           shabStatus: shabStatus(results[4][i]),
           otherStatus: otherStatus(results[5][i]),
         };
-
+        
         let price = convertToPersianNumber(
-          parseInt(results[0][i]["discountedPrice"])
+          parseInt(results[0][i]["discountedPrice"])/10000
             .toLocaleString()
             .replace(/,/g, "/")
         );
