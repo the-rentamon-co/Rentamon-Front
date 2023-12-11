@@ -698,8 +698,10 @@ $(document).ready(function () {
           otherStatus: otherStatus(results[5][i]),
         };
         
+        let raw =  parseInt(parseInt(results[0][i]["discountedPrice"]) / 10000)
+
         let price = convertToPersianNumber(
-          parseInt(results[0][i]["discountedPrice"])/10000
+          raw
             .toLocaleString()
             .replace(/,/g, "/")
         );
