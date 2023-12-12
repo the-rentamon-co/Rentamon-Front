@@ -499,8 +499,34 @@ function discountBtnClicked() {
         )
       );
     });
-    document.querySelector('input[name="form_fields[dates]"').value =
-      selectedDate;
+
+    const targetElementId = "elementor-popup-modal";
+
+    // Create a new MutationObserver
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === "childList") {
+          const addedNodes = Array.from(mutation.addedNodes);
+          const targetElement = addedNodes.find(
+            (node) =>
+              node.nodeType === Node.ELEMENT_NODE &&
+              node.id.includes(targetElementId)
+          );
+
+          if (targetElement) {
+            document.querySelector('input[name="form_fields[dates]"').value =
+              selectedDate;
+            console.log(
+              'Element with ID containing "elementor-popup-modal" added:',
+              targetElement
+            );
+          }
+        }
+      }
+    });
+
+    // Start observing the document body for changes
+    observer.observe(document.body, { childList: true, subtree: true });
 
     // $.ajax({
     //   url: mainApiUrl + "/test",
@@ -599,6 +625,8 @@ $(".inline").pDatepicker({
 `,
 });
 $(document).ready(function () {
+  // Target element ID
+
   $(document).off();
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
