@@ -499,21 +499,24 @@ function discountBtnClicked() {
         )
       );
     });
-    $.ajax({
-      url: mainApiUrl + "/test",
-      method: "GET",
-      data: {
-        otagh: routes["otaghak"]["room"],
-        jabama: routes["jabama"]["room"],
-        days: selectedDate.join(","),
-      },
-      success: function (response) {
-        console.log(response);
-      },
-      error: function (error) {
-        console.error(error);
-      },
-    });
+    document.querySelector('input[name="form_fields[dates]"').value =
+      selectedDate;
+
+    // $.ajax({
+    //   url: mainApiUrl + "/test",
+    //   method: "GET",
+    //   data: {
+    //     otagh: routes["otaghak"]["room"],
+    //     jabama: routes["jabama"]["room"],
+    //     days: selectedDate.join(","),
+    //   },
+    //   success: function (response) {
+    //     console.log(response);
+    //   },
+    //   error: function (error) {
+    //     console.error(error);
+    //   },
+    // });
     // alert(messages.reserveDaySuccess);
     // window.location.reload();
   } else {
