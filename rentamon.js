@@ -813,7 +813,9 @@ $(document).ready(function () {
         ) {
           days[i].parentElement.style.border = "2px solid #8165D6";
         }
+        if (price> 0){
         days[i].parentElement.querySelector(".price").innerHTML = price;
+        }
         var names = {
           jabamaStatus: { fa: "جاباما", en: "jabama" },
           mizboonStatus: { fa: "میزبون", en: "mizbon" },
