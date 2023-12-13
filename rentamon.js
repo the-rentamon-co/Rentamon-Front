@@ -6,13 +6,60 @@ const tehranTimestamp = currentDate.toLocaleString("en-US", {
 });
 const tehran = new Date(tehranTimestamp);
 const tehranzeroo = tehran.setHours(0, 0, 0, 0);
+// const routes = {
+//   otaghak: {
+//     block: mainApiUrl + "/otaghak",
+//     unblock: mainApiUrl + "/otaghak",
+//     calendar:
+//       mainApiUrl +
+//       "/otaghak/calendar?roomId=55614&startDate=1402-09-01&endDate=1402-11-30",
+//     room: 55614,
+//   },
+//   jabama: {
+//     block: mainApiUrl + "/jabama/disable",
+//     unblock: mainApiUrl + "/jabama/enable",
+//     calendar:
+//       mainApiUrl +
+//       "/jabama/calendar?room=109108&start_date=1402-9-1&end_date=1402-11-01",
+//     room: 109108,
+//   },
+//   jajiga: {
+//     block: mainApiUrl + "/jajiga",
+//     unblock: mainApiUrl + "/jajiga",
+//     calendar: mainApiUrl + "/jajiga/calendar?room_id=3142341",
+//     room: 3142341,
+//   },
+//   shab: {
+//     block: mainApiUrl + "/shab",
+//     unblock: mainApiUrl + "/shab",
+//     calendar:
+//       mainApiUrl +
+//       "/shab/calendar?room=9094&from_date=1402-09-01&to_date=1402-11-31",
+//     room: 9094,
+//   },
+//   mizboon: {
+//     block: mainApiUrl + "/mizboon/close",
+//     unblock: mainApiUrl + "/mizboon/unclose",
+//     calendar:
+//       mainApiUrl +
+//       "/mizboon/calendar?rental_id=10922&from=1402-09-01&to=1402-11-30",
+//     room: 10922,
+//   },
+//   other: {
+//     blockUnblock: mainApiUrl + "/other",
+//     calendar: mainApiUrl + "/other/calendar",
+//   },
+// };
+
+
+
 const routes = {
   otaghak: {
     block: mainApiUrl + "/otaghak",
     unblock: mainApiUrl + "/otaghak",
     calendar:
       mainApiUrl +
-      "/otaghak/calendar?roomId=55614&startDate=1402-09-01&endDate=1402-11-30",
+      "/otaghak/calendar",
     room: 55614,
   },
   jabama: {
@@ -20,13 +67,13 @@ const routes = {
     unblock: mainApiUrl + "/jabama/enable",
     calendar:
       mainApiUrl +
-      "/jabama/calendar?room=109108&start_date=1402-9-1&end_date=1402-11-01",
+      "/jabama/calendar",
     room: 109108,
   },
   jajiga: {
     block: mainApiUrl + "/jajiga",
     unblock: mainApiUrl + "/jajiga",
-    calendar: mainApiUrl + "/jajiga/calendar?room_id=3142341",
+    calendar: mainApiUrl + "/jajiga/calendar",
     room: 3142341,
   },
   shab: {
@@ -34,7 +81,7 @@ const routes = {
     unblock: mainApiUrl + "/shab",
     calendar:
       mainApiUrl +
-      "/shab/calendar?room=9094&from_date=1402-09-01&to_date=1402-11-31",
+      "/shab/calendar",
     room: 9094,
   },
   mizboon: {
@@ -42,7 +89,7 @@ const routes = {
     unblock: mainApiUrl + "/mizboon/unclose",
     calendar:
       mainApiUrl +
-      "/mizboon/calendar?rental_id=10922&from=1402-09-01&to=1402-11-30",
+      "/mizboon/calendar",
     room: 10922,
   },
   other: {
@@ -50,6 +97,7 @@ const routes = {
     calendar: mainApiUrl + "/other/calendar",
   },
 };
+
 const urls = [
   routes.jabama.calendar,
   routes.mizboon.calendar,
@@ -693,7 +741,7 @@ $(".inline").pDatepicker({
   },
   inline: true,
   // minDate: new persianDate().month(9).startOf("month"),
-  minDate: new persianDate().startOf('day'),
+  minDate: new persianDate().startOf("day"),
 
   maxDate: new persianDate().month(10).endOf("month"),
   navigator: {
@@ -701,10 +749,10 @@ $(".inline").pDatepicker({
     scroll: {
       enabled: false,
     },
-    text:{
-      btnNextText:">",
-      btnPrevText:"<"
-    }
+    text: {
+      btnNextText: ">",
+      btnPrevText: "<",
+    },
   },
   format: "YYYY-MM-DD",
   resoinsive: true,
@@ -783,8 +831,6 @@ $(document).ready(function () {
       }
     });
   });
-  
 });
-
 
 // console.log("today",new persianDate().startOf('day'))
