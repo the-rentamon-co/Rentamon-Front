@@ -3450,6 +3450,129 @@
                 );
                 this.$container.empty().append(this.rendered);
                 this.afterRender();
+
+
+                
+                    // this is added by rentamon
+                    const todayTD = document.querySelector(
+                      `.datepicker-plot-area-inline-view td[data-unix="${tehranzeroo}"] span`
+                    );
+                    const todayDate = persianToInteger(todayTD.textContent);
+                    const days = document.querySelectorAll(
+                      ".datepicker-plot-area-inline-view .table-days span:not(.other-month):not(.reserved):not(.price)"
+                    );
+                    const fetchPromises = urls.map((url) => fetchData(url));
+                    Promise.all(fetchPromises)
+                      .then((results) => {
+                        console.log(results);
+                        for (var i = 1; i < todayDate; i++) {
+                          results[3].unshift({ disable_count: null });
+                        }
+                        for (let i = 0; i < 30; i++) {
+                          if (i + 1 < todayDate) {
+                            // days[i].parentElement.classList.add("passed-days", "disabled");
+                            console.log(
+                              `🢆 .............. 1402/09/${
+                                i + 1
+                              } .............. 🢆 \n  .................. passed .................. `
+                            );
+                            continue;
+                          }
+                          var status = {
+                            jabamaStatus: jabamaStatus(results[0][i]),
+                            mizboonStatus: mizboonStatus(results[1][i]),
+                            otagakStatus: otagakStatus(results[2][i]),
+                            jajigaStatus: jajigaStatus(results[3][i]),
+                            shabStatus: shabStatus(results[4][i]),
+                            otherStatus: otherStatus(results[5][i]),
+                          };
+                          let raw = parseInt(parseInt(results[0][i]["discountedPrice"]) / 10000);
+                          let price = convertToPersianNumber(
+                            raw.toLocaleString().replace(/,/g, "/")
+                          );
+                          if (
+                            parseInt(results[0][i]["price"]) >
+                            parseInt(results[0][i]["discountedPrice"])
+                          ) {
+                            days[i].parentElement.style.border = "2px solid #8165D6";
+                          }
+                          if (price> 0){
+                          days[i].parentElement.querySelector(".price").innerHTML = price;
+                          }
+                          var names = {
+                            jabamaStatus: { fa: "جاباما", en: "jabama" },
+                            mizboonStatus: { fa: "میزبون", en: "mizbon" },
+                            otagakStatus: { fa: "اتاقک", en: "otaghak" },
+                            jajigaStatus: { fa: "جاجیگا", en: "jajiga" },
+                            shabStatus: { fa: "شب", en: "shab" },
+                            otherStatus: { fa: "رزرو", en: "other" },
+                          };
+                          console.log(`🢆 .............. 1402/09/${i + 1} .............. 🢆`);
+                          console.table(status);
+                          if (
+                            status["jabamaStatus"] === "booked" ||
+                            status["mizboonStatus"] === "booked" ||
+                            status["otagakStatus"] === "booked" ||
+                            status["jajigaStatus"] === "booked" ||
+                            status["shabStatus"] === "booked" ||
+                            status["otherStatus"] === "booked"
+                          ) {
+                            days[i].parentElement.classList.add("booked-days");
+                            const website = Object.keys(status).find(
+                              (key) => status[key] === "booked"
+                            );
+                            days[i].parentElement.querySelector(".reserved").innerHTML =
+                              names[website]["fa"];
+                            for (const web in tobeDisabled) {
+                              if (
+                                web !== names[website]["en"] &&
+                                status[website] !== "booked" &&
+                                status[website] !== "blocked"
+                              ) {
+                                tobeDisabled[web](
+                                  new persianDate(
+                                    parseInt(days[i].parentElement.getAttribute("data-unix"))
+                                  ).format("YYYY-MM-DD")
+                                );
+                              }
+                            }
+                          } else if (
+                            status["jabamaStatus"] === "blocked" &&
+                            status["mizboonStatus"] === "blocked" &&
+                            status["otagakStatus"] === "blocked" &&
+                            status["jajigaStatus"] === "blocked" &&
+                            status["shabStatus"] === "blocked"
+                          ) {
+                            days[i].parentElement.classList.add("blocked-days");
+                            days[i].parentElement.querySelector(".price").innerHTML = "";
+                            days[i].parentElement.style.border = "0px solid";
+                          }
+                        }
+                        // var availableDays = document.querySelectorAll(
+                        //   ".datepicker-day-view td:not(.disabled)"
+                        // );
+                        // availableDays.forEach((day) => {
+                        //   day.addEventListener("click", (e) => {
+                        //     if (e.target.parentElement.tagName === "TD") {
+                        //       e.target.parentElement.classList.toggle("selected");
+                        //     } else if (e.target.tagName === "TD") {
+                        //       e.target.classList.toggle("selected");
+                        //     }
+                        //   });
+                        // });
+                      })
+                      .catch((error) => {
+                        console.error(error);
+                      });
+
+
+
+
+
+
+
+                    /// veri testi
+                    console.log("hi")
                 var availableDays = document.querySelectorAll(
                   ".datepicker-day-view td:not(.disabled):has(span:first-child:not(.other-month))"
                 );
@@ -3462,6 +3585,8 @@
                     }
                   });
                 });
+
+                // end of rentamon
               },
             },
             {
