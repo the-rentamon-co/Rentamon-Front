@@ -62,7 +62,7 @@ const messages = {
   blockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   unblockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   reserveDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
-  notSelectedDay: "هنوز روزی انتخاب نکردی",
+  notSelectedDay: "هنوز هیچ روزی رو انتخاب نکردی",
 };
 const fetchData = async (url) => {
   const response = await fetch(url);
