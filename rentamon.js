@@ -12,7 +12,7 @@ const routes = {
     unblock: mainApiUrl + "/otaghak",
     calendar:
       mainApiUrl +
-      "/otaghak/calendar?roomId=55614&startDate=1402-09-01&endDate=1402-09-30",
+      "/otaghak/calendar?roomId=55614&startDate=1402-09-01&endDate=1402-11-30",
     room: 55614,
   },
   jabama: {
@@ -20,7 +20,7 @@ const routes = {
     unblock: mainApiUrl + "/jabama/enable",
     calendar:
       mainApiUrl +
-      "/jabama/calendar?room=109108&start_date=1402-9-1&end_date=1402-10-01",
+      "/jabama/calendar?room=109108&start_date=1402-9-1&end_date=1402-11-01",
     room: 109108,
   },
   jajiga: {
@@ -34,7 +34,7 @@ const routes = {
     unblock: mainApiUrl + "/shab",
     calendar:
       mainApiUrl +
-      "/shab/calendar?room=9094&from_date=1402-09-01&to_date=1402-09-31",
+      "/shab/calendar?room=9094&from_date=1402-09-01&to_date=1402-11-31",
     room: 9094,
   },
   mizboon: {
@@ -42,7 +42,7 @@ const routes = {
     unblock: mainApiUrl + "/mizboon/unclose",
     calendar:
       mainApiUrl +
-      "/mizboon/calendar?rental_id=10922&from=1402-09-01&to=1402-09-30",
+      "/mizboon/calendar?rental_id=10922&from=1402-09-01&to=1402-11-30",
     room: 10922,
   },
   other: {
@@ -692,8 +692,10 @@ $(".inline").pDatepicker({
     titleFormat: "YYYY",
   },
   inline: true,
-  minDate: new persianDate().month(9).startOf("month"),
-  maxDate: new persianDate().month(9).endOf("month"),
+  // minDate: new persianDate().month(9).startOf("month"),
+  minDate: new persianDate().startOf('day'),
+
+  maxDate: new persianDate().month(10).endOf("month"),
   navigator: {
     enabled: true,
     scroll: {
@@ -704,7 +706,13 @@ $(".inline").pDatepicker({
   resoinsive: true,
   template: `
   <div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
-  <div class="month">{{ navigator.switch.text }}</div>
+  <div class="navigator">
+  <div class="datepicker-header">
+  <div class="btn btn-next">{{navigator.text.btnNextText}}</div>
+  <div class="btn btn-switch">{{ navigator.switch.text }}</div>
+  <div class="btn btn-prev">{{navigator.text.btnPrevText}}</div>
+  </div>
+  </div>
   <div class="datepicker-grid-view">
     {{#days.enabled}} {{#days.viewMode}}
     <div class="datepicker-day-view">
@@ -755,7 +763,7 @@ $(".inline").pDatepicker({
 $(document).ready(function () {
   // Target element ID
 
-  $(document).off();
+  // $(document).off();
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
     elem.addEventListener("change", (e) => {
@@ -787,7 +795,7 @@ $(document).ready(function () {
       }
       for (let i = 0; i < 30; i++) {
         if (i + 1 < todayDate) {
-          days[i].parentElement.classList.add("passed-days", "disabled");
+          // days[i].parentElement.classList.add("passed-days", "disabled");
           console.log(
             `🢆 .............. 1402/09/${
               i + 1
@@ -865,20 +873,23 @@ $(document).ready(function () {
           days[i].parentElement.style.border = "0px solid";
         }
       }
-      const availableDays = document.querySelectorAll(
-        ".datepicker-day-view td:not(.disabled)"
-      );
-      availableDays.forEach((day) => {
-        day.addEventListener("click", (e) => {
-          if (e.target.parentElement.tagName === "TD") {
-            e.target.parentElement.classList.toggle("selected");
-          } else if (e.target.tagName === "TD") {
-            e.target.classList.toggle("selected");
-          }
-        });
-      });
+      // var availableDays = document.querySelectorAll(
+      //   ".datepicker-day-view td:not(.disabled)"
+      // );
+      // availableDays.forEach((day) => {
+      //   day.addEventListener("click", (e) => {
+      //     if (e.target.parentElement.tagName === "TD") {
+      //       e.target.parentElement.classList.toggle("selected");
+      //     } else if (e.target.tagName === "TD") {
+      //       e.target.classList.toggle("selected");
+      //     }
+      //   });
+      // });
     })
     .catch((error) => {
       console.error(error);
     });
 });
+
+
+// console.log("today",new persianDate().startOf('day'))
