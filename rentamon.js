@@ -701,6 +701,10 @@ $(".inline").pDatepicker({
     scroll: {
       enabled: false,
     },
+    text:{
+      btnNextText:">",
+      btnPrevText:"<"
+    }
   },
   format: "YYYY-MM-DD",
   resoinsive: true,
