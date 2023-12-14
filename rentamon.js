@@ -672,6 +672,70 @@ function discountBtnClicked() {
     // alert(messages.notSelectedDay);
   }
 }
+
+function priceBtnClicked() {
+  var selected = document.querySelectorAll(".selected");
+  var selectedDate = [];
+  if (selected.length > 0) {
+    selected.forEach((z) => {
+      z.classList.remove("selected");
+      selectedDate.push(
+        new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+          "YYYY-MM-DD"
+        )
+      );
+    });
+
+    const targetElementId = "elementor-popup-modal";
+
+    // Create a new MutationObserver
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === "childList") {
+          const addedNodes = Array.from(mutation.addedNodes);
+          const targetElement = addedNodes.find(
+            (node) =>
+              node.nodeType === Node.ELEMENT_NODE &&
+              node.id.includes(targetElementId)
+          );
+
+          if (targetElement) {
+            document.querySelector('input[name="form_fields[dates]"').value =
+              selectedDate;
+            console.log(
+              'Element with ID containing "elementor-popup-modal" added:',
+              targetElement
+            );
+          }
+        }
+      }
+    });
+
+    // Start observing the document body for changes
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // $.ajax({
+    //   url: mainApiUrl + "/test",
+    //   method: "GET",
+    //   data: {
+    //     otagh: routes["otaghak"]["room"],
+    //     jabama: routes["jabama"]["room"],
+    //     days: selectedDate.join(","),
+    //   },
+    //   success: function (response) {
+    //     console.log(response);
+    //   },
+    //   error: function (error) {
+    //     console.error(error);
+    //   },
+    // });
+    // alert(messages.reserveDaySuccess);
+    // window.location.reload();
+  } else {
+    // alert(messages.notSelectedDay);
+  }
+}
+
 $(".inline").pDatepicker({
   initialValue: false,
   dayPicker: {
@@ -766,12 +830,19 @@ $(document).ready(function () {
       const actionBtn = document.querySelector(".btnActionCont button");
       if (e.target.className === "discount") {
         actionBtn.removeEventListener("click", checkAction);
+        actionBtn.removeEventListener("click", priceBtnClicked);
         actionBtn.className = "discount-submit";
         actionBtn.addEventListener("click", discountBtnClicked);
+      } else if (e.target.className === "price") {
+        actionBtn.removeEventListener("click", checkAction);
+        actionBtn.removeEventListener("click", discountBtnClicked);
+        actionBtn.className = "price-submit";
+        actionBtn.addEventListener("click", priceBtnClicked);
       } else {
         actionBtn.addEventListener("click", checkAction);
         document.querySelector(".btnActionCont button").className = "submit";
         actionBtn.removeEventListener("click", discountBtnClicked);
+        actionBtn.removeEventListener("click", priceBtnClicked);
       }
     });
   });
