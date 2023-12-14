@@ -71,11 +71,11 @@ button.unblock {
     border-radius: 5px;
 }
 
-td.passed-days span:first-child {
+td.disabled span:first-child {
     border-radius: 5px 5px 0px 0px !important;
 }
 
-td.passed-days span:last-child {
+td.disabled span:last-child {
     border-radius: 0px 0px 5px 5px !important;
 }
 
