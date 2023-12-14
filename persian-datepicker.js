@@ -3456,7 +3456,6 @@
                 var availableDays = document.querySelectorAll(
                   ".datepicker-day-view td:not(.disabled):has(span:first-child:not(.other-month))"
                 );
-
                 const days = document.querySelectorAll(
                   ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
                 );
@@ -3464,7 +3463,6 @@
                   new persianDate(
                     parseInt(availableDays[0].getAttribute("data-unix"))
                   ).format("YYYY-MM-DD"),
-
                   new persianDate(
                     parseInt(
                       availableDays[availableDays.length - 1].getAttribute(
@@ -3472,7 +3470,6 @@
                       )
                     )
                   ).format("YYYY-MM-DD"),
-
                   new persianDate(
                     parseInt(
                       availableDays[availableDays.length - 1].getAttribute(
@@ -3483,7 +3480,6 @@
                     .add("day", 1)
                     .format("YYYY-MM-DD"),
                 ];
-
                 const urls2 = [
                   routes.jabama.calendar +
                     `?room=${routes.jabama.room}&start_date=${range[0]}&end_date=${range[2]}`,
@@ -3494,7 +3490,7 @@
                   routes.otaghak.calendar +
                     `?roomId=${routes.otaghak.room}&startDate=${range[0]}&endDate=${range[1]}`,
 
-                  routes.jajiga.calendar + `?room_id=${routes.jajiga.room}`,
+                  routes.jajiga.calendar + `?room_id=${routes.jajiga.room}&from=${range[0]}&to=${range[1]}`,
 
                   routes.shab.calendar +
                     `?room=${routes.shab.room}&from_date=${range[0]}&to_date=${range[2]}`,
@@ -3519,7 +3515,7 @@
                   .then((results) => {
                     console.log(results);
 
-                    for (let i = 0; i < 9; i++) {
+                    for (let i = 0; i < availableDays.length; i++) {
                       var status = {
                         jabamaStatus: jabamaStatus(results[0][i]),
                         mizboonStatus: mizboonStatus(results[1][i]),
