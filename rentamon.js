@@ -50,6 +50,16 @@ const messages = {
   reserveDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   notSelectedDay: "هنوز هیچ روزی رو انتخاب نکردی",
 };
+
+const names = {
+  jabamaStatus: { fa: "جاباما", en: "jabama" },
+  mizboonStatus: { fa: "میزبون", en: "mizbon" },
+  otagakStatus: { fa: "اتاقک", en: "otaghak" },
+  jajigaStatus: { fa: "جاجیگا", en: "jajiga" },
+  shabStatus: { fa: "شب", en: "shab" },
+  otherStatus: { fa: "رزرو", en: "other" },
+};
+
 const fetchData = async (url) => {
   const response = await fetch(url);
   const data = await response.json();

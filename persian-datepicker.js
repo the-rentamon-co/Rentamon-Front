@@ -3448,6 +3448,7 @@
                     this.getViewModel(data)
                   )
                 );
+
                 this.$container.empty().append(this.rendered);
                 this.afterRender();
 
@@ -3456,7 +3457,6 @@
                 var availableDays = document.querySelectorAll(
                   ".datepicker-day-view td:not(.disabled):has(span:first-child:not(.other-month))"
                 );
-
                 if (availableDays.length > 0) {
                   const days = document.querySelectorAll(
                     ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
@@ -3503,6 +3503,7 @@
                   ];
 
                   console.log(urls2);
+                  const fetchPromises = urls2.map((url) => fetchData(url));
 
                   availableDays.forEach((day) => {
                     day.addEventListener("click", (e) => {
@@ -3514,7 +3515,6 @@
                     });
                   });
 
-                  const fetchPromises = urls2.map((url) => fetchData(url));
                   Promise.all(fetchPromises)
                     .then((results) => {
                       console.log(results);
@@ -3528,6 +3528,8 @@
                           shabStatus: shabStatus(results[4][i]),
                           otherStatus: otherStatus(results[5][i]),
                         };
+
+                        // console.log(Object.entries(status).every(([key, value]) => blockStatus([key, value])))
                         let raw = parseInt(
                           parseInt(results[0][i]["discountedPrice"]) / 10000
                         );
@@ -3546,27 +3548,26 @@
                             ".price"
                           ).innerHTML = price;
                         }
-                        var names = {
-                          jabamaStatus: { fa: "جاباما", en: "jabama" },
-                          mizboonStatus: { fa: "میزبون", en: "mizbon" },
-                          otagakStatus: { fa: "اتاقک", en: "otaghak" },
-                          jajigaStatus: { fa: "جاجیگا", en: "jajiga" },
-                          shabStatus: { fa: "شب", en: "shab" },
-                          otherStatus: { fa: "رزرو", en: "other" },
-                        };
+
                         console.table(status);
+                        const bookedStatus = Object.entries(status).find(
+                          ([key, value]) => value === "booked"
+                        );
+
                         if (
-                          status["jabamaStatus"] === "booked" ||
-                          status["mizboonStatus"] === "booked" ||
-                          status["otagakStatus"] === "booked" ||
-                          status["jajigaStatus"] === "booked" ||
-                          status["shabStatus"] === "booked" ||
-                          status["otherStatus"] === "booked"
+                          bookedStatus
+                          // status["jabamaStatus"] === "booked" ||
+                          // status["mizboonStatus"] === "booked" ||
+                          // status["otagakStatus"] === "booked" ||
+                          // status["jajigaStatus"] === "booked" ||
+                          // status["shabStatus"] === "booked" ||
+                          // status["otherStatus"] === "booked"
                         ) {
                           days[i].parentElement.classList.add("booked-days");
-                          const website = Object.keys(status).find(
-                            (key) => status[key] === "booked"
-                          );
+                          const website = bookedStatus[0];
+                          // const website = Object.keys(status).find(
+                          //   (key) => status[key] === "booked"
+                          // );
                           days[i].parentElement.querySelector(
                             ".reserved"
                           ).innerHTML = names[website]["fa"];
@@ -3588,11 +3589,16 @@
                             }
                           }
                         } else if (
-                          status["jabamaStatus"] === "blocked" &&
-                          status["mizboonStatus"] === "blocked" &&
-                          status["otagakStatus"] === "blocked" &&
-                          status["jajigaStatus"] === "blocked" &&
-                          status["shabStatus"] === "blocked"
+                          Object.entries(status).every(
+                            ([key, value]) =>
+                              (key !== "otherStatus" && value === "blocked") ||
+                              (key === "otherStatus" && value === "not sure")
+                          )
+                          // status["jabamaStatus"] === "blocked" &&
+                          // status["mizboonStatus"] === "blocked" &&
+                          // status["otagakStatus"] === "blocked" &&
+                          // status["jajigaStatus"] === "blocked" &&
+                          // status["shabStatus"] === "blocked"
                         ) {
                           days[i].parentElement.classList.add("blocked-days");
                           days[i].parentElement.querySelector(
