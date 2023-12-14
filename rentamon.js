@@ -623,17 +623,17 @@ function discountBtnClicked() {
       );
     });
 
-    const targetElementId = "elementor-popup-modal";
+    const priceTargetElementId = "elementor-popup-modal";
 
     // Create a new MutationObserver
-    const observer = new MutationObserver((mutationsList) => {
+    const priceObserver = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.type === "childList") {
           const addedNodes = Array.from(mutation.addedNodes);
           const targetElement = addedNodes.find(
             (node) =>
               node.nodeType === Node.ELEMENT_NODE &&
-              node.id.includes(targetElementId)
+              node.id.includes(priceTargetElementId)
           );
 
           if (targetElement) {
@@ -649,7 +649,7 @@ function discountBtnClicked() {
     });
 
     // Start observing the document body for changes
-    observer.observe(document.body, { childList: true, subtree: true });
+    priceObserver.observe(document.body, { childList: true, subtree: true });
 
     // $.ajax({
     //   url: mainApiUrl + "/test",
@@ -686,17 +686,17 @@ function priceBtnClicked() {
       );
     });
 
-    const targetElementId = "elementor-popup-modal";
+    const priceTargetElementId = "elementor-popup-modal";
 
     // Create a new MutationObserver
-    const observer = new MutationObserver((mutationsList) => {
+    const priceObserver = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.type === "childList") {
           const addedNodes = Array.from(mutation.addedNodes);
           const targetElement = addedNodes.find(
             (node) =>
               node.nodeType === Node.ELEMENT_NODE &&
-              node.id.includes(targetElementId)
+              node.id.includes(priceTargetElementId)
           );
 
           if (targetElement) {
@@ -712,7 +712,7 @@ function priceBtnClicked() {
     });
 
     // Start observing the document body for changes
-    observer.observe(document.body, { childList: true, subtree: true });
+    priceObserver.observe(document.body, { childList: true, subtree: true });
 
     // $.ajax({
     //   url: mainApiUrl + "/test",
