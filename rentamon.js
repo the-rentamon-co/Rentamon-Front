@@ -44,15 +44,6 @@ const routes = {
   },
 };
 
-// const urls = [
-//   routes.jabama.calendar,
-//   routes.mizboon.calendar,
-//   routes.otaghak.calendar,
-//   routes.jajiga.calendar,
-//   routes.shab.calendar,
-//   routes.other.calendar,
-// ];
-
 const messages = {
   blockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   unblockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
@@ -95,22 +86,6 @@ function jabamaStatus(jabama) {
   }
 }
 
-// function jabamaStatus(jabama) {
-//   if (jabama) {
-//     if (jabama["status"] === "disabledByHost") {
-//       return "blocked";
-//     } else if (jabama["status"] === "reserved") {
-//       return "booked";
-//     } else if (jabama["status"] === "available") {
-//       return "unblocked";
-//     } else {
-//       return "not sure";
-//     }
-//   } else {
-//     return "not sure";
-//   }
-// }
-
 function jajigaStatus(jajiga) {
   if (!jajiga) {
     return "not sure";
@@ -134,43 +109,6 @@ function jajigaStatus(jajiga) {
   }
 }
 
-// function jajigaStatus(jajiga) {
-//   if (jajiga) {
-
-//     if (
-//       jajiga["books_count"] === 0 &&
-//       jajiga["disable_count"] === 1 &&
-//       jajiga["unavailable_type"] === "disabled"
-//     ) {
-//       return "blocked";
-//     } else if (
-//       jajiga["books_count"] === 1 &&
-//       jajiga["disable_count"] === 0 &&
-//       jajiga["unavailable_type"] === "booked"
-//     ) {
-//       return "booked";
-//     } else if (jajiga["books_count"] === 0 && jajiga["disable_count"] === 0) {
-//       return "unblocked";
-//     } else {
-//       return "not sure";
-//     }
-//   } else {
-//     return "not sure";
-//   }
-// }
-
-// function otherStatus(other) {
-//   if (other) {
-//     if (other["status"] === "booked") {
-//       return "booked";
-//     } else {
-//       return "not sure";
-//     }
-//   } else {
-//     return "not sure";
-//   }
-// }
-
 function otherStatus(other) {
   if (!other) {
     return "not sure";
@@ -181,37 +119,6 @@ function otherStatus(other) {
     return "not sure";
   }
 }
-
-// function shabStatus(shab) {
-//   if (shab) {
-//     if (
-//       shab["available_units_count"] === 1 &&
-//       shab["is_disabled"] === true &&
-//       shab["is_non_bookable"] === true &&
-//       shab["is_unavailable"] === false
-//     ) {
-//       return "blocked";
-//     } else if (
-//       shab["available_units_count"] === 0 &&
-//       shab["is_disabled"] === true &&
-//       shab["is_non_bookable"] === true &&
-//       shab["is_unavailable"] === false
-//     ) {
-//       return "booked";
-//     } else if (
-//       shab["available_units_count"] === 1 &&
-//       shab["is_disabled"] === false &&
-//       shab["is_non_bookable"] === false &&
-//       shab["is_unavailable"] === false
-//     ) {
-//       return "unblocked";
-//     } else {
-//       return "not sure";
-//     }
-//   } else {
-//     return "not sure";
-//   }
-// }
 
 function shabStatus(shab) {
   if (!shab) {
@@ -244,22 +151,6 @@ function shabStatus(shab) {
   }
 }
 
-// function mizboonStatus(mizboon) {
-//   if (mizboon) {
-//     if (mizboon["booked"] === 0 && mizboon["closed"] === 1) {
-//       return "blocked";
-//     } else if (mizboon["booked"] === 1 && mizboon["closed"] === 1) {
-//       return "booked";
-//     } else if (mizboon["booked"] === 0 && mizboon["closed"] === 0) {
-//       return "unblocked";
-//     } else {
-//       return "not sure";
-//     }
-//   } else {
-//     return "not sure";
-//   }
-// }
-
 function mizboonStatus(mizboon) {
   if (!mizboon) {
     return "not sure";
@@ -276,30 +167,6 @@ function mizboonStatus(mizboon) {
   }
 }
 
-// function otagakStatus(otaghak) {
-//   if (otaghak) {
-//     if (
-//       otaghak["isBlocked"] === true &&
-//       otaghak["blockedType"] === "BlockedManually"
-//     ) {
-//       return "blocked";
-//     } else if (
-//       otaghak["isBlocked"] === true &&
-//       otaghak["blockedType"] === "BlockedByBooking"
-//     ) {
-//       return "booked";
-//     } else if (
-//       otaghak["isBlocked"] === false &&
-//       otaghak["blockedType"] === null
-//     ) {
-//       return "unblocked";
-//     } else {
-//       return "not sure";
-//     }
-//   } else {
-//     return "not sure";
-//   }
-// }
 function otagakStatus(otaghak) {
   if (!otaghak) {
     return "not sure";
@@ -624,8 +491,6 @@ function discountBtnClicked() {
     });
 
     const priceTargetElementId = "elementor-popup-modal";
-
-    // Create a new MutationObserver
     const priceObserver = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.type === "childList") {
@@ -647,29 +512,8 @@ function discountBtnClicked() {
         }
       }
     });
-
-    // Start observing the document body for changes
     priceObserver.observe(document.body, { childList: true, subtree: true });
-
-    // $.ajax({
-    //   url: mainApiUrl + "/test",
-    //   method: "GET",
-    //   data: {
-    //     otagh: routes["otaghak"]["room"],
-    //     jabama: routes["jabama"]["room"],
-    //     days: selectedDate.join(","),
-    //   },
-    //   success: function (response) {
-    //     console.log(response);
-    //   },
-    //   error: function (error) {
-    //     console.error(error);
-    //   },
-    // });
-    // alert(messages.reserveDaySuccess);
-    // window.location.reload();
   } else {
-    // alert(messages.notSelectedDay);
   }
 }
 
@@ -687,8 +531,6 @@ function priceBtnClicked() {
     });
 
     const priceTargetElementId = "elementor-popup-modal";
-
-    // Create a new MutationObserver
     const priceObserver = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.type === "childList") {
@@ -698,7 +540,6 @@ function priceBtnClicked() {
               node.nodeType === Node.ELEMENT_NODE &&
               node.id.includes(priceTargetElementId)
           );
-
           if (targetElement) {
             document.querySelector('input[name="form_fields[dates]"').value =
               selectedDate;
@@ -711,28 +552,8 @@ function priceBtnClicked() {
       }
     });
 
-    // Start observing the document body for changes
     priceObserver.observe(document.body, { childList: true, subtree: true });
-
-    // $.ajax({
-    //   url: mainApiUrl + "/test",
-    //   method: "GET",
-    //   data: {
-    //     otagh: routes["otaghak"]["room"],
-    //     jabama: routes["jabama"]["room"],
-    //     days: selectedDate.join(","),
-    //   },
-    //   success: function (response) {
-    //     console.log(response);
-    //   },
-    //   error: function (error) {
-    //     console.error(error);
-    //   },
-    // });
-    // alert(messages.reserveDaySuccess);
-    // window.location.reload();
   } else {
-    // alert(messages.notSelectedDay);
   }
 }
 
@@ -751,9 +572,7 @@ $(".inline").pDatepicker({
     titleFormat: "YYYY",
   },
   inline: true,
-  // minDate: new persianDate().month(9).startOf("month"),
   minDate: new persianDate().startOf("day"),
-
   maxDate: new persianDate().month(10).endOf("month"),
   navigator: {
     enabled: true,
