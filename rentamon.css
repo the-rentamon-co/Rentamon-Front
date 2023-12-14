@@ -104,7 +104,9 @@ td.passed-days span:last-child {
 .form {
     width: 100%;
     padding-top: 40px;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    /* grid-template-columns: repeat(3, 1fr); */
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
@@ -137,7 +139,7 @@ label {
 
 }
 
-.price{
+.price {
     font-size: 14px !important;
 }
 
