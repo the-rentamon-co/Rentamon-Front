@@ -3456,167 +3456,171 @@
                 var availableDays = document.querySelectorAll(
                   ".datepicker-day-view td:not(.disabled):has(span:first-child:not(.other-month))"
                 );
-                const days = document.querySelectorAll(
-                  ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
-                );
-                var range = [
-                  new persianDate(
-                    parseInt(availableDays[0].getAttribute("data-unix"))
-                  ).format("YYYY-MM-DD"),
-                  new persianDate(
-                    parseInt(
-                      availableDays[availableDays.length - 1].getAttribute(
-                        "data-unix"
+
+                if (availableDays.length > 0) {
+                  const days = document.querySelectorAll(
+                    ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
+                  );
+                  var range = [
+                    new persianDate(
+                      parseInt(availableDays[0].getAttribute("data-unix"))
+                    ).format("YYYY-MM-DD"),
+                    new persianDate(
+                      parseInt(
+                        availableDays[availableDays.length - 1].getAttribute(
+                          "data-unix"
+                        )
+                      )
+                    ).format("YYYY-MM-DD"),
+                    new persianDate(
+                      parseInt(
+                        availableDays[availableDays.length - 1].getAttribute(
+                          "data-unix"
+                        )
                       )
                     )
-                  ).format("YYYY-MM-DD"),
-                  new persianDate(
-                    parseInt(
-                      availableDays[availableDays.length - 1].getAttribute(
-                        "data-unix"
-                      )
-                    )
-                  )
-                    .add("day", 1)
-                    .format("YYYY-MM-DD"),
-                ];
-                const urls2 = [
-                  routes.jabama.calendar +
-                    `?room=${routes.jabama.room}&start_date=${range[0]}&end_date=${range[2]}`,
+                      .add("day", 1)
+                      .format("YYYY-MM-DD"),
+                  ];
+                  const urls2 = [
+                    routes.jabama.calendar +
+                      `?room=${routes.jabama.room}&start_date=${range[0]}&end_date=${range[2]}`,
 
-                  routes.mizboon.calendar +
-                    `?rental_id=${routes.mizboon.room}&from=${range[0]}&to=${range[1]}`,
+                    routes.mizboon.calendar +
+                      `?rental_id=${routes.mizboon.room}&from=${range[0]}&to=${range[1]}`,
 
-                  routes.otaghak.calendar +
-                    `?roomId=${routes.otaghak.room}&startDate=${range[0]}&endDate=${range[1]}`,
+                    routes.otaghak.calendar +
+                      `?roomId=${routes.otaghak.room}&startDate=${range[0]}&endDate=${range[1]}`,
 
-                  routes.jajiga.calendar + `?room_id=${routes.jajiga.room}&from=${range[0]}&to=${range[1]}`,
+                    routes.jajiga.calendar +
+                      `?room_id=${routes.jajiga.room}&from=${range[0]}&to=${range[1]}`,
 
-                  routes.shab.calendar +
-                    `?room=${routes.shab.room}&from_date=${range[0]}&to_date=${range[2]}`,
+                    routes.shab.calendar +
+                      `?room=${routes.shab.room}&from_date=${range[0]}&to_date=${range[2]}`,
 
-                  routes.other.calendar + `?start=${range[0]}&end=${range[1]}`,
-                ];
+                    routes.other.calendar +
+                      `?start=${range[0]}&end=${range[1]}`,
+                  ];
 
-                console.log(urls2);
+                  console.log(urls2);
 
-                availableDays.forEach((day) => {
-                  day.addEventListener("click", (e) => {
-                    if (e.target.parentElement.tagName === "TD") {
-                      e.target.parentElement.classList.toggle("selected");
-                    } else if (e.target.tagName === "TD") {
-                      e.target.classList.toggle("selected");
-                    }
+                  availableDays.forEach((day) => {
+                    day.addEventListener("click", (e) => {
+                      if (e.target.parentElement.tagName === "TD") {
+                        e.target.parentElement.classList.toggle("selected");
+                      } else if (e.target.tagName === "TD") {
+                        e.target.classList.toggle("selected");
+                      }
+                    });
                   });
-                });
 
-                const fetchPromises = urls2.map((url) => fetchData(url));
-                Promise.all(fetchPromises)
-                  .then((results) => {
-                    console.log(results);
+                  const fetchPromises = urls2.map((url) => fetchData(url));
+                  Promise.all(fetchPromises)
+                    .then((results) => {
+                      console.log(results);
 
-                    for (let i = 0; i < availableDays.length; i++) {
-                      var status = {
-                        jabamaStatus: jabamaStatus(results[0][i]),
-                        mizboonStatus: mizboonStatus(results[1][i]),
-                        otagakStatus: otagakStatus(results[2][i]),
-                        jajigaStatus: jajigaStatus(results[3][i]),
-                        shabStatus: shabStatus(results[4][i]),
-                        otherStatus: otherStatus(results[5][i]),
-                      };
-                      let raw = parseInt(
-                        parseInt(results[0][i]["discountedPrice"]) / 10000
-                      );
-                      let price = convertToPersianNumber(
-                        raw.toLocaleString().replace(/,/g, "/")
-                      );
-                      if (
-                        parseInt(results[0][i]["price"]) >
-                        parseInt(results[0][i]["discountedPrice"])
-                      ) {
-                        days[i].parentElement.style.border =
-                          "2px solid #8165D6";
-                      }
-                      if (price > 0) {
-                        days[i].parentElement.querySelector(
-                          ".price"
-                        ).innerHTML = price;
-                      }
-                      var names = {
-                        jabamaStatus: { fa: "جاباما", en: "jabama" },
-                        mizboonStatus: { fa: "میزبون", en: "mizbon" },
-                        otagakStatus: { fa: "اتاقک", en: "otaghak" },
-                        jajigaStatus: { fa: "جاجیگا", en: "jajiga" },
-                        shabStatus: { fa: "شب", en: "shab" },
-                        otherStatus: { fa: "رزرو", en: "other" },
-                      };
-                      console.log(
-                        `🢆 .............. 1402/09/${i + 1} .............. 🢆`
-                      );
-                      console.table(status);
-                      if (
-                        status["jabamaStatus"] === "booked" ||
-                        status["mizboonStatus"] === "booked" ||
-                        status["otagakStatus"] === "booked" ||
-                        status["jajigaStatus"] === "booked" ||
-                        status["shabStatus"] === "booked" ||
-                        status["otherStatus"] === "booked"
-                      ) {
-                        days[i].parentElement.classList.add("booked-days");
-                        const website = Object.keys(status).find(
-                          (key) => status[key] === "booked"
+                      for (let i = 0; i < availableDays.length; i++) {
+                        var status = {
+                          jabamaStatus: jabamaStatus(results[0][i]),
+                          mizboonStatus: mizboonStatus(results[1][i]),
+                          otagakStatus: otagakStatus(results[2][i]),
+                          jajigaStatus: jajigaStatus(results[3][i]),
+                          shabStatus: shabStatus(results[4][i]),
+                          otherStatus: otherStatus(results[5][i]),
+                        };
+                        let raw = parseInt(
+                          parseInt(results[0][i]["discountedPrice"]) / 10000
                         );
-                        days[i].parentElement.querySelector(
-                          ".reserved"
-                        ).innerHTML = names[website]["fa"];
-                        for (const web in tobeDisabled) {
-                          if (
-                            web !== names[website]["en"] &&
-                            status[website] !== "booked" &&
-                            status[website] !== "blocked"
-                          ) {
-                            tobeDisabled[web](
-                              new persianDate(
-                                parseInt(
-                                  days[i].parentElement.getAttribute(
-                                    "data-unix"
-                                  )
-                                )
-                              ).format("YYYY-MM-DD")
-                            );
-                          }
+                        let price = convertToPersianNumber(
+                          raw.toLocaleString().replace(/,/g, "/")
+                        );
+                        if (
+                          parseInt(results[0][i]["price"]) >
+                          parseInt(results[0][i]["discountedPrice"])
+                        ) {
+                          days[i].parentElement.style.border =
+                            "2px solid #8165D6";
                         }
-                      } else if (
-                        status["jabamaStatus"] === "blocked" &&
-                        status["mizboonStatus"] === "blocked" &&
-                        status["otagakStatus"] === "blocked" &&
-                        status["jajigaStatus"] === "blocked" &&
-                        status["shabStatus"] === "blocked"
-                      ) {
-                        days[i].parentElement.classList.add("blocked-days");
-                        days[i].parentElement.querySelector(
-                          ".price"
-                        ).innerHTML = "";
-                        days[i].parentElement.style.border = "0px solid";
+                        if (price > 0) {
+                          days[i].parentElement.querySelector(
+                            ".price"
+                          ).innerHTML = price;
+                        }
+                        var names = {
+                          jabamaStatus: { fa: "جاباما", en: "jabama" },
+                          mizboonStatus: { fa: "میزبون", en: "mizbon" },
+                          otagakStatus: { fa: "اتاقک", en: "otaghak" },
+                          jajigaStatus: { fa: "جاجیگا", en: "jajiga" },
+                          shabStatus: { fa: "شب", en: "shab" },
+                          otherStatus: { fa: "رزرو", en: "other" },
+                        };
+                        console.log(
+                          `🢆 .............. 1402/09/${i + 1} .............. 🢆`
+                        );
+                        console.table(status);
+                        if (
+                          status["jabamaStatus"] === "booked" ||
+                          status["mizboonStatus"] === "booked" ||
+                          status["otagakStatus"] === "booked" ||
+                          status["jajigaStatus"] === "booked" ||
+                          status["shabStatus"] === "booked" ||
+                          status["otherStatus"] === "booked"
+                        ) {
+                          days[i].parentElement.classList.add("booked-days");
+                          const website = Object.keys(status).find(
+                            (key) => status[key] === "booked"
+                          );
+                          days[i].parentElement.querySelector(
+                            ".reserved"
+                          ).innerHTML = names[website]["fa"];
+                          for (const web in tobeDisabled) {
+                            if (
+                              web !== names[website]["en"] &&
+                              status[website] !== "booked" &&
+                              status[website] !== "blocked"
+                            ) {
+                              tobeDisabled[web](
+                                new persianDate(
+                                  parseInt(
+                                    days[i].parentElement.getAttribute(
+                                      "data-unix"
+                                    )
+                                  )
+                                ).format("YYYY-MM-DD")
+                              );
+                            }
+                          }
+                        } else if (
+                          status["jabamaStatus"] === "blocked" &&
+                          status["mizboonStatus"] === "blocked" &&
+                          status["otagakStatus"] === "blocked" &&
+                          status["jajigaStatus"] === "blocked" &&
+                          status["shabStatus"] === "blocked"
+                        ) {
+                          days[i].parentElement.classList.add("blocked-days");
+                          days[i].parentElement.querySelector(
+                            ".price"
+                          ).innerHTML = "";
+                          days[i].parentElement.style.border = "0px solid";
+                        }
                       }
-                    }
-                    // var availableDays = document.querySelectorAll(
-                    //   ".datepicker-day-view td:not(.disabled)"
-                    // );
-                    // availableDays.forEach((day) => {
-                    //   day.addEventListener("click", (e) => {
-                    //     if (e.target.parentElement.tagName === "TD") {
-                    //       e.target.parentElement.classList.toggle("selected");
-                    //     } else if (e.target.tagName === "TD") {
-                    //       e.target.classList.toggle("selected");
-                    //     }
-                    //   });
-                    // });
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                  });
-
+                      // var availableDays = document.querySelectorAll(
+                      //   ".datepicker-day-view td:not(.disabled)"
+                      // );
+                      // availableDays.forEach((day) => {
+                      //   day.addEventListener("click", (e) => {
+                      //     if (e.target.parentElement.tagName === "TD") {
+                      //       e.target.parentElement.classList.toggle("selected");
+                      //     } else if (e.target.tagName === "TD") {
+                      //       e.target.classList.toggle("selected");
+                      //     }
+                      //   });
+                      // });
+                    })
+                    .catch((error) => {
+                      console.error(error);
+                    });
+                }
                 // const todayTD = document.querySelector(
                 //   `.datepicker-plot-area-inline-view td[data-unix="${tehranzeroo}"] span`
                 // );
