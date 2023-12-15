@@ -27,7 +27,7 @@
 .datepicker-plot-area-inline-view {
     font-size: 16px !important;
     font-family: vazirmatn !important;
-    height: 500px;
+    /* height: 500px; */
     padding-top: 10px
 }
 
@@ -145,4 +145,13 @@ label {
 
 td.passed-days.disabled {
     background: #f1f1f1;
+}
+.header-row {
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    flex-direction: row-reverse !important;
+}
+.btn-next,.btn-prev {
+transform: rotate(180deg);
 }
