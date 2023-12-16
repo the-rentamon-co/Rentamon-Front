@@ -166,7 +166,7 @@ td.passed-days.disabled {
 
 
 
-.loading-overlay {
+.loading-overlay-calendar {
     position: fixed;
     top: 0;
     left: 0;
