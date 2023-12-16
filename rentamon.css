@@ -18,6 +18,7 @@
     height: 33% !important;
     background-color: inherit;
     color: inherit;
+    word-break: break-all;
 }
 
 .datepicker-plot-area-inline-view .datepicker-day-view .month-grid-box {
@@ -151,4 +152,11 @@ td.passed-days.disabled {
     justify-content: space-around !important;
     align-items: center !important;
 
+}
+
+
+.datepicker-plot-area .datepicker-day-view .table-days tr {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
 }
