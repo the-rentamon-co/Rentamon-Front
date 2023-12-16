@@ -613,11 +613,11 @@ $(".inline").pDatepicker({
           <div class="title"></div>
           <div class="header-row">
             <div class="header-row-cell">شنبه</div>
-            <div class="header-row-cell">یکشنبه</div>
-            <div class="header-row-cell">دوشنبه</div>
-            <div class="header-row-cell">سه‌شنبه</div>
-            <div class="header-row-cell">چهارشنبه</div>
-            <div class="header-row-cell">پنجشنبه</div>
+            <div class="header-row-cell">یک</div>
+            <div class="header-row-cell">دو</div>
+            <div class="header-row-cell">سه</div>
+            <div class="header-row-cell">چهار</div>
+            <div class="header-row-cell">پنج</div>
             <div class="header-row-cell">جمعه</div>
           </div>
         </div>

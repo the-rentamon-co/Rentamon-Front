@@ -150,8 +150,5 @@ td.passed-days.disabled {
     display: flex !important;
     justify-content: space-around !important;
     align-items: center !important;
-    flex-direction: row-reverse !important;
-}
-.btn-next,.btn-prev {
-transform: rotate(180deg);
+
 }
