@@ -9,8 +9,8 @@
 /* End of added CSS by Faghih */
 
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td:focus,
-.datepicker-plot-area-inline-view .datepicker-day-view .table-days td span  {
-    outline-color: inherit;
+.datepicker-plot-area-inline-view .datepicker-day-view .table-days td span:focus  {
+    outline-color: red;
     outline: none
 }
 
