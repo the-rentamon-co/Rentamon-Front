@@ -3440,7 +3440,7 @@
             {
               key: "render",
               value: function render(data) {
-                document.querySelector(".loading-overlay").style.display= "block"
+                document.querySelector(".loading-overlay").style.display= "flex"
                 Helper.debug(this, "render");
                 Mustache.parse(Template);
                 this.rendered = $(
