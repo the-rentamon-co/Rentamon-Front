@@ -3440,7 +3440,7 @@
             {
               key: "render",
               value: function render(data) {
-                document.querySelector(".loading-overlay").style.display= "flex"
+                document.querySelector(".loading-overlay-calendar").style.display= "flex"
                 Helper.debug(this, "render");
                 Mustache.parse(Template);
                 this.rendered = $(
@@ -3608,13 +3608,13 @@
                           days[i].parentElement.style.border = "0px solid";
                         }
                       }
-                      document.querySelector(".loading-overlay").style.display= "none"
+                      document.querySelector(".loading-overlay-calendar").style.display= "none"
                     })
                     .catch((error) => {
                       console.error(error);
                     });
                   }else{
-                    document.querySelector(".loading-overlay").style.display= "none"
+                    document.querySelector(".loading-overlay-calendar").style.display= "none"
                   }
                   
                 // end of rentamon

@@ -148,6 +148,7 @@ label {
 td.passed-days.disabled {
     background: #f1f1f1;
 }
+
 .header-row {
     display: flex !important;
     justify-content: space-around !important;
@@ -176,10 +177,10 @@ td.passed-days.disabled {
     justify-content: center;
     align-items: center;
     z-index: 9999;
-            flex-direction: column;
+    flex-direction: column;
 }
 
-.loading-overlay .loading-spinner {
+.loading-overlay-calendar .loading-spinner-calendar {
     border: 16px solid #f3f3f3;
     border-top: 16px solid #8165D6;
     border-radius: 50%;
@@ -188,15 +189,20 @@ td.passed-days.disabled {
     animation: spin 2s linear infinite;
 }
 
-.loading-text{
+.loading-text-calendar {
     margin-top: 20px;
     font-size: 18px;
     color: white;
     text-align: center;
-    
+
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
