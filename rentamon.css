@@ -8,6 +8,13 @@
 
 /* End of added CSS by Faghih */
 
+.datepicker-plot-area-inline-view .datepicker-day-view .table-days td:focus,
+.datepicker-plot-area-inline-view .datepicker-day-view .table-days td span:focus  {
+    outline-color: red;
+    outline: none
+}
+
+
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span:hover {
     background-color: #f1f1f1;
     color: #ccc;
@@ -160,3 +167,4 @@ td.passed-days.disabled {
     display: flex;
     justify-content: space-evenly;
 }
+
