@@ -3440,6 +3440,7 @@
             {
               key: "render",
               value: function render(data) {
+                document.querySelector(".loading-overlay").style.display= "block"
                 Helper.debug(this, "render");
                 Mustache.parse(Template);
                 this.rendered = $(
@@ -3607,12 +3608,15 @@
                           days[i].parentElement.style.border = "0px solid";
                         }
                       }
+                      document.querySelector(".loading-overlay").style.display= "none"
                     })
                     .catch((error) => {
                       console.error(error);
                     });
-                }
-
+                  }else{
+                    document.querySelector(".loading-overlay").style.display= "none"
+                  }
+                  
                 // end of rentamon
               },
             },
