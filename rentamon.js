@@ -490,6 +490,7 @@ const tobeDisabled = {
 function discountBtnClicked() {
   var selected = document.querySelectorAll(".selected");
   var selectedDate = [];
+  var jabamaPrice = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
@@ -498,8 +499,8 @@ function discountBtnClicked() {
           "YYYY-MM-DD"
         )
       );
+      jabamaPrice.push(z.getAttribute("price-from-jabama"));
     });
-
     const priceTargetElementId = "elementor-popup-modal";
     const priceObserver = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
@@ -514,10 +515,9 @@ function discountBtnClicked() {
           if (targetElement) {
             document.querySelector('input[name="form_fields[dates]"').value =
               selectedDate;
-            console.log(
-              'Element with ID containing "elementor-popup-modal" added:',
-              targetElement
-            );
+            document.querySelector(
+              'input[name="form_fields[noDiscountPrice]"'
+            ).value = jabamaPrice;
           }
         }
       }

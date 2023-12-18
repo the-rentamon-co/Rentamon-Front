@@ -3440,7 +3440,9 @@
             {
               key: "render",
               value: function render(data) {
-                document.querySelector(".loading-overlay-calendar").style.display= "flex"
+                document.querySelector(
+                  ".loading-overlay-calendar"
+                ).style.display = "flex";
                 Helper.debug(this, "render");
                 Mustache.parse(Template);
                 this.rendered = $(
@@ -3530,7 +3532,9 @@
                           otherStatus: otherStatus(results[5][i]),
                         };
 
-                        // console.log(Object.entries(status).every(([key, value]) => blockStatus([key, value])))
+                        let origPrice = parseInt(
+                          parseInt(results[0][i]["price"]) / 10
+                        );
                         let raw = parseInt(
                           parseInt(results[0][i]["discountedPrice"]) / 10000
                         );
@@ -3548,6 +3552,11 @@
                           days[i].parentElement.querySelector(
                             ".price"
                           ).innerHTML = price;
+
+                          days[i].parentElement.setAttribute(
+                            "price-from-jabama",
+                            origPrice
+                          );
                         }
 
                         console.table(status);
@@ -3555,20 +3564,10 @@
                           ([key, value]) => value === "booked"
                         );
 
-                        if (
-                          bookedStatus
-                          // status["jabamaStatus"] === "booked" ||
-                          // status["mizboonStatus"] === "booked" ||
-                          // status["otagakStatus"] === "booked" ||
-                          // status["jajigaStatus"] === "booked" ||
-                          // status["shabStatus"] === "booked" ||
-                          // status["otherStatus"] === "booked"
-                        ) {
+                        if (bookedStatus) {
                           days[i].parentElement.classList.add("booked-days");
                           const website = bookedStatus[0];
-                          // const website = Object.keys(status).find(
-                          //   (key) => status[key] === "booked"
-                          // );
+
                           days[i].parentElement.querySelector(
                             ".reserved"
                           ).innerHTML = names[website]["fa"];
@@ -3595,11 +3594,6 @@
                               (key !== "otherStatus" && value === "blocked") ||
                               (key === "otherStatus" && value === "not sure")
                           )
-                          // status["jabamaStatus"] === "blocked" &&
-                          // status["mizboonStatus"] === "blocked" &&
-                          // status["otagakStatus"] === "blocked" &&
-                          // status["jajigaStatus"] === "blocked" &&
-                          // status["shabStatus"] === "blocked"
                         ) {
                           days[i].parentElement.classList.add("blocked-days");
                           days[i].parentElement.querySelector(
@@ -3608,15 +3602,19 @@
                           days[i].parentElement.style.border = "0px solid";
                         }
                       }
-                      document.querySelector(".loading-overlay-calendar").style.display= "none"
+                      document.querySelector(
+                        ".loading-overlay-calendar"
+                      ).style.display = "none";
                     })
                     .catch((error) => {
                       console.error(error);
                     });
-                  }else{
-                    document.querySelector(".loading-overlay-calendar").style.display= "none"
-                  }
-                  
+                } else {
+                  document.querySelector(
+                    ".loading-overlay-calendar"
+                  ).style.display = "none";
+                }
+
                 // end of rentamon
               },
             },
