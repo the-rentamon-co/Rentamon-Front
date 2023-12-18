@@ -517,7 +517,7 @@ function discountBtnClicked() {
               selectedDate;
             document.querySelector(
               'input[name="form_fields[noDiscountPrice]"'
-            ).value = jabamaPrice;
+            ).value = jabamaPrice[0];
           }
         }
       }
