@@ -3533,7 +3533,7 @@
                         };
 
                         let origPrice = parseInt(
-                          parseInt(results[0][i]["price"]) / 10
+                          parseInt(results[0][i]["price"])
                         );
                         let raw = parseInt(
                           parseInt(results[0][i]["discountedPrice"]) / 10000
