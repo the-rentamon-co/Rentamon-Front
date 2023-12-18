@@ -10,7 +10,9 @@
 /* End of added CSS by Faghih */
 
 
-.datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span:hover {
+.datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span:hover,
+.datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span
+ {
     background-color: #F2F2F2;
     color: #C3C3C3 !important;
 }
