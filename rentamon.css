@@ -212,7 +212,15 @@ td.passed-days.disabled {
 /* for normal days */
 .datepicker-day-view .table-days td:not(.blocked-days):not(.disabled):not(:has(span.other-month)) {
 
-    background-color: white !important;
+    background-color: #E5E5E5 !important;
 }
 
 /* end of normal days */
+
+/* for all texts */
+.datepicker-plot-area * {
+
+    color: #203647 !important;
+}
+
+/* for all texts */
