@@ -10,8 +10,8 @@
 
 
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span:hover {
-    background-color: #f1f1f1;
-    color: #ccc;
+    background-color: #F2F2F2;
+    color: #C3C3C3;
 }
 
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td span,
@@ -41,11 +41,11 @@
 }
 
 .blocked-days {
-    background-color: #FF9E6A !important;
+    background-color: #FBB142 !important;
 }
 
 .booked-days {
-    background-color: #7ce656 !important;
+    background-color: #4FDFB1 !important;
 }
 
 .datepicker-plot-area-inline-view .header-row {
@@ -146,7 +146,7 @@ label {
 }
 
 td.passed-days.disabled {
-    background: #f1f1f1;
+    background: #F2F2F2;
 }
 
 .header-row {
