@@ -590,12 +590,12 @@ $(".inline").pDatepicker({
       enabled: false,
     },
     text: {
-      btnNextText: "<svg width="8" height="16" viewBox="0 0 8 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      btnNextText: '<svg width="8" height="16" viewBox="0 0 8 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1 15L5.87868 10.1213C7.05025 8.94975 7.05025 7.05025 5.87868 5.87868L1 1" stroke="#203647" stroke-width="2"/>
-</svg>",
-      btnPrevText: "<svg width="8" height="16" viewBox="0 0 8 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+</svg>',
+      btnPrevText: '<svg width="8" height="16" viewBox="0 0 8 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M7 1L2.12132 5.87868C0.949747 7.05025 0.949746 8.94975 2.12132 10.1213L7 15" stroke="#203647" stroke-width="2"/>
-</svg>",
+</svg>',
     },
   },
   format: "YYYY-MM-DD",
