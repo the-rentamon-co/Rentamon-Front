@@ -4,6 +4,7 @@
     border-radius: 5px;
     padding: 1px;
     width: 14% !important;
+
 }
 
 /* End of added CSS by Faghih */
@@ -206,3 +207,12 @@ td.passed-days.disabled {
         transform: rotate(360deg);
     }
 }
+
+
+/* for normal days */
+.datepicker-day-view .table-days td:not(.blocked-days):not(.disabled):not(:has(span.other-month)) {
+
+    background-color: white !important;
+}
+
+/* end of normal days */
