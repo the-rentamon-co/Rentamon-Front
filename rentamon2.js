@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((response) => response.json())
     .then((data) => {
       var ids = data["listing"];
-      // ids.push({ id: "2439453" });
+      ids.push({ id: "2439453" });
 
       if (ids.length !== 0) {
         document.querySelector(".flat-button").style.display = "inline-block"
