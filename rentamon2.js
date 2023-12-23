@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ids.push({ id: "2439453" });
 
       if (ids.length !== 0) {
+        document.querySelector(".flat-button").style.display = "inline-block"
         ids.forEach((elm) =>
           fetch(url2 + elm["id"])
             .then((response2) => response2.json())
