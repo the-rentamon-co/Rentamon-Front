@@ -583,7 +583,8 @@ $(".inline").pDatepicker({
   },
   inline: true,
   minDate: new persianDate().startOf("day"),
-  maxDate: new persianDate().month(10).endOf("month"),
+  // maxDate: new persianDate().month(10).endOf("month"),
+  maxDate: new persianDate().add("month",3).startOf("month").subtract('day',1),
   navigator: {
     enabled: true,
     scroll: {
