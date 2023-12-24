@@ -54,7 +54,7 @@ const messages = {
 const names = {
   jabamaStatus: { fa: "جاباما", en: "jabama" },
   mizboonStatus: { fa: "میزبون", en: "mizbon" },
-  otagakStatus: { fa: "اتاقک", en: "otaghak" },
+  otaghakStatus: { fa: "اتاقک", en: "otaghak" },
   jajigaStatus: { fa: "جاجیگا", en: "jajiga" },
   shabStatus: { fa: "شب", en: "shab" },
   otherStatus: { fa: "رزرو", en: "other" },
@@ -177,7 +177,7 @@ function mizboonStatus(mizboon) {
   }
 }
 
-function otagakStatus(otaghak) {
+function otaghakStatus(otaghak) {
   if (!otaghak) {
     return "not sure";
   }

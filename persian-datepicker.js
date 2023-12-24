@@ -3526,7 +3526,7 @@
                         var status = {
                           jabamaStatus: jabamaStatus(results[0][i]),
                           mizboonStatus: mizboonStatus(results[1][i]),
-                          otagakStatus: otagakStatus(results[2][i]),
+                          otaghakStatus: otaghakStatus(results[2][i]),
                           jajigaStatus: jajigaStatus(results[3][i]),
                           shabStatus: shabStatus(results[4][i]),
                           otherStatus: otherStatus(results[5][i]),
@@ -3581,6 +3581,8 @@
                               status[`${web}Status`] !== "booked" &&
                               status[`${web}Status`] !== "blocked"
                             ) {
+
+                              console.log(i,status[`${web}Status`])
                               tobeDisabled[web](
                                 new persianDate(
                                   parseInt(
