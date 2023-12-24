@@ -219,7 +219,7 @@ td.passed-days.disabled {
 
 
 /* for normal days */
-.datepicker-day-view .table-days td:not(.selected):not(.blocked-days):not(.disabled):not(:has(span.other-month)) {
+.datepicker-day-view .table-days td:not(.selected):not(.blocked-days):not(.booked-days):not(:has(span.other-month)) {
 
     background-color: #E5E5E5 !important;
     color: #203647 !important;
