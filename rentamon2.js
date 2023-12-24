@@ -6,20 +6,18 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((response) => response.json())
     .then((data) => {
       var ids = data["listing"];
-      ids.push({ id: "2439453" });
+      // ids.push({ id: "2439453" });
 
       if (ids.length !== 0) {
-        document.querySelector(".flat-button").style.display = "inline-block"
-        ids.forEach((elm) =>
+        document.querySelector(".flat-button").style.display = "inline-block";
+        ids.forEach((elm) => {
           fetch(url2 + elm["id"])
             .then((response2) => response2.json())
             .then((data2) => {
               const details = data2["details"];
               console.log(details);
               document.querySelector("#fname").innerHTML = details["firstname"];
-
               document.querySelector("#lname").innerHTML = details["lastname"];
-
               document.querySelector("#checkin").innerHTML = details["checkin"];
               document.querySelector("#checkout").innerHTML =
                 details["checkout"];
@@ -30,8 +28,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 details["payoutprice"];
               document.querySelector("#fullprice").innerHTML =
                 details["fullprice"];
-            })
-        );
+            });
+
+          document
+            .querySelector("#acceptrequest")
+            .addEventListener("click", () =>
+              fetch(
+                "https://classiccowl.chbk.run/jabama/listing/order/accept?order_id=" +
+                  elm["id"]
+              )
+                .then((r) => r.json())
+                .then((d) => console.log(d))
+            );
+
+          document
+            .querySelector("#declinerequest")
+            .addEventListener("click", () =>
+              fetch(
+                "https://classiccowl.chbk.run/jabama/listing/order/reject?order_id=" +
+                  elm["id"]
+              )
+                .then((r) => r.json())
+                .then((d) => console.log(d))
+            );
+        });
       } else {
         console.log("no id");
       }
