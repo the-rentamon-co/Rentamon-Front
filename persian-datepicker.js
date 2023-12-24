@@ -3572,10 +3572,14 @@
                             ".reserved"
                           ).innerHTML = names[website]["fa"];
                           for (const web in tobeDisabled) {
+
+                            // console.log(status[`${web}Status`])
+                            // console.log(names[website]["en"])
+                            // console.log(status[website])
                             if (
                               web !== names[website]["en"] &&
-                              status[website] !== "booked" &&
-                              status[website] !== "blocked"
+                              status[`${web}Status`] !== "booked" &&
+                              status[`${web}Status`] !== "blocked"
                             ) {
                               tobeDisabled[web](
                                 new persianDate(
