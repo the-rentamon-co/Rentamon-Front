@@ -16,6 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
             .then((data2) => {
               const details = data2["details"];
               console.log(details);
+              document.querySelector("#website-title").innerHTML =
+                details["website"];
               document.querySelector("#fname").innerHTML = details["firstname"];
               document.querySelector("#lname").innerHTML = details["lastname"];
               document.querySelector("#checkin").innerHTML = details["checkin"];
@@ -28,29 +30,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 details["payoutprice"];
               document.querySelector("#fullprice").innerHTML =
                 details["fullprice"];
+
+              document
+                .querySelector("#acceptrequest")
+                .addEventListener("click", () =>
+                  fetch("https://classiccowl.chbk.run" + data2["forAccept"])
+                    .then((r) => r.json())
+                    .then((d) => console.log(d))
+                );
+
+              document
+                .querySelector("#declinerequest")
+                .addEventListener("click", () =>
+                  fetch("https://classiccowl.chbk.run" + data2["forReject"])
+                    .then((r) => r.json())
+                    .then((d) => console.log(d))
+                );
             });
-
-          document
-            .querySelector("#acceptrequest")
-            .addEventListener("click", () =>
-              fetch(
-                "https://classiccowl.chbk.run/jabama/listing/order/accept?order_id=" +
-                  elm["id"]
-              )
-                .then((r) => r.json())
-                .then((d) => console.log(d))
-            );
-
-          document
-            .querySelector("#declinerequest")
-            .addEventListener("click", () =>
-              fetch(
-                "https://classiccowl.chbk.run/jabama/listing/order/reject?order_id=" +
-                  elm["id"]
-              )
-                .then((r) => r.json())
-                .then((d) => console.log(d))
-            );
         });
       } else {
         console.log("no id");
