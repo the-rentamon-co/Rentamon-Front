@@ -40,10 +40,16 @@ document.addEventListener("DOMContentLoaded", () => {
               document.querySelector("#expire").innerHTML = details["expire"];
               document.querySelector("#nights").innerHTML = details["nights"];
               document.querySelector("#people").innerHTML = details["people"];
-              document.querySelector("#payoutprice").innerHTML =
-                parseInt(details["payoutprice"])/10;
-              document.querySelector("#fullprice").innerHTML =
-                parseInt(details["fullprice"])/10;
+              document.querySelector("#payoutprice").innerHTML = (
+                parseInt(details["payoutprice"]) / 10
+              )
+                .toLocaleString()
+                .replace(/,/g, "/");
+              document.querySelector("#fullprice").innerHTML = (
+                parseInt(details["fullprice"]) / 10
+              )
+                .toLocaleString()
+                .replace(/,/g, "/");
 
               document
                 .querySelector("#acceptrequest")
