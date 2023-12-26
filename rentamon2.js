@@ -41,9 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
               document.querySelector("#nights").innerHTML = details["nights"];
               document.querySelector("#people").innerHTML = details["people"];
               document.querySelector("#payoutprice").innerHTML =
-                details["payoutprice"];
+                parseInt(details["payoutprice"])/10;
               document.querySelector("#fullprice").innerHTML =
-                details["fullprice"];
+                parseInt(details["fullprice"])/10;
 
               document
                 .querySelector("#acceptrequest")
