@@ -1,7 +1,7 @@
 const mainApiUrl = "https://rentamon.chbk.run";
 
-const rentamon_user_id = document.querySelector("#rentamon_id").innerHTML;
-const rentamon_room_id = document.querySelector("#rentamon_room_id").innerHTML;
+const rentamon_user_id = document.querySelector("#rentamon_id").innerText;
+const rentamon_room_id = document.querySelector("#rentamon_room_id").innerText;
 
 const tehranTimeZone = "Asia/Tehran";
 const currentDate = new Date();
