@@ -525,6 +525,13 @@ function discountBtnClicked() {
             document.querySelector(
               'input[name="form_fields[noDiscountPrice]"'
             ).value = jabamaPrice[0];
+
+            document.querySelector(
+              'input[name="form_fields[h_f_r_r_i]"'
+            ).value = rentamon_user_id;
+            document.querySelector(
+              'input[name="form_fields[h_f_r_r_r_i]"'
+            ).value = rentamon_room_id;
           }
         }
       }
@@ -560,10 +567,13 @@ function priceBtnClicked() {
           if (targetElement) {
             document.querySelector('input[name="form_fields[dates]"').value =
               selectedDate;
-            console.log(
-              'Element with ID containing "elementor-popup-modal" added:',
-              targetElement
-            );
+
+            document.querySelector(
+              'input[name="form_fields[h_f_r_r_i]"'
+            ).value = rentamon_user_id;
+            document.querySelector(
+              'input[name="form_fields[h_f_r_r_r_i]"'
+            ).value = rentamon_room_id;
           }
         }
       }
