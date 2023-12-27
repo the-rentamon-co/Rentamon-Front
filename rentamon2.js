@@ -1,11 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
   const apiDomainUrl = "https://rentamon.chbk.run";
   const listings = [
-    apiDomainUrl + "/jabama/listing" + `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
-    apiDomainUrl + "/jajiga/listing"+ `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
-    apiDomainUrl + "/mizboon/listing"+ `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
-    apiDomainUrl + "/shab/listing"+ `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
-    apiDomainUrl + "/otaghak/listing"+ `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
+    apiDomainUrl +
+      "/jabama/listing" +
+      `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
+    apiDomainUrl +
+      "/jajiga/listing" +
+      `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
+    apiDomainUrl +
+      "/mizboon/listing" +
+      `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
+    apiDomainUrl +
+      "/shab/listing" +
+      `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
+    apiDomainUrl +
+      "/otaghak/listing" +
+      `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
   ];
   const fetchDataForListing = async (url) => {
     const response = await fetch(url);
@@ -24,7 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector(".flat-button").style.display = "inline-block";
 
         for (let elm = 0; elm < ids.length; elm++) {
-          fetch(apiDomainUrl + site["forDetail"][elm])
+          fetch(
+            apiDomainUrl +
+              site["forDetail"][elm] +
+              `&rentamon_id=${rentamon_user_id}`
+          )
             .then((response2) => response2.json())
             .then((data2) => {
               const details = data2["details"];
