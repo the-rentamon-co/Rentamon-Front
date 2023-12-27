@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
   const apiDomainUrl = "https://rentamon.chbk.run";
   const listings = [
-    apiDomainUrl + "/jabama/listing",
-    apiDomainUrl + "/jajiga/listing",
-    apiDomainUrl + "/mizboon/listing",
-    apiDomainUrl + "/shab/listing",
-    apiDomainUrl + "/otaghak/listing",
+    apiDomainUrl + "/jabama/listing" + `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
+    apiDomainUrl + "/jajiga/listing"+ `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
+    apiDomainUrl + "/mizboon/listing"+ `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
+    apiDomainUrl + "/shab/listing"+ `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
+    apiDomainUrl + "/otaghak/listing"+ `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
   ];
   const fetchDataForListing = async (url) => {
     const response = await fetch(url);
