@@ -1,4 +1,8 @@
-const mainApiUrl = "https://classiccowl.chbk.run";
+const mainApiUrl = "https://rentamon.chbk.run";
+
+const rentamon_user_id = document.querySelector("#rentamon_id").innerHTML;
+const rentamon_room_id = document.querySelector("#rentamon_room_id").innerHTML;
+
 const tehranTimeZone = "Asia/Tehran";
 const currentDate = new Date();
 const tehranTimestamp = currentDate.toLocaleString("en-US", {
@@ -12,31 +16,31 @@ const routes = {
     block: mainApiUrl + "/otaghak",
     unblock: mainApiUrl + "/otaghak",
     calendar: mainApiUrl + "/otaghak/calendar",
-    room: 55614,
+    room: rentamon_room_id,
   },
   jabama: {
     block: mainApiUrl + "/jabama/disable",
     unblock: mainApiUrl + "/jabama/enable",
     calendar: mainApiUrl + "/jabama/calendar",
-    room: 109108,
+    room: rentamon_room_id,
   },
   jajiga: {
     block: mainApiUrl + "/jajiga",
     unblock: mainApiUrl + "/jajiga",
     calendar: mainApiUrl + "/jajiga/calendar",
-    room: 3142341,
+    room: rentamon_room_id,
   },
   shab: {
     block: mainApiUrl + "/shab",
     unblock: mainApiUrl + "/shab",
     calendar: mainApiUrl + "/shab/calendar",
-    room: 9094,
+    room: rentamon_room_id,
   },
   mizboon: {
     block: mainApiUrl + "/mizboon/close",
     unblock: mainApiUrl + "/mizboon/unclose",
     calendar: mainApiUrl + "/mizboon/calendar",
-    room: 10922,
+    room: rentamon_room_id,
   },
   other: {
     blockUnblock: mainApiUrl + "/other",
@@ -205,7 +209,10 @@ function rentamonApiCaller(website, data, action, method = "GET") {
   $.ajax({
     url: routes[website][action],
     method: method,
-    data: data,
+    data: {
+      ...data,
+      ...{ rentamon_room_id: rentamon_room_id, rentamon_id: rentamon_user_id },
+    },
     success: function (response) {
       console.log(website, response);
     },
@@ -229,7 +236,7 @@ function blockBtnClicked() {
     rentamonApiCaller(
       (website = "jabama"),
       (data = {
-        roomId: routes["jabama"]["room"],
+        rentamon_room_id: routes["jabama"]["room"],
         days: selectedDate.join(","),
       }),
       (action = "block")
@@ -238,7 +245,7 @@ function blockBtnClicked() {
       (website = "jajiga"),
       (data = {
         dates: selectedDate.join(","),
-        room_id: routes["jajiga"]["room"],
+        rentamon_room_id: routes["jajiga"]["room"],
         disable_count: 1,
       }),
       (action = "block")
@@ -246,7 +253,7 @@ function blockBtnClicked() {
     rentamonApiCaller(
       (website = "shab"),
       (data = {
-        roomId: routes["shab"]["room"],
+        rentamon_room_id: routes["shab"]["room"],
         dates: selectedDate.join(","),
         disabled: 1,
       }),
@@ -256,14 +263,14 @@ function blockBtnClicked() {
       (website = "mizboon"),
       (data = {
         days: selectedDate.join(","),
-        rental_id: routes["mizboon"]["room"],
+        rentamon_room_id: routes["mizboon"]["room"],
       }),
       (action = "block")
     );
     rentamonApiCaller(
       (website = "otaghak"),
       (data = {
-        room: routes["otaghak"]["room"],
+        rentamon_room_id: routes["otaghak"]["room"],
         unblockDays: null,
         blockDays: selectedDate.join(","),
       }),
@@ -290,7 +297,7 @@ function unblockBtnClicked() {
     rentamonApiCaller(
       (website = "jabama"),
       (data = {
-        roomId: routes["jabama"]["room"],
+        rentamon_room_id: routes["jabama"]["room"],
         days: selectedDate.join(","),
       }),
       (action = "unblock")
@@ -299,7 +306,7 @@ function unblockBtnClicked() {
       (website = "jajiga"),
       (data = {
         dates: selectedDate.join(","),
-        room_id: routes["jajiga"]["room"],
+        rentamon_room_id: routes["jajiga"]["room"],
         disable_count: 0,
       }),
       (action = "unblock")
@@ -307,7 +314,7 @@ function unblockBtnClicked() {
     rentamonApiCaller(
       (website = "shab"),
       (data = {
-        roomId: routes["shab"]["room"],
+        rentamon_room_id: routes["shab"]["room"],
         dates: selectedDate.join(","),
         disabled: 0,
       }),
@@ -317,14 +324,14 @@ function unblockBtnClicked() {
       (website = "mizboon"),
       (data = {
         days: selectedDate.join(","),
-        rental_id: routes["mizboon"]["room"],
+        rentamon_room_id: routes["mizboon"]["room"],
       }),
       (action = "unblock")
     );
     rentamonApiCaller(
       (website = "otaghak"),
       (data = {
-        room: routes["otaghak"]["room"],
+        rentamon_room_id: routes["otaghak"]["room"],
         unblockDays: selectedDate.join(","),
         blockDays: null,
       }),
@@ -339,7 +346,7 @@ function unblockBtnClicked() {
       (action = "blockUnblock")
     );
     alert(messages.unblockDaySuccess);
-    window.location.reload();
+    // window.location.reload();
   } else {
     alert(messages.notSelectedDay);
   }
@@ -359,7 +366,7 @@ function reserveOther() {
     rentamonApiCaller(
       (website = "jabama"),
       (data = {
-        roomId: routes["jabama"]["room"],
+        rentamon_room_id: routes["jabama"]["room"],
         days: selectedDate.join(","),
       }),
       (action = "block")
@@ -368,7 +375,7 @@ function reserveOther() {
       (website = "jajiga"),
       (data = {
         dates: selectedDate.join(","),
-        room_id: routes["jajiga"]["room"],
+        rentamon_room_id: routes["jajiga"]["room"],
         disable_count: 1,
       }),
       (action = "block")
@@ -376,7 +383,7 @@ function reserveOther() {
     rentamonApiCaller(
       (website = "shab"),
       (data = {
-        roomId: routes["shab"]["room"],
+        rentamon_room_id: routes["shab"]["room"],
         dates: selectedDate.join(","),
         disabled: 1,
       }),
@@ -386,14 +393,14 @@ function reserveOther() {
       (website = "mizboon"),
       (data = {
         days: selectedDate.join(","),
-        rental_id: routes["mizboon"]["room"],
+        rentamon_room_id: routes["mizboon"]["room"],
       }),
       (action = "block")
     );
     rentamonApiCaller(
       (website = "otaghak"),
       (data = {
-        room: routes["otaghak"]["room"],
+        rentamon_room_id: routes["otaghak"]["room"],
         unblockDays: null,
         blockDays: selectedDate.join(","),
       }),
@@ -436,7 +443,7 @@ const tobeDisabled = {
     rentamonApiCaller(
       (website = "jabama"),
       (data = {
-        roomId: routes["jabama"]["room"],
+        rentamon_room_id: routes["jabama"]["room"],
         days: single,
       }),
       (action = "block")
@@ -447,7 +454,7 @@ const tobeDisabled = {
       (website = "jajiga"),
       (data = {
         dates: single,
-        room_id: routes["jajiga"]["room"],
+        rentamon_room_id: routes["jajiga"]["room"],
         disable_count: 1,
       }),
       (action = "block")
@@ -457,7 +464,7 @@ const tobeDisabled = {
     rentamonApiCaller(
       (website = "shab"),
       (data = {
-        roomId: routes["shab"]["room"],
+        rentamon_room_id: routes["shab"]["room"],
         dates: single,
         disabled: 1,
       }),
@@ -469,7 +476,7 @@ const tobeDisabled = {
       (website = "mizboon"),
       (data = {
         days: single,
-        rental_id: routes["mizboon"]["room"],
+        rentamon_room_id: routes["mizboon"]["room"],
       }),
       (action = "block")
     );
@@ -478,7 +485,7 @@ const tobeDisabled = {
     rentamonApiCaller(
       (website = "otaghak"),
       (data = {
-        room: routes["otaghak"]["room"],
+        rentamon_room_id: routes["otaghak"]["room"],
         unblockDays: null,
         blockDays: single,
       }),
@@ -584,7 +591,10 @@ $(".inline").pDatepicker({
   inline: true,
   minDate: new persianDate().startOf("day"),
   // maxDate: new persianDate().month(10).endOf("month"),
-  maxDate: new persianDate().add("month",3).startOf("month").subtract('day',1),
+  maxDate: new persianDate()
+    .add("month", 3)
+    .startOf("month")
+    .subtract("day", 1),
   navigator: {
     enabled: true,
     scroll: {

@@ -3487,19 +3487,19 @@
                   ];
                   const urls2 = [
                     routes.jabama.calendar +
-                      `?room=${routes.jabama.room}&start_date=${range[0]}&end_date=${range[2]}`,
+                      `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}&start_date=${range[0]}&end_date=${range[2]}`,
 
                     routes.mizboon.calendar +
-                      `?rental_id=${routes.mizboon.room}&from=${range[0]}&to=${range[1]}`,
+                      `?rentamon_room_id=${routes.mizboon.room}&rentamon_id=${rentamon_user_id}&from=${range[0]}&to=${range[1]}`,
 
                     routes.otaghak.calendar +
-                      `?roomId=${routes.otaghak.room}&startDate=${range[0]}&endDate=${range[1]}`,
+                      `?rentamon_room_id=${routes.otaghak.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
 
                     routes.jajiga.calendar +
-                      `?room_id=${routes.jajiga.room}&from=${range[0]}&to=${range[1]}`,
+                      `?rentamon_room_id=${routes.jajiga.room}&rentamon_id=${rentamon_user_id}&from=${range[0]}&to=${range[1]}`,
 
                     routes.shab.calendar +
-                      `?room=${routes.shab.room}&from_date=${range[0]}&to_date=${range[2]}`,
+                      `?rentamon_room_id=${routes.shab.room}&rentamon_id=${rentamon_user_id}&from_date=${range[0]}&to_date=${range[2]}`,
 
                     routes.other.calendar +
                       `?start=${range[0]}&end=${range[1]}`,
