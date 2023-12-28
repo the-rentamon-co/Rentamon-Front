@@ -67,7 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
               document
                 .querySelector("#acceptrequest")
                 .addEventListener("click", () =>
-                  fetch(apiDomainUrl + data2["forAccept"])
+                  fetch(
+                    apiDomainUrl +
+                      data2["forAccept"] +
+                      `&rentamon_id=${rentamon_user_id}`
+                  )
                     .then((r) => r.json())
                     .then((d) => console.log(d))
                 );
@@ -75,7 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
               document
                 .querySelector("#declinerequest")
                 .addEventListener("click", () =>
-                  fetch(apiDomainUrl + data2["forReject"])
+                  fetch(
+                    apiDomainUrl +
+                      data2["forReject"] +
+                      `&rentamon_id=${rentamon_user_id}`
+                  )
                     .then((r) => r.json())
                     .then((d) => console.log(d))
                 );
