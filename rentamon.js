@@ -552,7 +552,9 @@ function disconnectedBtnClicked() {
             node.id.includes(disconnectTargetElementId)
         );
         if (targetElement) {
-          document.querySelector('input[name="form_fields[userid]"').value =
+          document.querySelectorAll('input[name="form_fields[userid]"')[0].value =
+            rentamon_user_id;
+            document.querySelectorAll('input[name="form_fields[userid]"')[1].value =
             rentamon_user_id;
         }
       }
