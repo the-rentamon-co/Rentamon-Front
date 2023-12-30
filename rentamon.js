@@ -540,8 +540,7 @@ function discountBtnClicked() {
   }
 }
 
-function disconnectedBtnClicked(){
-
+function disconnectedBtnClicked() {
   const disconnectTargetElementId = "elementor-popup-modal";
   const disconnectObserver = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
@@ -550,10 +549,11 @@ function disconnectedBtnClicked(){
         const targetElement = addedNodes.find(
           (node) =>
             node.nodeType === Node.ELEMENT_NODE &&
-            node.id.includes(priceTargetElementId)
+            node.id.includes(disconnectTargetElementId)
         );
         if (targetElement) {
-          document.querySelector('input[name="form_fields[userid]"').value = rentamon_user_id
+          document.querySelector('input[name="form_fields[userid]"').value =
+            rentamon_user_id;
         }
       }
     }
@@ -561,8 +561,6 @@ function disconnectedBtnClicked(){
 
   disconnectObserver.observe(document.body, { childList: true, subtree: true });
 }
-
-
 
 function priceBtnClicked() {
   var selected = document.querySelectorAll(".selected");
@@ -696,9 +694,9 @@ $(".inline").pDatepicker({
 `,
 });
 $(document).ready(function () {
-
-  document.querySelector("#webdisconnected").addEventListener("click", disconnectedBtnClicked)
-
+  document
+    .querySelector("#webdisconnected")
+    .addEventListener("click", disconnectedBtnClicked);
 
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
