@@ -540,6 +540,30 @@ function discountBtnClicked() {
   }
 }
 
+function disconnectedBtnClicked(){
+
+  const disconnectTargetElementId = "elementor-popup-modal";
+  const disconnectObserver = new MutationObserver((mutationsList) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === "childList") {
+        const addedNodes = Array.from(mutation.addedNodes);
+        const targetElement = addedNodes.find(
+          (node) =>
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.id.includes(priceTargetElementId)
+        );
+        if (targetElement) {
+          document.querySelector('input[name="form_fields[userid]"').value = rentamon_user_id
+        }
+      }
+    }
+  });
+
+  disconnectObserver.observe(document.body, { childList: true, subtree: true });
+}
+
+
+
 function priceBtnClicked() {
   var selected = document.querySelectorAll(".selected");
   var selectedDate = [];
@@ -672,6 +696,10 @@ $(".inline").pDatepicker({
 `,
 });
 $(document).ready(function () {
+
+  document.querySelector("#webdisconnected").addEventListener("click", disconnectedBtnClicked)
+
+
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
     elem.addEventListener("change", (e) => {
