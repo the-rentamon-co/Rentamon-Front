@@ -3612,7 +3612,7 @@
                           }
                         }
                       } else {
-                        document.querySelector("#webdisconnected").click();
+                        document.querySelector("#webdisconnected a").click();
                       }
 
                       document.querySelector(
