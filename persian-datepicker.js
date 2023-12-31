@@ -3542,7 +3542,8 @@
                             parseInt(results[0]["data"][i]["price"])
                           );
                           let raw = parseInt(
-                            parseInt(results[0]["data"][i]["discountedPrice"]) / 10000
+                            parseInt(results[0]["data"][i]["discountedPrice"]) /
+                              10000
                           );
                           let price = convertToPersianNumber(
                             raw.toLocaleString().replace(/,/g, "/")
@@ -3610,10 +3611,11 @@
                             days[i].parentElement.style.border = "0px solid";
                           }
                         }
-                        document.querySelector(
-                          ".loading-overlay-calendar"
-                        ).style.display = "none";
+                      } else {
                       }
+                      document.querySelector(
+                        ".loading-overlay-calendar"
+                      ).style.display = "none";
                     })
                     .catch((error) => {
                       console.error(error);
