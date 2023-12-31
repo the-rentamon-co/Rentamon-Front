@@ -3521,96 +3521,99 @@
                   Promise.all(fetchPromises)
                     .then((results) => {
                       console.log(results);
+                      if (
+                        results[0]["status"] === 200 &&
+                        results[1]["status"] === 200 &&
+                        results[2]["status"] === 200 &&
+                        results[3]["status"] === 200 &&
+                        results[4]["status"] === 200
+                      ) {
+                        for (let i = 0; i < availableDays.length; i++) {
+                          var status = {
+                            jabamaStatus: jabamaStatus(results[0]["data"][i]),
+                            mizboonStatus: mizboonStatus(results[1]["data"][i]),
+                            otaghakStatus: otaghakStatus(results[2]["data"][i]),
+                            jajigaStatus: jajigaStatus(results[3]["data"][i]),
+                            shabStatus: shabStatus(results[4]["data"][i]),
+                            otherStatus: otherStatus(results[5][i]),
+                          };
 
-                      for (let i = 0; i < availableDays.length; i++) {
-                        var status = {
-                          jabamaStatus: jabamaStatus(results[0][i]),
-                          mizboonStatus: mizboonStatus(results[1][i]),
-                          otaghakStatus: otaghakStatus(results[2][i]),
-                          jajigaStatus: jajigaStatus(results[3][i]),
-                          shabStatus: shabStatus(results[4][i]),
-                          otherStatus: otherStatus(results[5][i]),
-                        };
-
-                        let origPrice = parseInt(
-                          parseInt(results[0][i]["price"])
-                        );
-                        let raw = parseInt(
-                          parseInt(results[0][i]["discountedPrice"]) / 10000
-                        );
-                        let price = convertToPersianNumber(
-                          raw.toLocaleString().replace(/,/g, "/")
-                        );
-                        if (
-                          parseInt(results[0][i]["price"]) >
-                          parseInt(results[0][i]["discountedPrice"])
-                        ) {
-                          days[i].parentElement.style.border =
-                            "2px solid #8165D6";
-                        }
-                        if (raw > 0) {
-                          days[i].parentElement.querySelector(
-                            ".price"
-                          ).innerHTML = price;
-
-                          days[i].parentElement.setAttribute(
-                            "price-from-jabama",
-                            origPrice
+                          let origPrice = parseInt(
+                            parseInt(results[0]["data"][i]["price"])
                           );
-                        }
-
-                        console.table(status);
-                        const bookedStatus = Object.entries(status).find(
-                          ([key, value]) => value === "booked"
-                        );
-
-                        if (bookedStatus) {
-                          days[i].parentElement.classList.add("booked-days");
-                          const website = bookedStatus[0];
-
-                          days[i].parentElement.querySelector(
-                            ".reserved"
-                          ).innerHTML = names[website]["fa"];
-                          for (const web in tobeDisabled) {
-
-                            // console.log(status[`${web}Status`])
-                            // console.log(names[website]["en"])
-                            // console.log(status[website])
-                            if (
-                              web !== names[website]["en"] &&
-                              status[`${web}Status`] !== "booked" &&
-                              status[`${web}Status`] !== "blocked"
-                            ) {
-
-                              console.log(i,status[`${web}Status`])
-                              tobeDisabled[web](
-                                new persianDate(
-                                  parseInt(
-                                    days[i].parentElement.getAttribute(
-                                      "data-unix"
-                                    )
-                                  )
-                                ).format("YYYY-MM-DD")
-                              );
-                            }
+                          let raw = parseInt(
+                            parseInt(results[0]["data"][i]["discountedPrice"]) / 10000
+                          );
+                          let price = convertToPersianNumber(
+                            raw.toLocaleString().replace(/,/g, "/")
+                          );
+                          if (
+                            parseInt(results[0]["data"][i]["price"]) >
+                            parseInt(results[0]["data"][i]["discountedPrice"])
+                          ) {
+                            days[i].parentElement.style.border =
+                              "2px solid #8165D6";
                           }
-                        } else if (
-                          Object.entries(status).every(
-                            ([key, value]) =>
-                              (key !== "otherStatus" && value === "blocked") ||
-                              (key === "otherStatus" && value === "not sure")
-                          )
-                        ) {
-                          days[i].parentElement.classList.add("blocked-days");
-                          days[i].parentElement.querySelector(
-                            ".price"
-                          ).innerHTML = "";
-                          days[i].parentElement.style.border = "0px solid";
+                          if (raw > 0) {
+                            days[i].parentElement.querySelector(
+                              ".price"
+                            ).innerHTML = price;
+
+                            days[i].parentElement.setAttribute(
+                              "price-from-jabama",
+                              origPrice
+                            );
+                          }
+
+                          console.table(status);
+                          const bookedStatus = Object.entries(status).find(
+                            ([key, value]) => value === "booked"
+                          );
+
+                          if (bookedStatus) {
+                            days[i].parentElement.classList.add("booked-days");
+                            const website = bookedStatus[0];
+
+                            days[i].parentElement.querySelector(
+                              ".reserved"
+                            ).innerHTML = names[website]["fa"];
+                            for (const web in tobeDisabled) {
+                              if (
+                                web !== names[website]["en"] &&
+                                status[`${web}Status`] !== "booked" &&
+                                status[`${web}Status`] !== "blocked"
+                              ) {
+                                console.log(i, status[`${web}Status`]);
+                                tobeDisabled[web](
+                                  new persianDate(
+                                    parseInt(
+                                      days[i].parentElement.getAttribute(
+                                        "data-unix"
+                                      )
+                                    )
+                                  ).format("YYYY-MM-DD")
+                                );
+                              }
+                            }
+                          } else if (
+                            Object.entries(status).every(
+                              ([key, value]) =>
+                                (key !== "otherStatus" &&
+                                  value === "blocked") ||
+                                (key === "otherStatus" && value === "not sure")
+                            )
+                          ) {
+                            days[i].parentElement.classList.add("blocked-days");
+                            days[i].parentElement.querySelector(
+                              ".price"
+                            ).innerHTML = "";
+                            days[i].parentElement.style.border = "0px solid";
+                          }
                         }
+                        document.querySelector(
+                          ".loading-overlay-calendar"
+                        ).style.display = "none";
                       }
-                      document.querySelector(
-                        ".loading-overlay-calendar"
-                      ).style.display = "none";
                     })
                     .catch((error) => {
                       console.error(error);
