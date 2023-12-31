@@ -3612,10 +3612,10 @@
                           }
                         }
                       } else {
-                        document.querySelector("#webdisconnected").style.background="white"                      }
-                      document.querySelector(
-                        ".loading-overlay-calendar"
-                      ).style.display = "none";
+                        document.querySelector(
+                          ".loading-overlay-calendar"
+                          ).style.display = "none";
+                          document.querySelector("#webdisconnected").click()                    }
                     })
                     .catch((error) => {
                       console.error(error);
