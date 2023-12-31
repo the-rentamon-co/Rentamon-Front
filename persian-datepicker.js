@@ -3612,7 +3612,7 @@
                           }
                         }
                       } else {
-                      }
+                        document.querySelector("#webdisconnected").style.background="white"                      }
                       document.querySelector(
                         ".loading-overlay-calendar"
                       ).style.display = "none";
