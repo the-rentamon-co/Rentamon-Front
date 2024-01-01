@@ -701,12 +701,29 @@ $(".inline").pDatepicker({
 `,
 });
 $(document).ready(function () {
-  const webdisconnectedBtn = document.querySelector("#webdisconnected")
+  const webdisconnectedJabamaBtn = document.querySelector("#webdisconnected")
+  const webdisconnectedOtaghakBtn = document.querySelector("#webdisconnected_otaghak")
+  const webdisconnectedJajigaBtn = document.querySelector("#webdisconnected_jajiga")
+  const webdisconnectedShabBtn = document.querySelector("#webdisconnected_shab")
 
-  if( webdisconnectedBtn !== null){
+  if( webdisconnectedJabamaBtn !== null){
 
-    webdisconnectedBtn.addEventListener("click", disconnectedBtnClicked);
+    webdisconnectedJabamaBtn.addEventListener("click", disconnectedBtnClicked);
   }
+
+  if( webdisconnectedOtaghakBtn !== null){
+
+    webdisconnectedOtaghakBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+  if( webdisconnectedJajigaBtn !== null){
+
+    webdisconnectedJajigaBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+  if( webdisconnectedShabBtn !== null){
+
+    webdisconnectedShabBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+
 
 
   document.querySelector(".submit").addEventListener("click", checkAction);
