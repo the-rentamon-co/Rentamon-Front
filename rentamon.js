@@ -3,15 +3,15 @@ var mainApiUrl = "https://rentamon.chbk.run";
 var rentamon_user_id = document.querySelector("#rentamon_id").innerText;
 var rentamon_room_id = document.querySelector("#rentamon_room_id").innerText;
 
-const tehranTimeZone = "Asia/Tehran";
-const currentDate = new Date();
-const tehranTimestamp = currentDate.toLocaleString("en-US", {
+var tehranTimeZone = "Asia/Tehran";
+var currentDate = new Date();
+var tehranTimestamp = currentDate.toLocaleString("en-US", {
   timeZone: tehranTimeZone,
 });
-const tehran = new Date(tehranTimestamp);
-const tehranzeroo = tehran.setHours(0, 0, 0, 0);
+var tehran = new Date(tehranTimestamp);
+var tehranzeroo = tehran.setHours(0, 0, 0, 0);
 
-const routes = {
+var routes = {
   otaghak: {
     block: mainApiUrl + "/otaghak",
     unblock: mainApiUrl + "/otaghak",
