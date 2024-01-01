@@ -701,9 +701,13 @@ $(".inline").pDatepicker({
 `,
 });
 $(document).ready(function () {
-  document
-    .querySelector("#webdisconnected")
-    .addEventListener("click", disconnectedBtnClicked);
+  const webdisconnectedBtn = document.querySelector("#webdisconnected")
+
+  if( webdisconnectedBtn !== null){
+
+    webdisconnectedBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+
 
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
