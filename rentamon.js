@@ -1,4 +1,4 @@
-const mainApiUrl = "https://rentamon.chbk.run";
+var mainApiUrl = "https://rentamon.chbk.run";
 
 const rentamon_user_id = document.querySelector("#rentamon_id").innerText;
 const rentamon_room_id = document.querySelector("#rentamon_room_id").innerText;
@@ -552,10 +552,12 @@ function disconnectedBtnClicked() {
             node.id.includes(disconnectTargetElementId)
         );
         if (targetElement) {
-          document.querySelectorAll('input[name="form_fields[userid]"')[0].value =
-            rentamon_user_id;
-            document.querySelectorAll('input[name="form_fields[userid]"')[1].value =
-            rentamon_user_id;
+          document.querySelectorAll(
+            'input[name="form_fields[userid]"'
+          )[0].value = rentamon_user_id;
+          document.querySelectorAll(
+            'input[name="form_fields[userid]"'
+          )[1].value = rentamon_user_id;
         }
       }
     }
