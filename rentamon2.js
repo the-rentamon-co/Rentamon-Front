@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const apiDomainUrl = "https://rentamon.chbk.run";
+  var apiDomainUrl = "https://rentamon.chbk.run";
   const listings = [
     apiDomainUrl +
       "/jabama/listing" +
