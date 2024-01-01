@@ -45,7 +45,7 @@ const routes = {
   other: {
     blockUnblock: mainApiUrl + "/other",
     calendar: mainApiUrl + "/other/calendar",
-    room: rentamon_room_id
+    room: rentamon_room_id,
   },
 };
 
@@ -342,6 +342,7 @@ function unblockBtnClicked() {
       (website = "other"),
       (data = {
         action: "available",
+        rentamon_room_id: routes["other"]["room"],
         days: selectedDate.join(","),
       }),
       (action = "blockUnblock")
@@ -410,6 +411,7 @@ function reserveOther() {
     rentamonApiCaller(
       (website = "other"),
       (data = {
+        rentamon_room_id: routes["other"]["room"],
         action: "book",
         days: selectedDate.join(","),
       }),
