@@ -3611,8 +3611,24 @@
                             days[i].parentElement.style.border = "0px solid";
                           }
                         }
-                      } else {
+                      } else if (results[0]["status"] !== 200) {
                         document.querySelector("#webdisconnected a").click();
+                      } else if (results[1]["status"] !== 200) {
+                        // document.querySelector("#webdisconnected_mizboon a").click();
+                        // document.querySelector("#webdisconnected_mizboon a").click();
+                        console.log("mizboon");
+                      } else if (results[2]["status"] !== 200) {
+                        document
+                          .querySelector("#webdisconnected_otaghak a")
+                          .click();
+                      } else if (results[3]["status"] !== 200) {
+                        document
+                          .querySelector("#webdisconnected_jajiga a")
+                          .click();
+                      } else if (results[4]["status"] !== 200) {
+                        document
+                          .querySelector("#webdisconnected_shab a")
+                          .click();
                       }
 
                       document.querySelector(
