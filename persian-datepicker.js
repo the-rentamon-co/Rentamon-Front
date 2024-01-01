@@ -3614,7 +3614,7 @@
                       } else if (results[0]["status"] !== 200) {
                         document.querySelector("#webdisconnected a").click();
                       } else if (results[1]["status"] !== 200) {
-                        // document.querySelector("#webdisconnected_mizboon a").click();
+                        document.querySelector("#webdisconnected_mizboon a").click();
                         // document.querySelector("#webdisconnected_mizboon a").click();
                         console.log("mizboon");
                       } else if (results[2]["status"] !== 200) {
