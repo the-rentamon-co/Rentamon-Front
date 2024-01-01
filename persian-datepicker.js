@@ -3502,7 +3502,7 @@
                       `?rentamon_room_id=${routes.shab.room}&rentamon_id=${rentamon_user_id}&from_date=${range[0]}&to_date=${range[2]}`,
 
                     routes.other.calendar +
-                      `?start=${range[0]}&end=${range[1]}`,
+                      `?rentamon_room_id=${routes.shab.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,
                   ];
 
                   console.log(urls2);

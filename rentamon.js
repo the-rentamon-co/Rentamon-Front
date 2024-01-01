@@ -45,6 +45,7 @@ const routes = {
   other: {
     blockUnblock: mainApiUrl + "/other",
     calendar: mainApiUrl + "/other/calendar",
+    room: rentamon_room_id
   },
 };
 
