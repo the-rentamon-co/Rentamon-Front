@@ -556,7 +556,7 @@ function disconnectedBtnClicked() {
         );
         if (targetElement) {
 
-          var phone = document.querySelectorAll(
+          var phone = document.querySelector(
             'input[name="form_fields[userphone]"'
           )
           phone.addEventListener("input", ()=> console.log(phone.value))
