@@ -555,12 +555,12 @@ function disconnectedBtnClicked() {
             node.id.includes(disconnectTargetElementId)
         );
         if (targetElement) {
-
           var phone = document.querySelector(
             'input[name="form_fields[userphone]"'
-          )
-          phone.addEventListener("input", ()=> console.log(phone.value))
-
+          );
+          phone.addEventListener("input", () =>
+            document.querySelector('input[name="form_fields[phoneNumber]"').value = phone.value
+          );
 
           document.querySelectorAll(
             'input[name="form_fields[userid]"'
@@ -708,30 +708,30 @@ $(".inline").pDatepicker({
 `,
 });
 $(document).ready(function () {
-  const webdisconnectedJabamaBtn = document.querySelector("#webdisconnected")
-  const webdisconnectedOtaghakBtn = document.querySelector("#webdisconnected_otaghak")
-  const webdisconnectedJajigaBtn = document.querySelector("#webdisconnected_jajiga")
-  const webdisconnectedShabBtn = document.querySelector("#webdisconnected_shab")
+  const webdisconnectedJabamaBtn = document.querySelector("#webdisconnected");
+  const webdisconnectedOtaghakBtn = document.querySelector(
+    "#webdisconnected_otaghak"
+  );
+  const webdisconnectedJajigaBtn = document.querySelector(
+    "#webdisconnected_jajiga"
+  );
+  const webdisconnectedShabBtn = document.querySelector(
+    "#webdisconnected_shab"
+  );
 
-  if( webdisconnectedJabamaBtn !== null){
-
+  if (webdisconnectedJabamaBtn !== null) {
     webdisconnectedJabamaBtn.addEventListener("click", disconnectedBtnClicked);
   }
 
-  if( webdisconnectedOtaghakBtn !== null){
-
+  if (webdisconnectedOtaghakBtn !== null) {
     webdisconnectedOtaghakBtn.addEventListener("click", disconnectedBtnClicked);
   }
-  if( webdisconnectedJajigaBtn !== null){
-
+  if (webdisconnectedJajigaBtn !== null) {
     webdisconnectedJajigaBtn.addEventListener("click", disconnectedBtnClicked);
   }
-  if( webdisconnectedShabBtn !== null){
-
+  if (webdisconnectedShabBtn !== null) {
     webdisconnectedShabBtn.addEventListener("click", disconnectedBtnClicked);
   }
-
-
 
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
