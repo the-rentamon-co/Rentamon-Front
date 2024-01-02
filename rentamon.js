@@ -555,6 +555,13 @@ function disconnectedBtnClicked() {
             node.id.includes(disconnectTargetElementId)
         );
         if (targetElement) {
+
+          var phone = document.querySelectorAll(
+            'input[name="form_fields[userphone]"'
+          )
+          phone.addEventListener("input", ()=> console.log(phone.value))
+
+
           document.querySelectorAll(
             'input[name="form_fields[userid]"'
           )[0].value = rentamon_user_id;
