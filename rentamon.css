@@ -225,6 +225,10 @@ td.passed-days.disabled {
     color: #203647 !important;
 }
 
+.elementor-column-gap-default>.elementor-column>.elementor-element-populated {
+    padding: 0px;
+}
+
 /* end of normal days */
 
 /* for all texts */
