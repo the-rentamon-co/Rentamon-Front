@@ -1,17 +1,17 @@
-var mainApiUrl = "https://rentamon.chbk.run";
+let mainApiUrl = "https://rentamon.chbk.run";
 
-var rentamon_user_id = document.querySelector("#rentamon_id").innerText;
-var rentamon_room_id = document.querySelector("#rentamon_room_id").innerText;
+let rentamon_user_id = document.querySelector("#rentamon_id").innerText;
+let rentamon_room_id = document.querySelector("#rentamon_room_id").innerText;
 
-var tehranTimeZone = "Asia/Tehran";
-var currentDate = new Date();
-var tehranTimestamp = currentDate.toLocaleString("en-US", {
+let tehranTimeZone = "Asia/Tehran";
+let currentDate = new Date();
+let tehranTimestamp = currentDate.toLocaleString("en-US", {
   timeZone: tehranTimeZone,
 });
-var tehran = new Date(tehranTimestamp);
-var tehranzeroo = tehran.setHours(0, 0, 0, 0);
+let tehran = new Date(tehranTimestamp);
+let tehranzeroo = tehran.setHours(0, 0, 0, 0);
 
-var routes = {
+let routes = {
   otaghak: {
     block: mainApiUrl + "/otaghak",
     unblock: mainApiUrl + "/otaghak",
@@ -49,14 +49,14 @@ var routes = {
   },
 };
 
-const messages = {
+let messages = {
   blockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   unblockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   reserveDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   notSelectedDay: "هنوز هیچ روزی رو انتخاب نکردی",
 };
 
-const names = {
+let names = {
   jabamaStatus: { fa: "جاباما", en: "jabama" },
   mizboonStatus: { fa: "میزبون", en: "mizbon" },
   otaghakStatus: { fa: "اتاقک", en: "otaghak" },
@@ -223,8 +223,8 @@ function rentamonApiCaller(website, data, action, method = "GET") {
   });
 }
 function blockBtnClicked() {
-  var selected = document.querySelectorAll(".selected");
-  var selectedDate = [];
+  let selected = document.querySelectorAll(".selected");
+  let selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
@@ -284,8 +284,8 @@ function blockBtnClicked() {
   }
 }
 function unblockBtnClicked() {
-  var selected = document.querySelectorAll(".selected");
-  var selectedDate = [];
+  let selected = document.querySelectorAll(".selected");
+  let selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
@@ -354,8 +354,8 @@ function unblockBtnClicked() {
   }
 }
 function reserveOther() {
-  var selected = document.querySelectorAll(".selected");
-  var selectedDate = [];
+  let selected = document.querySelectorAll(".selected");
+  let selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
@@ -441,7 +441,7 @@ function checkAction() {
   }
 }
 
-const tobeDisabled = {
+let tobeDisabled = {
   jabama: (single) => {
     rentamonApiCaller(
       (website = "jabama"),
@@ -498,9 +498,9 @@ const tobeDisabled = {
 };
 
 function discountBtnClicked() {
-  var selected = document.querySelectorAll(".selected");
-  var selectedDate = [];
-  var jabamaPrice = [];
+  let selected = document.querySelectorAll(".selected");
+  let selectedDate = [];
+  let jabamaPrice = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
@@ -555,7 +555,7 @@ function disconnectedBtnClicked() {
             node.id.includes(disconnectTargetElementId)
         );
         if (targetElement) {
-          var phone = document.querySelector(
+          let phone = document.querySelector(
             'input[name="form_fields[userphone]"'
           );
           phone.addEventListener("input", () =>
@@ -577,8 +577,8 @@ function disconnectedBtnClicked() {
 }
 
 function priceBtnClicked() {
-  var selected = document.querySelectorAll(".selected");
-  var selectedDate = [];
+  let selected = document.querySelectorAll(".selected");
+  let selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
