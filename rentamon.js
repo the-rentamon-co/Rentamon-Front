@@ -1,6 +1,4 @@
-let mainApiUrl
-
-mainApiUrl = "https://rentamon.chbk.run";
+let apiHostMainUrl="https://rentamon.chbk.run";
 
 let rentamon_user_id = document.querySelector("#rentamon_id").innerText;
 let rentamon_room_id = document.querySelector("#rentamon_room_id").innerText;
@@ -15,38 +13,38 @@ let tehranzeroo = tehran.setHours(0, 0, 0, 0);
 
 let routes = {
   otaghak: {
-    block: mainApiUrl + "/otaghak",
-    unblock: mainApiUrl + "/otaghak",
-    calendar: mainApiUrl + "/otaghak/calendar",
+    block: apiHostMainUrl + "/otaghak",
+    unblock: apiHostMainUrl + "/otaghak",
+    calendar: apiHostMainUrl + "/otaghak/calendar",
     room: rentamon_room_id,
   },
   jabama: {
-    block: mainApiUrl + "/jabama/disable",
-    unblock: mainApiUrl + "/jabama/enable",
-    calendar: mainApiUrl + "/jabama/calendar",
+    block: apiHostMainUrl + "/jabama/disable",
+    unblock: apiHostMainUrl + "/jabama/enable",
+    calendar: apiHostMainUrl + "/jabama/calendar",
     room: rentamon_room_id,
   },
   jajiga: {
-    block: mainApiUrl + "/jajiga",
-    unblock: mainApiUrl + "/jajiga",
-    calendar: mainApiUrl + "/jajiga/calendar",
+    block: apiHostMainUrl + "/jajiga",
+    unblock: apiHostMainUrl + "/jajiga",
+    calendar: apiHostMainUrl + "/jajiga/calendar",
     room: rentamon_room_id,
   },
   shab: {
-    block: mainApiUrl + "/shab",
-    unblock: mainApiUrl + "/shab",
-    calendar: mainApiUrl + "/shab/calendar",
+    block: apiHostMainUrl + "/shab",
+    unblock: apiHostMainUrl + "/shab",
+    calendar: apiHostMainUrl + "/shab/calendar",
     room: rentamon_room_id,
   },
   mizboon: {
-    block: mainApiUrl + "/mizboon/close",
-    unblock: mainApiUrl + "/mizboon/unclose",
-    calendar: mainApiUrl + "/mizboon/calendar",
+    block: apiHostMainUrl + "/mizboon/close",
+    unblock: apiHostMainUrl + "/mizboon/unclose",
+    calendar: apiHostMainUrl + "/mizboon/calendar",
     room: rentamon_room_id,
   },
   other: {
-    blockUnblock: mainApiUrl + "/other",
-    calendar: mainApiUrl + "/other/calendar",
+    blockUnblock: apiHostMainUrl + "/other",
+    calendar: apiHostMainUrl + "/other/calendar",
     room: rentamon_room_id,
   },
 };
@@ -210,6 +208,7 @@ function otaghakStatus(otaghak) {
 
 function rentamonApiCaller(website, data, action, method = "GET") {
   $.ajax({
+    timeout:10000,
     url: routes[website][action],
     method: method,
     data: {
