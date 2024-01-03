@@ -1,4 +1,6 @@
-let mainApiUrl = "https://rentamon.chbk.run";
+let mainApiUrl
+
+mainApiUrl = "https://rentamon.chbk.run";
 
 let rentamon_user_id = document.querySelector("#rentamon_id").innerText;
 let rentamon_room_id = document.querySelector("#rentamon_room_id").innerText;
