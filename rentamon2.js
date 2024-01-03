@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  var apiDomainUrl = "https://rentamon.chbk.run";
-  const listings = [
+  let apiDomainUrl = "https://rentamon.chbk.run";
+  let listings = [
     apiDomainUrl +
       "/jabama/listing" +
       `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
@@ -17,19 +17,19 @@ document.addEventListener("DOMContentLoaded", () => {
       "/otaghak/listing" +
       `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
   ];
-  const fetchDataForListing = async (url) => {
+  let fetchDataForListing = async (url) => {
     const response = await fetch(url);
     const data = await response.json();
     return data;
   };
 
-  const fetchPromisesForListing = listings.map((url) =>
+  let fetchPromisesForListing = listings.map((url) =>
     fetchDataForListing(url)
   );
 
   Promise.all(fetchPromisesForListing).then((results) => {
     results.forEach((site) => {
-      var ids = site["listing"];
+      let ids = site["listing"];
       if (ids.length !== 0) {
         document.querySelector(".flat-button").style.display = "inline-block";
 
