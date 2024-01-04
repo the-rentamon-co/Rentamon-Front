@@ -16,11 +16,10 @@
 } */
 
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span:not(.other-month):hover,
-.datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span:not(.other-month)
- {
+.datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span:not(.other-month) {
     background-color: #F2F2F2;
     color: #C3C3C3 !important;
-} 
+}
 
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td span,
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td:not(.disabled) span:hover {
@@ -78,7 +77,7 @@ span.other-month {
 button.block,
 button.unblock {
     border: 0px;
-    
+
     border-radius: 5px;
 }
 
@@ -219,7 +218,7 @@ td.passed-days.disabled {
 
 
 /* for normal days */
-.datepicker-day-view .table-days td:not(.disabled):not(.blocked-days):not(.booked-days):not(:has(span.other-month)) {
+.datepicker-day-view .table-days td:not(.selected):not(.disabled):not(.blocked-days):not(.booked-days):not(:has(span.other-month)) {
 
     background-color: #E5E5E5 !important;
     color: #203647 !important;
