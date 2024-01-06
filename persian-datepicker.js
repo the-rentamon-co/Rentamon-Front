@@ -3505,7 +3505,7 @@
                       `?rentamon_room_id=${routes.other.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,
 
                     routes.mihmansho.calendar +
-                      `?rentamon_room_id=${routes.mihmansho.room}&rentamon_id=${rentamon_user_id}&start_date=${range[0]}&end_date=${range[1]}`,
+                      `?rentamon_room_id=${routes.mihmansho.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
                   ];
 
                   console.log(urls2);
@@ -3523,24 +3523,90 @@
 
                   Promise.all(fetchPromises)
                     .then((results) => {
-                      console.log(results);
+                      // console.log(results);
+
+                      var calendars = {};
+
+                      if (results[0]["status"] === 200) {
+                        calendars["jabamaStatus"] = results[0]["data"];
+                      } else if (results[0]["status"] === 400) {
+                        document.querySelector("#webdisconnected a").click();
+                      }
+
+                      if (results[1]["status"] === 200) {
+                        calendars["mizboonStatus"] = results[1]["data"];
+                      } else if (results[1]["status"] === 400) {
+                        document
+                          .querySelector("#webdisconnected_mizboon a")
+                          .click();
+                      }
+
+                      if (results[2]["status"] === 200) {
+                        calendars["otaghakStatus"] = results[2]["data"];
+                      } else if (results[2]["status"] === 400) {
+                        document
+                          .querySelector("#webdisconnected_otaghak a")
+                          .click();
+                      }
+
+                      if (results[3]["status"] === 200) {
+                        calendars["jajigaStatus"] = results[3]["data"];
+                      } else if (results[3]["status"] === 400) {
+                        document
+                          .querySelector("#webdisconnected_jajiga a")
+                          .click();
+                      }
+
+                      if (results[4]["status"] === 200) {
+                        calendars["shabStatus"] = results[4]["data"];
+                      } else if (results[4]["status"] === 400) {
+                        document
+                          .querySelector("#webdisconnected_shab a")
+                          .click();
+                      }
+
+                      if (results[6]["status"] === 200) {
+                        calendars["mihmanshoStatus"] = results[6]["data"];
+                      } else if (results[6]["status"] === 400) {
+                        document
+                          .querySelector("#webdisconnected_mihmansho a")
+                          .click();
+                      }
+                      calendars["otherStatus"] = results[5];
+
+                      // console.log(calendars)
+
+                      // for (let x in calendars){
+                      //   // console.log(calendars[x][0])
+                      //   console.log(window[x](calendars[x][0]))
+                      // }
+
                       if (
-                        results[0]["status"] === 200 &&
-                        results[1]["status"] === 200 &&
-                        results[2]["status"] === 200 &&
-                        results[3]["status"] === 200 &&
-                        results[4]["status"] === 200 
+                        // results[0]["status"] === 200 &&
+                        // results[1]["status"] === 200 &&
+                        // results[2]["status"] === 200 &&
+                        // results[3]["status"] === 200 &&
+                        // results[4]["status"] === 200
                         // results[5]["status"] === 200
+                        calendars
                       ) {
                         for (let i = 0; i < availableDays.length; i++) {
-                          var status = {
-                            jabamaStatus: jabamaStatus(results[0]["data"][i]),
-                            mizboonStatus: mizboonStatus(results[1]["data"][i]),
-                            otaghakStatus: otaghakStatus(results[2]["data"][i]),
-                            jajigaStatus: jajigaStatus(results[3]["data"][i]),
-                            shabStatus: shabStatus(results[4]["data"][i]),
-                            otherStatus: otherStatus(results[5][i]),
-                          };
+                          // var status = {
+                          //   jabamaStatus: jabamaStatus(results[0]["data"][i]),
+                          //   mizboonStatus: mizboonStatus(results[1]["data"][i]),
+                          //   otaghakStatus: otaghakStatus(results[2]["data"][i]),
+                          //   jajigaStatus: jajigaStatus(results[3]["data"][i]),
+                          //   shabStatus: shabStatus(results[4]["data"][i]),
+                          //   otherStatus: otherStatus(results[5][i]),
+                          // };
+
+                          var status = {};
+
+                          for (let cal in calendars) {
+                            status[cal] = window[cal](calendars[cal][i]);
+                          }
+
+                          // console.log(status);
 
                           let origPrice = parseInt(
                             parseInt(results[0]["data"][i]["price"])
@@ -3584,11 +3650,12 @@
                             ).innerHTML = names[website]["fa"];
                             for (const web in tobeDisabled) {
                               if (
+                                web + "Status" in status &&
                                 web !== names[website]["en"] &&
                                 status[`${web}Status`] !== "booked" &&
                                 status[`${web}Status`] !== "blocked"
                               ) {
-                                console.log(i, status[`${web}Status`]);
+                                // console.log(i, status[`${web}Status`]);
                                 tobeDisabled[web](
                                   new persianDate(
                                     parseInt(
@@ -3605,7 +3672,7 @@
                               ([key, value]) =>
                                 (key !== "otherStatus" &&
                                   value === "blocked") ||
-                                (key === "otherStatus" && value === "not sure")
+                                (key === "otherStatus" && value === "unblocked")
                             )
                           ) {
                             days[i].parentElement.classList.add("blocked-days");
@@ -3615,25 +3682,26 @@
                             days[i].parentElement.style.border = "0px solid";
                           }
                         }
-                      } else if (results[0]["status"] === 400) {
-                        document.querySelector("#webdisconnected a").click();
-                      } else if (results[1]["status"] === 400) {
-                        document.querySelector("#webdisconnected_mizboon a").click();
-                        // document.querySelector("#webdisconnected_mizboon a").click();
-                        console.log("mizboon");
-                      } else if (results[2]["status"] === 400) {
-                        document
-                          .querySelector("#webdisconnected_otaghak a")
-                          .click();
-                      } else if (results[3]["status"] === 400) {
-                        document
-                          .querySelector("#webdisconnected_jajiga a")
-                          .click();
-                      } else if (results[4]["status"] === 400) {
-                        document
-                          .querySelector("#webdisconnected_shab a")
-                          .click();
                       }
+                      //  else if (results[0]["status"] === 400) {
+                      //   document.querySelector("#webdisconnected a").click();
+                      // } else if (results[1]["status"] === 400) {
+                      //   document
+                      //     .querySelector("#webdisconnected_mizboon a")
+                      //     .click();
+                      // } else if (results[2]["status"] === 400) {
+                      //   document
+                      //     .querySelector("#webdisconnected_otaghak a")
+                      //     .click();
+                      // } else if (results[3]["status"] === 400) {
+                      //   document
+                      //     .querySelector("#webdisconnected_jajiga a")
+                      //     .click();
+                      // } else if (results[4]["status"] === 400) {
+                      //   document
+                      //     .querySelector("#webdisconnected_shab a")
+                      //     .click();
+                      // }
 
                       document.querySelector(
                         ".loading-overlay-calendar"
