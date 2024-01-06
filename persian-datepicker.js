@@ -3502,7 +3502,10 @@
                       `?rentamon_room_id=${routes.shab.room}&rentamon_id=${rentamon_user_id}&from_date=${range[0]}&to_date=${range[2]}`,
 
                     routes.other.calendar +
-                      `?rentamon_room_id=${routes.shab.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,
+                      `?rentamon_room_id=${routes.other.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,
+
+                    routes.mihmansho.calendar +
+                      `?rentamon_room_id=${routes.mihmansho.room}&rentamon_id=${rentamon_user_id}&start_date=${range[0]}&end_date=${range[1]}`,
                   ];
 
                   console.log(urls2);
@@ -3526,7 +3529,8 @@
                         results[1]["status"] === 200 &&
                         results[2]["status"] === 200 &&
                         results[3]["status"] === 200 &&
-                        results[4]["status"] === 200
+                        results[4]["status"] === 200 &&
+                        results[5]["status"] === 200
                       ) {
                         for (let i = 0; i < availableDays.length; i++) {
                           var status = {

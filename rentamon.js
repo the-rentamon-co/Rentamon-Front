@@ -47,6 +47,13 @@ let routes = {
     calendar: apiHostMainUrl + "/other/calendar",
     room: rentamon_room_id,
   },
+
+  mihmansho: {
+    block: apiHostMainUrl + "/mizboon/block",
+    unblock: apiHostMainUrl+ "/mizboon/unblock",
+    calendar: apiHostMainUrl+ "/mizboon/calendar",
+    room: rentamon_room_id
+  }
 };
 
 let messages = {
@@ -63,6 +70,7 @@ let names = {
   jajigaStatus: { fa: "جاجیگا", en: "jajiga" },
   shabStatus: { fa: "شب", en: "shab" },
   otherStatus: { fa: "رزرو", en: "other" },
+  mihmanshoStatus: {fa: "مهمان شو", en: "mihmansho"}
 };
 
 const fetchData = async (url) => {
@@ -82,6 +90,23 @@ function persianToInteger(persianString) {
 function convertToPersianNumber(number) {
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   return number.replace(/\d/g, (digit) => persianDigits[digit]);
+}
+
+function mihmanshoStatus(mihmansho) {
+  if (!mihmansho) {
+    return "not sure";
+  }
+
+  switch (mihmansho.status) {
+    case "status":
+      return "blocked";
+    case "reserved":
+      return "booked";
+    case "":
+      return "unblocked";
+    default:
+      return "not sure";
+  }
 }
 
 function jabamaStatus(jabama) {
