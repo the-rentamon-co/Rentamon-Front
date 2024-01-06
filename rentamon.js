@@ -1,4 +1,4 @@
-let apiHostMainUrl="https://rentamon.chbk.run";
+let apiHostMainUrl = "https://rentamon.chbk.run";
 
 let rentamon_user_id = document.querySelector("#rentamon_id").innerText;
 let rentamon_room_id = document.querySelector("#rentamon_room_id").innerText;
@@ -50,10 +50,10 @@ let routes = {
 
   mihmansho: {
     block: apiHostMainUrl + "/mihmansho/block",
-    unblock: apiHostMainUrl+ "/mihmansho/unblock",
-    calendar: apiHostMainUrl+ "/mihmansho/calendar",
-    room: rentamon_room_id
-  }
+    unblock: apiHostMainUrl + "/mihmansho/unblock",
+    calendar: apiHostMainUrl + "/mihmansho/calendar",
+    room: rentamon_room_id,
+  },
 };
 
 let messages = {
@@ -70,7 +70,7 @@ let names = {
   jajigaStatus: { fa: "جاجیگا", en: "jajiga" },
   shabStatus: { fa: "شب", en: "shab" },
   otherStatus: { fa: "رزرو", en: "other" },
-  mihmanshoStatus: {fa: "مهمان شو", en: "mihmansho"}
+  mihmanshoStatus: { fa: "مهمان شو", en: "mihmansho" },
 };
 
 const fetchData = async (url) => {
@@ -98,7 +98,7 @@ function mihmanshoStatus(mihmansho) {
   }
 
   switch (mihmansho.status) {
-    case "status":
+    case "unavailable":
       return "blocked";
     case "reserved":
       return "booked";
@@ -153,11 +153,17 @@ function otherStatus(other) {
   if (!other) {
     return "not sure";
   }
-  if (other.status === "booked") {
-    return "booked";
-  } else {
-    return "not sure";
+  switch (other.status) {
+    case "booked":
+      return "booked";
+    case "":
+      return "unblocked";
   }
+  // if (other.status === "booked") {
+  //   return "booked";
+  // } else {
+  //   return "not sure";
+  // }
 }
 
 function shabStatus(shab) {
@@ -233,7 +239,7 @@ function otaghakStatus(otaghak) {
 
 function rentamonApiCaller(website, data, action, method = "GET") {
   $.ajax({
-    timeout:10000,
+    timeout: 10000,
     url: routes[website][action],
     method: method,
     data: {
@@ -260,6 +266,16 @@ function blockBtnClicked() {
         )
       );
     });
+
+    rentamonApiCaller(
+      (website = "mihmansho"),
+      (data = {
+        rentamon_room_id: routes["mihmansho"]["room"],
+        days: selectedDate.join(","),
+      }),
+      (action = "block")
+    );
+
     rentamonApiCaller(
       (website = "jabama"),
       (data = {
@@ -322,6 +338,14 @@ function unblockBtnClicked() {
       );
     });
     rentamonApiCaller(
+      (website = "mihmansho"),
+      (data = {
+        rentamon_room_id: routes["mihmansho"]["room"],
+        days: selectedDate.join(","),
+      }),
+      (action = "unblock")
+    );
+    rentamonApiCaller(
       (website = "jabama"),
       (data = {
         rentamon_room_id: routes["jabama"]["room"],
@@ -374,7 +398,7 @@ function unblockBtnClicked() {
       (action = "blockUnblock")
     );
     alert(messages.unblockDaySuccess);
-    window.location.reload();
+    // window.location.reload();
   } else {
     alert(messages.notSelectedDay);
   }
@@ -391,6 +415,15 @@ function reserveOther() {
         )
       );
     });
+
+    rentamonApiCaller(
+      (website = "mihmansho"),
+      (data = {
+        rentamon_room_id: routes["mihmansho"]["room"],
+        days: selectedDate.join(","),
+      }),
+      (action = "block")
+    );
     rentamonApiCaller(
       (website = "jabama"),
       (data = {
@@ -468,6 +501,17 @@ function checkAction() {
 }
 
 let tobeDisabled = {
+  mihmansho: (single) => {
+    rentamonApiCaller(
+      (website = "mihmansho"),
+      (data = {
+        rentamon_room_id: routes["mihmansho"]["room"],
+        days: single,
+      }),
+      (action = "block")
+    );
+  },
+
   jabama: (single) => {
     rentamonApiCaller(
       (website = "jabama"),
@@ -584,8 +628,12 @@ function disconnectedBtnClicked() {
           let phone = document.querySelector(
             'input[name="form_fields[userphone]"'
           );
-          phone.addEventListener("input", () =>
-            document.querySelector('input[name="form_fields[phoneNumber]"').value = phone.value
+          phone.addEventListener(
+            "input",
+            () =>
+              (document.querySelector(
+                'input[name="form_fields[phoneNumber]"'
+              ).value = phone.value)
           );
 
           document.querySelectorAll(
