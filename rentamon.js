@@ -49,9 +49,9 @@ let routes = {
   },
 
   mihmansho: {
-    block: apiHostMainUrl + "/mizboon/block",
-    unblock: apiHostMainUrl+ "/mizboon/unblock",
-    calendar: apiHostMainUrl+ "/mizboon/calendar",
+    block: apiHostMainUrl + "/mihmansho/block",
+    unblock: apiHostMainUrl+ "/mihmansho/unblock",
+    calendar: apiHostMainUrl+ "/mihmansho/calendar",
     room: rentamon_room_id
   }
 };
