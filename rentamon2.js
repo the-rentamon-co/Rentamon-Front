@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   Promise.all(fetchPromisesForListing).then((results) => {
     results.forEach((site) => {
       let ids = site["listing"];
-      if (ids.length !== 0) {
+      if (typeof x !== "undefined" && ids.length !== 0) {
         document.querySelector(".flat-button").style.display = "inline-block";
 
         for (let elm = 0; elm < ids.length; elm++) {
