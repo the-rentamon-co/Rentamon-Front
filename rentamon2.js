@@ -6,16 +6,20 @@ document.addEventListener("DOMContentLoaded", () => {
       `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
     apiDomainUrl +
       "/jajiga/listing" +
-      `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
+      `?rentamon_room_id=${routes.jajiga.room}&rentamon_id=${rentamon_user_id}`,
     apiDomainUrl +
       "/mizboon/listing" +
-      `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
+      `?rentamon_room_id=${routes.mizboon.room}&rentamon_id=${rentamon_user_id}`,
     apiDomainUrl +
       "/shab/listing" +
-      `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
+      `?rentamon_room_id=${routes.shab.room}&rentamon_id=${rentamon_user_id}`,
     apiDomainUrl +
       "/otaghak/listing" +
-      `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}`,
+      `?rentamon_room_id=${routes.otaghak.room}&rentamon_id=${rentamon_user_id}`,
+
+    apiDomainUrl +
+      "/mihmansho/listing" +
+      `?rentamon_room_id=${routes.mihmansho.room}&rentamon_id=${rentamon_user_id}`,
   ];
   let fetchDataForListing = async (url) => {
     const response = await fetch(url);
@@ -23,9 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return data;
   };
 
-  let fetchPromisesForListing = listings.map((url) =>
-    fetchDataForListing(url)
-  );
+  let fetchPromisesForListing = listings.map((url) => fetchDataForListing(url));
 
   Promise.all(fetchPromisesForListing).then((results) => {
     results.forEach((site) => {
