@@ -3568,9 +3568,9 @@
                       if (results[6]["status"] === 200) {
                         calendars["mihmanshoStatus"] = results[6]["data"];
                       } else if (results[6]["status"] === 401) {
-                        document
-                          .querySelector("#webdisconnected_mihmansho a")
-                          .click();
+                        // document
+                        //   .querySelector("#webdisconnected_mihmansho a")
+                        //   .click();
                       }
                       calendars["otherStatus"] = results[5];
 
