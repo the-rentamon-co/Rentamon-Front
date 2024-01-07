@@ -3456,7 +3456,6 @@
                 this.afterRender();
 
                 // this is added by rentamon
-                
 
                 var availableDays = document.querySelectorAll(
                   ".datepicker-day-view td:not(.disabled):has(span:first-child:not(.other-month))"
@@ -3664,6 +3663,12 @@
                         }
                       }
                       if (results[0]["status"] === 400) {
+                        if (webdisconnectedJabamaBtn !== null) {
+                          webdisconnectedJabamaBtn.addEventListener(
+                            "click",
+                            disconnectedBtnClicked
+                          );
+                        }
                         document.querySelector("#webdisconnected a").click();
                       }
                       if (results[1]["status"] === 400) {
@@ -3672,16 +3677,34 @@
                           .click();
                       }
                       if (results[2]["status"] === 400) {
+                        if (webdisconnectedOtaghakBtn !== null) {
+                          webdisconnectedOtaghakBtn.addEventListener(
+                            "click",
+                            disconnectedBtnClicked
+                          );
+                        }
                         document
                           .querySelector("#webdisconnected_otaghak a")
                           .click();
                       }
                       if (results[3]["status"] === 400) {
+                        if (webdisconnectedJajigaBtn !== null) {
+                          webdisconnectedJajigaBtn.addEventListener(
+                            "click",
+                            disconnectedBtnClicked
+                          );
+                        }
                         document
                           .querySelector("#webdisconnected_jajiga a")
                           .click();
                       }
                       if (results[4]["status"] === 400) {
+                        if (webdisconnectedShabBtn !== null) {
+                          webdisconnectedShabBtn.addEventListener(
+                            "click",
+                            disconnectedBtnClicked
+                          );
+                        }
                         document
                           .querySelector("#webdisconnected_shab a")
                           .click();
