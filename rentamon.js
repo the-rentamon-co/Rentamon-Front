@@ -625,19 +625,18 @@ function disconnectedBtnClicked() {
             node.id.includes(disconnectTargetElementId)
         );
         if (targetElement) {
-          console.log(targetElement)
-          let phone = targetElement.querySelectorAll(
+          console.log(targetElement);
+          let phone = targetElement.querySelector(
             'input[name="form_fields[userphone]"'
           );
-          phone.forEach((elm) => {
-            elm.addEventListener(
-              "input",
-              () =>
-                (targetElement.querySelector(
-                  'input[name="form_fields[phoneNumber]"'
-                ).value = phone.value)
-            );
-          });
+          console.log(phone);
+          phone.addEventListener(
+            "input",
+            () =>
+              (targetElement.querySelector(
+                'input[name="form_fields[phoneNumber]"'
+              ).value = phone.value)
+          );
 
           targetElement
             .querySelectorAll('input[name="form_fields[userid]"')
