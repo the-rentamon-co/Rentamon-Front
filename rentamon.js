@@ -625,16 +625,18 @@ function disconnectedBtnClicked() {
             node.id.includes(disconnectTargetElementId)
         );
         if (targetElement) {
-          let phone = document.querySelector(
+          let phone = document.querySelectorAll(
             'input[name="form_fields[userphone]"'
           );
-          phone.addEventListener(
-            "input",
-            () =>
-              (document.querySelector(
-                'input[name="form_fields[phoneNumber]"'
-              ).value = phone.value)
-          );
+          phone.forEach((elm) => {
+            elm.addEventListener(
+              "input",
+              () =>
+                (document.querySelector(
+                  'input[name="form_fields[phoneNumber]"'
+                ).value = phone.value)
+            );
+          });
 
           document
             .querySelectorAll('input[name="form_fields[userid]"')
