@@ -3529,13 +3529,13 @@
 
                       if (results[0]["status"] === 200) {
                         calendars["jabamaStatus"] = results[0]["data"];
-                      } else if (results[0]["status"] === 401) {
+                      } else if (results[0]["status"] === 400) {
                         document.querySelector("#webdisconnected a").click();
                       }
 
                       if (results[1]["status"] === 200) {
                         calendars["mizboonStatus"] = results[1]["data"];
-                      } else if (results[1]["status"] === 401) {
+                      } else if (results[1]["status"] === 400) {
                         document
                           .querySelector("#webdisconnected_mizboon a")
                           .click();
@@ -3543,7 +3543,7 @@
 
                       if (results[2]["status"] === 200) {
                         calendars["otaghakStatus"] = results[2]["data"];
-                      } else if (results[2]["status"] === 401) {
+                      } else if (results[2]["status"] === 400) {
                         document
                           .querySelector("#webdisconnected_otaghak a")
                           .click();
@@ -3551,7 +3551,7 @@
 
                       if (results[3]["status"] === 200) {
                         calendars["jajigaStatus"] = results[3]["data"];
-                      } else if (results[3]["status"] === 401) {
+                      } else if (results[3]["status"] === 400) {
                         document
                           .querySelector("#webdisconnected_jajiga a")
                           .click();
@@ -3559,7 +3559,7 @@
 
                       if (results[4]["status"] === 200) {
                         calendars["shabStatus"] = results[4]["data"];
-                      } else if (results[4]["status"] === 401) {
+                      } else if (results[4]["status"] === 400) {
                         document
                           .querySelector("#webdisconnected_shab a")
                           .click();
@@ -3567,7 +3567,7 @@
 
                       if (results[6]["status"] === 200) {
                         calendars["mihmanshoStatus"] = results[6]["data"];
-                      } else if (results[6]["status"] === 401) {
+                      } else if (results[6]["status"] === 400) {
                         // document
                         //   .querySelector("#webdisconnected_mihmansho a")
                         //   .click();
