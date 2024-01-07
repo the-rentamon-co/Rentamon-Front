@@ -398,7 +398,7 @@ function unblockBtnClicked() {
       (action = "blockUnblock")
     );
     alert(messages.unblockDaySuccess);
-    // window.location.reload();
+    window.location.reload();
   } else {
     alert(messages.notSelectedDay);
   }
