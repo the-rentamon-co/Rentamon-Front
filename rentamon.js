@@ -692,6 +692,59 @@ function priceBtnClicked() {
   }
 }
 
+
+$(document).ready(function () {
+  const webdisconnectedJabamaBtn = document.querySelector("#webdisconnected");
+  const webdisconnectedOtaghakBtn = document.querySelector(
+    "#webdisconnected_otaghak"
+  );
+  const webdisconnectedJajigaBtn = document.querySelector(
+    "#webdisconnected_jajiga"
+  );
+  const webdisconnectedShabBtn = document.querySelector(
+    "#webdisconnected_shab"
+  );
+
+  if (webdisconnectedJabamaBtn !== null) {
+    webdisconnectedJabamaBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+
+  if (webdisconnectedOtaghakBtn !== null) {
+    webdisconnectedOtaghakBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+  if (webdisconnectedJajigaBtn !== null) {
+    webdisconnectedJajigaBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+  if (webdisconnectedShabBtn !== null) {
+    webdisconnectedShabBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+
+  document.querySelector(".submit").addEventListener("click", checkAction);
+  document.querySelectorAll('input[name="block"]').forEach((elem) => {
+    elem.addEventListener("change", (e) => {
+      const actionBtn = document.querySelector(".btnActionCont button");
+      if (e.target.className === "discount") {
+        actionBtn.removeEventListener("click", checkAction);
+        actionBtn.removeEventListener("click", priceBtnClicked);
+        actionBtn.className = "discount-submit";
+        actionBtn.addEventListener("click", discountBtnClicked);
+      } else if (e.target.className === "price") {
+        actionBtn.removeEventListener("click", checkAction);
+        actionBtn.removeEventListener("click", discountBtnClicked);
+        actionBtn.className = "price-submit";
+        actionBtn.addEventListener("click", priceBtnClicked);
+      } else {
+        actionBtn.addEventListener("click", checkAction);
+        document.querySelector(".btnActionCont button").className = "submit";
+        actionBtn.removeEventListener("click", discountBtnClicked);
+        actionBtn.removeEventListener("click", priceBtnClicked);
+      }
+    });
+  });
+});
+
+
+
 $(".inline").pDatepicker({
   initialValue: false,
   dayPicker: {
@@ -780,53 +833,4 @@ $(".inline").pDatepicker({
   </div>
 </div>
 `,
-});
-$(document).ready(function () {
-  const webdisconnectedJabamaBtn = document.querySelector("#webdisconnected");
-  const webdisconnectedOtaghakBtn = document.querySelector(
-    "#webdisconnected_otaghak"
-  );
-  const webdisconnectedJajigaBtn = document.querySelector(
-    "#webdisconnected_jajiga"
-  );
-  const webdisconnectedShabBtn = document.querySelector(
-    "#webdisconnected_shab"
-  );
-
-  if (webdisconnectedJabamaBtn !== null) {
-    webdisconnectedJabamaBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-
-  if (webdisconnectedOtaghakBtn !== null) {
-    webdisconnectedOtaghakBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-  if (webdisconnectedJajigaBtn !== null) {
-    webdisconnectedJajigaBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-  if (webdisconnectedShabBtn !== null) {
-    webdisconnectedShabBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-
-  document.querySelector(".submit").addEventListener("click", checkAction);
-  document.querySelectorAll('input[name="block"]').forEach((elem) => {
-    elem.addEventListener("change", (e) => {
-      const actionBtn = document.querySelector(".btnActionCont button");
-      if (e.target.className === "discount") {
-        actionBtn.removeEventListener("click", checkAction);
-        actionBtn.removeEventListener("click", priceBtnClicked);
-        actionBtn.className = "discount-submit";
-        actionBtn.addEventListener("click", discountBtnClicked);
-      } else if (e.target.className === "price") {
-        actionBtn.removeEventListener("click", checkAction);
-        actionBtn.removeEventListener("click", discountBtnClicked);
-        actionBtn.className = "price-submit";
-        actionBtn.addEventListener("click", priceBtnClicked);
-      } else {
-        actionBtn.addEventListener("click", checkAction);
-        document.querySelector(".btnActionCont button").className = "submit";
-        actionBtn.removeEventListener("click", discountBtnClicked);
-        actionBtn.removeEventListener("click", priceBtnClicked);
-      }
-    });
-  });
 });
