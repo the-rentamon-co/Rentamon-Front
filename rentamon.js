@@ -742,98 +742,97 @@ $(document).ready(function () {
     });
   });
 
-
-
-});
-
-
-
-$(".inline").pDatepicker({
-  initialValue: false,
-  dayPicker: {
-    enabled: true,
-    titleFormat: "MMMM YYYY",
-  },
-  monthPicker: {
-    enabled: false,
-    titleFormat: "YYYY",
-  },
-  yearPicker: {
-    enabled: false,
-    titleFormat: "YYYY",
-  },
-  inline: true,
-  minDate: new persianDate().startOf("day"),
-  // maxDate: new persianDate().month(10).endOf("month"),
-  maxDate: new persianDate()
-    .add("month", 3)
-    .startOf("month")
-    .subtract("day", 1),
-  navigator: {
-    enabled: true,
-    scroll: {
+  $(".inline").pDatepicker({
+    initialValue: false,
+    dayPicker: {
+      enabled: true,
+      titleFormat: "MMMM YYYY",
+    },
+    monthPicker: {
       enabled: false,
+      titleFormat: "YYYY",
     },
-    text: {
-      btnNextText: ">",
-      btnPrevText: "<",
+    yearPicker: {
+      enabled: false,
+      titleFormat: "YYYY",
     },
-  },
-  format: "YYYY-MM-DD",
-  resoinsive: true,
-  template: `
-  <div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
-  <div class="navigator">
-  <div class="datepicker-header">
-  <div class="btn btn-next">{{navigator.text.btnNextText}}</div>
-  <div class="btn btn-switch">{{ navigator.switch.text }}</div>
-  <div class="btn btn-prev">{{navigator.text.btnPrevText}}</div>
-  </div>
-  </div>
-  <div class="datepicker-grid-view">
-    {{#days.enabled}} {{#days.viewMode}}
-    <div class="datepicker-day-view">
-      <div class="month-grid-box">
-        <div class="header">
-          <div class="title"></div>
-          <div class="header-row">
-            <div class="header-row-cell">شنبه</div>
-            <div class="header-row-cell">یک</div>
-            <div class="header-row-cell">دو</div>
-            <div class="header-row-cell">سه</div>
-            <div class="header-row-cell">چهار</div>
-            <div class="header-row-cell">پنج</div>
-            <div class="header-row-cell">جمعه</div>
-          </div>
-        </div>
-        <table cellspacing="1" class="table-days">
-          <tbody>
-            {{#days.list}}
-            <tr>
-              {{#.}} {{#enabled}}
-              <td data-unix="{{dataUnix}}">
-                <span
-                  class="{{#otherMonth}}other-month{{/otherMonth}} {{#selected}}selected{{/selected}}"
-                  >{{title}}</span
-                ><span class="reserved"></span><span class="price"></span>
-              </td>
-              {{/enabled}} {{^enabled}}
-              <td data-unix="{{dataUnix}}" class="disabled">
-                <span class="{{#otherMonth}}other-month{{/otherMonth}}"
-                  >{{title}}</span
-                ><span
-                  class="reserved {{#otherMonth}}other-month{{/otherMonth}}"
-                ></span><span class="price {{#otherMonth}}other-month{{/otherMonth}}"></span>
-              </td>
-              {{/enabled}} {{/.}}
-            </tr>
-            {{/days.list}}
-          </tbody>
-        </table>
-      </div>
+    inline: true,
+    minDate: new persianDate().startOf("day"),
+    // maxDate: new persianDate().month(10).endOf("month"),
+    maxDate: new persianDate()
+      .add("month", 3)
+      .startOf("month")
+      .subtract("day", 1),
+    navigator: {
+      enabled: true,
+      scroll: {
+        enabled: false,
+      },
+      text: {
+        btnNextText: ">",
+        btnPrevText: "<",
+      },
+    },
+    format: "YYYY-MM-DD",
+    resoinsive: true,
+    template: `
+    <div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
+    <div class="navigator">
+    <div class="datepicker-header">
+    <div class="btn btn-next">{{navigator.text.btnNextText}}</div>
+    <div class="btn btn-switch">{{ navigator.switch.text }}</div>
+    <div class="btn btn-prev">{{navigator.text.btnPrevText}}</div>
     </div>
-    {{/days.viewMode}} {{/days.enabled}}
+    </div>
+    <div class="datepicker-grid-view">
+      {{#days.enabled}} {{#days.viewMode}}
+      <div class="datepicker-day-view">
+        <div class="month-grid-box">
+          <div class="header">
+            <div class="title"></div>
+            <div class="header-row">
+              <div class="header-row-cell">شنبه</div>
+              <div class="header-row-cell">یک</div>
+              <div class="header-row-cell">دو</div>
+              <div class="header-row-cell">سه</div>
+              <div class="header-row-cell">چهار</div>
+              <div class="header-row-cell">پنج</div>
+              <div class="header-row-cell">جمعه</div>
+            </div>
+          </div>
+          <table cellspacing="1" class="table-days">
+            <tbody>
+              {{#days.list}}
+              <tr>
+                {{#.}} {{#enabled}}
+                <td data-unix="{{dataUnix}}">
+                  <span
+                    class="{{#otherMonth}}other-month{{/otherMonth}} {{#selected}}selected{{/selected}}"
+                    >{{title}}</span
+                  ><span class="reserved"></span><span class="price"></span>
+                </td>
+                {{/enabled}} {{^enabled}}
+                <td data-unix="{{dataUnix}}" class="disabled">
+                  <span class="{{#otherMonth}}other-month{{/otherMonth}}"
+                    >{{title}}</span
+                  ><span
+                    class="reserved {{#otherMonth}}other-month{{/otherMonth}}"
+                  ></span><span class="price {{#otherMonth}}other-month{{/otherMonth}}"></span>
+                </td>
+                {{/enabled}} {{/.}}
+              </tr>
+              {{/days.list}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {{/days.viewMode}} {{/days.enabled}}
+    </div>
   </div>
-</div>
-`,
+  `,
+  });
+
 });
+
+
+
