@@ -694,30 +694,7 @@ function priceBtnClicked() {
 
 
 $(document).ready(function () {
-  const webdisconnectedJabamaBtn = document.querySelector("#webdisconnected");
-  const webdisconnectedOtaghakBtn = document.querySelector(
-    "#webdisconnected_otaghak"
-  );
-  const webdisconnectedJajigaBtn = document.querySelector(
-    "#webdisconnected_jajiga"
-  );
-  const webdisconnectedShabBtn = document.querySelector(
-    "#webdisconnected_shab"
-  );
 
-  if (webdisconnectedJabamaBtn !== null) {
-    webdisconnectedJabamaBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-
-  if (webdisconnectedOtaghakBtn !== null) {
-    webdisconnectedOtaghakBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-  if (webdisconnectedJajigaBtn !== null) {
-    webdisconnectedJajigaBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-  if (webdisconnectedShabBtn !== null) {
-    webdisconnectedShabBtn.addEventListener("click", disconnectedBtnClicked);
-  }
 
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
