@@ -625,6 +625,7 @@ function disconnectedBtnClicked() {
             node.id.includes(disconnectTargetElementId)
         );
         if (targetElement) {
+          console.log(targetElement)
           let phone = document.querySelectorAll(
             'input[name="form_fields[userphone]"'
           );
