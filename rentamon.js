@@ -568,6 +568,7 @@ let tobeDisabled = {
 };
 
 function discountBtnClicked() {
+  alert(":XD")
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   let jabamaPrice = [];
