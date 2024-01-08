@@ -797,6 +797,13 @@ $(document).ready(function () {
   const webdisconnectedShabBtn = document.querySelector(
     "#webdisconnected_shab"
   );
+  const webdisconnectedMihmanshoBtn = document.querySelector(
+    "#webdisconnected_mihmansho"
+  );
+
+  if (webdisconnectedMihmanshoBtn !== null) {
+    webdisconnectedMihmanshoBtn.addEventListener("click", disconnectedBtnClicked);
+  }
 
   if (webdisconnectedJabamaBtn !== null) {
     webdisconnectedJabamaBtn.addEventListener("click", disconnectedBtnClicked);

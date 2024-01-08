@@ -3686,9 +3686,9 @@
                           .click();
                       }
                       if (results[6]["status"] === 400) {
-                        // document
-                        //   .querySelector("#webdisconnected_mihmansho a")
-                        //   .click();
+                        document
+                          .querySelector("#webdisconnected_mihmansho a")
+                          .click();
                       }
                       //  else if (results[0]["status"] === 400) {
                       //   document.querySelector("#webdisconnected a").click();
