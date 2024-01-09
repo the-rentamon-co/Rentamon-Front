@@ -3551,8 +3551,6 @@
                         calendars["mihmanshoStatus"] = results[6]["data"];
                       }
 
-                      calendars["otherStatus"] = results[5];
-
                       // console.log(calendars)
 
                       // for (let x in calendars){
@@ -3569,6 +3567,7 @@
                         // results[5]["status"] === 200
                         calendars != {}
                       ) {
+                        calendars["otherStatus"] = results[5];
                         for (let i = 0; i < availableDays.length; i++) {
                           // var status = {
                           //   jabamaStatus: jabamaStatus(results[0]["data"][i]),
