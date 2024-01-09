@@ -3559,12 +3559,7 @@
                       // }
 
                       if (
-                        // results[0]["status"] === 200 &&
-                        // results[1]["status"] === 200 &&
-                        // results[2]["status"] === 200 &&
-                        // results[3]["status"] === 200 &&
-                        // results[4]["status"] === 200
-                        // results[5]["status"] === 200
+
                         JSON.stringify(calendars) !== '{}'
                       ) {
                         calendars["otherStatus"] = results[5];
