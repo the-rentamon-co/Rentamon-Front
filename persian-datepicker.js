@@ -3565,7 +3565,7 @@
                         // results[3]["status"] === 200 &&
                         // results[4]["status"] === 200
                         // results[5]["status"] === 200
-                        calendars != {}
+                        JSON.stringify(calendars) !== '{}'
                       ) {
                         calendars["otherStatus"] = results[5];
                         for (let i = 0; i < availableDays.length; i++) {
