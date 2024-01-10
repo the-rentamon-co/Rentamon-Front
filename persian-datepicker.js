@@ -3507,7 +3507,7 @@
                     routes.mihmansho.calendar +
                       `?rentamon_room_id=${routes.mihmansho.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
 
-                    routes.mihmansho.calendar +
+                    routes.homsa.calendar +
                       `?rentamon_room_id=${routes.homsa.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
                   ];
 
