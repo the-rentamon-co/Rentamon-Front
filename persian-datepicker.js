@@ -3506,6 +3506,9 @@
 
                     routes.mihmansho.calendar +
                       `?rentamon_room_id=${routes.mihmansho.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
+
+                    routes.mihmansho.calendar +
+                      `?rentamon_room_id=${routes.homsa.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
                   ];
 
                   console.log(urls2);
@@ -3523,8 +3526,6 @@
 
                   Promise.all(fetchPromises)
                     .then((results) => {
-                      // console.log(results);
-
                       var calendars = {};
 
                       if (results[0]["status"] === 200) {
@@ -3551,12 +3552,9 @@
                         calendars["mihmanshoStatus"] = results[6]["data"];
                       }
 
-                      // console.log(calendars)
-
-                      // for (let x in calendars){
-                      //   // console.log(calendars[x][0])
-                      //   console.log(window[x](calendars[x][0]))
-                      // }
+                      if (results[7]["status"] === 200) {
+                        calendars["homsaStatus"] = results[6]["data"];
+                      }
 
                       if (
                         JSON.stringify(calendars) !== "{}" &&
@@ -3564,22 +3562,11 @@
                       ) {
                         calendars["otherStatus"] = results[5];
                         for (let i = 0; i < availableDays.length; i++) {
-                          // var status = {
-                          //   jabamaStatus: jabamaStatus(results[0]["data"][i]),
-                          //   mizboonStatus: mizboonStatus(results[1]["data"][i]),
-                          //   otaghakStatus: otaghakStatus(results[2]["data"][i]),
-                          //   jajigaStatus: jajigaStatus(results[3]["data"][i]),
-                          //   shabStatus: shabStatus(results[4]["data"][i]),
-                          //   otherStatus: otherStatus(results[5][i]),
-                          // };
-
                           var status = {};
 
                           for (let cal in calendars) {
                             status[cal] = window[cal](calendars[cal][i]);
                           }
-
-                          // console.log(status);
 
                           let origPrice = parseInt(
                             parseInt(results[0]["data"][i]["price"])
@@ -3628,7 +3615,6 @@
                                 status[`${web}Status`] !== "booked" &&
                                 status[`${web}Status`] !== "blocked"
                               ) {
-                                // console.log(i, status[`${web}Status`]);
                                 tobeDisabled[web](
                                   new persianDate(
                                     parseInt(
@@ -3682,6 +3668,12 @@
                       if (results[6]["status"] === 400) {
                         document
                           .querySelector("#webdisconnected_mihmansho a")
+                          .click();
+                      }
+
+                      if (results[7]["status"] === 400) {
+                        document
+                          .querySelector("#webdisconnected_homsa a")
                           .click();
                       }
 
@@ -4829,7 +4821,6 @@
           // Export the escaping function so that the user may override it.
           // See https://github.com/janl/mustache.js/issues/244
           mustache.escape = escapeHtml;
-          
 
           // Export these mainly for testing, but also for advanced usage.
           mustache.Scanner = Scanner;
