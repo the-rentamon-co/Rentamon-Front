@@ -20,6 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
     apiDomainUrl +
       "/mihmansho/listing" +
       `?rentamon_room_id=${routes.mihmansho.room}&rentamon_id=${rentamon_user_id}`,
+
+      apiDomainUrl +
+      "/homsa/listing" +
+      `?rentamon_room_id=${routes.homsa.room}&rentamon_id=${rentamon_user_id}`,
   ];
   let fetchDataForListing = async (url) => {
     const response = await fetch(url);
