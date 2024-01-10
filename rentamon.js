@@ -625,11 +625,11 @@ function disconnectedBtnClicked() {
             node.id.includes(disconnectTargetElementId)
         );
         if (targetElement) {
-          console.log(targetElement);
+          // console.log(targetElement);
           let phone = targetElement.querySelector(
             'input[name="form_fields[userphone]"'
           );
-          console.log(phone);
+          // console.log(phone);
           phone.addEventListener(
             "input",
             () =>
