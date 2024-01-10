@@ -54,6 +54,14 @@ let routes = {
     calendar: apiHostMainUrl + "/mihmansho/calendar",
     room: rentamon_room_id,
   },
+
+
+  homsa: {
+    block: apiHostMainUrl + "/homsa/block",
+    unblock: apiHostMainUrl + "/homsa/unblock",
+    calendar: apiHostMainUrl + "/homsa/calendar",
+    room: rentamon_room_id,
+  },
 };
 
 let messages = {
@@ -71,6 +79,7 @@ let names = {
   shabStatus: { fa: "شب", en: "shab" },
   otherStatus: { fa: "رزرو", en: "other" },
   mihmanshoStatus: { fa: "مهمان شو", en: "mihmansho" },
+  homsaStatus: { fa: "هومسا", en: "homsa" },
 };
 
 const fetchData = async (url) => {
@@ -91,6 +100,24 @@ function convertToPersianNumber(number) {
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   return number.replace(/\d/g, (digit) => persianDigits[digit]);
 }
+
+function homsaStatus(homsa) {
+  if (!homsa) {
+    return "not sure";
+  }
+
+  switch (homsa.status) {
+    case "blocked":
+      return "blocked";
+    case "reserved":
+      return "booked";
+    case "unblocked":
+      return "unblocked";
+    default:
+      return "not sure";
+  }
+}
+
 
 function mihmanshoStatus(mihmansho) {
   if (!mihmansho) {
@@ -266,6 +293,14 @@ function blockBtnClicked() {
         )
       );
     });
+    rentamonApiCaller(
+      (website = "homsa"),
+      (data = {
+        rentamon_room_id: routes["homsa"]["room"],
+        days: selectedDate.join(","),
+      }),
+      (action = "block")
+    );
 
     rentamonApiCaller(
       (website = "mihmansho"),
@@ -337,6 +372,14 @@ function unblockBtnClicked() {
         )
       );
     });
+    rentamonApiCaller(
+      (website = "homsa"),
+      (data = {
+        rentamon_room_id: routes["homsa"]["room"],
+        days: selectedDate.join(","),
+      }),
+      (action = "unblock")
+    );
     rentamonApiCaller(
       (website = "mihmansho"),
       (data = {
@@ -415,6 +458,14 @@ function reserveOther() {
         )
       );
     });
+    rentamonApiCaller(
+      (website = "homsa"),
+      (data = {
+        rentamon_room_id: routes["homsa"]["room"],
+        days: selectedDate.join(","),
+      }),
+      (action = "block")
+    );
 
     rentamonApiCaller(
       (website = "mihmansho"),
@@ -501,6 +552,18 @@ function checkAction() {
 }
 
 let tobeDisabled = {
+  homsa: (single) => {
+    rentamonApiCaller(
+      (website = "homsa"),
+      (data = {
+        rentamon_room_id: routes["homsa"]["room"],
+        days: single,
+      }),
+      (action = "block")
+    );
+  },
+
+
   mihmansho: (single) => {
     rentamonApiCaller(
       (website = "mihmansho"),
@@ -800,6 +863,12 @@ $(document).ready(function () {
   const webdisconnectedMihmanshoBtn = document.querySelector(
     "#webdisconnected_mihmansho"
   );
+  const webdisconnectedHomsaBtn = document.querySelector(
+    "#webdisconnected_homsa"
+  );
+  if (webdisconnectedHomsaBtn !== null) {
+    webdisconnectedHomsaBtn.addEventListener("click", disconnectedBtnClicked);
+  }
 
   if (webdisconnectedMihmanshoBtn !== null) {
     webdisconnectedMihmanshoBtn.addEventListener("click", disconnectedBtnClicked);
