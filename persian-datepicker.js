@@ -3559,8 +3559,8 @@
                       // }
 
                       if (
-
-                        JSON.stringify(calendars) !== '{}'
+                        JSON.stringify(calendars) !== "{}" &&
+                        "jabamaStatus" in calendars
                       ) {
                         calendars["otherStatus"] = results[5];
                         for (let i = 0; i < availableDays.length; i++) {
@@ -3684,7 +3684,6 @@
                           .querySelector("#webdisconnected_mihmansho a")
                           .click();
                       }
-
 
                       document.querySelector(
                         ".loading-overlay-calendar"
