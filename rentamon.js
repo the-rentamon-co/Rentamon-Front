@@ -55,7 +55,6 @@ let routes = {
     room: rentamon_room_id,
   },
 
-
   homsa: {
     block: apiHostMainUrl + "/homsa/block",
     unblock: apiHostMainUrl + "/homsa/unblock",
@@ -117,7 +116,6 @@ function homsaStatus(homsa) {
       return "not sure";
   }
 }
-
 
 function mihmanshoStatus(mihmansho) {
   if (!mihmansho) {
@@ -563,7 +561,6 @@ let tobeDisabled = {
     );
   },
 
-
   mihmansho: (single) => {
     rentamonApiCaller(
       (website = "mihmansho"),
@@ -760,40 +757,107 @@ function priceBtnClicked() {
   }
 }
 
-$(".inline").pDatepicker({
-  initialValue: false,
-  dayPicker: {
-    enabled: true,
-    titleFormat: "MMMM YYYY",
-  },
-  monthPicker: {
-    enabled: false,
-    titleFormat: "YYYY",
-  },
-  yearPicker: {
-    enabled: false,
-    titleFormat: "YYYY",
-  },
-  inline: true,
-  minDate: new persianDate().startOf("day"),
-  // maxDate: new persianDate().month(10).endOf("month"),
-  maxDate: new persianDate()
-    .add("month", 3)
-    .startOf("month")
-    .subtract("day", 1),
-  navigator: {
-    enabled: true,
-    scroll: {
+$(document).ready(function () {
+  const webdisconnectedJabamaBtn = document.querySelector("#webdisconnected");
+  const webdisconnectedOtaghakBtn = document.querySelector(
+    "#webdisconnected_otaghak"
+  );
+  const webdisconnectedJajigaBtn = document.querySelector(
+    "#webdisconnected_jajiga"
+  );
+  const webdisconnectedShabBtn = document.querySelector(
+    "#webdisconnected_shab"
+  );
+  const webdisconnectedMihmanshoBtn = document.querySelector(
+    "#webdisconnected_mihmansho"
+  );
+  const webdisconnectedHomsaBtn = document.querySelector(
+    "#webdisconnected_homsa"
+  );
+  if (webdisconnectedHomsaBtn !== null) {
+    webdisconnectedHomsaBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+
+  if (webdisconnectedMihmanshoBtn !== null) {
+    webdisconnectedMihmanshoBtn.addEventListener(
+      "click",
+      disconnectedBtnClicked
+    );
+  }
+
+  if (webdisconnectedJabamaBtn !== null) {
+    webdisconnectedJabamaBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+
+  if (webdisconnectedOtaghakBtn !== null) {
+    webdisconnectedOtaghakBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+  if (webdisconnectedJajigaBtn !== null) {
+    webdisconnectedJajigaBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+  if (webdisconnectedShabBtn !== null) {
+    webdisconnectedShabBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+
+  document.querySelector(".submit").addEventListener("click", checkAction);
+  document.querySelectorAll('input[name="block"]').forEach((elem) => {
+    elem.addEventListener("change", (e) => {
+      const actionBtn = document.querySelector(".btnActionCont button");
+      if (e.target.className === "discount") {
+        actionBtn.removeEventListener("click", checkAction);
+        actionBtn.removeEventListener("click", priceBtnClicked);
+        actionBtn.className = "discount-submit";
+        actionBtn.addEventListener("click", discountBtnClicked);
+      } else if (e.target.className === "price") {
+        actionBtn.removeEventListener("click", checkAction);
+        actionBtn.removeEventListener("click", discountBtnClicked);
+        actionBtn.className = "price-submit";
+        actionBtn.addEventListener("click", priceBtnClicked);
+      } else {
+        actionBtn.addEventListener("click", checkAction);
+        document.querySelector(".btnActionCont button").className = "submit";
+        actionBtn.removeEventListener("click", discountBtnClicked);
+        actionBtn.removeEventListener("click", priceBtnClicked);
+      }
+    });
+  });
+});
+
+$(window).on("load", function () {
+  $(".inline").pDatepicker({
+    initialValue: false,
+    dayPicker: {
+      enabled: true,
+      titleFormat: "MMMM YYYY",
+    },
+    monthPicker: {
       enabled: false,
+      titleFormat: "YYYY",
     },
-    text: {
-      btnNextText: ">",
-      btnPrevText: "<",
+    yearPicker: {
+      enabled: false,
+      titleFormat: "YYYY",
     },
-  },
-  format: "YYYY-MM-DD",
-  resoinsive: true,
-  template: `
+    inline: true,
+    minDate: new persianDate().startOf("day"),
+    // maxDate: new persianDate().month(10).endOf("month"),
+    maxDate: new persianDate()
+      .add("month", 3)
+      .startOf("month")
+      .subtract("day", 1),
+    navigator: {
+      enabled: true,
+      scroll: {
+        enabled: false,
+      },
+      text: {
+        btnNextText: ">",
+        btnPrevText: "<",
+      },
+    },
+    format: "YYYY-MM-DD",
+    resoinsive: true,
+    template: `
   <div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
   <div class="navigator">
   <div class="datepicker-header">
@@ -848,66 +912,5 @@ $(".inline").pDatepicker({
   </div>
 </div>
 `,
-});
-$(document).ready(function () {
-  const webdisconnectedJabamaBtn = document.querySelector("#webdisconnected");
-  const webdisconnectedOtaghakBtn = document.querySelector(
-    "#webdisconnected_otaghak"
-  );
-  const webdisconnectedJajigaBtn = document.querySelector(
-    "#webdisconnected_jajiga"
-  );
-  const webdisconnectedShabBtn = document.querySelector(
-    "#webdisconnected_shab"
-  );
-  const webdisconnectedMihmanshoBtn = document.querySelector(
-    "#webdisconnected_mihmansho"
-  );
-  const webdisconnectedHomsaBtn = document.querySelector(
-    "#webdisconnected_homsa"
-  );
-  if (webdisconnectedHomsaBtn !== null) {
-    webdisconnectedHomsaBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-
-  if (webdisconnectedMihmanshoBtn !== null) {
-    webdisconnectedMihmanshoBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-
-  if (webdisconnectedJabamaBtn !== null) {
-    webdisconnectedJabamaBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-
-  if (webdisconnectedOtaghakBtn !== null) {
-    webdisconnectedOtaghakBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-  if (webdisconnectedJajigaBtn !== null) {
-    webdisconnectedJajigaBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-  if (webdisconnectedShabBtn !== null) {
-    webdisconnectedShabBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-
-  document.querySelector(".submit").addEventListener("click", checkAction);
-  document.querySelectorAll('input[name="block"]').forEach((elem) => {
-    elem.addEventListener("change", (e) => {
-      const actionBtn = document.querySelector(".btnActionCont button");
-      if (e.target.className === "discount") {
-        actionBtn.removeEventListener("click", checkAction);
-        actionBtn.removeEventListener("click", priceBtnClicked);
-        actionBtn.className = "discount-submit";
-        actionBtn.addEventListener("click", discountBtnClicked);
-      } else if (e.target.className === "price") {
-        actionBtn.removeEventListener("click", checkAction);
-        actionBtn.removeEventListener("click", discountBtnClicked);
-        actionBtn.className = "price-submit";
-        actionBtn.addEventListener("click", priceBtnClicked);
-      } else {
-        actionBtn.addEventListener("click", checkAction);
-        document.querySelector(".btnActionCont button").className = "submit";
-        actionBtn.removeEventListener("click", discountBtnClicked);
-        actionBtn.removeEventListener("click", priceBtnClicked);
-      }
-    });
   });
 });
