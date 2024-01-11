@@ -3553,7 +3553,7 @@
                       }
 
                       if (results[7]["status"] === 200) {
-                        calendars["homsaStatus"] = results[6]["data"];
+                        calendars["homsaStatus"] = results[7]["data"];
                       }
 
                       if (
