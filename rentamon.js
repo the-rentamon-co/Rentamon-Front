@@ -690,13 +690,13 @@ function disconnectedBtnClicked() {
             'input[name="form_fields[userphone]"'
           );
           // console.log(phone);
-          phone.addEventListener(
-            "input",
-            () =>
-              (targetElement.querySelector(
+          phone.addEventListener("input", () => {
+            try {
+              targetElement.querySelector(
                 'input[name="form_fields[phoneNumber]"'
-              ).value = phone.value)
-          );
+              ).value = phone.value;
+            } catch (err) {}
+          });
 
           targetElement
             .querySelectorAll('input[name="form_fields[userid]"')
