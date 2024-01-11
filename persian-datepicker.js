@@ -3681,25 +3681,11 @@
                           .click();
                       }
 
-                      if (
-                        document.querySelector("input[name='form_fields[run]']")
-                          .checked !== true
-                      ) {
-                        document
-                          .querySelector("input[name='form_fields[run]']")
-                          .click();
-                      }
+
                     })
                     .catch((error) => {
                       console.error(error);
-                      if (
-                        document.querySelector("input[name='form_fields[run]']")
-                          .checked !== true
-                      ) {
-                        document
-                          .querySelector("input[name='form_fields[run]']")
-                          .click();
-                      }
+
                     });
                 } else {
                   document.querySelector(
