@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.getElementById("run").addEventListener("change", () => {
   let apiDomainUrl = "https://rentamon.chbk.run";
   let listings = [
     apiDomainUrl +

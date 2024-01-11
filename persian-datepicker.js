@@ -3642,6 +3642,7 @@
                           }
                         }
                       }
+
                       if (results[0]["status"] === 400) {
                         document.querySelector("#webdisconnected a").click();
                       }
@@ -3680,9 +3681,15 @@
                       document.querySelector(
                         ".loading-overlay-calendar"
                       ).style.display = "none";
+                      if (document.getElementById("run").checked !== true) {
+                        document.getElementById("run").click();
+                      }
                     })
                     .catch((error) => {
                       console.error(error);
+                      if (document.getElementById("run").checked !== true) {
+                        document.getElementById("run").click();
+                      }
                     });
                 } else {
                   document.querySelector(
