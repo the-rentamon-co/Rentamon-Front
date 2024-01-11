@@ -1,4 +1,4 @@
-document.querySelector("form_fields[run]").addEventListener("change", () => {
+document.querySelector("input[name='form_fields[run]']").addEventListener("change", () => {
   let apiDomainUrl = "https://rentamon.chbk.run";
   let listings = [
     apiDomainUrl +
