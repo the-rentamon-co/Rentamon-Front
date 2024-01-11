@@ -3681,14 +3681,20 @@
                           .click();
                       }
 
-                      if (document.getElementById("run").checked !== true) {
-                        document.getElementById("run").click();
+                      if (
+                        documentquerySelector("form_fields[run]").checked !==
+                        true
+                      ) {
+                        documentquerySelector("form_fields[run]").click();
                       }
                     })
                     .catch((error) => {
                       console.error(error);
-                      if (document.getElementById("run").checked !== true) {
-                        document.getElementById("run").click();
+                      if (
+                        documentquerySelector("form_fields[run]").checked !==
+                        true
+                      ) {
+                        documentquerySelector("form_fields[run]").click();
                       }
                     });
                 } else {

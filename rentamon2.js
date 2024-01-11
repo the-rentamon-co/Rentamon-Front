@@ -1,4 +1,4 @@
-document.getElementById("run").addEventListener("change", () => {
+document.querySelector("form_fields[run]").addEventListener("change", () => {
   let apiDomainUrl = "https://rentamon.chbk.run";
   let listings = [
     apiDomainUrl +
