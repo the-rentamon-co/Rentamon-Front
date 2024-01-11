@@ -3642,6 +3642,9 @@
                           }
                         }
                       }
+                      document.querySelector(
+                        ".loading-overlay-calendar"
+                      ).style.display = "none";
 
                       if (results[0]["status"] === 400) {
                         document.querySelector("#webdisconnected a").click();
@@ -3678,9 +3681,6 @@
                           .click();
                       }
 
-                      document.querySelector(
-                        ".loading-overlay-calendar"
-                      ).style.display = "none";
                       if (document.getElementById("run").checked !== true) {
                         document.getElementById("run").click();
                       }
