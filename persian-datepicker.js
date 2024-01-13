@@ -3646,9 +3646,7 @@
                         ".loading-overlay-calendar"
                       ).style.display = "none";
 
-                      if (results[0]["status"] === 400) {
-                        document.querySelector("#webdisconnected a").click();
-                      }
+
                       if (results[1]["status"] === 400) {
                         document
                           .querySelector("#webdisconnected_mizboon a")
@@ -3679,6 +3677,10 @@
                         document
                           .querySelector("#webdisconnected_homsa a")
                           .click();
+                      }
+
+                      if (results[0]["status"] === 400) {
+                        document.querySelector("#webdisconnected a").click();
                       }
 
 
