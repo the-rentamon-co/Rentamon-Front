@@ -776,6 +776,13 @@ $(document).ready(function () {
   const webdisconnectedHomsaBtn = document.querySelector(
     "#webdisconnected_homsa"
   );
+  const webdisconnectedMizboonBtn = document.querySelector(
+    "#webdisconnected_mizboon"
+  );
+
+  if (webdisconnectedMizboonBtn !== null) {
+    webdisconnectedMizboonBtn.addEventListener("click", disconnectedBtnClicked);
+  }
   if (webdisconnectedHomsaBtn !== null) {
     webdisconnectedHomsaBtn.addEventListener("click", disconnectedBtnClicked);
   }
