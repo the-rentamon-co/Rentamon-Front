@@ -67,7 +67,7 @@ let messages = {
   blockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   unblockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   reserveDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
-  notSelectedDay: "هنوز هیچ روزی رو انتخاب نکردی",
+  notSelectedDay: "هنوز هیچ روز یا وضعیتی رو انتخاب نکردی",
 };
 
 let names = {
