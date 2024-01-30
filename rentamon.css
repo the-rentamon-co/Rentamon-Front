@@ -85,8 +85,8 @@ span.other-month {
 
 .select,
 .select:hover {
-  background-color: #203647;
-  color: #e4defe;
+  background-color: #203647 !important;
+  color: #e4defe !important;
 }
 
 button.block,
@@ -227,15 +227,15 @@ td.passed-days.disabled {
   td:not(.select):not(.disabled):not(.blocked-days):not(.booked-days):not(
     :has(span.other-month)
   ) {
-  background-color: #e5e5e5;
-  color: #203647;
+  background-color: #e5e5e5 !important;
+  color: #203647 !important;
 }
 
 td:is(.select):not(.disabled):not(.blocked-days):not(.booked-days):not(
     :has(span.other-month)
   ) {
-  background-color: #203647;
-  color: #e4defe;
+  background-color: #203647 !important;
+  color: #e4defe !important;
 }
 
 /* .elementor-column-gap-default>.elementor-column>.elementor-element-populated {

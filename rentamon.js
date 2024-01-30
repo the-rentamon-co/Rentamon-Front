@@ -1,6 +1,6 @@
 let apiHostMainUrl = "https://rentamon.chbk.run";
 
-// console.log(document.querySelector("#rentamon_id"));  
+// console.log(document.querySelector("#rentamon_id"));
 
 let rentamon_user_id = document.querySelector("#rentamon_id").innerText.trim();
 let rentamon_room_id = document
@@ -875,7 +875,7 @@ $(window).on("load", function () {
     },
     format: "YYYY-MM-DD",
     resoinsive: true,
-        template: `
+    template: `
       <div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
       <div class="navigator">
       <div class="datepicker-header">
@@ -929,18 +929,6 @@ $(window).on("load", function () {
         {{/days.viewMode}} {{/days.enabled}}
       </div>
     </div>
-    <script>
-      let a = document.querySelectorAll("td");
-      Array.from(a).forEach((z) => {
-        z.addEventListener("click", () => {
-          if (z.classList.contains("select")) {
-            z.classList.remove("select");
-          } else {
-            z.classList.add("select");
-          }
-        });
-      });
-    </script>
     `,
   });
 });
