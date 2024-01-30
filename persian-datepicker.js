@@ -3988,6 +3988,22 @@
                 if (!data) {
                   data = this.model.state.view;
                 }
+                
+                document.querySelector(
+                  ".loading-overlay-calendar"
+                ).style.display = "flex";
+                Helper.debug(this, "render");
+                Mustache.parse(Template);
+                this.rendered = $(
+                  Mustache.render(
+                    this.model.options.template,
+                    this.getViewModel(data)
+                  )
+                );
+
+                this.$container.empty().append(this.rendered);
+                this.afterRender();
+
                 Helper.debug(this, "render");
                 Mustache.parse(Template);
                 this.rendered = $(
@@ -4240,27 +4256,14 @@
                 // end of rentamon
               },
             },
-            {
-              key: "render",
-              value: function render(data) {
-                document.querySelector(
-                  ".loading-overlay-calendar"
-                ).style.display = "flex";
-                Helper.debug(this, "render");
-                Mustache.parse(Template);
-                this.rendered = $(
-                  Mustache.render(
-                    this.model.options.template,
-                    this.getViewModel(data)
-                  )
-                );
+            // {
+            //   key: "render",
+            //   value: function render(data) {
+                
 
-                this.$container.empty().append(this.rendered);
-                this.afterRender();
-
-                // this is added by
-              },
-            },
+            //     // this is added by
+            //   },
+            // },
             {
               key: "reRender",
               value: function reRender() {
