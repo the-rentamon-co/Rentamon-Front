@@ -851,7 +851,7 @@ $(window).on("load", function () {
     },
     inline: true,
     minDate: new persianDate().startOf("day"),
-    maxDate: new persianDate().month(12).endOf("month"),
+    maxDate: new persianDate().month(11).endOf("month"),
     // maxDate: new persianDate().
     // maxDate: new persianDate()
     //   .add("month", 3)
