@@ -4009,17 +4009,17 @@
                 var availableDays = document.querySelectorAll(
                   ".datepicker-day-view td:not(.disabled):has(span:first-child:not(.other-month))"
                 );
-                document.querySelector(
-                  ".loading-overlay-calendar"
-                ).style.display = "flex";
-                Helper.debug(this, "render");
-                Mustache.parse(Template);
-                this.rendered = $(
-                  Mustache.render(
-                    this.model.options.template,
-                    this.getViewModel(data)
-                  )
-                );
+                // document.querySelector(
+                //   ".loading-overlay-calendar"
+                // ).style.display = "flex";
+                // Helper.debug(this, "render");
+                // Mustache.parse(Template);
+                // this.rendered = $(
+                //   Mustache.render(
+                //     this.model.options.template,
+                //     this.getViewModel(data)
+                //   )
+                // );
                 if (availableDays.length > 0) {
                   const days = document.querySelectorAll(
                     ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
@@ -4252,11 +4252,13 @@
                 }
 
                 // end of rentamon
+              
               },
             },
             // {
             //   key: "render",
             //   value: function render(data) {
+                
 
             //     // this is added by
             //   },
