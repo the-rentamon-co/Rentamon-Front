@@ -1,92 +1,116 @@
+body {
+  padding: 20%;
+}
+
+@media screen and (min-width: 300px) {
+  body {
+    padding: 3%;
+  }
+}
 /* Added CSS by Faghih */
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td {
-    height: 70px !important;
-    border-radius: 5px;
-    padding: 1px;
-    width: 14% !important;
-
+  height: 70px;
+  border-radius: 5px;
+  padding: 1px;
+  width: 14%;
 }
 
 /* End of added CSS by Faghih */
 
-
 /* .datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled * {
     background-color: #F2F2F2;
-    color: #C3C3C3 !important;
+    color: #C3C3C3 ;
 } */
 
-.datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span:not(.other-month):hover,
-.datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span:not(.other-month) {
-    background-color: #F2F2F2;
-    color: #C3C3C3 !important;
+.datepicker-plot-area-inline-view
+  .datepicker-day-view
+  .table-days
+  td.disabled
+  span:not(.other-month):hover,
+.datepicker-plot-area-inline-view
+  .datepicker-day-view
+  .table-days
+  td.disabled
+  span:not(.other-month) {
+  background-color: #f2f2f2;
+  color: #c3c3c3;
 }
 
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td span,
-.datepicker-plot-area-inline-view .datepicker-day-view .table-days td:not(.disabled) span:hover {
-    height: 33% !important;
-    background-color: inherit;
-    color: inherit;
-    word-break: break-all;
+.datepicker-plot-area-inline-view
+  .datepicker-day-view
+  .table-days
+  td:not(.disabled)
+  span:hover {
+  height: 33%;
+  background-color: inherit;
+  color: inherit;
+  word-break: break-all;
 }
 
 .datepicker-plot-area-inline-view .datepicker-day-view .month-grid-box {
-    height: auto !important;
+  height: auto;
 }
 
 .datepicker-plot-area-inline-view {
-    font-size: 16px !important;
-    font-family: vazirmatn !important;
-    /* height: 500px; */
-    padding-top: 10px
+  font-size: 16px;
+  font-family: vazirmatn;
+  /* height: 500px; */
+  padding-top: 10px;
 }
 
 .datepicker-plot-area-inline-view table {
-    font-size: 16px;
-    font-family: vazirmatn;
-    border-collapse: separate !important;
-    border-spacing: 4px 4px !important
+  font-size: 16px;
+  font-family: vazirmatn;
+  border-collapse: separate;
+  border-spacing: 4px 4px;
 }
 
 .blocked-days {
-    background-color: #FBB142 !important;
+  background-color: #fbb142 !important;
 }
 
 .booked-days {
-    background-color: #4FDFB1 !important;
+  background-color: #4fdfb1 !important;
 }
 
 .datepicker-plot-area-inline-view .header-row {
-    height: 40px !important;
+  height: 40px;
 }
 
-.datepicker-plot-area-inline-view .datepicker-day-view .month-grid-box .header .header-row-cell {
-    font-family: vazirmatn !important;
+.datepicker-plot-area-inline-view
+  .datepicker-day-view
+  .month-grid-box
+  .header
+  .header-row-cell {
+  font-family: vazirmatn;
 }
 
 span.other-month {
-    color: white !important;
-    background-color: white !important;
+  color: white !important;
+  background-color: white !important;
+  outline: none !important;
 }
 
-.selected,
-.selected:hover {
-    background-color: #203647 !important;
-    color: #E4DEFE !important;
+.select,
+.select:hover {
+  background-color: #203647;
+  color: #e4defe;
 }
 
 button.block,
 button.unblock {
-    border: 0px;
+  border: 0px;
 
-    border-radius: 5px;
+  border-radius: 5px;
 }
 
 td.disabled span:first-child {
-    border-radius: 5px 5px 0px 0px !important;
+  border-radius: 5px 5px 0px 0px;
 }
 
 td.disabled span:last-child {
-    border-radius: 0px 0px 5px 5px !important;
+  border-radius: 0px 0px 5px 5px;
 }
 
 /* .btnActionCont {
@@ -94,134 +118,133 @@ td.disabled span:last-child {
     display: flex;
     justify-content: space-between;
 } */
-.btnActionCont {
-    width: 100%;
-    display: grid;
-    justify-content: space-around;
 
+.btnActionCont {
+  width: 100%;
+  display: grid;
+  justify-content: space-around;
 }
 
 .btnActionCont button {
-    width: 100%;
-    margin: 0;
-    padding: 10px;
-    box-sizing: border-box;
-    margin-top: 40px;
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-top: 40px;
 }
 
-
-
 .form {
-    width: 100%;
-    padding-top: 40px;
-    display: grid;
-    grid-template-columns: auto auto auto;
-    /* grid-template-columns: repeat(3, 1fr); */
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
+  width: 100%;
+  padding-top: 40px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  /* grid-template-columns: repeat(3, 1fr); */
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 input[type="radio"] {
-    accent-color: #8165D6;
-    height: 18px;
-    width: 18px;
-
+  accent-color: #8165d6;
+  height: 18px;
+  width: 18px;
 }
 
 label {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    direction: rtl;
-    font-size: 20px;
-    font-family: vazirmatn;
-    color: #E4DEFE;
-    gap: 10px
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  direction: rtl;
+  font-size: 20px;
+  font-family: vazirmatn;
+  color: #e4defe;
+  gap: 10px;
 }
 
 .btnActionCont button {
-    margin-top: 40px;
-    font-size: 20px;
-    font-family: vazirmatn;
-    border: 0px;
-    border-radius: 5px;
-
+  margin-top: 40px;
+  font-size: 20px;
+  font-family: vazirmatn;
+  border: 0px;
+  border-radius: 5px;
 }
 
 .price {
-    font-size: 14px !important;
+  font-size: 14px;
 }
 
 td.passed-days.disabled {
-    background: #F2F2F2;
+  background: #f2f2f2;
 }
 
 .header-row {
-    display: flex !important;
-    justify-content: space-around !important;
-    align-items: center !important;
-
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
-
 
 .datepicker-plot-area .datepicker-day-view .table-days tr {
-    width: 100%;
-    margin-bottom: 2px;
-    display: flex;
-    justify-content: space-evenly;
+  width: 100%;
+  margin-bottom: 2px;
+  display: flex;
+  justify-content: space-evenly;
 }
 
-
-
-
 .loading-overlay-calendar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.75);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  flex-direction: column;
 }
 
 .loading-overlay-calendar .loading-spinner-calendar {
-    border: 16px solid #f3f3f3;
-    border-top: 16px solid #8165D6;
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    animation: spin 2s linear infinite;
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #8165d6;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: spin 2s linear infinite;
 }
 
 .loading-text-calendar {
-    margin-top: 20px;
-    font-size: 18px;
-    color: white;
-    text-align: center;
-
+  margin-top: 20px;
+  font-size: 18px;
+  color: white;
+  text-align: center;
 }
 
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
 
-    100% {
-        transform: rotate(360deg);
-    }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-
 /* for normal days */
-.datepicker-day-view .table-days td:not(.selected):not(.disabled):not(.blocked-days):not(.booked-days):not(:has(span.other-month)) {
+.datepicker-day-view
+  .table-days
+  td:not(.select):not(.disabled):not(.blocked-days):not(.booked-days):not(
+    :has(span.other-month)
+  ) {
+  background-color: #e5e5e5;
+  color: #203647;
+}
 
-    background-color: #E5E5E5 !important;
-    color: #203647 !important;
+td:is(.select):not(.disabled):not(.blocked-days):not(.booked-days):not(
+    :has(span.other-month)
+  ) {
+  background-color: #203647;
+  color: #e4defe;
 }
 
 /* .elementor-column-gap-default>.elementor-column>.elementor-element-populated {
@@ -233,7 +256,7 @@ td.passed-days.disabled {
 /* for all texts */
 /* .datepicker-plot-area * {
 
-    color: #203647 !important;
+    color: #203647 ;
 } */
 
 /* for all texts */

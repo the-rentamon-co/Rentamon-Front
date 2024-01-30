@@ -1,7 +1,11 @@
 let apiHostMainUrl = "https://rentamon.chbk.run";
 
+// console.log(document.querySelector("#rentamon_id"));  
+
 let rentamon_user_id = document.querySelector("#rentamon_id").innerText.trim();
-let rentamon_room_id = document.querySelector("#rentamon_room_id").innerText.trim();
+let rentamon_room_id = document
+  .querySelector("#rentamon_room_id")
+  .innerText.trim();
 
 let tehranTimeZone = "Asia/Tehran";
 let currentDate = new Date();
@@ -86,6 +90,7 @@ const fetchData = async (url) => {
   const data = await response.json();
   return data;
 };
+
 function persianToInteger(persianString) {
   const persianNumerals = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   const convertDigit = (digit) => persianNumerals.indexOf(digit);
@@ -280,17 +285,18 @@ function rentamonApiCaller(website, data, action, method = "GET") {
   });
 }
 function blockBtnClicked() {
-  let selected = document.querySelectorAll(".selected");
+  let selected = document.querySelectorAll(".select");
   let selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
-      z.classList.remove("selected");
+      z.classList.remove("select");
       selectedDate.push(
         new persianDate(parseInt(z.getAttribute("data-unix"))).format(
           "YYYY-MM-DD"
         )
       );
     });
+    console.log("ok");
     rentamonApiCaller(
       (website = "homsa"),
       (data = {
@@ -353,17 +359,17 @@ function blockBtnClicked() {
       (action = "block")
     );
     alert(messages.blockDaySuccess);
-    window.location.reload();
+    // window.location.reload();
   } else {
     alert(messages.notSelectedDay);
   }
 }
 function unblockBtnClicked() {
-  let selected = document.querySelectorAll(".selected");
+  let selected = document.querySelectorAll(".select");
   let selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
-      z.classList.remove("selected");
+      z.classList.remove("select");
       selectedDate.push(
         new persianDate(parseInt(z.getAttribute("data-unix"))).format(
           "YYYY-MM-DD"
@@ -445,11 +451,11 @@ function unblockBtnClicked() {
   }
 }
 function reserveOther() {
-  let selected = document.querySelectorAll(".selected");
+  let selected = document.querySelectorAll(".select");
   let selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
-      z.classList.remove("selected");
+      // z.classList.remove("select");
       selectedDate.push(
         new persianDate(parseInt(z.getAttribute("data-unix"))).format(
           "YYYY-MM-DD"
@@ -628,12 +634,12 @@ let tobeDisabled = {
 };
 
 function discountBtnClicked() {
-  let selected = document.querySelectorAll(".selected");
+  let selected = document.querySelectorAll(".select");
   let selectedDate = [];
   let jabamaPrice = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
-      z.classList.remove("selected");
+      // z.classList.remove("select");
       selectedDate.push(
         new persianDate(parseInt(z.getAttribute("data-unix"))).format(
           "YYYY-MM-DD"
@@ -672,8 +678,6 @@ function discountBtnClicked() {
   } else {
   }
 }
-
-
 
 function disconnectedBtnClicked() {
   const disconnectTargetElementId = "elementor-popup-modal";
@@ -720,11 +724,11 @@ function disconnectedBtnClicked() {
 }
 
 function priceBtnClicked() {
-  let selected = document.querySelectorAll(".selected");
+  let selected = document.querySelectorAll(".select");
   let selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
-      z.classList.remove("selected");
+      // z.classList.remove("select");
       selectedDate.push(
         new persianDate(parseInt(z.getAttribute("data-unix"))).format(
           "YYYY-MM-DD"
@@ -834,6 +838,8 @@ $(document).ready(function () {
   });
 });
 
+// debugger;
+
 $(window).on("load", function () {
   $(".inline").pDatepicker({
     initialValue: false,
@@ -869,60 +875,72 @@ $(window).on("load", function () {
     },
     format: "YYYY-MM-DD",
     resoinsive: true,
-    template: `
-  <div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
-  <div class="navigator">
-  <div class="datepicker-header">
-  <div class="btn btn-next">{{navigator.text.btnNextText}}</div>
-  <div class="btn btn-switch">{{ navigator.switch.text }}</div>
-  <div class="btn btn-prev">{{navigator.text.btnPrevText}}</div>
-  </div>
-  </div>
-  <div class="datepicker-grid-view">
-    {{#days.enabled}} {{#days.viewMode}}
-    <div class="datepicker-day-view">
-      <div class="month-grid-box">
-        <div class="header">
-          <div class="title"></div>
-          <div class="header-row">
-            <div class="header-row-cell">شنبه</div>
-            <div class="header-row-cell">یک</div>
-            <div class="header-row-cell">دو</div>
-            <div class="header-row-cell">سه</div>
-            <div class="header-row-cell">چهار</div>
-            <div class="header-row-cell">پنج</div>
-            <div class="header-row-cell">جمعه</div>
+        template: `
+      <div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
+      <div class="navigator">
+      <div class="datepicker-header">
+      <div class="btn btn-next pwt-btn pwt-btn-next">{{navigator.text.btnNextText}}</div>
+      <div class="btn btn-switch pwt-btn pwt-btn-switch">{{ navigator.switch.text }}</div>
+      <div class="btn btn-prev pwt-btn pwt-btn-prev">{{navigator.text.btnPrevText}}</div>
+      </div>
+      </div>
+      <div class="datepicker-grid-view">
+        {{#days.enabled}} {{#days.viewMode}}
+        <div class="datepicker-day-view">
+          <div class="month-grid-box">
+            <div class="header">
+              <div class="title"></div>
+              <div class="header-row">
+                <div class="header-row-cell">شنبه</div>
+                <div class="header-row-cell">یک</div>
+                <div class="header-row-cell">دو</div>
+                <div class="header-row-cell">سه</div>
+                <div class="header-row-cell">چهار</div>
+                <div class="header-row-cell">پنج</div>
+                <div class="header-row-cell">جمعه</div>
+              </div>
+            </div>
+            <table cellspacing="1" class="table-days">
+              <tbody>
+                {{#days.list}}
+                <tr>
+                  {{#.}} {{#enabled}}
+                  <td data-unix="{{dataUnix}}" class="{{#select}}select{{/select}}">
+                    <span
+                      class="{{#otherMonth}}other-month{{/otherMonth}}"
+                      >{{title}}</span
+                    ><span class="reserved"></span><span class="price"></span>
+                  </td>
+                  {{/enabled}} {{^enabled}}
+                  <td data-unix="{{dataUnix}}" class="disabled">
+                    <span class="{{#otherMonth}}other-month{{/otherMonth}}"
+                      >{{title}}</span
+                    ><span
+                      class="reserved {{#otherMonth}}other-month{{/otherMonth}}"
+                    ></span><span class="price {{#otherMonth}}other-month{{/otherMonth}}"></span>
+                  </td>
+                  {{/enabled}} {{/.}}
+                </tr>
+                {{/days.list}}
+              </tbody>
+            </table>
           </div>
         </div>
-        <table cellspacing="1" class="table-days">
-          <tbody>
-            {{#days.list}}
-            <tr>
-              {{#.}} {{#enabled}}
-              <td data-unix="{{dataUnix}}">
-                <span
-                  class="{{#otherMonth}}other-month{{/otherMonth}} {{#selected}}selected{{/selected}}"
-                  >{{title}}</span
-                ><span class="reserved"></span><span class="price"></span>
-              </td>
-              {{/enabled}} {{^enabled}}
-              <td data-unix="{{dataUnix}}" class="disabled">
-                <span class="{{#otherMonth}}other-month{{/otherMonth}}"
-                  >{{title}}</span
-                ><span
-                  class="reserved {{#otherMonth}}other-month{{/otherMonth}}"
-                ></span><span class="price {{#otherMonth}}other-month{{/otherMonth}}"></span>
-              </td>
-              {{/enabled}} {{/.}}
-            </tr>
-            {{/days.list}}
-          </tbody>
-        </table>
+        {{/days.viewMode}} {{/days.enabled}}
       </div>
     </div>
-    {{/days.viewMode}} {{/days.enabled}}
-  </div>
-</div>
-`,
+    <script>
+      let a = document.querySelectorAll("td");
+      Array.from(a).forEach((z) => {
+        z.addEventListener("click", () => {
+          if (z.classList.contains("select")) {
+            z.classList.remove("select");
+          } else {
+            z.classList.add("select");
+          }
+        });
+      });
+    </script>
+    `,
   });
 });
