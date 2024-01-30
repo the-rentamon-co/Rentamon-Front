@@ -1943,20 +1943,20 @@ var Navigator = function () {
                 /**
                  * @description time up btn click event
                  */
-                $(document).on('click', '#' + that.model.view.id + ' .up-btn', function () {
-                    var timekey = $(this).data('time-key');
-                    that.timeUp(timekey);
-                    that.model.options.onSelect(that.model.state.selected.unixDate);
-                });
+                // $(document).on('click', '#' + that.model.view.id + ' .up-btn', function () {
+                //     var timekey = $(this).data('time-key');
+                //     that.timeUp(timekey);
+                //     that.model.options.onSelect(that.model.state.selected.unixDate);
+                // });
 
-                /**
-                 * @description time down btn click event
-                 */
-                $(document).on('click', '#' + that.model.view.id + ' .down-btn', function () {
-                    var timekey = $(this).data('time-key');
-                    that.timeDown(timekey);
-                    that.model.options.onSelect(that.model.state.selected.unixDate);
-                });
+                // /**
+                //  * @description time down btn click event
+                //  */
+                // $(document).on('click', '#' + that.model.view.id + ' .down-btn', function () {
+                //     var timekey = $(this).data('time-key');
+                //     that.timeDown(timekey);
+                //     that.model.options.onSelect(that.model.state.selected.unixDate);
+                // });
             }
 
             /**
