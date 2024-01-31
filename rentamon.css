@@ -1,9 +1,11 @@
 /* Added CSS by Faghih */
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td {
   height: 70px;
-  border-radius: 5px;
+  border-radius: 9px;
+  /* display: ; */
   /* padding: 1px; */
   width: 14%;
+  /* background-color: none !important; */
 }
 
 /* End of added CSS by Faghih */
@@ -33,13 +35,11 @@
   .table-days
   td:not(.disabled)
   span:hover {
-  height: 33%;
+  height: calc(100% / 3);
   background-color: inherit;
   color: inherit;
   word-break: break-all;
 }
-
-
 
 .datepicker-plot-area-inline-view .datepicker-day-view .month-grid-box {
   height: auto;
@@ -65,6 +65,8 @@
 
 .booked-days {
   background-color: #4fdfb1 !important;
+  border: none !important;
+  /* border: 1px solid #4fdfb1 !important; */
 }
 
 .datepicker-plot-area-inline-view .header-row {
@@ -102,6 +104,14 @@ td.disabled span:first-child {
 }
 
 td.disabled span:last-child {
+  border-radius: 0px 0px 5px 5px !important;
+}
+
+td span:first-child {
+  border-radius: 5px 5px 0px 0px !important;
+}
+
+td span:last-child {
   border-radius: 0px 0px 5px 5px !important;
 }
 
