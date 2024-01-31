@@ -3985,41 +3985,26 @@
             {
               key: "render",
               value: function render(data) {
-                if (!data) {
-                  data = this.model.state.view;
-                }
-                this.$container.empty().append(this.rendered);
-                this.afterRender();
-
-                Helper.debug(this, "render");
-                Mustache.parse(Template);
-                this.rendered = $(
-                  Mustache.render(
-                    this.model.options.template,
-                    this.getViewModel(data)
-                  )
-                );
-                this.$container.empty().append(this.rendered);
-                this.markSelectedDay();
-                this.markToday();
-                this.afterRender();
+            if (!data) {
+                data = this.model.state.view;
+            }
+            document.querySelector(
+              ".loading-overlay-calendar"
+            ).style.display = "flex";
+            Helper.debug(this, 'render');
+            Mustache.parse(Template);
+            this.rendered = $(Mustache.render(this.model.options.template, this.getViewModel(data)));
+            this.$container.empty().append(this.rendered);
+            this.markSelectedDay();
+            this.markToday();
+            this.afterRender();
 
                 // this is added by rentamon
 
                 var availableDays = document.querySelectorAll(
                   ".datepicker-day-view td:not(.disabled):has(span:first-child:not(.other-month))"
                 );
-                // document.querySelector(
-                //   ".loading-overlay-calendar"
-                // ).style.display = "flex";
-                // Helper.debug(this, "render");
-                // Mustache.parse(Template);
-                // this.rendered = $(
-                //   Mustache.render(
-                //     this.model.options.template,
-                //     this.getViewModel(data)
-                //   )
-                // );
+
                 if (availableDays.length > 0) {
                   const days = document.querySelectorAll(
                     ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
@@ -4255,14 +4240,7 @@
               
               },
             },
-            // {
-            //   key: "render",
-            //   value: function render(data) {
-                
 
-            //     // this is added by
-            //   },
-            // },
             {
               key: "reRender",
               value: function reRender() {
