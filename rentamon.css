@@ -8,6 +8,14 @@
 
 /* End of added CSS by Faghih */
 
+td.disabled span:first-child {
+  border-radius: 5px 5px 0px 0px !important;
+}
+
+td.disabled span:last-child {
+  border-radius: 0px 0px 5px 5px !important;
+}
+
 /* .datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled * {
     background-color: #F2F2F2;
     color: #C3C3C3 ;
