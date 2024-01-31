@@ -359,7 +359,7 @@ function blockBtnClicked() {
       (action = "block")
     );
     alert(messages.blockDaySuccess);
-    // window.location.reload();
+    window.location.reload();
   } else {
     alert(messages.notSelectedDay);
   }
@@ -455,7 +455,7 @@ function reserveOther() {
   let selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
-      // z.classList.remove("select");
+      z.classList.remove("select");
       selectedDate.push(
         new persianDate(parseInt(z.getAttribute("data-unix"))).format(
           "YYYY-MM-DD"
@@ -639,7 +639,7 @@ function discountBtnClicked() {
   let jabamaPrice = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
-      // z.classList.remove("select");
+      z.classList.remove("select");
       selectedDate.push(
         new persianDate(parseInt(z.getAttribute("data-unix"))).format(
           "YYYY-MM-DD"
@@ -728,7 +728,7 @@ function priceBtnClicked() {
   let selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
-      // z.classList.remove("select");
+      z.classList.remove("select");
       selectedDate.push(
         new persianDate(parseInt(z.getAttribute("data-unix"))).format(
           "YYYY-MM-DD"
@@ -857,12 +857,12 @@ $(window).on("load", function () {
     },
     inline: true,
     minDate: new persianDate().startOf("day"),
-    maxDate: new persianDate().month(11).endOf("month"),
+    // maxDate: new persianDate().month(11).endOf("month"),
     // maxDate: new persianDate().
-    // maxDate: new persianDate()
-    //   .add("month", 3)
-    //   .startOf("month")
-    //   .subtract("day", 1),
+    maxDate: new persianDate()
+      .add("month", 3)
+      .startOf("month")
+      .subtract("day", 1),
     navigator: {
       enabled: true,
       scroll: {
