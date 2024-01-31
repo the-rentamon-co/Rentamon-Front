@@ -83,8 +83,8 @@ span.other-month {
   outline: none !important;
 }
 
-.select,
-.select:hover {
+.selected,
+.selected:hover {
   background-color: #203647 !important;
   color: #e4defe !important;
 }
@@ -224,14 +224,14 @@ td.passed-days.disabled {
 /* for normal days */
 .datepicker-day-view
   .table-days
-  td:not(.select):not(.disabled):not(.blocked-days):not(.booked-days):not(
+  td:not(.selected):not(.disabled):not(.blocked-days):not(.booked-days):not(
     :has(span.other-month)
   ) {
   background-color: #e5e5e5 !important;
   color: #203647 !important;
 }
 
-td:is(.select):not(.disabled):not(.blocked-days):not(.booked-days):not(
+td:is(.selected):not(.disabled):not(.blocked-days):not(.booked-days):not(
     :has(span.other-month)
   ) {
   background-color: #203647 !important;

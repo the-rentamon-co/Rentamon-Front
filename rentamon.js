@@ -285,11 +285,11 @@ function rentamonApiCaller(website, data, action, method = "GET") {
   });
 }
 function blockBtnClicked() {
-  let selected = document.querySelectorAll(".select");
+  let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
-      z.classList.remove("select");
+      z.classList.remove("selected");
       selectedDate.push(
         new persianDate(parseInt(z.getAttribute("data-unix"))).format(
           "YYYY-MM-DD"
@@ -365,11 +365,11 @@ function blockBtnClicked() {
   }
 }
 function unblockBtnClicked() {
-  let selected = document.querySelectorAll(".select");
+  let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
-      z.classList.remove("select");
+      z.classList.remove("selected");
       selectedDate.push(
         new persianDate(parseInt(z.getAttribute("data-unix"))).format(
           "YYYY-MM-DD"
@@ -451,11 +451,11 @@ function unblockBtnClicked() {
   }
 }
 function reserveOther() {
-  let selected = document.querySelectorAll(".select");
+  let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
-      z.classList.remove("select");
+      z.classList.remove("selected");
       selectedDate.push(
         new persianDate(parseInt(z.getAttribute("data-unix"))).format(
           "YYYY-MM-DD"
@@ -634,12 +634,12 @@ let tobeDisabled = {
 };
 
 function discountBtnClicked() {
-  let selected = document.querySelectorAll(".select");
+  let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   let jabamaPrice = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
-      z.classList.remove("select");
+      z.classList.remove("selected");
       selectedDate.push(
         new persianDate(parseInt(z.getAttribute("data-unix"))).format(
           "YYYY-MM-DD"
@@ -724,11 +724,11 @@ function disconnectedBtnClicked() {
 }
 
 function priceBtnClicked() {
-  let selected = document.querySelectorAll(".select");
+  let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
-      z.classList.remove("select");
+      z.classList.remove("selected");
       selectedDate.push(
         new persianDate(parseInt(z.getAttribute("data-unix"))).format(
           "YYYY-MM-DD"
@@ -905,7 +905,7 @@ $(window).on("load", function () {
                 {{#days.list}}
                 <tr>
                   {{#.}} {{#enabled}}
-                  <td data-unix="{{dataUnix}}" class="{{#select}}select{{/select}}">
+                  <td data-unix="{{dataUnix}}" class="{{#selected}}selected{{/selected}}">
                     <span
                       class="{{#otherMonth}}other-month{{/otherMonth}}"
                       >{{title}}</span
