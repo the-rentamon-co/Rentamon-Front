@@ -4102,8 +4102,10 @@
                       }
 
                       if (
-                        JSON.stringify(calendars) !== "{}" &&
-                        "jabamaStatus" in calendars
+                        JSON.stringify(calendars) !== "{}" 
+                        
+                        // &&
+                        // "jabamaStatus" in calendars
                       ) {
                         calendars["otherStatus"] = results[5];
                         for (let i = 0; i < availableDays.length; i++) {
@@ -4113,33 +4115,37 @@
                             status[cal] = window[cal](calendars[cal][i]);
                           }
 
-                          let origPrice = parseInt(
-                            parseInt(results[0]["data"][i]["price"])
-                          );
-                          let raw = parseInt(
-                            parseInt(results[0]["data"][i]["discountedPrice"]) /
-                              10000
-                          );
-                          let price = convertToPersianNumber(
-                            raw.toLocaleString().replace(/,/g, "/")
-                          );
-                          if (
-                            parseInt(results[0]["data"][i]["price"]) >
-                            parseInt(results[0]["data"][i]["discountedPrice"])
-                          ) {
-                            days[i].parentElement.style.border =
-                              "2px solid #8165D6";
-                          }
-                          if (raw > 0) {
-                            days[i].parentElement.querySelector(
-                              ".price"
-                            ).innerHTML = price;
-
-                            days[i].parentElement.setAttribute(
-                              "price-from-jabama",
-                              origPrice
+                          if ("jabamaStatus" in calendars){
+                            let origPrice = parseInt(
+                              parseInt(results[0]["data"][i]["price"])
                             );
+
+                            let raw = parseInt(
+                              parseInt(results[0]["data"][i]["discountedPrice"]) /
+                                10000
+                            );
+                            let price = convertToPersianNumber(
+                              raw.toLocaleString().replace(/,/g, "/")
+                            );
+                            if (
+                              parseInt(results[0]["data"][i]["price"]) >
+                              parseInt(results[0]["data"][i]["discountedPrice"])
+                            ) {
+                              days[i].parentElement.style.border =
+                                "2px solid #8165D6";
+                            }
+                            if (raw > 0) {
+                              days[i].parentElement.querySelector(
+                                ".price"
+                              ).innerHTML = price;
+  
+                              days[i].parentElement.setAttribute(
+                                "price-from-jabama",
+                                origPrice
+                              );
+                            }
                           }
+
 
                           console.table(status);
                           const bookedStatus = Object.entries(status).find(
