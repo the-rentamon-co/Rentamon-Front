@@ -4145,6 +4145,35 @@
                               );
                             }
                           }
+                          else if ("otherStatus" in calendars){
+                            let origPrice = parseInt(
+                              parseInt(results[5][i]["price"])
+                            );
+
+                            let raw = parseInt(
+                              origPrice/10000
+                            );
+                            // let price = convertToPersianNumber(
+                            //   raw.toLocaleString().replace(/,/g, "/")
+                            // );
+                            // if (
+                            //   parseInt(results[0]["data"][i]["price"]) >
+                            //   parseInt(results[0]["data"][i]["discountedPrice"])
+                            // ) {
+                            //   days[i].parentElement.style.border =
+                            //     "2px solid #8165D6";
+                            // }
+                            if (raw > 0) {
+                              days[i].parentElement.querySelector(
+                                ".price"
+                              ).innerHTML = raw;
+  
+                              // days[i].parentElement.setAttribute(
+                              //   "price-from-jabama",
+                              //   origPrice
+                              // );
+                            }
+                          }
 
 
                           console.table(status);
