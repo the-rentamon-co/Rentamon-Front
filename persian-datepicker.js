@@ -2102,19 +2102,31 @@
                   /**
                    * @description time up btn click event
                    */
-                  $(document).on('click', '#' + that.model.view.id + ' .up-btn', function () {
-                      var timekey = $(this).data('time-key');
+                  $(document).on(
+                    "click",
+                    "#" + that.model.view.id + " .up-btn",
+                    function () {
+                      var timekey = $(this).data("time-key");
                       that.timeUp(timekey);
-                      that.model.options.onSelect(that.model.state.selected.unixDate);
-                  });
+                      that.model.options.onSelect(
+                        that.model.state.selected.unixDate
+                      );
+                    }
+                  );
                   /**
                    * @description time down btn click event
                    */
-                  $(document).on('click', '#' + that.model.view.id + ' .down-btn', function () {
-                      var timekey = $(this).data('time-key');
+                  $(document).on(
+                    "click",
+                    "#" + that.model.view.id + " .down-btn",
+                    function () {
+                      var timekey = $(this).data("time-key");
                       that.timeDown(timekey);
-                      that.model.options.onSelect(that.model.state.selected.unixDate);
-                  });
+                      that.model.options.onSelect(
+                        that.model.state.selected.unixDate
+                      );
+                    }
+                  );
                 }
 
                 /**
@@ -3985,19 +3997,24 @@
             {
               key: "render",
               value: function render(data) {
-            if (!data) {
-                data = this.model.state.view;
-            }
-            document.querySelector(
-              ".loading-overlay-calendar"
-            ).style.display = "flex";
-            Helper.debug(this, 'render');
-            Mustache.parse(Template);
-            this.rendered = $(Mustache.render(this.model.options.template, this.getViewModel(data)));
-            this.$container.empty().append(this.rendered);
-            this.markSelectedDay();
-            this.markToday();
-            this.afterRender();
+                if (!data) {
+                  data = this.model.state.view;
+                }
+                document.querySelector(
+                  ".loading-overlay-calendar"
+                ).style.display = "flex";
+                Helper.debug(this, "render");
+                Mustache.parse(Template);
+                this.rendered = $(
+                  Mustache.render(
+                    this.model.options.template,
+                    this.getViewModel(data)
+                  )
+                );
+                this.$container.empty().append(this.rendered);
+                this.markSelectedDay();
+                this.markToday();
+                this.afterRender();
 
                 // this is added by rentamon
 
@@ -4102,8 +4119,8 @@
                       }
 
                       if (
-                        JSON.stringify(calendars) !== "{}" 
-                        
+                        JSON.stringify(calendars) !== "{}"
+
                         // &&
                         // "jabamaStatus" in calendars
                       ) {
@@ -4115,66 +4132,79 @@
                             status[cal] = window[cal](calendars[cal][i]);
                           }
 
-                          if ("jabamaStatus" in calendars){
+                          // if ("jabamaStatus" in calendars){
+                          //   let origPrice = parseInt(
+                          //     parseInt(results[0]["data"][i]["price"])
+                          //   );
+
+                          //   let raw = parseInt(
+                          //     parseInt(results[0]["data"][i]["discountedPrice"]) /
+                          //       10000
+                          //   );
+                          //   let price = convertToPersianNumber(
+                          //     raw.toLocaleString().replace(/,/g, "/")
+                          //   );
+                          //   if (
+                          //     parseInt(results[0]["data"][i]["price"]) >
+                          //     parseInt(results[0]["data"][i]["discountedPrice"])
+                          //   ) {
+                          //     days[i].parentElement.style.border =
+                          //       "2px solid #8165D6";
+                          //   }
+                          //   if (raw > 0) {
+                          //     days[i].parentElement.querySelector(
+                          //       ".price"
+                          //     ).innerHTML = price;
+
+                          //     days[i].parentElement.setAttribute(
+                          //       "price-from-jabama",
+                          //       origPrice
+                          //     );
+                          //   }
+                          // }
+                          if ("otherStatus" in calendars) {
                             let origPrice = parseInt(
-                              parseInt(results[0]["data"][i]["price"])
+                              parseInt(results[5][i]["price"]) / 10000
                             );
 
-                            let raw = parseInt(
-                              parseInt(results[0]["data"][i]["discountedPrice"]) /
+                            let discountedPrice = parseInt(
+                              parseInt(results[5][i]["discounted_price"]) /
                                 10000
                             );
-                            let price = convertToPersianNumber(
-                              raw.toLocaleString().replace(/,/g, "/")
-                            );
-                            if (
-                              parseInt(results[0]["data"][i]["price"]) >
-                              parseInt(results[0]["data"][i]["discountedPrice"])
-                            ) {
+
+                            if (origPrice > discountedPrice) {
                               days[i].parentElement.style.border =
                                 "2px solid #8165D6";
+                                days[i].parentElement.querySelector(
+                                  ".price"
+                                ).innerHTML = discountedPrice;
+                                days[i].parentElement.setAttribute(
+                                    "price-from-rentamon",
+                                    origPrice
+                                  );
                             }
-                            if (raw > 0) {
+
+                            else{
                               days[i].parentElement.querySelector(
                                 ".price"
-                              ).innerHTML = price;
-  
+                              ).innerHTML = origPrice;
                               days[i].parentElement.setAttribute(
-                                "price-from-jabama",
-                                origPrice
-                              );
-                            }
-                          }
-                          else if ("otherStatus" in calendars){
-                            let origPrice = parseInt(
-                              parseInt(results[5][i]["price"])
-                            );
+                                  "price-from-rentamon",
+                                  origPrice
+                                );
 
-                            let raw = parseInt(
-                              origPrice/10000
-                            );
-                            // let price = convertToPersianNumber(
-                            //   raw.toLocaleString().replace(/,/g, "/")
-                            // );
-                            // if (
-                            //   parseInt(results[0]["data"][i]["price"]) >
-                            //   parseInt(results[0]["data"][i]["discountedPrice"])
-                            // ) {
-                            //   days[i].parentElement.style.border =
-                            //     "2px solid #8165D6";
-                            // }
-                            if (raw > 0) {
-                              days[i].parentElement.querySelector(
-                                ".price"
-                              ).innerHTML = raw;
-  
-                              // days[i].parentElement.setAttribute(
-                              //   "price-from-jabama",
-                              //   origPrice
-                              // );
                             }
-                          }
+                          //   if (raw > 0) {
+                          //     days[i].parentElement.querySelector(
+                          //       ".price"
+                          //     ).innerHTML = raw;
 
+                          //     // days[i].parentElement.setAttribute(
+                          //     //   "price-from-jabama",
+                          //     //   origPrice
+                          //     // );
+                          //   }
+                          // }
 
                           console.table(status);
                           const bookedStatus = Object.entries(status).find(
@@ -4272,7 +4302,6 @@
                 }
 
                 // end of rentamon
-              
               },
             },
 
