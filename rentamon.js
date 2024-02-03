@@ -645,7 +645,7 @@ function discountBtnClicked() {
           "YYYY-MM-DD"
         )
       );
-      jabamaPrice.push(z.getAttribute("price-from-jabama"));
+      jabamaPrice.push(z.getAttribute("price-from-rentamon"));
     });
     const priceTargetElementId = "elementor-popup-modal";
     const priceObserver = new MutationObserver((mutationsList) => {
