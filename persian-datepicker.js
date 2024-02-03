@@ -4175,36 +4175,33 @@
                             if (origPrice > discountedPrice) {
                               days[i].parentElement.style.border =
                                 "2px solid #8165D6";
-                                days[i].parentElement.querySelector(
-                                  ".price"
-                                ).innerHTML = discountedPrice;
-                                days[i].parentElement.setAttribute(
-                                    "price-from-rentamon",
-                                    origPrice
-                                  );
-                            }
-
-                            else{
+                              days[i].parentElement.querySelector(
+                                ".price"
+                              ).innerHTML = discountedPrice;
+                              days[i].parentElement.setAttribute(
+                                "price-from-rentamon",
+                                origPrice
+                              );
+                            } else {
                               days[i].parentElement.querySelector(
                                 ".price"
                               ).innerHTML = origPrice;
                               days[i].parentElement.setAttribute(
-                                  "price-from-rentamon",
-                                  origPrice
-                                );
-
+                                "price-from-rentamon",
+                                origPrice
+                              );
                             }
-                          //   if (raw > 0) {
-                          //     days[i].parentElement.querySelector(
-                          //       ".price"
-                          //     ).innerHTML = raw;
+                            //   if (raw > 0) {
+                            //     days[i].parentElement.querySelector(
+                            //       ".price"
+                            //     ).innerHTML = raw;
 
-                          //     // days[i].parentElement.setAttribute(
-                          //     //   "price-from-jabama",
-                          //     //   origPrice
-                          //     // );
-                          //   }
-                          // }
+                            //     // days[i].parentElement.setAttribute(
+                            //     //   "price-from-jabama",
+                            //     //   origPrice
+                            //     // );
+                            //   }
+                          }
 
                           console.table(status);
                           const bookedStatus = Object.entries(status).find(
