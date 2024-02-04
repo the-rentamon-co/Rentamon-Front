@@ -4163,14 +4163,16 @@
                           //   }
                           // }
                           if ("otherStatus" in calendars) {
-                            let origPrice = parseInt(
-                              parseInt(results[5][i]["price"]) / 10000
-                            );
+                            let origPrice =
+                              parseInt(
+                                parseInt(results[5][i]["price"]) / 1000
+                              ) || null;
 
-                            let discountedPrice = parseInt(
-                              parseInt(results[5][i]["discounted_price"]) /
-                                10000
-                            );
+                            let discountedPrice =
+                              parseInt(
+                                parseInt(results[5][i]["discounted_price"]) /
+                                  1000
+                              ) || null;
 
                             if (origPrice > discountedPrice) {
                               days[i].parentElement.style.border =
