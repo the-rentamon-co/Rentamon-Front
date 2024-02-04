@@ -2,7 +2,7 @@ let apiHostMainUrl = "https://rentamon.chbk.run";
 
 // console.log(document.querySelector("#rentamon_id"));
 
-let rentamon_user_id = document.querySelector("#rentamon_id div").textContent.trim()
+let rentamon_user_id = document.querySelector("#rentamon_id div").lastChild.textContent.trim()
 let rentamon_room_id = document
   .querySelector("#rentamon_room_id")
   .innerText.trim();
