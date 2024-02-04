@@ -4174,7 +4174,7 @@
                                   1000
                               ) || null;
 
-                            if (origPrice > discountedPrice) {
+                            if (origPrice > discountedPrice && discountedPrice!== null) {
                               days[i].parentElement.style.border =
                                 "2px solid #8165D6";
                               days[i].parentElement.querySelector(
