@@ -211,8 +211,9 @@ function shabStatus(shab) {
   } else if (
     shab["available_units_count"] === 0 &&
     shab["is_disabled"] === true &&
-    shab["is_non_bookable"] === true &&
-    shab["is_unavailable"] === false
+    shab["is_non_bookable"] === true 
+    // &&
+    // shab["is_unavailable"] === false
   ) {
     return "booked";
   } else if (
