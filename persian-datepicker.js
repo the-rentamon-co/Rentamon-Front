@@ -4174,12 +4174,16 @@
                                   1000
                               ) || null;
 
-                            if (origPrice > discountedPrice && discountedPrice!== null) {
+                            if (
+                              origPrice > discountedPrice &&
+                              discountedPrice !== null
+                            ) {
                               days[i].parentElement.style.border =
                                 "2px solid #8165D6";
                               days[i].parentElement.querySelector(
                                 ".price"
-                              ).innerHTML = discountedPrice;
+                              ).innerHTML =
+                                convertToPersianNumber(discountedPrice);
                               days[i].parentElement.setAttribute(
                                 "price-from-rentamon",
                                 origPrice
@@ -4187,7 +4191,7 @@
                             } else {
                               days[i].parentElement.querySelector(
                                 ".price"
-                              ).innerHTML = origPrice;
+                              ).innerHTML = convertToPersianNumber(origPrice);
                               days[i].parentElement.setAttribute(
                                 "price-from-rentamon",
                                 origPrice
