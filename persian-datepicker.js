@@ -4183,7 +4183,7 @@
                               days[i].parentElement.querySelector(
                                 ".price"
                               ).innerHTML =
-                                convertToPersianNumber(discountedPrice);
+                                convertToPersianNumber(discountedPrice.toLocaleString());
                               days[i].parentElement.setAttribute(
                                 "price-from-rentamon",
                                 origPrice
@@ -4191,7 +4191,7 @@
                             } else {
                               days[i].parentElement.querySelector(
                                 ".price"
-                              ).innerHTML = convertToPersianNumber(origPrice);
+                              ).innerHTML = convertToPersianNumber(origPrice.toLocaleString());
                               days[i].parentElement.setAttribute(
                                 "price-from-rentamon",
                                 origPrice
