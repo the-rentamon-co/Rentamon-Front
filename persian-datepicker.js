@@ -4188,7 +4188,7 @@
                                 "price-from-rentamon",
                                 origPrice
                               );
-                            } else {
+                            } else if (origPrice === discountedPrice && origPrice !== null){
                               days[i].parentElement.querySelector(
                                 ".price"
                               ).innerHTML = convertToPersianNumber(origPrice.toLocaleString().replace(/,/g, "/"));
