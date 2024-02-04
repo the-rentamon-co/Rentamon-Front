@@ -4186,7 +4186,7 @@
                                 convertToPersianNumber(discountedPrice.toLocaleString().replace(/,/g, "/"));
                               days[i].parentElement.setAttribute(
                                 "price-from-rentamon",
-                                origPrice
+                                origPrice*10000
                               );
                             } else if (origPrice === discountedPrice && origPrice !== null){
                               days[i].parentElement.querySelector(
@@ -4194,7 +4194,7 @@
                               ).innerHTML = convertToPersianNumber(origPrice.toLocaleString().replace(/,/g, "/"));
                               days[i].parentElement.setAttribute(
                                 "price-from-rentamon",
-                                origPrice
+                                origPrice*10000
                               );
                             }
                             //   if (raw > 0) {
