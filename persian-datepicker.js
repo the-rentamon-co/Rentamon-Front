@@ -4092,30 +4092,37 @@
 
                       if (results[0]["status"] === 200) {
                         calendars["jabamaStatus"] = results[0]["data"];
+                        document.querySelector("#jabama_icon_connected").style.display="block"
                       }
-
+                      
                       if (results[1]["status"] === 200) {
                         calendars["mizboonStatus"] = results[1]["data"];
+                        document.querySelector("#mizboon_icon_connected").style.display="block"
                       }
-
+                      
                       if (results[2]["status"] === 200) {
                         calendars["otaghakStatus"] = results[2]["data"];
+                        document.querySelector("#otaghak_icon_connected").style.display="block"
                       }
-
+                      
                       if (results[3]["status"] === 200) {
                         calendars["jajigaStatus"] = results[3]["data"];
+                        document.querySelector("#jajiga_icon_connected").style.display="block"
                       }
-
+                      
                       if (results[4]["status"] === 200) {
                         calendars["shabStatus"] = results[4]["data"];
+                        document.querySelector("#shab_icon_connected").style.display="block"
                       }
-
+                      
                       if (results[6]["status"] === 200) {
                         calendars["mihmanshoStatus"] = results[6]["data"];
+                        document.querySelector("#mihmansho_icon_connected").style.display="block"
                       }
-
+                      
                       if (results[7]["status"] === 200) {
                         calendars["homsaStatus"] = results[7]["data"];
+                        document.querySelector("#homsa_icon_connected").style.display="block"
                       }
 
                       if (
