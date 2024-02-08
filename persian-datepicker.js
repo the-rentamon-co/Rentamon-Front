@@ -4092,49 +4092,59 @@
 
                       if (results[0]["status"] === 200) {
                         calendars["jabamaStatus"] = results[0]["data"];
-                        document.querySelector("#jabama_icon_connected").style.display="block"
+                        document.querySelector(
+                          "#jabama_icon_connected"
+                        ).style.display = "block";
                       }
-                      
+
                       if (results[1]["status"] === 200) {
                         calendars["mizboonStatus"] = results[1]["data"];
-                        document.querySelector("#mizboon_icon_connected").style.display="block"
+                        document.querySelector(
+                          "#mizboon_icon_connected"
+                        ).style.display = "block";
                       }
-                      
+
                       if (results[2]["status"] === 200) {
                         calendars["otaghakStatus"] = results[2]["data"];
-                        document.querySelector("#otaghak_icon_connected").style.display="block"
+                        document.querySelector(
+                          "#otaghak_icon_connected"
+                        ).style.display = "block";
                       }
-                      
+
                       if (results[3]["status"] === 200) {
                         calendars["jajigaStatus"] = results[3]["data"];
-                        document.querySelector("#jajiga_icon_connected").style.display="block"
+                        document.querySelector(
+                          "#jajiga_icon_connected"
+                        ).style.display = "block";
                       }
-                      
+
                       if (results[4]["status"] === 200) {
                         calendars["shabStatus"] = results[4]["data"];
-                        document.querySelector("#shab_icon_connected").style.display="block"
+                        document.querySelector(
+                          "#shab_icon_connected"
+                        ).style.display = "block";
                       }
-                      
+                      if (results[5]['"status'] === 200) {
+                        calendars["otherStatus"] = results[5];
+                      }
+
                       if (results[6]["status"] === 200) {
                         calendars["mihmanshoStatus"] = results[6]["data"];
-                        document.querySelector("#mihmansho_icon_connected").style.display="block"
+                        document.querySelector(
+                          "#mihmansho_icon_connected"
+                        ).style.display = "block";
                       }
-                      
+
                       if (results[7]["status"] === 200) {
                         calendars["homsaStatus"] = results[7]["data"];
-                        document.querySelector("#homsa_icon_connected").style.display="block"
+                        document.querySelector(
+                          "#homsa_icon_connected"
+                        ).style.display = "block";
                       }
 
-                      if (
-                        JSON.stringify(calendars) !== "{}"
-
-                        // &&
-                        // "jabamaStatus" in calendars
-                      ) {
-                        calendars["otherStatus"] = results[5];
+                      if (JSON.stringify(calendars) !== "{}") {
                         for (let i = 0; i < availableDays.length; i++) {
                           var status = {};
-
                           for (let cal in calendars) {
                             status[cal] = window[cal](calendars[cal][i]);
                           }
@@ -4189,19 +4199,27 @@
                                 "2px solid #8165D6";
                               days[i].parentElement.querySelector(
                                 ".price"
-                              ).innerHTML =
-                                convertToPersianNumber(discountedPrice.toLocaleString().replace(/,/g, "/"));
+                              ).innerHTML = convertToPersianNumber(
+                                discountedPrice
+                                  .toLocaleString()
+                                  .replace(/,/g, "/")
+                              );
                               days[i].parentElement.setAttribute(
                                 "price-from-rentamon",
-                                origPrice*10000
+                                origPrice * 10000
                               );
-                            } else if (origPrice === discountedPrice && origPrice !== null){
+                            } else if (
+                              origPrice === discountedPrice &&
+                              origPrice !== null
+                            ) {
                               days[i].parentElement.querySelector(
                                 ".price"
-                              ).innerHTML = convertToPersianNumber(origPrice.toLocaleString().replace(/,/g, "/"));
+                              ).innerHTML = convertToPersianNumber(
+                                origPrice.toLocaleString().replace(/,/g, "/")
+                              );
                               days[i].parentElement.setAttribute(
                                 "price-from-rentamon",
-                                origPrice*10000
+                                origPrice * 10000
                               );
                             }
                             //   if (raw > 0) {
