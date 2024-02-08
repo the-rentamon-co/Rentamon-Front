@@ -4124,7 +4124,7 @@
                           "#shab_icon_connected"
                         ).style.display = "block";
                       }
-                      if (results[5]['"status'] === 200) {
+                      if (results[5]["status"] === 200) {
                         calendars["otherStatus"] = results[5];
                       }
 
