@@ -4182,12 +4182,12 @@
                           if ("otherStatus" in calendars) {
                             let origPrice =
                               parseInt(
-                                parseInt(results[5][i]["price"]) / 1000
+                                parseInt(results[5][i]["data"]["price"]) / 1000
                               ) || null;
 
                             let discountedPrice =
                               parseInt(
-                                parseInt(results[5][i]["discounted_price"]) /
+                                parseInt(results[5][i]["data"]["discounted_price"]) /
                                   1000
                               ) || null;
 
