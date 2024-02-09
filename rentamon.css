@@ -235,19 +235,19 @@ td.passed-days.disabled {
 /* for normal days */
 .datepicker-day-view
   .table-days
-  td:not(.selected):not(.disabled):not(.blocked-days):not(.booked-days):not(
-    :has(span.other-month)
+  td:not(.selected):not(.disabled):not(.blocked-days):not(.booked-days):not(.other-month
+    /* :has(span.other-month) */
   ) {
   background-color: #e5e5e5 !important;
   color: #203647 !important;
 }
 
-td:is(.selected):not(.disabled):not(.blocked-days):not(.booked-days):not(
+/* td:is(.selected):not(.disabled):not(.blocked-days):not(.booked-days):not(
     :has(span.other-month)
   ) {
   background-color: #203647 !important;
   color: #e4defe !important;
-}
+} */
 
 /* .elementor-column-gap-default>.elementor-column>.elementor-element-populated {
     padding: 0px;
