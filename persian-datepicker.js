@@ -4022,12 +4022,12 @@
                   ".datepicker-day-view td:not(.disabled)"
                 );
 
-                allTds.forEach((td) => {
-                  if (!td.firstChild.classList.contains("other-month")) {
-                    availableDates.push(dt);
-                  }
-                });
-                console.log(availableDates)
+                // allTds.forEach((td) => {
+                //   if (!td.firstChild.classList.contains("other-month")) {
+                //     availableDates.push(dt);
+                //   }
+                // });
+                console.log(allTds)
 
                 var availableDays = document.querySelectorAll(
                   ".datepicker-day-view td:not(.disabled):has(span:first-child:not(.other-month))"
