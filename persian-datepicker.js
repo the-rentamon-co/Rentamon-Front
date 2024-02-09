@@ -4101,37 +4101,37 @@
 
                       if (results[0]["status"] === 200) {
                         calendars["jabamaStatus"] = results[0]["data"];
-                        // document.querySelector(
-                        //   "#jabama_icon_connected"
-                        // ).style.display = "block";
+                        document.querySelector(
+                          "#jabama_icon_connected"
+                        ).style.display = "block";
                       }
 
                       if (results[1]["status"] === 200) {
                         calendars["mizboonStatus"] = results[1]["data"];
-                        // document.querySelector(
-                        //   "#mizboon_icon_connected"
-                        // ).style.display = "block";
+                        document.querySelector(
+                          "#mizboon_icon_connected"
+                        ).style.display = "block";
                       }
 
                       if (results[2]["status"] === 200) {
                         calendars["otaghakStatus"] = results[2]["data"];
-                        // document.querySelector(
-                        //   "#otaghak_icon_connected"
-                        // ).style.display = "block";
+                        document.querySelector(
+                          "#otaghak_icon_connected"
+                        ).style.display = "block";
                       }
 
                       if (results[3]["status"] === 200) {
                         calendars["jajigaStatus"] = results[3]["data"];
-                        // document.querySelector(
-                        //   "#jajiga_icon_connected"
-                        // ).style.display = "block";
+                        document.querySelector(
+                          "#jajiga_icon_connected"
+                        ).style.display = "block";
                       }
 
                       if (results[4]["status"] === 200) {
                         calendars["shabStatus"] = results[4]["data"];
-                        // document.querySelector(
-                        //   "#shab_icon_connected"
-                        // ).style.display = "block";
+                        document.querySelector(
+                          "#shab_icon_connected"
+                        ).style.display = "block";
                       }
                       if (results[5]["status"] === 200) {
                         calendars["otherStatus"] = results[5];
@@ -4139,16 +4139,16 @@
 
                       if (results[6]["status"] === 200) {
                         calendars["mihmanshoStatus"] = results[6]["data"];
-                        // document.querySelector(
-                        //   "#mihmansho_icon_connected"
-                        // ).style.display = "block";
+                        document.querySelector(
+                          "#mihmansho_icon_connected"
+                        ).style.display = "block";
                       }
 
                       if (results[7]["status"] === 200) {
                         calendars["homsaStatus"] = results[7]["data"];
-                        // document.querySelector(
-                        //   "#homsa_icon_connected"
-                        // ).style.display = "block";
+                        document.querySelector(
+                          "#homsa_icon_connected"
+                        ).style.display = "block";
                       }
 
                       if (JSON.stringify(calendars) !== "{}") {
@@ -4294,41 +4294,41 @@
                         ".loading-overlay-calendar"
                       ).style.display = "none";
 
-                      // if (results[1]["status"] === 400) {
-                      //   document
-                      //     .querySelector("#webdisconnected_mizboon a")
-                      //     .click();
-                      // }
-                      // if (results[2]["status"] === 400) {
-                      //   document
-                      //     .querySelector("#webdisconnected_otaghak a")
-                      //     .click();
-                      // }
-                      // if (results[3]["status"] === 400) {
-                      //   document
-                      //     .querySelector("#webdisconnected_jajiga a")
-                      //     .click();
-                      // }
-                      // if (results[4]["status"] === 400) {
-                      //   document
-                      //     .querySelector("#webdisconnected_shab a")
-                      //     .click();
-                      // }
-                      // if (results[6]["status"] === 400) {
-                      //   document
-                      //     .querySelector("#webdisconnected_mihmansho a")
-                      //     .click();
-                      // }
+                      if (results[1]["status"] === 400) {
+                        document
+                          .querySelector("#webdisconnected_mizboon a")
+                          .click();
+                      }
+                      if (results[2]["status"] === 400) {
+                        document
+                          .querySelector("#webdisconnected_otaghak a")
+                          .click();
+                      }
+                      if (results[3]["status"] === 400) {
+                        document
+                          .querySelector("#webdisconnected_jajiga a")
+                          .click();
+                      }
+                      if (results[4]["status"] === 400) {
+                        document
+                          .querySelector("#webdisconnected_shab a")
+                          .click();
+                      }
+                      if (results[6]["status"] === 400) {
+                        document
+                          .querySelector("#webdisconnected_mihmansho a")
+                          .click();
+                      }
 
-                      // if (results[7]["status"] === 400) {
-                      //   document
-                      //     .querySelector("#webdisconnected_homsa a")
-                      //     .click();
-                      // }
+                      if (results[7]["status"] === 400) {
+                        document
+                          .querySelector("#webdisconnected_homsa a")
+                          .click();
+                      }
 
-                      // if (results[0]["status"] === 400) {
-                      //   document.querySelector("#webdisconnected a").click();
-                      // }
+                      if (results[0]["status"] === 400) {
+                        document.querySelector("#webdisconnected a").click();
+                      }
                     })
                     .catch((error) => {
                       console.error(error);
