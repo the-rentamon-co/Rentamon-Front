@@ -2,39 +2,19 @@
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td {
   height: 70px;
   border-radius: 9px;
-  /* display: ; */
-  /* padding: 1px; */
   width: 14%;
-  /* background-color: none !important; */
 }
 
 /* End of added CSS by Faghih */
 
-/* .datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled * {
-    background-color: #F2F2F2;
-    color: #C3C3C3 ;
-} */
-
-.datepicker-plot-area-inline-view
-  .datepicker-day-view
-  .table-days
-  td.disabled
-  span:not(.other-month):hover,
-.datepicker-plot-area-inline-view
-  .datepicker-day-view
-  .table-days
-  td.disabled
-  span:not(.other-month) {
+.datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span:not(.other-month):hover,
+.datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span:not(.other-month) {
   background-color: #f2f2f2;
   color: #c3c3c3;
 }
 
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td span,
-.datepicker-plot-area-inline-view
-  .datepicker-day-view
-  .table-days
-  td:not(.disabled)
-  span:hover {
+.datepicker-plot-area-inline-view .datepicker-day-view .table-days td:not(.disabled) span:hover {
   height: calc(100% / 3);
   background-color: inherit;
   color: inherit;
@@ -48,7 +28,6 @@
 .datepicker-plot-area-inline-view {
   font-size: 16px;
   font-family: vazirmatn;
-  /* height: 500px; */
   padding-top: 10px;
 }
 
@@ -66,18 +45,13 @@
 .booked-days {
   background-color: #4fdfb1 !important;
   border: none !important;
-  /* border: 1px solid #4fdfb1 !important; */
 }
 
 .datepicker-plot-area-inline-view .header-row {
   height: 40px;
 }
 
-.datepicker-plot-area-inline-view
-  .datepicker-day-view
-  .month-grid-box
-  .header
-  .header-row-cell {
+.datepicker-plot-area-inline-view .datepicker-day-view .month-grid-box .header .header-row-cell {
   font-family: vazirmatn;
 }
 
@@ -115,12 +89,6 @@ td span:last-child {
   border-radius: 0px 0px 5px 5px !important;
 }
 
-/* .btnActionCont {
-    width: 40%;
-    display: flex;
-    justify-content: space-between;
-} */
-
 .btnActionCont {
   width: 100%;
   display: grid;
@@ -140,7 +108,6 @@ td span:last-child {
   padding-top: 40px;
   display: grid;
   grid-template-columns: auto auto auto;
-  /* grid-template-columns: repeat(3, 1fr); */
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
@@ -233,32 +200,7 @@ td.passed-days.disabled {
 }
 
 /* for normal days */
-.datepicker-day-view
-  .table-days
-  td:not(.selected):not(.disabled):not(.blocked-days):not(.booked-days):not(.other-month
-    /* :has(span.other-month) */
-  ) {
+.datepicker-day-view .table-days td:not(.selected):not(.disabled):not(.blocked-days):not(.booked-days):not(.other-month) {
   background-color: #e5e5e5 !important;
   color: #203647 !important;
 }
-
-/* td:is(.selected):not(.disabled):not(.blocked-days):not(.booked-days):not(
-    :has(span.other-month)
-  ) {
-  background-color: #203647 !important;
-  color: #e4defe !important;
-} */
-
-/* .elementor-column-gap-default>.elementor-column>.elementor-element-populated {
-    padding: 0px;
-} */
-
-/* end of normal days */
-
-/* for all texts */
-/* .datepicker-plot-area * {
-
-    color: #203647 ;
-} */
-
-/* for all texts */
