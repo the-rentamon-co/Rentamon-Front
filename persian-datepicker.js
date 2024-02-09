@@ -4017,6 +4017,17 @@
                 this.afterRender();
 
                 // this is added by rentamon
+                var availableDates = [];
+                var allTds = document.querySelectorAll(
+                  ".datepicker-day-view td:not(.disabled)"
+                );
+
+                allTds.forEach((td) => {
+                  if (!td.firstChild.classList.contains("other-month")) {
+                    availableDates.push(dt);
+                  }
+                });
+                console.log(availableDates)
 
                 var availableDays = document.querySelectorAll(
                   ".datepicker-day-view td:not(.disabled):has(span:first-child:not(.other-month))"
@@ -4187,8 +4198,9 @@
 
                             let discountedPrice =
                               parseInt(
-                                parseInt(results[5]["data"][i]["discounted_price"]) /
-                                  1000
+                                parseInt(
+                                  results[5]["data"][i]["discounted_price"]
+                                ) / 1000
                               ) || null;
 
                             if (
