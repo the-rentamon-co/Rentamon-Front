@@ -4025,6 +4025,8 @@
                 allTds.forEach((td) => {
                   if (!td.firstElementChild.classList.contains("other-month")) {
                     availableDays.push(td);
+                  }else{
+                    td.classList.add("other-month")
                   }
                 });
                 // var availableDays = document.querySelectorAll(
