@@ -4025,8 +4025,8 @@
                 allTds.forEach((td) => {
                   if (!td.firstElementChild.classList.contains("other-month")) {
                     availableDays.push(td);
-                  }else{
-                    td.classList.add("other-month")
+                  } else {
+                    td.classList.add("other-month");
                   }
                 });
                 // var availableDays = document.querySelectorAll(
@@ -4158,9 +4158,7 @@
                           var status = {};
                           for (let cal in calendars) {
                             status[cal] = window[cal](calendars[cal][i]);
-                            console.log(cal);
-                            if (cal == 'blocked')
-                              console.log('blocked')
+                            if (cal == "blocked") console.log("blocked");
                           }
 
                           // if ("jabamaStatus" in calendars){
@@ -4284,10 +4282,13 @@
                               ([key, value]) =>
                                 (key !== "otherStatus" &&
                                   value === "blocked") ||
-                                (key === "otherStatus" && value === "unblocked")
+                                (key === "otherStatus" &&
+                                  value === "unblocked" &&
+                                  !Object.entries(status).every(
+                                    ([x, z]) => x === "otherStatus"
+                                  ))
                             )
                           ) {
-                            console.log("blocked");
                             days[i].parentElement.classList.add("blocked-days");
                             days[i].parentElement.querySelector(
                               ".price"
