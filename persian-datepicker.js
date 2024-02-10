@@ -4158,6 +4158,9 @@
                           var status = {};
                           for (let cal in calendars) {
                             status[cal] = window[cal](calendars[cal][i]);
+                            console.log(cal);
+                            if (cal == 'blocked')
+                              console.log('blocked')
                           }
 
                           // if ("jabamaStatus" in calendars){
