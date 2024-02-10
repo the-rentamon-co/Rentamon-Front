@@ -4284,6 +4284,7 @@
                                 (key === "otherStatus" && value === "unblocked")
                             )
                           ) {
+                            console.log("blocked");
                             days[i].parentElement.classList.add("blocked-days");
                             days[i].parentElement.querySelector(
                               ".price"
