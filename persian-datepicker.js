@@ -4085,8 +4085,8 @@
                     routes.otherv2.calendar +
                       `?rentamon_room_id=${routes.other.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,
 
-                    routes.other.calendar +
-                      `?rentamon_room_id=${routes.other.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,
+                    // routes.other.calendar +
+                    //   `?rentamon_room_id=${routes.other.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,
                   ];
 
                   console.log(urls2);
