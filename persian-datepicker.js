@@ -4082,6 +4082,10 @@
 
                     routes.homsa.calendar +
                       `?rentamon_room_id=${routes.homsa.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
+
+
+                      routes.otherv2.calendar +
+                      `?rentamon_room_id=${routes.other.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,
                   ];
 
                   console.log(urls2);
@@ -4099,6 +4103,7 @@
 
                   Promise.all(fetchPromises)
                     .then((results) => {
+                      console.log(results)
                       var calendars = {};
 
                       if (results[0]["status"] === 200) {
