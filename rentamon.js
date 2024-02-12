@@ -2,7 +2,9 @@ let apiHostMainUrl = "https://rentamon.chbk.run";
 
 // console.log(document.querySelector("#rentamon_id"));
 
-let rentamon_user_id = document.querySelector("#rentamon_id div").lastChild.textContent.trim()
+let rentamon_user_id = document
+  .querySelector("#rentamon_id div")
+  .lastChild.textContent.trim();
 let rentamon_room_id = document
   .querySelector("#rentamon_room_id")
   .innerText.trim();
@@ -49,6 +51,12 @@ let routes = {
   other: {
     blockUnblock: apiHostMainUrl + "/other",
     calendar: apiHostMainUrl + "/other/calendar",
+    room: rentamon_room_id,
+  },
+
+  otherv2: {
+    blockUnblock: apiHostMainUrl + "/other/v2",
+    calendar: apiHostMainUrl + "/other/calendar/v2",
     room: rentamon_room_id,
   },
 
@@ -211,7 +219,7 @@ function shabStatus(shab) {
   } else if (
     shab["available_units_count"] === 0 &&
     shab["is_disabled"] === true &&
-    shab["is_non_bookable"] === true 
+    shab["is_non_bookable"] === true
     // &&
     // shab["is_unavailable"] === false
   ) {
@@ -377,6 +385,18 @@ function unblockBtnClicked() {
         )
       );
     });
+
+    rentamonApiCaller(
+      (website = "otherv2"),
+      (data = {
+        action: "available",
+        rentamon_room_id: routes["otherv2"]["room"],
+        days: selectedDate.join(","),
+      }),
+      (action = "blockUnblock")
+    );
+
+
     rentamonApiCaller(
       (website = "homsa"),
       (data = {
@@ -463,6 +483,17 @@ function reserveOther() {
         )
       );
     });
+    rentamonApiCaller(
+      (website = "otherv2"),
+      (data = {
+        rentamon_room_id: routes["otherv2"]["room"],
+        action: "book",
+        days: selectedDate.join(","),
+      }),
+      (action = "blockUnblock")
+    );
+
+
     rentamonApiCaller(
       (website = "homsa"),
       (data = {
@@ -858,7 +889,7 @@ $(window).on("load", function () {
     },
     inline: true,
     minDate: new persianDate().startOf("day"),
-    maxDate: new persianDate().add("years",1).month(1).endOf("month"),
+    maxDate: new persianDate().add("years", 1).month(1).endOf("month"),
     // maxDate: new persianDate().
     // maxDate: new persianDate()
     //   .add("month", 3)
