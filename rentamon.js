@@ -370,7 +370,7 @@ function blockBtnClicked() {
       (action = "block")
     );
     alert(messages.blockDaySuccess);
-    window.location.reload();
+    // window.location.reload();
   } else {
     alert(messages.notSelectedDay);
   }
@@ -468,7 +468,7 @@ function unblockBtnClicked() {
       (action = "blockUnblock")
     );
     alert(messages.unblockDaySuccess);
-    window.location.reload();
+    // window.location.reload();
   } else {
     alert(messages.notSelectedDay);
   }
@@ -566,7 +566,7 @@ function reserveOther() {
       (action = "blockUnblock")
     );
     alert(messages.reserveDaySuccess);
-    window.location.reload();
+    // window.location.reload();
   } else {
     alert(messages.notSelectedDay);
   }
