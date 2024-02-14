@@ -196,6 +196,8 @@ function otherStatus(other) {
       return "booked";
     case "":
       return "unblocked";
+    case null:
+      return "unblocked"
   }
   // if (other.status === "booked") {
   //   return "booked";
