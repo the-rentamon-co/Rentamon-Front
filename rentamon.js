@@ -48,11 +48,11 @@ let routes = {
     calendar: apiHostMainUrl + "/mizboon/calendar",
     room: rentamon_room_id,
   },
-  other: {
-    blockUnblock: apiHostMainUrl + "/other",
-    calendar: apiHostMainUrl + "/other/calendar",
-    room: rentamon_room_id,
-  },
+  // other: {
+  //   blockUnblock: apiHostMainUrl + "/other",
+  //   calendar: apiHostMainUrl + "/other/calendar",
+  //   room: rentamon_room_id,
+  // },
 
   otherv2: {
     blockUnblock: apiHostMainUrl + "/other/v2",
@@ -458,15 +458,15 @@ function unblockBtnClicked() {
       }),
       (action = "unblock")
     );
-    rentamonApiCaller(
-      (website = "other"),
-      (data = {
-        action: "available",
-        rentamon_room_id: routes["other"]["room"],
-        days: selectedDate.join(","),
-      }),
-      (action = "blockUnblock")
-    );
+    // rentamonApiCaller(
+    //   (website = "other"),
+    //   (data = {
+    //     action: "available",
+    //     rentamon_room_id: routes["other"]["room"],
+    //     days: selectedDate.join(","),
+    //   }),
+    //   (action = "blockUnblock")
+    // );
     alert(messages.unblockDaySuccess);
      window.location.reload();
   } else {
@@ -556,15 +556,15 @@ function reserveOther() {
       }),
       (action = "block")
     );
-    rentamonApiCaller(
-      (website = "other"),
-      (data = {
-        rentamon_room_id: routes["other"]["room"],
-        action: "book",
-        days: selectedDate.join(","),
-      }),
-      (action = "blockUnblock")
-    );
+    // rentamonApiCaller(
+    //   (website = "other"),
+    //   (data = {
+    //     rentamon_room_id: routes["other"]["room"],
+    //     action: "book",
+    //     days: selectedDate.join(","),
+    //   }),
+    //   (action = "blockUnblock")
+    // );
     alert(messages.reserveDaySuccess);
      window.location.reload();
   } else {
