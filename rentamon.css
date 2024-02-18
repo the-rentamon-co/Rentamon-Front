@@ -45,6 +45,7 @@ body {
   font-family: vazirmatn;
   border-collapse: separate;
   border-spacing: 4px 4px;
+  margin-bottom: 0 !important;
 }
 
 .blocked-days {
