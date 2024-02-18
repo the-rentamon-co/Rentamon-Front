@@ -4075,7 +4075,7 @@
                       `?rentamon_room_id=${routes.shab.room}&rentamon_id=${rentamon_user_id}&from_date=${range[0]}&to_date=${range[2]}`,
 
                     routes.otherv2.calendar +
-                      `?rentamon_room_id=${routes.other.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,
+                      `?rentamon_room_id=${routes.otherv2.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,
 
                     routes.mihmansho.calendar +
                       `?rentamon_room_id=${routes.mihmansho.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
