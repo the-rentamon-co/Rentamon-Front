@@ -965,4 +965,19 @@ $(window).on("load", function () {
     </div>
     `,
   });
+
+  document
+  .querySelectorAll(".elementor-widget-wrap.elementor-element-populated")
+  .forEach((a) => {
+    var aa = a.querySelector(".elementor-element");
+
+    if (aa.getAttribute("data-widget_type") === "html.default") {
+      var b = aa.querySelector(".elementor-widget-container")
+
+      if (b.querySelector(".inline")){
+        a.style.padding = 0
+      }
+    }
+  });
+
 });
