@@ -11,10 +11,10 @@ body {
 
 /* End of added CSS by Faghih */
 
-.other-month,
+/* .other-month,
 .disabled:has(.other-month) {
   height: 0 !important;
-}
+} */
 
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span:not(.other-month):hover,
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span:not(.other-month) {
