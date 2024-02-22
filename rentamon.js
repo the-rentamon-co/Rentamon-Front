@@ -1045,6 +1045,7 @@ function rentamoning() {
               days[i].parentElement.style.border = "0px solid";
             } else {
               days[i].parentElement.classList = [];
+              days[i].parentElement.querySelector(".reserved").innerHTML = "";
             }
           }
         }
