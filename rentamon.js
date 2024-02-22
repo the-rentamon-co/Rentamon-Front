@@ -197,7 +197,7 @@ function otherStatus(other) {
     case "":
       return "unblocked";
     case null:
-      return "unblocked"
+      return "unblocked";
   }
   // if (other.status === "booked") {
   //   return "booked";
@@ -370,7 +370,7 @@ function blockBtnClicked() {
       (action = "block")
     );
     alert(messages.blockDaySuccess);
-     window.location.reload();
+    window.location.reload();
   } else {
     alert(messages.notSelectedDay);
   }
@@ -397,7 +397,6 @@ function unblockBtnClicked() {
       }),
       (action = "blockUnblock")
     );
-
 
     rentamonApiCaller(
       (website = "homsa"),
@@ -468,7 +467,7 @@ function unblockBtnClicked() {
     //   (action = "blockUnblock")
     // );
     alert(messages.unblockDaySuccess);
-     window.location.reload();
+    window.location.reload();
   } else {
     alert(messages.notSelectedDay);
   }
@@ -494,7 +493,6 @@ function reserveOther() {
       }),
       (action = "blockUnblock")
     );
-
 
     rentamonApiCaller(
       (website = "homsa"),
@@ -566,7 +564,7 @@ function reserveOther() {
     //   (action = "blockUnblock")
     // );
     alert(messages.reserveDaySuccess);
-     window.location.reload();
+    window.location.reload();
   } else {
     alert(messages.notSelectedDay);
   }
@@ -799,6 +797,286 @@ function priceBtnClicked() {
   }
 }
 
+function rentamoning() {
+  document.querySelector(".loading-overlay-calendar").style.display = "flex";
+  var availableDays = [];
+  var allTds = document.querySelectorAll(
+    ".datepicker-day-view td:not(.disabled)"
+  );
+  allTds.forEach((td) => {
+    if (!td.firstElementChild.classList.contains("other-month")) {
+      availableDays.push(td);
+    } else {
+      td.classList.add("other-month");
+    }
+  });
+  if (availableDays.length > 0) {
+    const days = document.querySelectorAll(
+      ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
+    );
+    var range = [
+      new persianDate(
+        parseInt(availableDays[0].getAttribute("data-unix"))
+      ).format("YYYY-MM-DD"),
+      new persianDate(
+        parseInt(
+          availableDays[availableDays.length - 1].getAttribute("data-unix")
+        )
+      ).format("YYYY-MM-DD"),
+      new persianDate(
+        parseInt(
+          availableDays[availableDays.length - 1].getAttribute("data-unix")
+        )
+      )
+        .add("day", 1)
+        .format("YYYY-MM-DD"),
+    ];
+    const urls2 = [
+      routes.jabama.calendar +
+        `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}&start_date=${range[0]}&end_date=${range[2]}`,
+
+      routes.mizboon.calendar +
+        `?rentamon_room_id=${routes.mizboon.room}&rentamon_id=${rentamon_user_id}&from=${range[0]}&to=${range[1]}`,
+
+      routes.otaghak.calendar +
+        `?rentamon_room_id=${routes.otaghak.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
+
+      routes.jajiga.calendar +
+        `?rentamon_room_id=${routes.jajiga.room}&rentamon_id=${rentamon_user_id}&from=${range[0]}&to=${range[1]}`,
+
+      routes.shab.calendar +
+        `?rentamon_room_id=${routes.shab.room}&rentamon_id=${rentamon_user_id}&from_date=${range[0]}&to_date=${range[2]}`,
+
+      routes.otherv2.calendar +
+        `?rentamon_room_id=${routes.otherv2.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,
+
+      routes.mihmansho.calendar +
+        `?rentamon_room_id=${routes.mihmansho.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
+
+      routes.homsa.calendar +
+        `?rentamon_room_id=${routes.homsa.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
+    ];
+
+    console.log(urls2);
+    const fetchPromises = urls2.map((url) => fetchData(url));
+
+    availableDays.forEach((day) => {
+      day.addEventListener("click", (e) => {
+        if (e.target.parentElement.tagName === "TD") {
+          e.target.parentElement.classList.toggle("selected");
+        } else if (e.target.tagName === "TD") {
+          e.target.classList.toggle("selected");
+        }
+      });
+    });
+
+    Promise.all(fetchPromises)
+      .then((results) => {
+        console.log(results);
+        var calendars = {};
+
+        if (results[0]["status"] === 200) {
+          calendars["jabamaStatus"] = results[0]["data"];
+          document.querySelector("#jabama_icon_connected").style.display =
+            "block";
+        }
+
+        if (results[1]["status"] === 200) {
+          calendars["mizboonStatus"] = results[1]["data"];
+          document.querySelector("#mizboon_icon_connected").style.display =
+            "block";
+        }
+
+        if (results[2]["status"] === 200) {
+          calendars["otaghakStatus"] = results[2]["data"];
+          document.querySelector("#otaghak_icon_connected").style.display =
+            "block";
+        }
+
+        if (results[3]["status"] === 200) {
+          calendars["jajigaStatus"] = results[3]["data"];
+          document.querySelector("#jajiga_icon_connected").style.display =
+            "block";
+        }
+
+        if (results[4]["status"] === 200) {
+          calendars["shabStatus"] = results[4]["data"];
+          document.querySelector("#shab_icon_connected").style.display =
+            "block";
+        }
+        if (results[5]["status"] === 200) {
+          calendars["otherStatus"] = results[5]["data"];
+        }
+
+        if (results[6]["status"] === 200) {
+          calendars["mihmanshoStatus"] = results[6]["data"];
+          document.querySelector("#mihmansho_icon_connected").style.display =
+            "block";
+        }
+
+        if (results[7]["status"] === 200) {
+          calendars["homsaStatus"] = results[7]["data"];
+          document.querySelector("#homsa_icon_connected").style.display =
+            "block";
+        }
+
+        if (JSON.stringify(calendars) !== "{}") {
+          for (let i = 0; i < availableDays.length; i++) {
+            var status = {};
+            for (let cal in calendars) {
+              status[cal] = window[cal](calendars[cal][i]);
+              if (cal == "blocked") console.log("blocked");
+            }
+
+            // if ("jabamaStatus" in calendars){
+            //   let origPrice = parseInt(
+            //     parseInt(results[0]["data"][i]["price"])
+            //   );
+
+            //   let raw = parseInt(
+            //     parseInt(results[0]["data"][i]["discountedPrice"]) /
+            //       10000
+            //   );
+            //   let price = convertToPersianNumber(
+            //     raw.toLocaleString().replace(/,/g, "/")
+            //   );
+            //   if (
+            //     parseInt(results[0]["data"][i]["price"]) >
+            //     parseInt(results[0]["data"][i]["discountedPrice"])
+            //   ) {
+            //     days[i].parentElement.style.border =
+            //       "2px solid #8165D6";
+            //   }
+            //   if (raw > 0) {
+            //     days[i].parentElement.querySelector(
+            //       ".price"
+            //     ).innerHTML = price;
+
+            //     days[i].parentElement.setAttribute(
+            //       "price-from-jabama",
+            //       origPrice
+            //     );
+            //   }
+            // }
+            if ("otherStatus" in calendars) {
+              let origPrice =
+                parseInt(parseInt(results[5]["data"][i]["price"]) / 1000) ||
+                null;
+
+              let discountedPrice =
+                parseInt(
+                  parseInt(results[5]["data"][i]["discounted_price"]) / 1000
+                ) || null;
+
+              if (origPrice > discountedPrice && discountedPrice !== null) {
+                days[i].parentElement.style.border = "2px solid #8165D6";
+                days[i].parentElement.querySelector(".price").innerHTML =
+                  convertToPersianNumber(
+                    discountedPrice.toLocaleString().replace(/,/g, "/")
+                  );
+                days[i].parentElement.setAttribute(
+                  "price-from-rentamon",
+                  origPrice * 10000
+                );
+              } else if (origPrice === discountedPrice && origPrice !== null) {
+                days[i].parentElement.querySelector(".price").innerHTML =
+                  convertToPersianNumber(
+                    origPrice.toLocaleString().replace(/,/g, "/")
+                  );
+                days[i].parentElement.setAttribute(
+                  "price-from-rentamon",
+                  origPrice * 10000
+                );
+              }
+              //   if (raw > 0) {
+              //     days[i].parentElement.querySelector(
+              //       ".price"
+              //     ).innerHTML = raw;
+
+              //     // days[i].parentElement.setAttribute(
+              //     //   "price-from-jabama",
+              //     //   origPrice
+              //     // );
+              //   }
+            }
+
+            console.table(status);
+            const bookedStatus = Object.entries(status).find(
+              ([key, value]) => value === "booked"
+            );
+
+            if (bookedStatus) {
+              days[i].parentElement.classList.add("booked-days");
+              const website = bookedStatus[0];
+
+              days[i].parentElement.querySelector(".reserved").innerHTML =
+                names[website]["fa"];
+              for (const web in tobeDisabled) {
+                if (
+                  web + "Status" in status &&
+                  web !== names[website]["en"] &&
+                  status[`${web}Status`] !== "booked" &&
+                  status[`${web}Status`] !== "blocked"
+                ) {
+                  tobeDisabled[web](
+                    new persianDate(
+                      parseInt(days[i].parentElement.getAttribute("data-unix"))
+                    ).format("YYYY-MM-DD")
+                  );
+                }
+              }
+            } else if (
+              Object.entries(status).every(
+                ([key, value]) =>
+                  (key !== "otherStatus" && value === "blocked") ||
+                  (key === "otherStatus" &&
+                    value === "unblocked" &&
+                    !Object.entries(status).every(
+                      ([x, z]) => x === "otherStatus"
+                    ))
+              )
+            ) {
+              days[i].parentElement.classList.add("blocked-days");
+              days[i].parentElement.querySelector(".price").innerHTML = "";
+              days[i].parentElement.style.border = "0px solid";
+            }
+          }
+        }
+        document.querySelector(".loading-overlay-calendar").style.display =
+          "none";
+
+        if (results[1]["status"] === 400) {
+          document.querySelector("#webdisconnected_mizboon a").click();
+        }
+        if (results[2]["status"] === 400) {
+          document.querySelector("#webdisconnected_otaghak a").click();
+        }
+        if (results[3]["status"] === 400) {
+          document.querySelector("#webdisconnected_jajiga a").click();
+        }
+        if (results[4]["status"] === 400) {
+          document.querySelector("#webdisconnected_shab a").click();
+        }
+        if (results[6]["status"] === 400) {
+          document.querySelector("#webdisconnected_mihmansho a").click();
+        }
+
+        if (results[7]["status"] === 400) {
+          document.querySelector("#webdisconnected_homsa a").click();
+        }
+
+        if (results[0]["status"] === 400) {
+          document.querySelector("#webdisconnected a").click();
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  } else {
+    document.querySelector(".loading-overlay-calendar").style.display = "none";
+  }
+}
+
 $(document).ready(function () {
   const webdisconnectedJabamaBtn = document.querySelector("#webdisconnected");
   const webdisconnectedOtaghakBtn = document.querySelector(
@@ -967,17 +1245,16 @@ $(window).on("load", function () {
   });
 
   document
-  .querySelectorAll(".elementor-widget-wrap.elementor-element-populated")
-  .forEach((a) => {
-    var aa = a.querySelector(".elementor-element");
+    .querySelectorAll(".elementor-widget-wrap.elementor-element-populated")
+    .forEach((a) => {
+      var aa = a.querySelector(".elementor-element");
 
-    if (aa.getAttribute("data-widget_type") === "html.default") {
-      var b = aa.querySelector(".elementor-widget-container")
+      if (aa.getAttribute("data-widget_type") === "html.default") {
+        var b = aa.querySelector(".elementor-widget-container");
 
-      if (b.querySelector(".inline")){
-        a.style.padding = 0
+        if (b.querySelector(".inline")) {
+          a.style.padding = 0;
+        }
       }
-    }
-  });
-
+    });
 });
