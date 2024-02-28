@@ -1,0 +1,34 @@
+<body>
+  <label>کد دریافتی: </label><input id="otpCOde" required value="" />
+  <button id="verifyCode">ارسال کد</button>
+</body>
+<script>
+  document.querySelector("#verifyCode").addEventListener("click", () => {
+    const otp = document.querySelector("#otpCOde").value;
+    const phone = document.querySelector("#phoneNumber").getAttribute("value");
+    const data = new URLSearchParams();
+    data.append("otp", otp);
+    data.append("phone", phone);
+    fetch(
+      "https://rentam8n.darkube.app/webhook/3ec01161-64d2-46ed-9885-7801e05fd688",
+      {
+        headers: {
+          accept: "application/json, text/plain, */*",
+          "accept-language": "en-US,en;q=0.9",
+          "content-type": "application/x-www-form-urlencoded",
+        },
+        body: data,
+        method: "POST",
+      }
+    )
+      .then((r) => r.json())
+      .then((x) => {
+        console.log(x);
+        if (x.status === 200) {
+          document.querySelector("#otpCOde").setAttribute("value", otp);
+          document.querySelector("#otpCOde").value = "";
+          document.cookie = `rentamon_token=${x.token}; Max-Age=7776000; path=/`;
+        }
+      });
+  });
+</script>

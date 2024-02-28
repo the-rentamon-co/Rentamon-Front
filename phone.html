@@ -1,0 +1,29 @@
+<body>
+  <label>شماره موبایل: </label><input id="phoneNumber" required value="" />
+  <button id="sendCode">ارسال کد</button>
+</body>
+<script>
+  document.querySelector("#sendCode").addEventListener("click", () => {
+    const phone = document.querySelector("#phoneNumber").value;
+    const data = new URLSearchParams();
+    data.append("phone", phone);
+    fetch(
+      "https://rentam8n.darkube.app/webhook/0b1cfba1-1373-4bf7-b36f-a075ad0d9d17",
+      {
+        headers: {
+          accept: "application/json, text/plain, */*",
+          "accept-language": "en-US,en;q=0.9",
+          "content-type": "application/x-www-form-urlencoded",
+        },
+        body: data,
+        method: "POST",
+      }
+    )
+      .then((r) => r.json())
+      .then((x) => {
+        console.log(x);
+        document.querySelector("#phoneNumber").setAttribute("value", phone);
+        document.querySelector("#phoneNumber").value = "";
+      });
+  });
+</script>
