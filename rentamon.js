@@ -1250,7 +1250,7 @@ $(window).on("load", function () {
     </div>
     `,
   });
-
+  try {
   document
     .querySelectorAll(".elementor-widget-wrap.elementor-element-populated")
     .forEach((a) => {
@@ -1264,4 +1264,5 @@ $(window).on("load", function () {
         }
       }
     });
+  } catch (error) {console.log("padding gone")}
 });
