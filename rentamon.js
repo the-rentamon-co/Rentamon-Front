@@ -698,8 +698,7 @@ function discountBtnClicked() {
   let selectedDate = [];
   let jabamaPrice = [];
   if (selected.length > 0) {
-    var actionBtn = document.querySelector(".btnActionCont button");
-    actionBtn.className = "discount-submit";
+
     selected.forEach((z) => {
       z.classList.remove("selected");
       selectedDate.push(
@@ -737,7 +736,10 @@ function discountBtnClicked() {
       }
     });
     priceObserver.observe(document.body, { childList: true, subtree: true });
-    actionBtn.click();
+    var dis_div =document.createElement("div")
+    dis_div.style.display= "none"
+    dis_div.className  = "discount-submit"
+    dis_div.click();
   } else {
     alert(messages.notSelectedDay);
   }
