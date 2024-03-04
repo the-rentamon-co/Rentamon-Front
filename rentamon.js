@@ -698,6 +698,8 @@ function discountBtnClicked() {
   let selectedDate = [];
   let jabamaPrice = [];
   if (selected.length > 0) {
+    var actionBtn = document.querySelector(".btnActionCont button");
+    actionBtn.className = "discount-submit";
     selected.forEach((z) => {
       z.classList.remove("selected");
       selectedDate.push(
@@ -735,7 +737,9 @@ function discountBtnClicked() {
       }
     });
     priceObserver.observe(document.body, { childList: true, subtree: true });
+    actionBtn.click();
   } else {
+    alert(messages.notSelectedDay);
   }
 }
 
@@ -1164,7 +1168,6 @@ $(document).ready(function () {
       if (e.target.className === "discount") {
         actionBtn.removeEventListener("click", checkAction);
         actionBtn.removeEventListener("click", priceBtnClicked);
-        actionBtn.className = "discount-submit";
         actionBtn.addEventListener("click", discountBtnClicked);
       } else if (e.target.className === "price") {
         actionBtn.removeEventListener("click", checkAction);
@@ -1275,18 +1278,20 @@ $(window).on("load", function () {
     `,
   });
   try {
-  document
-    .querySelectorAll(".elementor-widget-wrap.elementor-element-populated")
-    .forEach((a) => {
-      var aa = a.querySelector(".elementor-element");
+    document
+      .querySelectorAll(".elementor-widget-wrap.elementor-element-populated")
+      .forEach((a) => {
+        var aa = a.querySelector(".elementor-element");
 
-      if (aa.getAttribute("data-widget_type") === "html.default") {
-        var b = aa.querySelector(".elementor-widget-container");
+        if (aa.getAttribute("data-widget_type") === "html.default") {
+          var b = aa.querySelector(".elementor-widget-container");
 
-        if (b.querySelector(".inline")) {
-          a.style.padding = 0;
+          if (b.querySelector(".inline")) {
+            a.style.padding = 0;
+          }
         }
-      }
-    });
-  } catch (error) {console.log("padding gone")}
+      });
+  } catch (error) {
+    console.log("padding gone");
+  }
 });
