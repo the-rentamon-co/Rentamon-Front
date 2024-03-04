@@ -739,6 +739,7 @@ function discountBtnClicked() {
     var dis_div =document.createElement("div")
     dis_div.style.display= "none"
     dis_div.className  = "discount-submit"
+    document.body.appendChild(dis_div)
     dis_div.click();
   } else {
     alert(messages.notSelectedDay);
