@@ -401,6 +401,7 @@ async function blockBtnClicked() {
     // window.location.reload();
   } else {
     alert(messages.notSelectedDay);
+    document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
 }
 
@@ -495,6 +496,7 @@ async function unblockBtnClicked() {
     rentamoning();
   } else {
     alert(messages.notSelectedDay);
+    document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
 }
 
@@ -591,6 +593,7 @@ async function reserveOther() {
     rentamoning();
   } else {
     alert(messages.notSelectedDay);
+    document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
 }
 
