@@ -1,11 +1,9 @@
-<body>
-  <label>کد دریافتی: </label><input id="otpCOde" required value="" />
-  <button id="verifyCode">ارسال کد</button>
-</body>
 <script>
   document.querySelector("#verifyCode").addEventListener("click", () => {
-    const otp = document.querySelector("#otpCOde").value;
-    const phone = document.querySelector("#phoneNumber").getAttribute("value");
+    const otp = document.querySelector("#form-field-otpCode").value;
+    const phone = document
+      .querySelector("#form-field-phoneNumber")
+      .getAttribute("phone_value");
     const data = new URLSearchParams();
     data.append("otp", otp);
     data.append("phone", phone);
@@ -25,9 +23,16 @@
       .then((x) => {
         console.log(x);
         if (x.status === 200) {
-          document.querySelector("#otpCOde").setAttribute("value", otp);
-          document.querySelector("#otpCOde").value = "";
+          document
+            .querySelector("#form-field-otpCode")
+            .setAttribute("value", otp);
+          document.querySelector("#form-field-otpCode").value = "";
           document.cookie = `rentamon_token=${x.token}; Max-Age=7776000; path=/`;
+          window.location.reload();
+        } else if (x.status === 400) {
+          document.querySelector(
+            ".error_message .elementor-widget-container"
+          ).innerHTML = "کد ورود صحیح نیست";
         }
       });
   });
