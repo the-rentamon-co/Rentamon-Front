@@ -832,7 +832,14 @@ function priceBtnClicked() {
     });
 
     priceObserver.observe(document.body, { childList: true, subtree: true });
+    var price_div =document.createElement("div")
+    price_div.style.display= "none"
+    price_div.className  = "price-submit";
+    document.body.appendChild(price_div)
+    price_div.click();
   } else {
+    alert(messages.notSelectedDay);
+
   }
 }
 
@@ -1175,7 +1182,6 @@ $(document).ready(function () {
       } else if (e.target.className === "price") {
         actionBtn.removeEventListener("click", checkAction);
         actionBtn.removeEventListener("click", discountBtnClicked);
-        actionBtn.className = "price-submit";
         actionBtn.addEventListener("click", priceBtnClicked);
       } else {
         actionBtn.addEventListener("click", checkAction);
