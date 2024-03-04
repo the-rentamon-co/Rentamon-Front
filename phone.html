@@ -1,12 +1,9 @@
-<body>
-  <label>شماره موبایل: </label><input id="phoneNumber" required value="" />
-  <button id="sendCode">ارسال کد</button>
-</body>
 <script>
   document.querySelector("#sendCode").addEventListener("click", () => {
-    const phone = document.querySelector("#phoneNumber").value;
+    const phone = document.querySelector("#form-field-phoneNumber");
+    const phone_value = phone.value;
     const data = new URLSearchParams();
-    data.append("phone", phone);
+    data.append("phone", phone_value);
     fetch(
       "https://rentam8n.darkube.app/webhook/0b1cfba1-1373-4bf7-b36f-a075ad0d9d17",
       {
@@ -22,8 +19,20 @@
       .then((r) => r.json())
       .then((x) => {
         console.log(x);
-        document.querySelector("#phoneNumber").setAttribute("value", phone);
-        document.querySelector("#phoneNumber").value = "";
+
+        if (x.status === 200) {
+          phone.setAttribute("phone_value", phone_value);
+          phone.value = "";
+          document.querySelector(".firstPart").style.display = "none";
+          document.querySelector(".secondPart").style.display = "block";
+          document.querySelector(
+            ".error_message .elementor-widget-container"
+          ).innerHTML = "";
+        } else if (x.status === 400) {
+          document.querySelector(
+            ".error_message .elementor-widget-container"
+          ).innerHTML = "حسابی با این شماره در رنتامون ثبت نیست";
+        }
       });
   });
 </script>
