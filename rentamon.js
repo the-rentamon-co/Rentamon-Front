@@ -1,10 +1,11 @@
+// this is rentamon main api url.
 let apiHostMainUrl = "https://rentamon.chbk.run";
 
-// console.log(document.querySelector("#rentamon_id"));
-
+// each panel needs a user id. user id is hidden in the page
 let rentamon_user_id = document
   .querySelector("#rentamon_id div")
   .lastChild.textContent.trim();
+// each panel needs a rentamon room id. rentamon room id is hidden in the page
 let rentamon_room_id = document
   .querySelector("#rentamon_room_id")
   .innerText.trim();
@@ -17,6 +18,7 @@ let tehranTimestamp = currentDate.toLocaleString("en-US", {
 let tehran = new Date(tehranTimestamp);
 let tehranzeroo = tehran.setHours(0, 0, 0, 0);
 
+// rentamon api routes are defiend here
 let routes = {
   otaghak: {
     block: apiHostMainUrl + "/otaghak",
@@ -75,6 +77,7 @@ let routes = {
   },
 };
 
+// messages for alerting
 let messages = {
   blockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   unblockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
@@ -82,6 +85,7 @@ let messages = {
   notSelectedDay: "هنوز هیچ روز یا وضعیتی رو انتخاب نکردی",
 };
 
+// website names
 let names = {
   jabamaStatus: { fa: "جاباما", en: "jabama" },
   mizboonStatus: { fa: "میزبون", en: "mizbon" },
@@ -99,6 +103,7 @@ const fetchData = async (url) => {
   return data;
 };
 
+// converting persian number into integer
 function persianToInteger(persianString) {
   const persianNumerals = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   const convertDigit = (digit) => persianNumerals.indexOf(digit);
@@ -108,11 +113,14 @@ function persianToInteger(persianString) {
     .join("");
   return parseInt(arabicString, 10);
 }
+
+// convert numbers into persian number string
 function convertToPersianNumber(number) {
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   return number.replace(/\d/g, (digit) => persianDigits[digit]);
 }
 
+// this functions is for cheeking a day status response recived from homsa
 function homsaStatus(homsa) {
   if (!homsa) {
     return "not sure";
@@ -129,7 +137,7 @@ function homsaStatus(homsa) {
       return "not sure";
   }
 }
-
+// this functions is for cheeking a day status response recived from mihmansho
 function mihmanshoStatus(mihmansho) {
   if (!mihmansho) {
     return "not sure";
@@ -147,6 +155,7 @@ function mihmanshoStatus(mihmansho) {
   }
 }
 
+// this functions is for cheeking a day status response recived from jabama
 function jabamaStatus(jabama) {
   if (!jabama) {
     return "not sure";
@@ -163,7 +172,7 @@ function jabamaStatus(jabama) {
       return "not sure";
   }
 }
-
+// this functions is for cheeking a day status response recived from jajiga
 function jajigaStatus(jajiga) {
   if (!jajiga) {
     return "not sure";
@@ -187,6 +196,7 @@ function jajigaStatus(jajiga) {
   }
 }
 
+// this functions is for cheeking a day status response recived from rentamon
 function otherStatus(other) {
   if (!other) {
     return "not sure";
@@ -206,6 +216,7 @@ function otherStatus(other) {
   // }
 }
 
+// this functions is for cheeking a day status response recived from shab
 function shabStatus(shab) {
   if (!shab) {
     return "not sure";
@@ -238,6 +249,7 @@ function shabStatus(shab) {
   }
 }
 
+// this functions is for cheeking a day status response recived from mizboon
 function mizboonStatus(mizboon) {
   if (!mizboon) {
     return "not sure";
@@ -254,6 +266,7 @@ function mizboonStatus(mizboon) {
   }
 }
 
+// this functions is for cheeking a day status response recived from otaghak
 function otaghakStatus(otaghak) {
   if (!otaghak) {
     return "not sure";
@@ -278,6 +291,7 @@ function otaghakStatus(otaghak) {
   }
 }
 
+// this function makes a request to rentamon api
 function rentamonApiCaller(website, data, action, method = "GET") {
   return new Promise(function (resolve, reject) {
     $.ajax({
@@ -302,6 +316,8 @@ function rentamonApiCaller(website, data, action, method = "GET") {
     });
   });
 }
+
+// this function is called when block option is selected
 async function blockBtnClicked() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
 
@@ -387,6 +403,8 @@ async function blockBtnClicked() {
     alert(messages.notSelectedDay);
   }
 }
+
+// this function is called when unblock option is selected
 async function unblockBtnClicked() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
   let selected = document.querySelectorAll(".selected");
@@ -479,6 +497,8 @@ async function unblockBtnClicked() {
     alert(messages.notSelectedDay);
   }
 }
+
+// this function is called when reserve option is selected
 async function reserveOther() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
 
@@ -573,6 +593,7 @@ async function reserveOther() {
     alert(messages.notSelectedDay);
   }
 }
+
 function checkAction() {
   let action = document.querySelector('input[name="block"]:checked');
   if (action) {
