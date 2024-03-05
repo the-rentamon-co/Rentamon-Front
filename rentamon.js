@@ -732,7 +732,7 @@ function discountBtnClicked() {
             document.querySelector(
               'input[name="form_fields[h_f_r_r_i]"'
             ).value = rentamon_room_id;
-            f.addEventListener("submit", rentamoning);
+            // f.addEventListener("submit", rentamoning);
           }
         }
       }
@@ -831,7 +831,7 @@ function priceBtnClicked() {
               'input[name="form_fields[h_f_r_r_i]"'
             ).value = rentamon_room_id;
 
-            f.addEventListener("submit", rentamoning);
+            // f.addEventListener("submit", rentamoning);
           }
         }
       }
