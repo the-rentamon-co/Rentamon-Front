@@ -722,9 +722,6 @@ function discountBtnClicked() {
             var f = document.querySelector("form");
             console.log("discount pop up opens");
             console.log(f);
-            f.addEventListener("submit", () => {
-              console.log("sumbited");
-            });
             document.querySelector('input[name="form_fields[dates]"').value =
               selectedDate;
             document.querySelector(
@@ -736,6 +733,10 @@ function discountBtnClicked() {
             document.querySelector(
               'input[name="form_fields[h_f_r_r_i]"'
             ).value = rentamon_room_id;
+            f.addEventListener("submit", () => {
+              console.log("sumbited");
+              rentamoning()
+            });
           }
         }
       }
