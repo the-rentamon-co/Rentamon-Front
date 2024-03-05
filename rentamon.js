@@ -721,7 +721,6 @@ function discountBtnClicked() {
           if (targetElement) {
             var f = document.querySelector("form");
             console.log("discount pop up opens");
-            console.log(f);
             document.querySelector('input[name="form_fields[dates]"').value =
               selectedDate;
             document.querySelector(
@@ -735,7 +734,7 @@ function discountBtnClicked() {
             ).value = rentamon_room_id;
             f.addEventListener("submit", () => {
               console.log("sumbited");
-              rentamoning()
+              rentamoning();
             });
           }
         }
@@ -824,6 +823,8 @@ function priceBtnClicked() {
               node.id.includes(priceTargetElementId)
           );
           if (targetElement) {
+            var f = document.querySelector("form");
+            console.log("price pop up opens");
             document.querySelector('input[name="form_fields[dates]"').value =
               selectedDate;
 
@@ -832,6 +833,11 @@ function priceBtnClicked() {
             document.querySelector(
               'input[name="form_fields[h_f_r_r_i]"'
             ).value = rentamon_room_id;
+
+            f.addEventListener("submit", () => {
+              console.log("sumbited");
+              rentamoning();
+            });
           }
         }
       }
