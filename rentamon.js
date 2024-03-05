@@ -708,7 +708,7 @@ function discountBtnClicked() {
       jabamaPrice.push(z.getAttribute("price-from-rentamon"));
     });
     const priceTargetElementId = "elementor-popup-modal";
-    const priceObserver = new MutationObserver((mutationsList) => {
+    const discountObserver = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.type === "childList") {
           const addedNodes = Array.from(mutation.addedNodes);
@@ -732,15 +732,12 @@ function discountBtnClicked() {
             document.querySelector(
               'input[name="form_fields[h_f_r_r_i]"'
             ).value = rentamon_room_id;
-            f.addEventListener("submit", () => {
-              console.log("sumbited");
-              rentamoning();
-            });
+            f.addEventListener("submit", rentamoning);
           }
         }
       }
     });
-    priceObserver.observe(document.body, { childList: true, subtree: true });
+    discountObserver.observe(document.body, { childList: true, subtree: true });
     var dis_div = document.createElement("div");
     dis_div.style.display = "none";
     dis_div.className = "discount-submit";
@@ -834,10 +831,7 @@ function priceBtnClicked() {
               'input[name="form_fields[h_f_r_r_i]"'
             ).value = rentamon_room_id;
 
-            f.addEventListener("submit", () => {
-              console.log("sumbited");
-              rentamoning();
-            });
+            f.addEventListener("submit", rentamoning);
           }
         }
       }
@@ -855,6 +849,7 @@ function priceBtnClicked() {
 }
 
 function rentamoning() {
+  document.querySelectorAll("form").forEach((form)=>form.removeEventListener("submit",rentamoning))
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
   document
     .querySelectorAll('input[name="block"]')
