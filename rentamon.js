@@ -698,7 +698,6 @@ function discountBtnClicked() {
   let selectedDate = [];
   let jabamaPrice = [];
   if (selected.length > 0) {
-
     selected.forEach((z) => {
       z.classList.remove("selected");
       selectedDate.push(
@@ -720,6 +719,12 @@ function discountBtnClicked() {
           );
 
           if (targetElement) {
+            var f = document.querySelector("form");
+            console.log("discount pop up opens");
+            console.log(f);
+            f.addEventListener("submit", () => {
+              console.log("sumbited");
+            });
             document.querySelector('input[name="form_fields[dates]"').value =
               selectedDate;
             document.querySelector(
@@ -736,10 +741,10 @@ function discountBtnClicked() {
       }
     });
     priceObserver.observe(document.body, { childList: true, subtree: true });
-    var dis_div =document.createElement("div")
-    dis_div.style.display= "none"
-    dis_div.className  = "discount-submit"
-    document.body.appendChild(dis_div)
+    var dis_div = document.createElement("div");
+    dis_div.style.display = "none";
+    dis_div.className = "discount-submit";
+    document.body.appendChild(dis_div);
     dis_div.click();
   } else {
     alert(messages.notSelectedDay);
@@ -832,14 +837,13 @@ function priceBtnClicked() {
     });
 
     priceObserver.observe(document.body, { childList: true, subtree: true });
-    var price_div =document.createElement("div")
-    price_div.style.display= "none"
-    price_div.className  = "price-submit";
-    document.body.appendChild(price_div)
+    var price_div = document.createElement("div");
+    price_div.style.display = "none";
+    price_div.className = "price-submit";
+    document.body.appendChild(price_div);
     price_div.click();
   } else {
     alert(messages.notSelectedDay);
-
   }
 }
 
