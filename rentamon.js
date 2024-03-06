@@ -695,49 +695,49 @@ let tobeDisabled = {
 
 function discountBtnClicked() {
   let selected = document.querySelectorAll(".selected");
-  let selectedDate = [];
-  let jabamaPrice = [];
+  // let selectedDate = [];
+  // let jabamaPrice = [];
   if (selected.length > 0) {
-    selected.forEach((z) => {
-      z.classList.remove("selected");
-      selectedDate.push(
-        new persianDate(parseInt(z.getAttribute("data-unix"))).format(
-          "YYYY-MM-DD"
-        )
-      );
-      jabamaPrice.push(z.getAttribute("price-from-rentamon"));
-    });
-    const priceTargetElementId = "elementor-popup-modal-7242";
-    const discountObserver = new MutationObserver((mutationsList) => {
-      for (const mutation of mutationsList) {
-        if (mutation.type === "childList") {
-          const addedNodes = Array.from(mutation.addedNodes);
-          const targetElement = addedNodes.find(
-            (node) =>
-              node.nodeType === Node.ELEMENT_NODE &&
-              node.id.includes(priceTargetElementId)
-          );
+    // selected.forEach((z) => {
+    // z.classList.remove("selected");
+    // selectedDate.push(
+    // new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+    // "YYYY-MM-DD"
+    // )
+    // );
+    // jabamaPrice.push(z.getAttribute("price-from-rentamon"));
+    // });
+    // const priceTargetElementId = "elementor-popup-modal-7242";
+    // const discountObserver = new MutationObserver((mutationsList) => {
+    //   for (const mutation of mutationsList) {
+    //     if (mutation.type === "childList") {
+    //       const addedNodes = Array.from(mutation.addedNodes);
+    //       const targetElement = addedNodes.find(
+    //         (node) =>
+    //           node.nodeType === Node.ELEMENT_NODE &&
+    //           node.id.includes(priceTargetElementId)
+    //       );
 
-          if (targetElement) {
-            var f = document.querySelector("form");
-            console.log("discount pop up opens");
-            document.querySelector('input[name="form_fields[dates]"').value =
-              selectedDate;
-            document.querySelector(
-              'input[name="form_fields[noDiscountPrice]"'
-            ).value = jabamaPrice[0];
+    //       if (targetElement) {
+    //         var f = document.querySelector("form");
+    //         console.log("discount pop up opens");
+    //         document.querySelector('input[name="form_fields[dates]"').value =
+    //           selectedDate;
+    //         document.querySelector(
+    //           'input[name="form_fields[noDiscountPrice]"'
+    //         ).value = jabamaPrice[0];
 
-            document.querySelector('input[name="form_fields[h_f_r_i]"').value =
-              rentamon_user_id;
-            document.querySelector(
-              'input[name="form_fields[h_f_r_r_i]"'
-            ).value = rentamon_room_id;
-            // f.addEventListener("submit", rentamoning);
-          }
-        }
-      }
-    });
-    discountObserver.observe(document.body, { childList: true, subtree: true });
+    //         document.querySelector('input[name="form_fields[h_f_r_i]"').value =
+    //           rentamon_user_id;
+    //         document.querySelector(
+    //           'input[name="form_fields[h_f_r_r_i]"'
+    //         ).value = rentamon_room_id;
+    //         // f.addEventListener("submit", rentamoning);
+    //       }
+    //     }
+    //   }
+    // });
+    // discountObserver.observe(document.body, { childList: true, subtree: true });
     var dis_div = document.createElement("div");
     dis_div.style.display = "none";
     dis_div.className = "discount-submit";
@@ -797,7 +797,6 @@ function handleDayClick(e) {
   }
 }
 
-
 function priceBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
@@ -851,7 +850,9 @@ function priceBtnClicked() {
 }
 
 function rentamoning() {
-  document.querySelectorAll("form").forEach((form)=>form.removeEventListener("submit",rentamoning))
+  document
+    .querySelectorAll("form")
+    .forEach((form) => form.removeEventListener("submit", rentamoning));
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
   document
     .querySelectorAll('input[name="block"]')
@@ -1178,6 +1179,54 @@ $(document).ready(function () {
   if (webdisconnectedShabBtn !== null) {
     webdisconnectedShabBtn.addEventListener("click", disconnectedBtnClicked);
   }
+
+  //
+
+  const priceTargetElementId = "elementor-popup-modal-7242";
+  const discountObserver = new MutationObserver((mutationsList) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === "childList") {
+        const addedNodes = Array.from(mutation.addedNodes);
+        const targetElement = addedNodes.find(
+          (node) =>
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.id.includes(priceTargetElementId)
+        );
+
+        if (targetElement) {
+          let selected = document.querySelectorAll(".selected");
+          let selectedDate = [];
+          let jabamaPrice = [];
+          selected.forEach((z) => {
+            z.classList.remove("selected");
+            selectedDate.push(
+              new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+                "YYYY-MM-DD"
+              )
+            );
+            jabamaPrice.push(z.getAttribute("price-from-rentamon"));
+          });
+
+          var f = document.querySelector("form");
+          console.log("discount pop up opens");
+          document.querySelector('input[name="form_fields[dates]"').value =
+            selectedDate;
+          document.querySelector(
+            'input[name="form_fields[noDiscountPrice]"'
+          ).value = jabamaPrice[0];
+
+          document.querySelector('input[name="form_fields[h_f_r_i]"').value =
+            rentamon_user_id;
+          document.querySelector('input[name="form_fields[h_f_r_r_i]"').value =
+            rentamon_room_id;
+          // f.addEventListener("submit", rentamoning);
+        }
+      }
+    }
+  });
+  discountObserver.observe(document.body, { childList: true, subtree: true });
+
+  //
 
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
