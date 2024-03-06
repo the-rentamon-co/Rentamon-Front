@@ -1047,6 +1047,7 @@ function rentamoning() {
                   origPrice * 10000
                 );
               } else if (origPrice === discountedPrice && origPrice !== null) {
+                days[i].parentElement.style.border = "0px solid";
                 days[i].parentElement.querySelector(".price").innerHTML =
                   convertToPersianNumber(
                     origPrice.toLocaleString().replace(/,/g, "/")
