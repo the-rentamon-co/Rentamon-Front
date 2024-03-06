@@ -1271,6 +1271,31 @@ $(document).ready(function () {
 
   //
 
+  // pop up form submited
+
+  let form_submited = new MutationObserver((mutaionlist) => {
+    for (const mutation of mutaionlist) {
+      if (mutation.type === "childList") {
+        const removedNodes = Array.from(mutation.removedNodes);
+        if (removedNodes.length > 0) {
+          const targetElement = removedNodes.find(
+            (node) =>
+              node.nodeType === Node.ELEMENT_NODE &&
+              node.nodeName === "SPAN" &&
+              node.className.includes("elementor-form-spinner")
+          );
+          if (targetElement) {
+            console.log("target herer", targetElement);
+          }
+        }
+      }
+    }
+  });
+
+  form_submited.observe(document.body, { childList: true, subtree: true });
+
+  //
+
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
     elem.addEventListener("change", (e) => {
