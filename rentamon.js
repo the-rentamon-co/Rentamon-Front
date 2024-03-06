@@ -1203,18 +1203,13 @@ $(document).ready(function () {
               )
             );
           });
-
-          var f = document.querySelector("form");
           console.log("price pop up opens");
           document.querySelector('input[name="form_fields[dates]"').value =
             selectedDate;
-
           document.querySelector('input[name="form_fields[h_f_r_i]"').value =
             rentamon_user_id;
           document.querySelector('input[name="form_fields[h_f_r_r_i]"').value =
             rentamon_room_id;
-
-          // f.addEventListener("submit", rentamoning);
         }
       }
     }
@@ -1249,8 +1244,6 @@ $(document).ready(function () {
             );
             jabamaPrice.push(z.getAttribute("price-from-rentamon"));
           });
-
-          var f = document.querySelector("form");
           console.log("discount pop up opens");
           document.querySelector('input[name="form_fields[dates]"').value =
             selectedDate;
@@ -1262,7 +1255,6 @@ $(document).ready(function () {
             rentamon_user_id;
           document.querySelector('input[name="form_fields[h_f_r_r_i]"').value =
             rentamon_room_id;
-          // f.addEventListener("submit", rentamoning);
         }
       }
     }
@@ -1286,6 +1278,7 @@ $(document).ready(function () {
           );
           if (targetElement) {
             console.log("target herer", targetElement);
+            rentamoning();
           }
         }
       }
