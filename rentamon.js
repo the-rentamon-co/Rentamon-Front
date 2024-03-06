@@ -307,6 +307,23 @@ function rentamonApiCaller(website, data, action, method = "GET") {
       },
       success: function (response) {
         console.log(website, response);
+        var response_status = document.querySelector(".response_status");
+
+        if (response_status) {
+          if (response.status === true) {
+            document.querySelector(
+              `.elementor-section.${website} .status_false`
+            ).style.display = "none";
+            document.querySelector(`website_row.${website}`).style.display =
+              "block";
+          } else {
+            document.querySelector(
+              `.elementor-section.${website} .status_true`
+            ).style.display = "none";
+            document.querySelector(`website_row.${website}`).style.display =
+              "block";
+          }
+        }
         resolve(response);
       },
       error: function (error) {
