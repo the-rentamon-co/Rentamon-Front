@@ -314,7 +314,7 @@ function rentamonApiCaller(website, data, action, method = "GET") {
             document.querySelector(
               `.elementor-section.${website} .status_false`
             ).style.display = "none";
-            document.querySelector(`website_row.${website}`).style.display =
+            document.querySelector(`.website_row.${website}`).style.display =
               "block";
           } else {
             document.querySelector(
