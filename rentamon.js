@@ -798,7 +798,7 @@ function handleDayClick(e) {
 }
 
 function priceBtnClicked() {
-  // let selected = document.querySelectorAll(".selected");
+  let selected = document.querySelectorAll(".selected");
   // let selectedDate = [];
   if (selected.length > 0) {
     // selected.forEach((z) => {

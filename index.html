@@ -2,59 +2,31 @@
   <head>
     <link
       rel="stylesheet"
-      href="https://babakhani.github.io/PersianWebToolkit/beta/lib/persian-datepicker/dist/css/persian-datepicker.css"
+      href="https://rentamon.com/wp-content/rentamon-content-files/persian-datepicker.css?ver=1.0.1"
     />
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.js"></script>
-    <!-- <script src="https://babakhani.github.io/PersianWebToolkit/beta/lib/persian-datepicker/dist/js/persian-datepicker.js"></script> -->
-    <script src="./persian-datepicker.js"></script>
-    <link rel="stylesheet" href="./rentamon.css" />
+    <script src="https://rentamon.com/wp-content/rentamon-content-files/jquery-2.2.4.min.js?ver=1.0.1"></script>
+    <script src="https://rentamon.com/wp-content/rentamon-content-files/persian-date.js?ver=1.0.1"></script>
+    <script src="https://classiccowl.github.io/jalali/persian-datepicker.js?ver=1.1.02"></script>
+    <link
+      rel="stylesheet"
+      href="https://classiccowl.github.io/jalali/rentamon.css"
+    />
   </head>
   <body>
-    <p id="rentamon_id"></p>
-    <p id="rentamon_room_id">1</p>
+    <div class="rentamon"></div>
+    <script>
+      var rBody = document.querySelector(".rentamon");
+      var newDiv = document.createElement("div");
+      var newScript = document.createElement("script");
+      newScript.src =
+        "https://classiccowl.github.io/jalali/rentamon.js?ver=1.1.02";
+      newDiv.innerHTML = `<div class="loading-overlay-calendar" style="display: none">
+      <div class="loading-spinner-calendar"></div>
+      <p class="loading-text-calendar">در حال دریافت اطلاعات تقویم ها</p>
+    </div>
     <div class="inline"></div>
+    <script>alert("hi")<\/script>
     <div class="form">
-      <label
-        ><input
-          type="radio"
-          id="discount"
-          name="block"
-          value="discount"
-          class="discount"
-        />تخفیف %</label
-      >
-
-      <label
-        ><input
-          type="radio"
-          id="price"
-          name="block"
-          value="price"
-          class="price"
-        />قیمت</label
-      >
-      <label>
-        <input
-          type="radio"
-          id="unblock"
-          name="block"
-          value="unblock"
-          class="unblock"
-        />
-
-        خالی</label
-      >
-      <label>
-        <input
-          type="radio"
-          id="block"
-          name="block"
-          value="block"
-          class="block"
-        />
-        غیرفعال</label
-      >
       <label>
         <input
           type="radio"
@@ -66,22 +38,88 @@
 
         رزرو</label
       >
+
+      <label>
+        <input
+          type="radio"
+          id="block"
+          name="block"
+          value="block"
+          class="block"
+        />
+        غیرفعال</label
+      >
+
+      <label>
+        <input
+          type="radio"
+          id="unblock"
+          name="block"
+          value="unblock"
+          class="unblock"
+        />
+
+        خالی</label
+      >
+
+      <label
+        ><input
+          type="radio"
+          id="price"
+          name="block"
+          value="price"
+          class="price"
+        />قیمت</label
+      >
+
+      <label
+        ><input
+          type="radio"
+          id="discount"
+          name="block"
+          value="discount"
+          class="discount"
+        />تخفیف %</label
+      >
     </div>
     <div class="btnActionCont">
       <button class="submit">اعمال تغییرات</button>
-    </div>
+    </div>`;
+      var c = Object.fromEntries(
+        document.cookie.split("; ").map((x) => x.split("="))
+      );
+      if (c.rentamon_token && window.location.href.includes(c.rentamon_token)) {
+        rBody.appendChild(newDiv);
+        rBody.appendChild(newScript);
+      } else {
+        var t = document.querySelector("#webdisconnected_rentamon a");
+        const popup = "elementor-popup-modal";
+        const timer = setInterval(() => {
+          t.click();
+          console.log("clicked");
+        }, 1000);
+        const popupObserver = new MutationObserver((mutationsList) => {
+          for (const mutation of mutationsList) {
+            if (mutation.type === "childList") {
+              const addedNodes = Array.from(mutation.addedNodes);
+              const targetElement = addedNodes.find(
+                (node) =>
+                  node.nodeType === Node.ELEMENT_NODE && node.id.includes(popup)
+              );
 
-    <div class="loading-overlay-calendar" style="display: none">
-      <div class="loading-spinner-calendar"></div>
-      <p class="loading-text-calendar">لطفا چند ثانیه صبر کنید</p>
-    </div>
+              if (targetElement) {
+                clearInterval(timer);
+                console.log("done");
+              }
+            }
+          }
+        });
 
-    <div id="rentamon_id"> <div>a0a07dab</div> </div>
+        popupObserver.observe(document.body, {
+          childList: true,
+          subtree: true,
+        });
+      }
+    </script>
   </body>
-  <script src="./rentamon.js"></script>
-  
-  <!-- <div class="btnActionCont">
-    <button class="block">غیرفعال</button>
-    <button class="unblock">خالی</button>
-  </div> -->
 </html>
