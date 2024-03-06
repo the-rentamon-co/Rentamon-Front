@@ -1278,7 +1278,7 @@ $(document).ready(function () {
           );
           if (targetElement) {
             console.log("target herer", targetElement);
-            rentamoning();
+            setTimeout(serentamoning, 2000);
           }
         }
       }
