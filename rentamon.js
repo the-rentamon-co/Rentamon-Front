@@ -1274,7 +1274,13 @@ $(document).ready(function () {
             (node) =>
               node.nodeType === Node.ELEMENT_NODE &&
               node.nodeName === "SPAN" &&
-              node.className.includes("elementor-form-spinner")
+              node.className.includes("elementor-form-spinner") &&
+              (node.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes(
+                "7242"
+              ) ||
+                node.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes(
+                  "7426"
+                ))
           );
           if (targetElement) {
             console.log(
