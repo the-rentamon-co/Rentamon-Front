@@ -311,6 +311,10 @@ function rentamonApiCaller(website, data, action, method = "GET") {
 
         if (response_status && website !== "otherv2") {
           if (response.final_status === true) {
+            var section = document.querySelector(`.website_row.${website}`);
+            console.log(section);
+            section.style.display = "block";
+            console.log(section);
             var falsi = document.querySelector(
               `.elementor-section.${website} .status_false`
             );
@@ -323,19 +327,15 @@ function rentamonApiCaller(website, data, action, method = "GET") {
             console.log(trui);
             trui.style.display = "block";
             console.log(trui);
-            var section = document.querySelector(`.website_row.${website}`);
-            console.log(section);
-            section.style.display = "block";
-            console.log(section);
           } else {
+            document.querySelector(`.website_row.${website}`).style.display =
+              "block";
             document.querySelector(
               `.elementor-section.${website} .status_true`
             ).style.display = "none";
             document.querySelector(
               `.elementor-section.${website} .status_false`
             ).style.display = "block";
-            document.querySelector(`.website_row.${website}`).style.display =
-              "block";
           }
         }
         resolve(response);
