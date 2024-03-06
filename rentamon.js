@@ -798,47 +798,47 @@ function handleDayClick(e) {
 }
 
 function priceBtnClicked() {
-  let selected = document.querySelectorAll(".selected");
-  let selectedDate = [];
+  // let selected = document.querySelectorAll(".selected");
+  // let selectedDate = [];
   if (selected.length > 0) {
-    selected.forEach((z) => {
-      z.classList.remove("selected");
-      selectedDate.push(
-        new persianDate(parseInt(z.getAttribute("data-unix"))).format(
-          "YYYY-MM-DD"
-        )
-      );
-    });
+    // selected.forEach((z) => {
+    //   z.classList.remove("selected");
+    //   selectedDate.push(
+    //     new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+    //       "YYYY-MM-DD"
+    //     )
+    //   );
+    // });
 
-    const priceTargetElementId = "elementor-popup-modal-7426";
-    const priceObserver = new MutationObserver((mutationsList) => {
-      for (const mutation of mutationsList) {
-        if (mutation.type === "childList") {
-          const addedNodes = Array.from(mutation.addedNodes);
-          const targetElement = addedNodes.find(
-            (node) =>
-              node.nodeType === Node.ELEMENT_NODE &&
-              node.id.includes(priceTargetElementId)
-          );
-          if (targetElement) {
-            var f = document.querySelector("form");
-            console.log("price pop up opens");
-            document.querySelector('input[name="form_fields[dates]"').value =
-              selectedDate;
+    // const priceTargetElementId = "elementor-popup-modal-7426";
+    // const priceObserver = new MutationObserver((mutationsList) => {
+    //   for (const mutation of mutationsList) {
+    //     if (mutation.type === "childList") {
+    //       const addedNodes = Array.from(mutation.addedNodes);
+    //       const targetElement = addedNodes.find(
+    //         (node) =>
+    //           node.nodeType === Node.ELEMENT_NODE &&
+    //           node.id.includes(priceTargetElementId)
+    //       );
+    //       if (targetElement) {
+    //         var f = document.querySelector("form");
+    //         console.log("price pop up opens");
+    //         document.querySelector('input[name="form_fields[dates]"').value =
+    //           selectedDate;
 
-            document.querySelector('input[name="form_fields[h_f_r_i]"').value =
-              rentamon_user_id;
-            document.querySelector(
-              'input[name="form_fields[h_f_r_r_i]"'
-            ).value = rentamon_room_id;
+    //         document.querySelector('input[name="form_fields[h_f_r_i]"').value =
+    //           rentamon_user_id;
+    //         document.querySelector(
+    //           'input[name="form_fields[h_f_r_r_i]"'
+    //         ).value = rentamon_room_id;
 
-            // f.addEventListener("submit", rentamoning);
-          }
-        }
-      }
-    });
+    //         // f.addEventListener("submit", rentamoning);
+    //       }
+    //     }
+    //   }
+    // });
 
-    priceObserver.observe(document.body, { childList: true, subtree: true });
+    // priceObserver.observe(document.body, { childList: true, subtree: true });
     var price_div = document.createElement("div");
     price_div.style.display = "none";
     price_div.className = "price-submit";
@@ -1180,10 +1180,10 @@ $(document).ready(function () {
     webdisconnectedShabBtn.addEventListener("click", disconnectedBtnClicked);
   }
 
-  //
+  // price
 
-  const priceTargetElementId = "elementor-popup-modal-7242";
-  const discountObserver = new MutationObserver((mutationsList) => {
+  const priceTargetElementId = "elementor-popup-modal-7426";
+  const priceObserver = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
       if (mutation.type === "childList") {
         const addedNodes = Array.from(mutation.addedNodes);
@@ -1191,6 +1191,49 @@ $(document).ready(function () {
           (node) =>
             node.nodeType === Node.ELEMENT_NODE &&
             node.id.includes(priceTargetElementId)
+        );
+        if (targetElement) {
+          let selected = document.querySelectorAll(".selected");
+          let selectedDate = [];
+          selected.forEach((z) => {
+            z.classList.remove("selected");
+            selectedDate.push(
+              new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+                "YYYY-MM-DD"
+              )
+            );
+          });
+
+          var f = document.querySelector("form");
+          console.log("price pop up opens");
+          document.querySelector('input[name="form_fields[dates]"').value =
+            selectedDate;
+
+          document.querySelector('input[name="form_fields[h_f_r_i]"').value =
+            rentamon_user_id;
+          document.querySelector('input[name="form_fields[h_f_r_r_i]"').value =
+            rentamon_room_id;
+
+          // f.addEventListener("submit", rentamoning);
+        }
+      }
+    }
+  });
+
+  priceObserver.observe(document.body, { childList: true, subtree: true });
+
+  //
+
+  // discount
+  const discountTargetElementId = "elementor-popup-modal-7242";
+  const discountObserver = new MutationObserver((mutationsList) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === "childList") {
+        const addedNodes = Array.from(mutation.addedNodes);
+        const targetElement = addedNodes.find(
+          (node) =>
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.id.includes(discountTargetElementId)
         );
 
         if (targetElement) {
