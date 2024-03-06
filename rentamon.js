@@ -309,7 +309,7 @@ function rentamonApiCaller(website, data, action, method = "GET") {
         console.log(website, response);
         var response_status = document.querySelector(".response_status");
 
-        if (response_status) {
+        if (response_status && website !== "otherv2") {
           if (response.final_status === true) {
             document.querySelector(
               `.elementor-section.${website} .status_false`
