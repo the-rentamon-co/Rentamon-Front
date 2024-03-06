@@ -1278,17 +1278,11 @@ $(document).ready(function () {
               (mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes(
                 "7242"
               ) ||
-              mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes(
+                mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes(
                   "7426"
                 ))
           );
           if (targetElement) {
-            console.log(
-              mutation.target.parentNode.parentNode.parentNode.parentNode
-                .parentNode.parentNode.parentNode.parentNode.parentNode
-                .parentNode.parentNode.parentNode.parentNode.parentNode
-            );
-            console.log("target herer", targetElement);
             setTimeout(rentamoning, 2000);
           }
         }
