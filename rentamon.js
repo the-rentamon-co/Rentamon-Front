@@ -310,7 +310,7 @@ function rentamonApiCaller(website, data, action, method = "GET") {
         var response_status = document.querySelector(".response_status");
 
         if (response_status) {
-          if (response.status === true) {
+          if (response.final_status === true) {
             document.querySelector(
               `.elementor-section.${website} .status_false`
             ).style.display = "none";
@@ -320,7 +320,7 @@ function rentamonApiCaller(website, data, action, method = "GET") {
             document.querySelector(
               `.elementor-section.${website} .status_true`
             ).style.display = "none";
-            document.querySelector(`website_row.${website}`).style.display =
+            document.querySelector(`.website_row.${website}`).style.display =
               "block";
           }
         }
