@@ -314,12 +314,18 @@ function rentamonApiCaller(website, data, action, method = "GET") {
             document.querySelector(
               `.elementor-section.${website} .status_false`
             ).style.display = "none";
+            document.querySelector(
+              `.elementor-section.${website} .status_true`
+            ).style.display = "block";
             document.querySelector(`.website_row.${website}`).style.display =
               "block";
           } else {
             document.querySelector(
               `.elementor-section.${website} .status_true`
             ).style.display = "none";
+            document.querySelector(
+              `.elementor-section.${website} .status_false`
+            ).style.display = "block";
             document.querySelector(`.website_row.${website}`).style.display =
               "block";
           }
