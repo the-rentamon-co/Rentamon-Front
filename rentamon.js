@@ -1150,6 +1150,14 @@ function rentamoning() {
       .catch((error) => {
         console.error(error);
       });
+
+    setTimeout(
+      () =>
+        document
+          .querySelectorAll(".website_row")
+          .forEach((row) => (row.style.display = "none")),
+      20000
+    );
   } else {
     document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
