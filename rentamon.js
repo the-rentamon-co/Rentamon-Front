@@ -707,7 +707,7 @@ function discountBtnClicked() {
       );
       jabamaPrice.push(z.getAttribute("price-from-rentamon"));
     });
-    const priceTargetElementId = "elementor-popup-modal";
+    const priceTargetElementId = "elementor-popup-modal-7242";
     const discountObserver = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.type === "childList") {
@@ -809,7 +809,7 @@ function priceBtnClicked() {
       );
     });
 
-    const priceTargetElementId = "elementor-popup-modal";
+    const priceTargetElementId = "elementor-popup-modal-7426";
     const priceObserver = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.type === "childList") {
