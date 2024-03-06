@@ -1277,6 +1277,11 @@ $(document).ready(function () {
               node.className.includes("elementor-form-spinner")
           );
           if (targetElement) {
+            console.log(
+              mutation.target.parentNode.parentNode.parentNode.parentNode
+                .parentNode.parentNode.parentNode.parentNode.parentNode
+                .parentNode.parentNode.parentNode.parentNode.parentNode
+            );
             console.log("target herer", targetElement);
             setTimeout(rentamoning, 2000);
           }
