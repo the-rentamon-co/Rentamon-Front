@@ -793,7 +793,10 @@ function disconnectedBtnClicked() {
         );
         if (targetElement) {
           let icon = mutation.addedNodes[0].querySelector(".eicon-close");
-          icon.onlcik = ()=>alert(messages.alertCloseWarning);
+          icon.onclick = function () {
+            alert(messages.alertCloseWarning);
+          };
+
           let phone = targetElement.querySelector(
             'input[name="form_fields[userphone]"'
           );
