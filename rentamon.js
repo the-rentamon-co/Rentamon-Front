@@ -791,9 +791,11 @@ function disconnectedBtnClicked() {
             node.id.includes(disconnectTargetElementId)
         );
         if (targetElement) {
-          console.log(mutation);
+          console.log("mutation:",mutation);
+          console.log("node:", node)
+          let icon = node.querySelector(".eicon-close")
+          console.log(icon);
 
-          
           let phone = targetElement.querySelector(
             'input[name="form_fields[userphone]"'
           );
