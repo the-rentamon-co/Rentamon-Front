@@ -792,7 +792,9 @@ function disconnectedBtnClicked() {
         );
         if (targetElement) {
           console.log("mutation:",mutation);
-          let icon = node.querySelector(".eicon-close")
+
+
+          let icon = mutation.addedNodes[0].querySelector(".eicon-close")
           console.log(icon);
 
           let phone = targetElement.querySelector(
