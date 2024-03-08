@@ -792,7 +792,6 @@ function disconnectedBtnClicked() {
         );
         if (targetElement) {
           console.log("mutation:",mutation);
-          console.log("node:", node)
           let icon = node.querySelector(".eicon-close")
           console.log(icon);
 
