@@ -793,8 +793,9 @@ function disconnectedBtnClicked() {
         );
         if (targetElement) {
           let icon = mutation.addedNodes[0].querySelector(".eicon-close");
-          icon.addEventListener("click", () => {
+          icon.addEventListener("click", function alert_message() {
             alert(messages.alertCloseWarning);
+            icon.removeEventListener("click", alert_message)
           });
 
           let phone = targetElement.querySelector(
