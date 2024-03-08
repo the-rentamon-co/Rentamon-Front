@@ -83,7 +83,7 @@ let messages = {
   unblockDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   reserveDaySuccess: "✅ ممنون!\nتغییرات اعمال شد.",
   notSelectedDay: "هنوز هیچ روز یا وضعیتی رو انتخاب نکردی",
-  alertCloseWarning: "هیج تغییری در این وبسایت اعمال نخواهد شد!",
+  alertCloseWarning: "تغیراتت دیگه توی این سایت ثبت نمیشه!",
 };
 
 // website names
@@ -792,10 +792,10 @@ function disconnectedBtnClicked() {
             node.id.includes(disconnectTargetElementId)
         );
         if (targetElement) {
-          // let icon = mutation.addedNodes[0].querySelector(".eicon-close");
-          // icon.addEventListener("click", () => {
-          //   alert(messages.alertCloseWarning);
-          // });
+          let icon = mutation.addedNodes[0].querySelector(".eicon-close");
+          icon.addEventListener("click", () => {
+            alert(messages.alertCloseWarning);
+          });
 
           let phone = targetElement.querySelector(
             'input[name="form_fields[userphone]"'
