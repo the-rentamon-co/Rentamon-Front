@@ -1002,11 +1002,11 @@ function rentamoning() {
           calendars["jabamaStatus"] = results[0]["data"];
           document.querySelector("#jabama_icon_connected").style.display =
             "block";
-          document.querySelector("#jabama_icon_connected div div div").style.border = "3px green solid"
+          document.querySelector("#jabama_icon_connected div div div").style.border = "3px #0c9d61 solid"
           document.querySelector("#jabama_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#jabama_icon_connected").style.display = "block";
-          document.querySelector("#jabama_icon_connected div div div").style.backgroundColor = "#ff0f0f"
+          document.querySelector("#jabama_icon_connected div div div").style.backgroundColor = "#d71d1d"
           document.querySelector("#jabama_icon_connected div div div").style.borderRadius = "5px"
           document.querySelector("#jabama_icon_connected div div div img").style.filter = 'grayscale(1)'
           check_is_valid("#jabama_icon_connected", "#webdisconnected")
@@ -1016,11 +1016,11 @@ function rentamoning() {
           calendars["mizboonStatus"] = results[1]["data"];
           document.querySelector("#mizboon_icon_connected").style.display =
             "block";
-          document.querySelector("#mizboon_icon_connected div div div").style.border = "3px green solid"
+          document.querySelector("#mizboon_icon_connected div div div").style.border = "3px #0c9d61 solid"
           document.querySelector("#mizboon_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#mizboon_icon_connected").style.display = "block";
-          document.querySelector("#mizboon_icon_connected div div div").style.backgroundColor = "#ff0f0f"
+          document.querySelector("#mizboon_icon_connected div div div").style.backgroundColor = "#d71d1d"
           document.querySelector("#mizboon_icon_connected div div div").style.borderRadius = "5px"
           document.querySelector("#mizboon_icon_connected div div div img").style.filter = 'grayscale(1)'
           check_is_valid("#mizboon_icon_connected", "#webdisconnected_mizboon")
@@ -1030,11 +1030,11 @@ function rentamoning() {
           calendars["otaghakStatus"] = results[2]["data"];
           document.querySelector("#otaghak_icon_connected").style.display =
             "block";
-          document.querySelector("#otaghak_icon_connected div div div").style.border = "3px green solid"
+          document.querySelector("#otaghak_icon_connected div div div").style.border = "3px #0c9d61 solid"
           document.querySelector("#otaghak_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#otaghak_icon_connected").style.display = "block";
-          document.querySelector("#otaghak_icon_connected div div div").style.backgroundColor = "#ff0f0f"
+          document.querySelector("#otaghak_icon_connected div div div").style.backgroundColor = "#d71d1d"
           document.querySelector("#otaghak_icon_connected div div div").style.borderRadius = "5px"
           document.querySelector("#otaghak_icon_connected div div div img").style.filter = 'grayscale(1)'
           check_is_valid("#otaghak_icon_connected", "#webdisconnected_otaghak")
@@ -1044,11 +1044,11 @@ function rentamoning() {
           calendars["jajigaStatus"] = results[3]["data"];
           document.querySelector("#jajiga_icon_connected").style.display =
             "block";
-          document.querySelector("#jajiga_icon_connected div div div").style.border = "3px green solid"
+          document.querySelector("#jajiga_icon_connected div div div").style.border = "3px #0c9d61 solid"
           document.querySelector("#jajiga_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#jajiga_icon_connected").style.display = "block";
-          document.querySelector("#jajiga_icon_connected div div div").style.backgroundColor = "#ff0f0f"
+          document.querySelector("#jajiga_icon_connected div div div").style.backgroundColor = "#d71d1d"
           document.querySelector("#jajiga_icon_connected div div div").style.borderRadius = "5px"
           document.querySelector("#jajiga_icon_connected div div div img").style.filter = 'grayscale(1)'
           check_is_valid("#jajiga_icon_connected", "#webdisconnected_jajiga")
@@ -1058,11 +1058,11 @@ function rentamoning() {
           calendars["shabStatus"] = results[4]["data"];
           document.querySelector("#shab_icon_connected").style.display =
             "block";
-          document.querySelector("#shab_icon_connected div div div").style.border = "3px green solid"
+          document.querySelector("#shab_icon_connected div div div").style.border = "3px #0c9d61 solid"
           document.querySelector("#shab_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#shab_icon_connected").style.display = "block";
-          document.querySelector("#shab_icon_connected div div div").style.backgroundColor = "#ff0f0f"
+          document.querySelector("#shab_icon_connected div div div").style.backgroundColor = "#d71d1d"
           document.querySelector("#shab_icon_connected div div div").style.borderRadius = "5px"
           document.querySelector("#shab_icon_connected div div div img").style.filter = 'grayscale(1)'
           check_is_valid("#shab_icon_connected", "#webdisconnected_shab")
@@ -1076,11 +1076,11 @@ function rentamoning() {
           calendars["mihmanshoStatus"] = results[6]["data"];
           document.querySelector("#mihmansho_icon_connected").style.display =
             "block";
-          document.querySelector("#mihmansho_icon_connected div div div").style.border = "3px green solid"
+          document.querySelector("#mihmansho_icon_connected div div div").style.border = "3px #0c9d61 solid"
           document.querySelector("#mihmansho_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#mihmansho_icon_connected").style.display = "block";
-          document.querySelector("#mihmansho_icon_connected div div div").style.backgroundColor = "#ff0f0f"
+          document.querySelector("#mihmansho_icon_connected div div div").style.backgroundColor = "#d71d1d"
           document.querySelector("#mihmansho_icon_connected div div div").style.borderRadius = "5px"
           document.querySelector("#mihmansho_icon_connected div div div img").style.filter = 'grayscale(1)'
           check_is_valid("#mihmansho_icon_connected", "#webdisconnected_mihmansho")
@@ -1090,11 +1090,11 @@ function rentamoning() {
           calendars["homsaStatus"] = results[7]["data"];
           document.querySelector("#homsa_icon_connected").style.display =
             "block";
-          document.querySelector("#homsa_icon_connected div div div").style.border = "3px green solid"
+          document.querySelector("#homsa_icon_connected div div div").style.border = "3px #0c9d61 solid"
           document.querySelector("#homsa_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#homsa_icon_connected").style.display = "block";
-          document.querySelector("#homsa_icon_connected div div div").style.backgroundColor = "#ff0f0f"
+          document.querySelector("#homsa_icon_connected div div div").style.backgroundColor = "#d71d1d"
           document.querySelector("#homsa_icon_connected div div div").style.borderRadius = "5px"
           document.querySelector("#homsa_icon_connected div div div img").style.filter = 'grayscale(1)'
           check_is_valid("#homsa_icon_connected", "#webdisconnected_homsa")
