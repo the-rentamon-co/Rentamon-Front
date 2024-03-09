@@ -299,7 +299,7 @@ function web_clear() {
     document
       .querySelectorAll(".website_row")
       .forEach((row) => (row.style.display = "none"));
-  }, 2000);
+  }, 5000);
   setTimeout(() => {
     clearInterval(bb);
   }, 2000);
