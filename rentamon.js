@@ -347,6 +347,7 @@ function rentamonApiCaller(website, data, action, method = "GET") {
             // trui.style.display = "block";
             // console.log(trui);
           } else {
+            document.querySelector(".contactsupport").style.display = "block";
             document
               .querySelectorAll(`.website_row.${website}`)
               .forEach((a) => (a.style.display = "block"));
