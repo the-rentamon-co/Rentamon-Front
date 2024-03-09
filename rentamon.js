@@ -313,22 +313,23 @@ function rentamonApiCaller(website, data, action, method = "GET") {
         if (response_status && website !== "otherv2") {
           if (response.final_status === true) {
             document.querySelector(".response_status_pop").click()
+            console.log(document.querySelector(".response_status_pop"))
             var section = document.querySelector(`.website_row.${website}`);
-            console.log(section);
+            // console.log(section);
             section.style.display = "block";
-            console.log(section);
+            // console.log(section);
             var falsi = document.querySelector(
               `.elementor-section.${website} .status_false`
             );
-            console.log(falsi);
+            // console.log(falsi);
             falsi.style.display = "none";
-            console.log(falsi);
+            // console.log(falsi);
             var trui = document.querySelector(
               `.elementor-section.${website} .status_true`
             );
-            console.log(trui);
+            // console.log(trui);
             trui.style.display = "block";
-            console.log(trui);
+            // console.log(trui);
           } else {
             document.querySelector(`.website_row.${website}`).style.display =
               "block";
