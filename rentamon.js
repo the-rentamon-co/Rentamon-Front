@@ -294,15 +294,15 @@ function otaghakStatus(otaghak) {
 
 function web_clear() {
   console.log("this is wb claer");
-  var bb = setInterval(() => {
-    console.log("cleared once");
-    document
-      .querySelectorAll(".website_row")
-      .forEach((row) => (row.style.display = "none"));
-  }, 5000);
-  setTimeout(() => {
-    clearInterval(bb);
-  }, 5500);
+  // var bb = setInterval(() => {
+  //   console.log("cleared once");
+  //   document
+  //     .querySelectorAll(".website_row")
+  //     .forEach((row) => (row.style.display = "none"));
+  // }, 5000);
+  // setTimeout(() => {
+  //   clearInterval(bb);
+  // }, 5500);
 }
 
 // this function makes a request to rentamon api
