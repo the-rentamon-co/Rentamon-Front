@@ -312,6 +312,7 @@ function rentamonApiCaller(website, data, action, method = "GET") {
 
         if (response_status && website !== "otherv2") {
           if (response.final_status === true) {
+            document.querySelector(".response_status_pop").click()
             var section = document.querySelector(`.website_row.${website}`);
             console.log(section);
             section.style.display = "block";
