@@ -1006,6 +1006,7 @@ function rentamoning() {
         } else {
           document.querySelector("#jabama_icon_connected").style.display = "block";
           document.querySelector("#jabama_icon_connected div div div").style.border = "2px red solid"
+          check_is_valid("#jabama_icon_connected")
         }
 
         if (results[1]["status"] === 200) {
@@ -1016,6 +1017,7 @@ function rentamoning() {
         } else {
           document.querySelector("#mizboon_icon_connected").style.display = "block";
           document.querySelector("#mizboon_icon_connected div div div").style.border = "2px red solid"
+          check_is_valid("#mizboon_icon_connected")
         }
 
         if (results[2]["status"] === 200) {
@@ -1026,6 +1028,7 @@ function rentamoning() {
         } else {
           document.querySelector("#otaghak_icon_connected").style.display = "block";
           document.querySelector("#otaghak_icon_connected div div div").style.border = "2px red solid"
+          check_is_valid("#otaghak_icon_connected")
         }
 
         if (results[3]["status"] === 200) {
@@ -1036,6 +1039,7 @@ function rentamoning() {
         } else {
           document.querySelector("#jajiga_icon_connected").style.display = "block";
           document.querySelector("#jajiga_icon_connected div div div").style.border = "2px red solid"
+          check_is_valid("#jajiga_icon_connected")
         }
 
         if (results[4]["status"] === 200) {
@@ -1046,6 +1050,7 @@ function rentamoning() {
         } else {
           document.querySelector("#shab_icon_connected").style.display = "block";
           document.querySelector("#shab_icon_connected div div div").style.border = "2px red solid"
+          check_is_valid("#shab_icon_connected")
         }
 
         if (results[5]["status"] === 200) {
@@ -1060,6 +1065,7 @@ function rentamoning() {
         } else {
           document.querySelector("#mihmansho_icon_connected").style.display = "block";
           document.querySelector("#mihmansho_icon_connected div div div").style.border = "2px red solid"
+          check_is_valid("#mihmansho_icon_connected")
         }
 
         if (results[7]["status"] === 200) {
@@ -1070,6 +1076,7 @@ function rentamoning() {
         } else {
           document.querySelector("#homsa_icon_connected").style.display = "block";
           document.querySelector("#homsa_icon_connected div div div").style.border = "2px red solid"
+          check_is_valid("#homsa_icon_connected")
         }
 
         if (JSON.stringify(calendars) !== "{}") {
@@ -1422,6 +1429,11 @@ $(document).ready(function () {
   });
 });
 
+function check_is_valid(id) {
+  document.querySelector(id).addEventListener("click", function () {
+    console.log("Ok")
+  })
+}
 // debugger;
 
 $(window).on("load", function () {
