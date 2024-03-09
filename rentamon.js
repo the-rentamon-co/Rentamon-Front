@@ -1003,9 +1003,11 @@ function rentamoning() {
           document.querySelector("#jabama_icon_connected").style.display =
             "block";
           document.querySelector("#jabama_icon_connected div div div").style.border = "2px green solid"
+          document.querySelector("#jabama_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#jabama_icon_connected").style.display = "block";
           document.querySelector("#jabama_icon_connected div div div").style.backgroundColor = "#ff0f0f"
+          document.querySelector("#jabama_icon_connected div div div").style.borderRadius = "5px"
           check_is_valid("#jabama_icon_connected", "#webdisconnected")
         }
 
@@ -1014,9 +1016,11 @@ function rentamoning() {
           document.querySelector("#mizboon_icon_connected").style.display =
             "block";
           document.querySelector("#mizboon_icon_connected div div div").style.border = "2px green solid"
+          document.querySelector("#mizboon_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#mizboon_icon_connected").style.display = "block";
           document.querySelector("#mizboon_icon_connected div div div").style.backgroundColor = "#ff0f0f"
+          document.querySelector("#mizboon_icon_connected div div div").style.borderRadius = "5px"
           check_is_valid("#mizboon_icon_connected", "#webdisconnected_mizboon")
         }
 
@@ -1025,10 +1029,11 @@ function rentamoning() {
           document.querySelector("#otaghak_icon_connected").style.display =
             "block";
           document.querySelector("#otaghak_icon_connected div div div").style.border = "2px green solid"
+          document.querySelector("#otaghak_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#otaghak_icon_connected").style.display = "block";
           document.querySelector("#otaghak_icon_connected div div div").style.backgroundColor = "#ff0f0f"
-
+          document.querySelector("#otaghak_icon_connected div div div").style.borderRadius = "5px"
           check_is_valid("#otaghak_icon_connected", "#webdisconnected_otaghak")
         }
 
@@ -1037,9 +1042,11 @@ function rentamoning() {
           document.querySelector("#jajiga_icon_connected").style.display =
             "block";
           document.querySelector("#jajiga_icon_connected div div div").style.border = "2px green solid"
+          document.querySelector("#jajiga_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#jajiga_icon_connected").style.display = "block";
           document.querySelector("#jajiga_icon_connected div div div").style.backgroundColor = "#ff0f0f"
+          document.querySelector("#jajiga_icon_connected div div div").style.borderRadius = "5px"
           check_is_valid("#jajiga_icon_connected", "#webdisconnected_jajiga")
         }
 
@@ -1048,9 +1055,11 @@ function rentamoning() {
           document.querySelector("#shab_icon_connected").style.display =
             "block";
           document.querySelector("#shab_icon_connected div div div").style.border = "2px green solid"
+          document.querySelector("#shab_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#shab_icon_connected").style.display = "block";
           document.querySelector("#shab_icon_connected div div div").style.backgroundColor = "#ff0f0f"
+          document.querySelector("#shab_icon_connected div div div").style.borderRadius = "5px"
           check_is_valid("#shab_icon_connected", "#webdisconnected_shab")
         }
 
@@ -1063,9 +1072,11 @@ function rentamoning() {
           document.querySelector("#mihmansho_icon_connected").style.display =
             "block";
           document.querySelector("#mihmansho_icon_connected div div div").style.border = "2px green solid"
+          document.querySelector("#mihmansho_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#mihmansho_icon_connected").style.display = "block";
           document.querySelector("#mihmansho_icon_connected div div div").style.backgroundColor = "#ff0f0f"
+          document.querySelector("#mihmansho_icon_connected div div div").style.borderRadius = "5px"
           check_is_valid("#mihmansho_icon_connected", "#webdisconnected_mihmansho")
         }
 
@@ -1074,9 +1085,11 @@ function rentamoning() {
           document.querySelector("#homsa_icon_connected").style.display =
             "block";
           document.querySelector("#homsa_icon_connected div div div").style.border = "2px green solid"
+          document.querySelector("#homsa_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#homsa_icon_connected").style.display = "block";
           document.querySelector("#homsa_icon_connected div div div").style.backgroundColor = "#ff0f0f"
+          document.querySelector("#homsa_icon_connected div div div").style.borderRadius = "5px"
           check_is_valid("#homsa_icon_connected", "#webdisconnected_homsa")
         }
 
