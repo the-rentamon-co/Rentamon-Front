@@ -311,6 +311,9 @@ function rentamonApiCaller(website, data, action, method = "GET") {
         var response_status = document.querySelector(".response_status");
 
         if (response_status && website !== "otherv2") {
+          document
+            .querySelectorAll(".website_row")
+            .forEach((row) => (row.style.display = "none"));
           if (response.final_status === true) {
             // document.querySelector(".response_status_pop a").click();
             // console.log(document.querySelector(".response_status_pop"));
@@ -1187,13 +1190,13 @@ function rentamoning() {
         console.error(error);
       });
 
-    setTimeout(
-      () =>
-        document
-          .querySelectorAll(".website_row")
-          .forEach((row) => (row.style.display = "none")),
-      30000
-    );
+    // setTimeout(
+    //   () =>
+    //     document
+    //       .querySelectorAll(".website_row")
+    //       .forEach((row) => (row.style.display = "none")),
+    //   30000
+    // );
   } else {
     document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
