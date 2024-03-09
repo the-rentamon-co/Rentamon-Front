@@ -293,7 +293,9 @@ function otaghakStatus(otaghak) {
 }
 
 function web_clear() {
+  console.log("this is wb claer");
   var bb = setInterval(() => {
+    console.log("cleared once");
     document
       .querySelectorAll(".website_row")
       .forEach((row) => (row.style.display = "none"));
@@ -445,7 +447,6 @@ async function blockBtnClicked() {
     var response_status = document.querySelector(".response_status");
     if (response_status) {
       document.querySelector(".response_status_pop a").click();
-      console.log(document.querySelector(".response_status_pop"));
     }
     const resps = await Promise.all(apicalls);
     alert(messages.blockDaySuccess);
@@ -547,7 +548,6 @@ async function unblockBtnClicked() {
 
     if (response_status) {
       document.querySelector(".response_status_pop a").click();
-      console.log(document.querySelector(".response_status_pop"));
     }
     const resps = await Promise.all(apicalls);
     alert(messages.unblockDaySuccess);
@@ -649,11 +649,10 @@ async function reserveOther() {
     var response_status = document.querySelector(".response_status");
     if (response_status) {
       document.querySelector(".response_status_pop a").click();
-      console.log(document.querySelector(".response_status_pop"));
     }
     const resps = await Promise.all(apicalls);
     alert(messages.reserveDaySuccess);
-    clearInterval(bb);
+    web_clear();
     rentamoning();
   } else {
     alert(messages.notSelectedDay);
@@ -1281,7 +1280,6 @@ $(document).ready(function () {
               )
             );
           });
-          console.log("price pop up opens");
           document.querySelector('input[name="form_fields[dates]"').value =
             selectedDate;
           document.querySelector('input[name="form_fields[h_f_r_i]"').value =
@@ -1322,7 +1320,6 @@ $(document).ready(function () {
             );
             jabamaPrice.push(z.getAttribute("price-from-rentamon"));
           });
-          console.log("discount pop up opens");
           document.querySelector('input[name="form_fields[dates]"').value =
             selectedDate;
           document.querySelector(
