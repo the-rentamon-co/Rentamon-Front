@@ -300,7 +300,9 @@ function web_clear() {
       .querySelectorAll(".website_row")
       .forEach((row) => (row.style.display = "none"));
   }, 2000);
-  return clearInterval(bb);
+  setTimeout(() => {
+    clearInterval(bb);
+  }, 2000);
 }
 
 // this function makes a request to rentamon api
