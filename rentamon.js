@@ -1431,7 +1431,8 @@ $(document).ready(function () {
 
 function check_is_valid(id) {
   document.querySelector(id).addEventListener("click", function () {
-    console.log("Ok")
+    console.log("Ok");
+    document.querySelector(`${id} a`).click();
   })
 }
 // debugger;
