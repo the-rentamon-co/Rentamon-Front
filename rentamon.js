@@ -312,8 +312,8 @@ function rentamonApiCaller(website, data, action, method = "GET") {
 
         if (response_status && website !== "otherv2") {
           if (response.final_status === true) {
-            document.querySelector(".response_status_pop").click()
-            console.log(document.querySelector(".response_status_pop"))
+            // document.querySelector(".response_status_pop a").click();
+            // console.log(document.querySelector(".response_status_pop"));
             var section = document.querySelector(`.website_row.${website}`);
             // console.log(section);
             section.style.display = "block";
@@ -524,6 +524,12 @@ async function unblockBtnClicked() {
         (action = "unblock")
       ),
     ];
+    var response_status = document.querySelector(".response_status");
+
+    if (response_status) {
+      document.querySelector(".response_status_pop a").click();
+      console.log(document.querySelector(".response_status_pop"));
+    }
     const resps = await Promise.all(apicalls);
     alert(messages.unblockDaySuccess);
     // window.location.reload();
