@@ -1006,7 +1006,7 @@ function rentamoning() {
         } else {
           document.querySelector("#jabama_icon_connected").style.display = "block";
           document.querySelector("#jabama_icon_connected div div div").style.border = "2px red solid"
-          check_is_valid("#jabama_icon_connected")
+          check_is_valid("#jabama_icon_connected", "#webdisconnected_jabama")
         }
 
         if (results[1]["status"] === 200) {
@@ -1017,7 +1017,7 @@ function rentamoning() {
         } else {
           document.querySelector("#mizboon_icon_connected").style.display = "block";
           document.querySelector("#mizboon_icon_connected div div div").style.border = "2px red solid"
-          check_is_valid("#mizboon_icon_connected")
+          check_is_valid("#mizboon_icon_connected", "#webdisconnected_mizboon")
         }
 
         if (results[2]["status"] === 200) {
@@ -1028,7 +1028,7 @@ function rentamoning() {
         } else {
           document.querySelector("#otaghak_icon_connected").style.display = "block";
           document.querySelector("#otaghak_icon_connected div div div").style.border = "2px red solid"
-          check_is_valid("#otaghak_icon_connected")
+          check_is_valid("#otaghak_icon_connected", "#webdisconnected_otaghak")
         }
 
         if (results[3]["status"] === 200) {
@@ -1039,7 +1039,7 @@ function rentamoning() {
         } else {
           document.querySelector("#jajiga_icon_connected").style.display = "block";
           document.querySelector("#jajiga_icon_connected div div div").style.border = "2px red solid"
-          check_is_valid("#jajiga_icon_connected")
+          check_is_valid("#jajiga_icon_connected", "#webdisconnected_jajiga")
         }
 
         if (results[4]["status"] === 200) {
@@ -1050,7 +1050,7 @@ function rentamoning() {
         } else {
           document.querySelector("#shab_icon_connected").style.display = "block";
           document.querySelector("#shab_icon_connected div div div").style.border = "2px red solid"
-          check_is_valid("#shab_icon_connected")
+          check_is_valid("#shab_icon_connected", "#webdisconnected_shab")
         }
 
         if (results[5]["status"] === 200) {
@@ -1065,7 +1065,7 @@ function rentamoning() {
         } else {
           document.querySelector("#mihmansho_icon_connected").style.display = "block";
           document.querySelector("#mihmansho_icon_connected div div div").style.border = "2px red solid"
-          check_is_valid("#mihmansho_icon_connected")
+          check_is_valid("#mihmansho_icon_connected", "#webdisconnected_mihmansho")
         }
 
         if (results[7]["status"] === 200) {
@@ -1076,7 +1076,7 @@ function rentamoning() {
         } else {
           document.querySelector("#homsa_icon_connected").style.display = "block";
           document.querySelector("#homsa_icon_connected div div div").style.border = "2px red solid"
-          check_is_valid("#homsa_icon_connected")
+          check_is_valid("#homsa_icon_connected", "#webdisconnected_homsa")
         }
 
         if (JSON.stringify(calendars) !== "{}") {
@@ -1429,10 +1429,10 @@ $(document).ready(function () {
   });
 });
 
-function check_is_valid(id) {
+function check_is_valid(id, pop_up_id) {
   document.querySelector(id).addEventListener("click", function () {
-    console.log("Ok");
-    document.querySelector(`${id} a`).click();
+    console.log(id);
+    document.querySelector(`${pop_up_id} a`).click();
   })
 }
 // debugger;
