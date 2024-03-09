@@ -1002,35 +1002,52 @@ function rentamoning() {
           calendars["jabamaStatus"] = results[0]["data"];
           document.querySelector("#jabama_icon_connected").style.display =
             "block";
-          document.querySelector("#jabama_icon_connected div div div img").style.border = "1px green solid"
+          document.querySelector("#jabama_icon_connected div div div").style.border = "2px green solid"
         } else {
           document.querySelector("#jabama_icon_connected").style.display = "block";
-          document.querySelector("#jabama_icon_connected").style.border = "1px red solid"
+          document.querySelector("#jabama_icon_connected div div div").style.border = "2px red solid"
         }
 
         if (results[1]["status"] === 200) {
           calendars["mizboonStatus"] = results[1]["data"];
           document.querySelector("#mizboon_icon_connected").style.display =
             "block";
+          document.querySelector("#mizboon_icon_connected div div div").style.border = "2px green solid"
+        } else {
+          document.querySelector("#mizboon_icon_connected").style.display = "block";
+          document.querySelector("#mizboon_icon_connected div div div").style.border = "2px red solid"
         }
 
         if (results[2]["status"] === 200) {
           calendars["otaghakStatus"] = results[2]["data"];
           document.querySelector("#otaghak_icon_connected").style.display =
             "block";
+          document.querySelector("#otaghak_icon_connected div div div").style.border = "2px green solid"
+        } else {
+          document.querySelector("#otaghak_icon_connected").style.display = "block";
+          document.querySelector("#otaghak_icon_connected div div div").style.border = "2px red solid"
         }
 
         if (results[3]["status"] === 200) {
           calendars["jajigaStatus"] = results[3]["data"];
           document.querySelector("#jajiga_icon_connected").style.display =
             "block";
+          document.querySelector("#jajiga_icon_connected div div div").style.border = "2px green solid"
+        } else {
+          document.querySelector("#jajiga_icon_connected").style.display = "block";
+          document.querySelector("#jajiga_icon_connected div div div").style.border = "2px red solid"
         }
 
         if (results[4]["status"] === 200) {
           calendars["shabStatus"] = results[4]["data"];
           document.querySelector("#shab_icon_connected").style.display =
             "block";
+          document.querySelector("#shab_icon_connected div div div").style.border = "2px green solid"
+        } else {
+          document.querySelector("#shab_icon_connected").style.display = "block";
+          document.querySelector("#shab_icon_connected div div div").style.border = "2px red solid"
         }
+
         if (results[5]["status"] === 200) {
           calendars["otherStatus"] = results[5]["data"];
         }
@@ -1039,12 +1056,20 @@ function rentamoning() {
           calendars["mihmanshoStatus"] = results[6]["data"];
           document.querySelector("#mihmansho_icon_connected").style.display =
             "block";
+          document.querySelector("#mihmansho_icon_connected div div div").style.border = "2px green solid"
+        } else {
+          document.querySelector("#mihmansho_icon_connected").style.display = "block";
+          document.querySelector("#mihmansho_icon_connected div div div").style.border = "2px red solid"
         }
 
         if (results[7]["status"] === 200) {
           calendars["homsaStatus"] = results[7]["data"];
           document.querySelector("#homsa_icon_connected").style.display =
             "block";
+          document.querySelector("#homsa_icon_connected div div div").style.border = "2px green solid"
+        } else {
+          document.querySelector("#homsa_icon_connected").style.display = "block";
+          document.querySelector("#homsa_icon_connected div div div").style.border = "2px red solid"
         }
 
         if (JSON.stringify(calendars) !== "{}") {
