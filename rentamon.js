@@ -1006,7 +1006,7 @@ function rentamoning() {
         } else {
           document.querySelector("#jabama_icon_connected").style.display = "block";
           document.querySelector("#jabama_icon_connected div div div").style.border = "2px red solid"
-          check_is_valid("#jabama_icon_connected", "#webdisconnected_jabama")
+          check_is_valid("#jabama_icon_connected", "#webdisconnected")
         }
 
         if (results[1]["status"] === 200) {
@@ -1431,7 +1431,7 @@ $(document).ready(function () {
 
 function check_is_valid(id, pop_up_id) {
   document.querySelector(id).addEventListener("click", function () {
-    console.log(id);
+    console.log(pop_up_id);
     document.querySelector(`${pop_up_id} a`).click();
   })
 }
