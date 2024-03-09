@@ -314,31 +314,35 @@ function rentamonApiCaller(website, data, action, method = "GET") {
           if (response.final_status === true) {
             // document.querySelector(".response_status_pop a").click();
             // console.log(document.querySelector(".response_status_pop"));
-            var section = document.querySelector(`.website_row.${website}`);
+            var section = document.querySelectorAll(`.website_row.${website}`);
             // console.log(section);
-            section.style.display = "block";
+            section.forEach((sel) => (sel.style.display = "block"));
+            // section
             // console.log(section);
-            var falsi = document.querySelector(
+            var falsi = document.querySelectorAll(
               `.elementor-section.${website} .status_false`
             );
             // console.log(falsi);
-            falsi.style.display = "none";
+            falsi.forEach((fal) => (fal.style.display = "none"));
+            // falsi;
             // console.log(falsi);
-            var trui = document.querySelector(
+            var trui = document.querySelectorAll(
               `.elementor-section.${website} .status_true`
             );
             // console.log(trui);
-            trui.style.display = "block";
+            trui.forEach((tru) => (tru.style.display = "block"));
+            // trui.style.display = "block";
             // console.log(trui);
           } else {
-            document.querySelector(`.website_row.${website}`).style.display =
-              "block";
-            document.querySelector(
-              `.elementor-section.${website} .status_true`
-            ).style.display = "none";
-            document.querySelector(
-              `.elementor-section.${website} .status_false`
-            ).style.display = "block";
+            document
+              .querySelectorAll(`.website_row.${website}`)
+              .forEach((a) => (a.style.display = "block"));
+            document
+              .querySelectorAll(`.elementor-section.${website} .status_true`)
+              .forEach((b) => (b.style.display = "none"));
+            document
+              .querySelectorAll(`.elementor-section.${website} .status_false`)
+              .forEach((c) => (c.style.display = "block"));
           }
         }
         resolve(response);
