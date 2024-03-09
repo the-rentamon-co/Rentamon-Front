@@ -1005,7 +1005,7 @@ function rentamoning() {
           document.querySelector("#jabama_icon_connected div div div").style.border = "2px green solid"
         } else {
           document.querySelector("#jabama_icon_connected").style.display = "block";
-          document.querySelector("#jabama_icon_connected div div div").style.backgroundColor = "red"
+          document.querySelector("#jabama_icon_connected div div div").style.backgroundColor = "#ff0f0f"
           check_is_valid("#jabama_icon_connected", "#webdisconnected")
         }
 
@@ -1016,7 +1016,7 @@ function rentamoning() {
           document.querySelector("#mizboon_icon_connected div div div").style.border = "2px green solid"
         } else {
           document.querySelector("#mizboon_icon_connected").style.display = "block";
-          document.querySelector("#mizboon_icon_connected div div div").style.backgroundColor = "red"
+          document.querySelector("#mizboon_icon_connected div div div").style.backgroundColor = "#ff0f0f"
           check_is_valid("#mizboon_icon_connected", "#webdisconnected_mizboon")
         }
 
@@ -1027,7 +1027,8 @@ function rentamoning() {
           document.querySelector("#otaghak_icon_connected div div div").style.border = "2px green solid"
         } else {
           document.querySelector("#otaghak_icon_connected").style.display = "block";
-          document.querySelector("#otaghak_icon_connected div div div").style.border = "2px red solid"
+          document.querySelector("#otaghak_icon_connected div div div").style.backgroundColor = "#ff0f0f"
+
           check_is_valid("#otaghak_icon_connected", "#webdisconnected_otaghak")
         }
 
@@ -1038,7 +1039,7 @@ function rentamoning() {
           document.querySelector("#jajiga_icon_connected div div div").style.border = "2px green solid"
         } else {
           document.querySelector("#jajiga_icon_connected").style.display = "block";
-          document.querySelector("#jajiga_icon_connected div div div").style.border = "2px red solid"
+          document.querySelector("#jajiga_icon_connected div div div").style.backgroundColor = "#ff0f0f"
           check_is_valid("#jajiga_icon_connected", "#webdisconnected_jajiga")
         }
 
@@ -1049,7 +1050,7 @@ function rentamoning() {
           document.querySelector("#shab_icon_connected div div div").style.border = "2px green solid"
         } else {
           document.querySelector("#shab_icon_connected").style.display = "block";
-          document.querySelector("#shab_icon_connected div div div").style.border = "2px red solid"
+          document.querySelector("#shab_icon_connected div div div").style.backgroundColor = "#ff0f0f"
           check_is_valid("#shab_icon_connected", "#webdisconnected_shab")
         }
 
@@ -1064,7 +1065,7 @@ function rentamoning() {
           document.querySelector("#mihmansho_icon_connected div div div").style.border = "2px green solid"
         } else {
           document.querySelector("#mihmansho_icon_connected").style.display = "block";
-          document.querySelector("#mihmansho_icon_connected div div div").style.border = "2px red solid"
+          document.querySelector("#mihmansho_icon_connected div div div").style.backgroundColor = "#ff0f0f"
           check_is_valid("#mihmansho_icon_connected", "#webdisconnected_mihmansho")
         }
 
@@ -1075,7 +1076,7 @@ function rentamoning() {
           document.querySelector("#homsa_icon_connected div div div").style.border = "2px green solid"
         } else {
           document.querySelector("#homsa_icon_connected").style.display = "block";
-          document.querySelector("#homsa_icon_connected div div div").style.border = "2px red solid"
+          document.querySelector("#homsa_icon_connected div div div").style.backgroundColor = "#ff0f0f"
           check_is_valid("#homsa_icon_connected", "#webdisconnected_homsa")
         }
 
