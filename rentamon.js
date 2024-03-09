@@ -433,6 +433,10 @@ async function blockBtnClicked() {
         (action = "block")
       ),
     ];
+    if (response_status) {
+      document.querySelector(".response_status_pop a").click();
+      console.log(document.querySelector(".response_status_pop"));
+    }
     const resps = await Promise.all(apicalls);
     alert(messages.blockDaySuccess);
     rentamoning();
@@ -631,6 +635,10 @@ async function reserveOther() {
         (action = "block")
       ),
     ];
+    if (response_status) {
+      document.querySelector(".response_status_pop a").click();
+      console.log(document.querySelector(".response_status_pop"));
+    }
     const resps = await Promise.all(apicalls);
     alert(messages.reserveDaySuccess);
     // window.location.reload();
@@ -1182,7 +1190,7 @@ function rentamoning() {
         document
           .querySelectorAll(".website_row")
           .forEach((row) => (row.style.display = "none")),
-      20000
+      30000
     );
   } else {
     document.querySelector(".loading-overlay-calendar").style.display = "none";
