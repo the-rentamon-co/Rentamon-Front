@@ -1016,7 +1016,7 @@ function rentamoning() {
           document.querySelector("#mizboon_icon_connected div div div").style.border = "2px green solid"
         } else {
           document.querySelector("#mizboon_icon_connected").style.display = "block";
-          document.querySelector("#mizboon_icon_connected div div div").style.border = "2px red solid"
+          document.querySelector("#mizboon_icon_connected div div div").style.backgroundColor = "red"
           check_is_valid("#mizboon_icon_connected", "#webdisconnected_mizboon")
         }
 
