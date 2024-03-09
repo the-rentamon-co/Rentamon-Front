@@ -292,6 +292,15 @@ function otaghakStatus(otaghak) {
   }
 }
 
+function web_clear() {
+  var bb = setInterval(() => {
+    document
+      .querySelectorAll(".website_row")
+      .forEach((row) => (row.style.display = "none"));
+  }, 2000);
+  return clearInterval(bb);
+}
+
 // this function makes a request to rentamon api
 function rentamonApiCaller(website, data, action, method = "GET") {
   return new Promise(function (resolve, reject) {
@@ -440,14 +449,7 @@ async function blockBtnClicked() {
     }
     const resps = await Promise.all(apicalls);
     alert(messages.blockDaySuccess);
-    var bb = setInterval(
-      () =>
-        document
-          .querySelectorAll(".website_row")
-          .forEach((row) => (row.style.display = "none")),
-      2000
-    );
-    clearInterval(bb);
+    web_clear();
     rentamoning();
     // window.location.reload();
   } else {
@@ -549,14 +551,7 @@ async function unblockBtnClicked() {
     }
     const resps = await Promise.all(apicalls);
     alert(messages.unblockDaySuccess);
-    var bb = setInterval(
-      () =>
-        document
-          .querySelectorAll(".website_row")
-          .forEach((row) => (row.style.display = "none")),
-      2000
-    );
-    clearInterval(bb);
+    web_clear();
     rentamoning();
   } else {
     alert(messages.notSelectedDay);
@@ -658,13 +653,6 @@ async function reserveOther() {
     }
     const resps = await Promise.all(apicalls);
     alert(messages.reserveDaySuccess);
-    var bb = setInterval(
-      () =>
-        document
-          .querySelectorAll(".website_row")
-          .forEach((row) => (row.style.display = "none")),
-      2000
-    );
     clearInterval(bb);
     rentamoning();
   } else {
