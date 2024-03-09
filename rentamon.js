@@ -347,7 +347,6 @@ function rentamonApiCaller(website, data, action, method = "GET") {
             // trui.style.display = "block";
             // console.log(trui);
           } else {
-            document.querySelector(".contactsupport").style.display = "block";
             document
               .querySelectorAll(`.website_row.${website}`)
               .forEach((a) => (a.style.display = "block"));
@@ -1003,6 +1002,10 @@ function rentamoning() {
           calendars["jabamaStatus"] = results[0]["data"];
           document.querySelector("#jabama_icon_connected").style.display =
             "block";
+          document.querySelector("#jabama_icon_connected").style.border = "1px green solid"
+        } else {
+          document.querySelector("#jabama_icon_connected").style.display = "block";
+          document.querySelector("#jabama_icon_connected").style.border = "1px red solid"
         }
 
         if (results[1]["status"] === 200) {
