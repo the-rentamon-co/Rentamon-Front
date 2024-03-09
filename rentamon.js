@@ -311,9 +311,6 @@ function rentamonApiCaller(website, data, action, method = "GET") {
         var response_status = document.querySelector(".response_status");
 
         if (response_status && website !== "otherv2") {
-          document
-            .querySelectorAll(".website_row")
-            .forEach((row) => (row.style.display = "none"));
           if (response.final_status === true) {
             // document.querySelector(".response_status_pop a").click();
             // console.log(document.querySelector(".response_status_pop"));
@@ -443,6 +440,14 @@ async function blockBtnClicked() {
     }
     const resps = await Promise.all(apicalls);
     alert(messages.blockDaySuccess);
+    var bb = setInterval(
+      () =>
+        document
+          .querySelectorAll(".website_row")
+          .forEach((row) => (row.style.display = "none")),
+      2000
+    );
+    clearInterval(bb);
     rentamoning();
     // window.location.reload();
   } else {
@@ -544,7 +549,14 @@ async function unblockBtnClicked() {
     }
     const resps = await Promise.all(apicalls);
     alert(messages.unblockDaySuccess);
-    // window.location.reload();
+    var bb = setInterval(
+      () =>
+        document
+          .querySelectorAll(".website_row")
+          .forEach((row) => (row.style.display = "none")),
+      2000
+    );
+    clearInterval(bb);
     rentamoning();
   } else {
     alert(messages.notSelectedDay);
@@ -646,7 +658,14 @@ async function reserveOther() {
     }
     const resps = await Promise.all(apicalls);
     alert(messages.reserveDaySuccess);
-    // window.location.reload();
+    var bb = setInterval(
+      () =>
+        document
+          .querySelectorAll(".website_row")
+          .forEach((row) => (row.style.display = "none")),
+      2000
+    );
+    clearInterval(bb);
     rentamoning();
   } else {
     alert(messages.notSelectedDay);
