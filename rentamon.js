@@ -1002,7 +1002,7 @@ function rentamoning() {
           calendars["jabamaStatus"] = results[0]["data"];
           document.querySelector("#jabama_icon_connected").style.display =
             "block";
-          document.querySelector("#jabama_icon_connected div div div").style.border = "2px green solid"
+          document.querySelector("#jabama_icon_connected div div div").style.border = "3px green solid"
           document.querySelector("#jabama_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#jabama_icon_connected").style.display = "block";
@@ -1016,7 +1016,7 @@ function rentamoning() {
           calendars["mizboonStatus"] = results[1]["data"];
           document.querySelector("#mizboon_icon_connected").style.display =
             "block";
-          document.querySelector("#mizboon_icon_connected div div div").style.border = "2px green solid"
+          document.querySelector("#mizboon_icon_connected div div div").style.border = "3px green solid"
           document.querySelector("#mizboon_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#mizboon_icon_connected").style.display = "block";
@@ -1030,7 +1030,7 @@ function rentamoning() {
           calendars["otaghakStatus"] = results[2]["data"];
           document.querySelector("#otaghak_icon_connected").style.display =
             "block";
-          document.querySelector("#otaghak_icon_connected div div div").style.border = "2px green solid"
+          document.querySelector("#otaghak_icon_connected div div div").style.border = "3px green solid"
           document.querySelector("#otaghak_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#otaghak_icon_connected").style.display = "block";
@@ -1044,7 +1044,7 @@ function rentamoning() {
           calendars["jajigaStatus"] = results[3]["data"];
           document.querySelector("#jajiga_icon_connected").style.display =
             "block";
-          document.querySelector("#jajiga_icon_connected div div div").style.border = "2px green solid"
+          document.querySelector("#jajiga_icon_connected div div div").style.border = "3px green solid"
           document.querySelector("#jajiga_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#jajiga_icon_connected").style.display = "block";
@@ -1058,7 +1058,7 @@ function rentamoning() {
           calendars["shabStatus"] = results[4]["data"];
           document.querySelector("#shab_icon_connected").style.display =
             "block";
-          document.querySelector("#shab_icon_connected div div div").style.border = "2px green solid"
+          document.querySelector("#shab_icon_connected div div div").style.border = "3px green solid"
           document.querySelector("#shab_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#shab_icon_connected").style.display = "block";
@@ -1076,7 +1076,7 @@ function rentamoning() {
           calendars["mihmanshoStatus"] = results[6]["data"];
           document.querySelector("#mihmansho_icon_connected").style.display =
             "block";
-          document.querySelector("#mihmansho_icon_connected div div div").style.border = "2px green solid"
+          document.querySelector("#mihmansho_icon_connected div div div").style.border = "3px green solid"
           document.querySelector("#mihmansho_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#mihmansho_icon_connected").style.display = "block";
@@ -1090,7 +1090,7 @@ function rentamoning() {
           calendars["homsaStatus"] = results[7]["data"];
           document.querySelector("#homsa_icon_connected").style.display =
             "block";
-          document.querySelector("#homsa_icon_connected div div div").style.border = "2px green solid"
+          document.querySelector("#homsa_icon_connected div div div").style.border = "3px green solid"
           document.querySelector("#homsa_icon_connected div div div").style.borderRadius = "5px"
         } else {
           document.querySelector("#homsa_icon_connected").style.display = "block";
