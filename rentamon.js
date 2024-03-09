@@ -433,6 +433,7 @@ async function blockBtnClicked() {
         (action = "block")
       ),
     ];
+    var response_status = document.querySelector(".response_status");
     if (response_status) {
       document.querySelector(".response_status_pop a").click();
       console.log(document.querySelector(".response_status_pop"));
@@ -635,6 +636,7 @@ async function reserveOther() {
         (action = "block")
       ),
     ];
+    var response_status = document.querySelector(".response_status");
     if (response_status) {
       document.querySelector(".response_status_pop a").click();
       console.log(document.querySelector(".response_status_pop"));
