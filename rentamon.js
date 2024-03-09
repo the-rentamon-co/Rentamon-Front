@@ -302,7 +302,7 @@ function web_clear() {
   }, 5000);
   setTimeout(() => {
     clearInterval(bb);
-  }, 2000);
+  }, 1000);
 }
 
 // this function makes a request to rentamon api
