@@ -1002,7 +1002,7 @@ function rentamoning() {
           calendars["jabamaStatus"] = results[0]["data"];
           document.querySelector("#jabama_icon_connected").style.display =
             "block";
-          document.querySelector("#jabama_icon_connected").style.border = "1px green solid"
+          document.querySelector("#jabama_icon_connected div div div img").style.border = "1px green solid"
         } else {
           document.querySelector("#jabama_icon_connected").style.display = "block";
           document.querySelector("#jabama_icon_connected").style.border = "1px red solid"
