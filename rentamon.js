@@ -1008,7 +1008,7 @@ function rentamoning() {
           document.querySelector(
             "#jabama_icon_connected div div div"
           ).style.borderRadius = "5px";
-        } else {
+        } else if (results[0]["status"] === 400) {
           document.querySelector("#jabama_icon_connected").style.display =
             "block";
           document.querySelector(
@@ -1033,7 +1033,7 @@ function rentamoning() {
           document.querySelector(
             "#mizboon_icon_connected div div div"
           ).style.borderRadius = "5px";
-        } else {
+        } else if (results[1]["status"] === 400) {
           document.querySelector("#mizboon_icon_connected").style.display =
             "block";
           document.querySelector(
@@ -1058,7 +1058,7 @@ function rentamoning() {
           document.querySelector(
             "#otaghak_icon_connected div div div"
           ).style.borderRadius = "5px";
-        } else {
+        } else if (results[2]["status"] === 400) {
           document.querySelector("#otaghak_icon_connected").style.display =
             "block";
           document.querySelector(
@@ -1083,7 +1083,7 @@ function rentamoning() {
           document.querySelector(
             "#jajiga_icon_connected div div div"
           ).style.borderRadius = "5px";
-        } else {
+        } else if (results[3]["status"] === 400) {
           document.querySelector("#jajiga_icon_connected").style.display =
             "block";
           document.querySelector(
@@ -1108,7 +1108,7 @@ function rentamoning() {
           document.querySelector(
             "#shab_icon_connected div div div"
           ).style.borderRadius = "5px";
-        } else {
+        } else if (results[4]["status"] === 400) {
           document.querySelector("#shab_icon_connected").style.display =
             "block";
           document.querySelector(
@@ -1137,7 +1137,7 @@ function rentamoning() {
           document.querySelector(
             "#mihmansho_icon_connected div div div"
           ).style.borderRadius = "5px";
-        } else {
+        } else if (results[6]["status"] === 400) {
           document.querySelector("#mihmansho_icon_connected").style.display =
             "block";
           document.querySelector(
@@ -1165,7 +1165,7 @@ function rentamoning() {
           document.querySelector(
             "#homsa_icon_connected div div div"
           ).style.borderRadius = "5px";
-        } else {
+        } else if (results[7]["status"] === 400) {
           document.querySelector("#homsa_icon_connected").style.display =
             "block";
           document.querySelector(
