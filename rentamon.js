@@ -1000,135 +1000,40 @@ function rentamoning() {
 
         if (results[0]["status"] === 200) {
           calendars["jabamaStatus"] = results[0]["data"];
-          // document.querySelector("#jabama_icon_connected").style.display =
-          //   "block";
-          // document.querySelector(
-          //   "#jabama_icon_connected div div div"
-          // ).style.border = "3px #0c9d61 solid";
-          // document.querySelector(
-          //   "#jabama_icon_connected div div div"
-          // ).style.borderRadius = "5px";
           isActiveHandler("#jabama_icon_connected", false)
         } else if (results[0]["status"] === 400) {
-          // document.querySelector("#jabama_icon_connected").style.display =
-          //   "block";
-          // document.querySelector(
-          //   "#jabama_icon_connected div div div"
-          // ).style.backgroundColor = "#d71d1d";
-          // document.querySelector(
-          //   "#jabama_icon_connected div div div"
-          // ).style.borderRadius = "5px";
-          // document.querySelector(
-          //   "#jabama_icon_connected div div div img"
-          // ).style.filter = "grayscale(1)";
           isActiveHandler("#jabama_icon_connected", true)
           check_is_valid("#jabama_icon_connected", "#webdisconnected");
         }
 
         if (results[1]["status"] === 200) {
           calendars["mizboonStatus"] = results[1]["data"];
-          // document.querySelector("#mizboon_icon_connected").style.display =
-          //   "block";
-          // document.querySelector(
-          //   "#mizboon_icon_connected div div div"
-          // ).style.border = "3px #0c9d61 solid";
-          // document.querySelector(
-          //   "#mizboon_icon_connected div div div"
-          // ).style.borderRadius = "5px";
           isActiveHandler("#mizboon_icon_connected", false)
         } else if (results[1]["status"] === 400) {
-          // document.querySelector("#mizboon_icon_connected").style.display =
-          //   "block";
-          // document.querySelector(
-          //   "#mizboon_icon_connected div div div"
-          // ).style.backgroundColor = "#d71d1d";
-          // document.querySelector(
-          //   "#mizboon_icon_connected div div div"
-          // ).style.borderRadius = "5px";
-          // document.querySelector(
-          //   "#mizboon_icon_connected div div div img"
-          // ).style.filter = "grayscale(1)";
           isActiveHandler("#mizboon_icon_connected", true)
           check_is_valid("#mizboon_icon_connected", "#webdisconnected_mizboon");
         }
 
         if (results[2]["status"] === 200) {
           calendars["otaghakStatus"] = results[2]["data"];
-          // document.querySelector("#otaghak_icon_connected").style.display =
-          //   "block";
-          // document.querySelector(
-          //   "#otaghak_icon_connected div div div"
-          // ).style.border = "3px #0c9d61 solid";
-          // document.querySelector(
-          //   "#otaghak_icon_connected div div div"
-          // ).style.borderRadius = "5px";
           isActiveHandler("#otaghak_icon_connected", false)
         } else if (results[2]["status"] === 400) {
-          // document.querySelector("#otaghak_icon_connected").style.display =
-          //   "block";
-          // document.querySelector(
-          //   "#otaghak_icon_connected div div div"
-          // ).style.backgroundColor = "#d71d1d";
-          // document.querySelector(
-          //   "#otaghak_icon_connected div div div"
-          // ).style.borderRadius = "5px";
-          // document.querySelector(
-          //   "#otaghak_icon_connected div div div img"
-          // ).style.filter = "grayscale(1)";
           isActiveHandler("#otaghak_icon_connected", true)
           check_is_valid("#otaghak_icon_connected", "#webdisconnected_otaghak");
         }
 
         if (results[3]["status"] === 200) {
           calendars["jajigaStatus"] = results[3]["data"];
-          // document.querySelector("#jajiga_icon_connected").style.display =
-          //   "block";
-          // document.querySelector(
-          //   "#jajiga_icon_connected div div div"
-          // ).style.border = "3px #0c9d61 solid";
-          // document.querySelector(
-          //   "#jajiga_icon_connected div div div"
-          // ).style.borderRadius = "5px";
           isActiveHandler("#jajiga_icon_connected", false)
         } else if (results[3]["status"] === 400) {
-          // document.querySelector("#jajiga_icon_connected").style.display =
-          //   "block";
-          // document.querySelector(
-          //   "#jajiga_icon_connected div div div"
-          // ).style.backgroundColor = "#d71d1d";
-          // document.querySelector(
-          //   "#jajiga_icon_connected div div div"
-          // ).style.borderRadius = "5px";
-          // document.querySelector(
-          //   "#jajiga_icon_connected div div div img"
-          // ).style.filter = "grayscale(1)";
           isActiveHandler("#jajiga_icon_connected", true)
           check_is_valid("#jajiga_icon_connected", "#webdisconnected_jajiga");
         }
 
         if (results[4]["status"] === 200) {
           calendars["shabStatus"] = results[4]["data"];
-          // document.querySelector("#shab_icon_connected").style.display =
-          //   "block";
-          // document.querySelector(
-          //   "#shab_icon_connected div div div"
-          // ).style.border = "3px #0c9d61 solid";
-          // document.querySelector(
-          //   "#shab_icon_connected div div div"
-          // ).style.borderRadius = "5px";
           isActiveHandler("#shab_icon_connected", false)
         } else if (results[4]["status"] === 400) {
-          // document.querySelector("#shab_icon_connected").style.display =
-          //   "block";
-          // document.querySelector(
-          //   "#shab_icon_connected div div div"
-          // ).style.backgroundColor = "#d71d1d";
-          // document.querySelector(
-          //   "#shab_icon_connected div div div"
-          // ).style.borderRadius = "5px";
-          // document.querySelector(
-          //   "#shab_icon_connected div div div img"
-          // ).style.filter = "grayscale(1)";
           isActiveHandler("#shab_icon_connected", true)
           check_is_valid("#shab_icon_connected", "#webdisconnected_shab");
         }
@@ -1139,27 +1044,8 @@ function rentamoning() {
 
         if (results[6]["status"] === 200) {
           calendars["mihmanshoStatus"] = results[6]["data"];
-          // document.querySelector("#mihmansho_icon_connected").style.display =
-          //   "block";
-          // document.querySelector(
-          //   "#mihmansho_icon_connected div div div"
-          // ).style.border = "3px #0c9d61 solid";
-          // document.querySelector(
-          //   "#mihmansho_icon_connected div div div"
-          // ).style.borderRadius = "5px";
           isActiveHandler("#mihmansho_icon_connected", false)
         } else if (results[6]["status"] === 400) {
-          // document.querySelector("#mihmansho_icon_connected").style.display =
-          //   "block";
-          // document.querySelector(
-          //   "#mihmansho_icon_connected div div div"
-          // ).style.backgroundColor = "#d71d1d";
-          // document.querySelector(
-          //   "#mihmansho_icon_connected div div div"
-          // ).style.borderRadius = "5px";
-          // document.querySelector(
-          //   "#mihmansho_icon_connected div div div img"
-          // ).style.filter = "grayscale(1)";
           isActiveHandler("#mihmansho_icon_connected", true)
           check_is_valid(
             "#mihmansho_icon_connected",
@@ -1169,27 +1055,8 @@ function rentamoning() {
 
         if (results[7]["status"] === 200) {
           calendars["homsaStatus"] = results[7]["data"];
-          // document.querySelector("#homsa_icon_connected").style.display =
-          //   "block";
-          // document.querySelector(
-          //   "#homsa_icon_connected div div div"
-          // ).style.border = "3px #0c9d61 solid";
-          // document.querySelector(
-          //   "#homsa_icon_connected div div div"
-          // ).style.borderRadius = "5px";
           isActiveHandler("#homsa_icon_connected", false)
         } else if (results[7]["status"] === 400) {
-          // document.querySelector("#homsa_icon_connected").style.display =
-          //   "block";
-          // document.querySelector(
-          //   "#homsa_icon_connected div div div"
-          // ).style.backgroundColor = "#d71d1d";
-          // document.querySelector(
-          //   "#homsa_icon_connected div div div"
-          // ).style.borderRadius = "5px";
-          // document.querySelector(
-          //   "#homsa_icon_connected div div div img"
-          // ).style.filter = "grayscale(1)";
           isActiveHandler("#homsa_icon_connected", true)
           check_is_valid("#homsa_icon_connected", "#webdisconnected_homsa");
         }
