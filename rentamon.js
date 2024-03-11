@@ -313,7 +313,13 @@ function web_clear() {
 }
 
 // this function makes a request to rentamon api
-function rentamonApiCaller(website, data, action, method = "GET", status = true) {
+function rentamonApiCaller(
+  website,
+  data,
+  action,
+  method = "GET",
+  status = true
+) {
   return new Promise(function (resolve, reject) {
     $.ajax({
       timeout: 25000,
@@ -330,7 +336,7 @@ function rentamonApiCaller(website, data, action, method = "GET", status = true)
         console.log(website, response);
         var response_status = document.querySelector(".response_status");
 
-        if (response_status && website !== "otherv2" && status) {
+        if (response_status && website !== "otherv2" && status === true) {
           if (response.final_status === true) {
             var section = document.querySelectorAll(`.website_row.${website}`);
             section.forEach((sel) => (sel.style.display = "block"));
