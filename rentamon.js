@@ -317,8 +317,8 @@ function rentamonApiCaller(
   website,
   data,
   action,
-  method = "GET",
-  status = true
+  status = true,
+  method = "GET"
 ) {
   return new Promise(function (resolve, reject) {
     $.ajax({
