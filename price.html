@@ -1,0 +1,59 @@
+<script>
+  document
+    .querySelector("#popup_sumbit_price")
+    .addEventListener("click", () => {
+      const dates = document.querySelector("#form-field-dates").value;
+      const price = document.querySelector("#form-field-price").value;
+      const hfrri = document.querySelector("#form-field-h_f_r_r_i").value;
+      const hfri = document.querySelector("#form-field-h_f_r_i").value;
+      const data = new URLSearchParams();
+      data.append("fields[dates][value]", dates);
+      data.append("fields[price][value]", price);
+      data.append("fields[h_f_r_r_i][value]", hfrri);
+      data.append("fields[h_f_r_i][value]", hfri);
+      fetch(
+        "https://rentam8n.darkube.app/webhook/6908650e-a38e-44d0-94a6-f8b7a0252323",
+        {
+          headers: {
+            accept: "application/json, text/plain, */*",
+            "accept-language": "en-US,en;q=0.9",
+            "content-type": "application/x-www-form-urlencoded",
+          },
+          body: data,
+          method: "POST",
+        }
+      )
+        .then((r) => r.json())
+        .then((x) => {
+          console.log(x);
+          setTimeout(rentamoning, 2000);
+          const responsers = Object.entries(x);
+          for (let [site, status] of responsers) {
+            if (status === "true") {
+              var section = document.querySelectorAll(`.website_row.${site}`);
+              section.forEach((sel) => (sel.style.display = "block"));
+              var falsi = document.querySelectorAll(
+                `.elementor-section.${site} .status_false`
+              );
+              falsi.forEach((fal) => (fal.style.display = "none"));
+              var trui = document.querySelectorAll(
+                `.elementor-section.${site} .status_true`
+              );
+              trui.forEach((tru) => (tru.style.display = "block"));
+            } else if (status === "false") {
+              document
+                .querySelectorAll(`.website_row.${site}`)
+                .forEach((a) => (a.style.display = "block"));
+              document
+                .querySelectorAll(`.elementor-section.${site} .status_true`)
+                .forEach((b) => (b.style.display = "none"));
+              document
+                .querySelectorAll(`.elementor-section.${site} .status_false`)
+                .forEach((c) => (c.style.display = "block"));
+            }
+          }
+        });
+
+      document.querySelector(".response_status_pop a").click();
+    });
+</script>
