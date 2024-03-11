@@ -313,7 +313,7 @@ function web_clear() {
 }
 
 // this function makes a request to rentamon api
-function rentamonApiCaller(website, data, action, method = "GET", status = True) {
+function rentamonApiCaller(website, data, action, method = "GET", status = true) {
   return new Promise(function (resolve, reject) {
     $.ajax({
       timeout: 25000,
