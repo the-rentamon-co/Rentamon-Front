@@ -26,6 +26,8 @@ let routes = {
     calendar: apiHostMainUrl + "/otaghak/calendar",
     room: rentamon_room_id,
     price: apiHostMainUrl + "/otaghak/changepricing",
+    discount: apiHostMainUrl + "/otaghak/pricing",
+
   },
   jabama: {
     block: apiHostMainUrl + "/jabama/disable",
@@ -33,6 +35,8 @@ let routes = {
     calendar: apiHostMainUrl + "/jabama/calendar",
     room: rentamon_room_id,
     price: apiHostMainUrl + "/jabama/changepricing",
+    discount: apiHostMainUrl + "/jabama/pricing",
+
   },
   jajiga: {
     block: apiHostMainUrl + "/jajiga",
@@ -61,6 +65,7 @@ let routes = {
     calendar: apiHostMainUrl + "/other/calendar/v2",
     room: rentamon_room_id,
     price: apiHostMainUrl + "/other/changepricing/v2",
+    discount: apiHostMainUrl + "/other/pricing/v2",
   },
 
   mihmansho: {
@@ -77,6 +82,8 @@ let routes = {
     calendar: apiHostMainUrl + "/homsa/calendar",
     room: rentamon_room_id,
     price: apiHostMainUrl + "/homsa/changepricing",
+    discount: apiHostMainUrl + "/homsa/pricing",
+
   },
 };
 
