@@ -27,7 +27,6 @@ let routes = {
     room: rentamon_room_id,
     price: apiHostMainUrl + "/otaghak/changepricing",
     discount: apiHostMainUrl + "/otaghak/pricing",
-
   },
   jabama: {
     block: apiHostMainUrl + "/jabama/disable",
@@ -36,7 +35,6 @@ let routes = {
     room: rentamon_room_id,
     price: apiHostMainUrl + "/jabama/changepricing",
     discount: apiHostMainUrl + "/jabama/pricing",
-
   },
   jajiga: {
     block: apiHostMainUrl + "/jajiga",
@@ -83,7 +81,6 @@ let routes = {
     room: rentamon_room_id,
     price: apiHostMainUrl + "/homsa/changepricing",
     discount: apiHostMainUrl + "/homsa/pricing",
-
   },
 };
 
@@ -316,7 +313,7 @@ function web_clear() {
 }
 
 // this function makes a request to rentamon api
-function rentamonApiCaller(website, data, action, method = "GET") {
+function rentamonApiCaller(website, data, action, method = "GET", status = True) {
   return new Promise(function (resolve, reject) {
     $.ajax({
       timeout: 25000,
@@ -333,29 +330,18 @@ function rentamonApiCaller(website, data, action, method = "GET") {
         console.log(website, response);
         var response_status = document.querySelector(".response_status");
 
-        if (response_status && website !== "otherv2") {
+        if (response_status && website !== "otherv2" && status) {
           if (response.final_status === true) {
-            // document.querySelector(".response_status_pop a").click();
-            // console.log(document.querySelector(".response_status_pop"));
             var section = document.querySelectorAll(`.website_row.${website}`);
-            // console.log(section);
             section.forEach((sel) => (sel.style.display = "block"));
-            // section
-            // console.log(section);
             var falsi = document.querySelectorAll(
               `.elementor-section.${website} .status_false`
             );
-            // console.log(falsi);
             falsi.forEach((fal) => (fal.style.display = "none"));
-            // falsi;
-            // console.log(falsi);
             var trui = document.querySelectorAll(
               `.elementor-section.${website} .status_true`
             );
-            // console.log(trui);
             trui.forEach((tru) => (tru.style.display = "block"));
-            // trui.style.display = "block";
-            // console.log(trui);
           } else if (response.final_status === false) {
             document
               .querySelectorAll(`.website_row.${website}`)
