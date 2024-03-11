@@ -333,11 +333,13 @@ function rentamonApiCaller(
         },
       },
       success: function (response) {
-        console.log(website, response);
+        console.log(website, response, status);
         var response_status = document.querySelector(".response_status");
 
         if (response_status && website !== "otherv2" && status === true) {
+          console.log("all");
           if (response.final_status === true) {
+            console.log("true");
             var section = document.querySelectorAll(`.website_row.${website}`);
             section.forEach((sel) => (sel.style.display = "block"));
             var falsi = document.querySelectorAll(
@@ -349,6 +351,7 @@ function rentamonApiCaller(
             );
             trui.forEach((tru) => (tru.style.display = "block"));
           } else if (response.final_status === false) {
+            console.log("false");
             document
               .querySelectorAll(`.website_row.${website}`)
               .forEach((a) => (a.style.display = "block"));
