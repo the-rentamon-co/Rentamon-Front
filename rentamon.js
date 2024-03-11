@@ -25,41 +25,42 @@ let routes = {
     unblock: apiHostMainUrl + "/otaghak",
     calendar: apiHostMainUrl + "/otaghak/calendar",
     room: rentamon_room_id,
+    price: apiHostMainUrl + "/otaghak/changepricing",
   },
   jabama: {
     block: apiHostMainUrl + "/jabama/disable",
     unblock: apiHostMainUrl + "/jabama/enable",
     calendar: apiHostMainUrl + "/jabama/calendar",
     room: rentamon_room_id,
+    price: apiHostMainUrl + "/jabama/changepricing",
   },
   jajiga: {
     block: apiHostMainUrl + "/jajiga",
     unblock: apiHostMainUrl + "/jajiga",
     calendar: apiHostMainUrl + "/jajiga/calendar",
     room: rentamon_room_id,
+    price: apiHostMainUrl + "/jajiga/changepricing",
   },
   shab: {
     block: apiHostMainUrl + "/shab",
     unblock: apiHostMainUrl + "/shab",
     calendar: apiHostMainUrl + "/shab/calendar",
     room: rentamon_room_id,
+    price: apiHostMainUrl + "/shab/changepricing",
   },
   mizboon: {
     block: apiHostMainUrl + "/mizboon/close",
     unblock: apiHostMainUrl + "/mizboon/unclose",
     calendar: apiHostMainUrl + "/mizboon/calendar",
     room: rentamon_room_id,
+    price: apiHostMainUrl + "/mizboon/changepricing",
   },
-  // other: {
-  //   blockUnblock: apiHostMainUrl + "/other",
-  //   calendar: apiHostMainUrl + "/other/calendar",
-  //   room: rentamon_room_id,
-  // },
 
   otherv2: {
     blockUnblock: apiHostMainUrl + "/other/v2",
     calendar: apiHostMainUrl + "/other/calendar/v2",
     room: rentamon_room_id,
+    price: apiHostMainUrl + "/other/changepricing/v2",
   },
 
   mihmansho: {
@@ -67,6 +68,7 @@ let routes = {
     unblock: apiHostMainUrl + "/mihmansho/unblock",
     calendar: apiHostMainUrl + "/mihmansho/calendar",
     room: rentamon_room_id,
+    price: apiHostMainUrl + "/mihmansho/changepricing",
   },
 
   homsa: {
@@ -74,6 +76,7 @@ let routes = {
     unblock: apiHostMainUrl + "/homsa/unblock",
     calendar: apiHostMainUrl + "/homsa/calendar",
     room: rentamon_room_id,
+    price: apiHostMainUrl + "/homsa/changepricing",
   },
 };
 
@@ -1000,41 +1003,41 @@ function rentamoning() {
 
         if (results[0]["status"] === 200) {
           calendars["jabamaStatus"] = results[0]["data"];
-          isActiveHandler("#jabama_icon_connected", false)
+          isActiveHandler("#jabama_icon_connected", false);
         } else if (results[0]["status"] === 400) {
-          isActiveHandler("#jabama_icon_connected", true)
+          isActiveHandler("#jabama_icon_connected", true);
           check_is_valid("#jabama_icon_connected", "#webdisconnected");
         }
 
         if (results[1]["status"] === 200) {
           calendars["mizboonStatus"] = results[1]["data"];
-          isActiveHandler("#mizboon_icon_connected", false)
+          isActiveHandler("#mizboon_icon_connected", false);
         } else if (results[1]["status"] === 400) {
-          isActiveHandler("#mizboon_icon_connected", true)
+          isActiveHandler("#mizboon_icon_connected", true);
           check_is_valid("#mizboon_icon_connected", "#webdisconnected_mizboon");
         }
 
         if (results[2]["status"] === 200) {
           calendars["otaghakStatus"] = results[2]["data"];
-          isActiveHandler("#otaghak_icon_connected", false)
+          isActiveHandler("#otaghak_icon_connected", false);
         } else if (results[2]["status"] === 400) {
-          isActiveHandler("#otaghak_icon_connected", true)
+          isActiveHandler("#otaghak_icon_connected", true);
           check_is_valid("#otaghak_icon_connected", "#webdisconnected_otaghak");
         }
 
         if (results[3]["status"] === 200) {
           calendars["jajigaStatus"] = results[3]["data"];
-          isActiveHandler("#jajiga_icon_connected", false)
+          isActiveHandler("#jajiga_icon_connected", false);
         } else if (results[3]["status"] === 400) {
-          isActiveHandler("#jajiga_icon_connected", true)
+          isActiveHandler("#jajiga_icon_connected", true);
           check_is_valid("#jajiga_icon_connected", "#webdisconnected_jajiga");
         }
 
         if (results[4]["status"] === 200) {
           calendars["shabStatus"] = results[4]["data"];
-          isActiveHandler("#shab_icon_connected", false)
+          isActiveHandler("#shab_icon_connected", false);
         } else if (results[4]["status"] === 400) {
-          isActiveHandler("#shab_icon_connected", true)
+          isActiveHandler("#shab_icon_connected", true);
           check_is_valid("#shab_icon_connected", "#webdisconnected_shab");
         }
 
@@ -1044,9 +1047,9 @@ function rentamoning() {
 
         if (results[6]["status"] === 200) {
           calendars["mihmanshoStatus"] = results[6]["data"];
-          isActiveHandler("#mihmansho_icon_connected", false)
+          isActiveHandler("#mihmansho_icon_connected", false);
         } else if (results[6]["status"] === 400) {
-          isActiveHandler("#mihmansho_icon_connected", true)
+          isActiveHandler("#mihmansho_icon_connected", true);
           check_is_valid(
             "#mihmansho_icon_connected",
             "#webdisconnected_mihmansho"
@@ -1055,9 +1058,9 @@ function rentamoning() {
 
         if (results[7]["status"] === 200) {
           calendars["homsaStatus"] = results[7]["data"];
-          isActiveHandler("#homsa_icon_connected", false)
+          isActiveHandler("#homsa_icon_connected", false);
         } else if (results[7]["status"] === 400) {
-          isActiveHandler("#homsa_icon_connected", true)
+          isActiveHandler("#homsa_icon_connected", true);
           check_is_valid("#homsa_icon_connected", "#webdisconnected_homsa");
         }
 
@@ -1421,12 +1424,15 @@ function check_is_valid(id, pop_up_id) {
 function isActiveHandler(id, isRed) {
   if (isRed) {
     document.querySelector(`${id}`).style.display = "block";
-    document.querySelector(`${id} div div div`).style.border = "4px #d71d1d solid";
+    document.querySelector(`${id} div div div`).style.border =
+      "4px #d71d1d solid";
     document.querySelector(`${id} div div div`).style.borderRadius = "5px";
-    document.querySelector(`${id} div div div img`).style.filter = "grayscale(1)";
+    document.querySelector(`${id} div div div img`).style.filter =
+      "grayscale(1)";
   } else if (isRed === false) {
     document.querySelector(`${id}`).style.display = "block";
-    document.querySelector(`${id} div div div`).style.border = "4px #0c9d61 solid";
+    document.querySelector(`${id} div div div`).style.border =
+      "4px #0c9d61 solid";
     document.querySelector(`${id} div div div`).style.borderRadius = "5px";
   }
 }
