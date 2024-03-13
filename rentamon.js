@@ -1,5 +1,6 @@
 // this is rentamon main api url.
 let apiHostMainUrl = "https://rentamon.chbk.run";
+let apiHostMainUrlF = "https://rentamon-api.chbk.run"
 
 // each panel needs a user id. user id is hidden in the page
 let rentamon_user_id = document
@@ -67,11 +68,11 @@ let routes = {
   },
 
   mihmansho: {
-    block: apiHostMainUrl + "/mihmansho/block",
-    unblock: apiHostMainUrl + "/mihmansho/unblock",
-    calendar: apiHostMainUrl + "/mihmansho/calendar",
+    block: apiHostMainUrlF + "/mihmansho/block",
+    unblock: apiHostMainUrlF + "/mihmansho/unblock",
+    calendar: apiHostMainUrlF + "/mihmansho/calendar",
     room: rentamon_room_id,
-    price: apiHostMainUrl + "/mihmansho/changepricing",
+    price: apiHostMainUrlF + "/mihmansho/changepricing",
   },
 
   homsa: {
