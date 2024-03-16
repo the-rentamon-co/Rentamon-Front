@@ -1323,7 +1323,7 @@ $(window).on("load", function () {
     },
     inline: true,
     minDate: new persianDate().startOf("day"),
-    maxDate: new persianDate().add("years", 1).month(1).endOf("month"),
+    maxDate: new persianDate().add("years", 1).month(2).endOf("month"),
     // maxDate: new persianDate().
     // maxDate: new persianDate()
     //   .add("month", 3)
