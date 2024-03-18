@@ -218,11 +218,6 @@ function otherStatus(other) {
     case null:
       return "unblocked";
   }
-  // if (other.status === "booked") {
-  //   return "booked";
-  // } else {
-  //   return "not sure";
-  // }
 }
 
 // this functions is for cheeking a day status response recived from shab
@@ -300,19 +295,6 @@ function otaghakStatus(otaghak) {
   }
 }
 
-function web_clear() {
-  console.log("this is wb claer");
-  // var bb = setInterval(() => {
-  //   console.log("cleared once");
-  //   document
-  //     .querySelectorAll(".website_row")
-  //     .forEach((row) => (row.style.display = "none"));
-  // }, 5000);
-  // setTimeout(() => {
-  //   clearInterval(bb);
-  // }, 5500);
-}
-
 // this function makes a request to rentamon api
 function rentamonApiCaller(
   website,
@@ -337,6 +319,7 @@ function rentamonApiCaller(
         console.log(website, response, status);
         var response_status = document.querySelector(".response_status");
 
+        // result of this ajax call is shown to user
         if (response_status && website !== "otherv2" && status === true) {
           if (response.final_status === true) {
             var section = document.querySelectorAll(`.website_row.${website}`);
@@ -372,6 +355,7 @@ function rentamonApiCaller(
 }
 
 // this function is called when block option is selected
+// if there are selected days, it starts requesting for block to each website
 async function blockBtnClicked() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
 
@@ -454,10 +438,7 @@ async function blockBtnClicked() {
       document.querySelector(".response_status_pop a").click();
     }
     const resps = await Promise.all(apicalls);
-    // alert(messages.blockDaySuccess);
-    web_clear();
     rentamoning();
-    // window.location.reload();
   } else {
     alert(messages.notSelectedDay);
     document.querySelector(".loading-overlay-calendar").style.display = "none";
@@ -465,6 +446,7 @@ async function blockBtnClicked() {
 }
 
 // this function is called when unblock option is selected
+// if there are selected days, it starts requesting for unblock to each website
 async function unblockBtnClicked() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
   let selected = document.querySelectorAll(".selected");
@@ -555,8 +537,6 @@ async function unblockBtnClicked() {
       document.querySelector(".response_status_pop a").click();
     }
     const resps = await Promise.all(apicalls);
-    // alert(messages.unblockDaySuccess);
-    web_clear();
     rentamoning();
   } else {
     alert(messages.notSelectedDay);
@@ -565,6 +545,7 @@ async function unblockBtnClicked() {
 }
 
 // this function is called when reserve option is selected
+// if there are selected days, it starts requesting for block to each website and resrve to rentamon
 async function reserveOther() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
 
@@ -656,8 +637,6 @@ async function reserveOther() {
       document.querySelector(".response_status_pop a").click();
     }
     const resps = await Promise.all(apicalls);
-    // alert(messages.reserveDaySuccess);
-    web_clear();
     rentamoning();
   } else {
     alert(messages.notSelectedDay);
@@ -665,17 +644,15 @@ async function reserveOther() {
   }
 }
 
+// this function ckecks witch action btn is ckecked
 function checkAction() {
   let action = document.querySelector('input[name="block"]:checked');
   if (action) {
     if (action.value === "block") {
-      // alert("block");
       blockBtnClicked();
     } else if (action.value === "reserve") {
-      // alert("reserve");
       reserveOther();
     } else if (action.value === "unblock") {
-      // alert("unblock");
       unblockBtnClicked();
     }
   } else {
@@ -683,6 +660,7 @@ function checkAction() {
   }
 }
 
+// this object is used when there is a site reservation and other websites need to be disabled
 let tobeDisabled = {
   homsa: (single) => {
     rentamonApiCaller(
@@ -761,6 +739,8 @@ let tobeDisabled = {
   },
 };
 
+// this function is called when user select discount action
+// there is a elemntor pop up which is wating for a element with class discount-submit to be clicked and then it shows a pop up
 function discountBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   if (selected.length > 0) {
@@ -774,6 +754,9 @@ function discountBtnClicked() {
   }
 }
 
+// this is for otp pop ups
+// if user click on close icon of these pop ups, user gets an error
+// 7426 and 7242 are discount and price pop ups, which are excluded from getting that error when close icon is clicked
 function disconnectedBtnClicked() {
   const disconnectTargetElementId = "elementor-popup-modal";
   const disconnectObserver = new MutationObserver((mutationsList) => {
@@ -816,6 +799,8 @@ function disconnectedBtnClicked() {
 
   disconnectObserver.observe(document.body, { childList: true, subtree: true });
 }
+
+// this is a function for when user selects a day, and that day need to get a class
 function handleDayClick(e) {
   if (e.target.parentElement.tagName === "TD") {
     e.target.parentElement.classList.toggle("selected");
@@ -824,6 +809,8 @@ function handleDayClick(e) {
   }
 }
 
+// this function is called when user select price action
+// there is a elemntor pop up which is wating for a element with class price-submit to be clicked and then it shows a pop up
 function priceBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   if (selected.length > 0) {
@@ -837,15 +824,22 @@ function priceBtnClicked() {
   }
 }
 
+// this is the main function that fetches data from websites based on calendar
 function rentamoning() {
   document
     .querySelectorAll("form")
     .forEach((form) => form.removeEventListener("submit", rentamoning));
+
+  // starts loading when this function is called
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
+
+  // resets every action input
   document
     .querySelectorAll('input[name="block"]')
     .forEach((i) => (i.checked = false));
   var availableDays = [];
+
+  // selecting start and end of each days range
   var allTds = document.querySelectorAll(
     ".datepicker-day-view td:not(.disabled)"
   );
@@ -877,6 +871,10 @@ function rentamoning() {
         .add("day", 1)
         .format("YYYY-MM-DD"),
     ];
+
+    // urls for getting calendar info and data from rentamon api
+    // for some websites if you want to get data in range of 01/01 until 01/10,
+    // you have to pass 01/01 and 01/11. thats why in var range we have added one more day to last day in range
     const urls2 = [
       routes.jabama.calendar +
         `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}&start_date=${range[0]}&end_date=${range[2]}`,
@@ -911,14 +909,20 @@ function rentamoning() {
       day.addEventListener("click", handleDayClick);
     });
 
+    // results are pupolated base on order of urls2 list
+    // for example if at first we call jabama, resluts[0] is jabama result
     Promise.all(fetchPromises)
       .then((results) => {
         console.log(results);
         var calendars = {};
 
+        // if ststus response from api is 200 the data fetched from api is stored in calendars object
+        // and the jabama icon is getting styled based on isActiveHandler function
         if (results[0]["status"] === 200) {
           calendars["jabamaStatus"] = results[0]["data"];
           isActiveHandler("#jabama_icon_connected", false);
+
+          // if the status is 400 it means there is problem with token or sth, icon gets styled
         } else if (results[0]["status"] === 400) {
           isActiveHandler("#jabama_icon_connected", true);
           check_is_valid("#jabama_icon_connected", "#webdisconnected");
@@ -985,7 +989,7 @@ function rentamoning() {
             for (let cal in calendars) {
               status[cal] = window[cal](calendars[cal][i]);
             }
-
+            // getting price, discount from rentamon calendar result
             if ("otherStatus" in calendars) {
               let origPrice =
                 parseInt(parseInt(results[5]["data"][i]["price"]) / 1000) ||
@@ -995,6 +999,7 @@ function rentamoning() {
                   parseInt(results[5]["data"][i]["discounted_price"]) / 1000
                 ) || null;
 
+              // if we have a discount, we apply and style to day
               if (origPrice > discountedPrice && discountedPrice !== null) {
                 days[i].parentElement.style.border = "2px solid #8165D6";
                 days[i].parentElement.querySelector(".price").innerHTML =
@@ -1019,16 +1024,19 @@ function rentamoning() {
             }
 
             console.table(status);
+
+            // this line of code ckecks if we have a booked day or not
             const bookedStatus = Object.entries(status).find(
               ([key, value]) => value === "booked"
             );
-
+            // gets booked-days style and name of that website is shown
             if (bookedStatus) {
               days[i].parentElement.classList.add("booked-days");
               const website = bookedStatus[0];
-
               days[i].parentElement.querySelector(".reserved").innerHTML =
                 names[website]["fa"];
+
+                // other websites that are not already blocked will be blocked
               for (const web in tobeDisabled) {
                 if (
                   web + "Status" in status &&
@@ -1066,6 +1074,8 @@ function rentamoning() {
         document.querySelector(".loading-overlay-calendar").style.display =
           "none";
 
+
+          // if status is 400 otp pop up is shown
         if (results[1]["status"] === 400) {
           document.querySelector("#webdisconnected_mizboon a").click();
         }
