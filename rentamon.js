@@ -1036,7 +1036,7 @@ function rentamoning() {
               days[i].parentElement.querySelector(".reserved").innerHTML =
                 names[website]["fa"];
 
-                // other websites that are not already blocked will be blocked
+              // other websites that are not already blocked will be blocked
               for (const web in tobeDisabled) {
                 if (
                   web + "Status" in status &&
@@ -1074,8 +1074,7 @@ function rentamoning() {
         document.querySelector(".loading-overlay-calendar").style.display =
           "none";
 
-
-          // if status is 400 otp pop up is shown
+        // if status is 400 otp pop up is shown
         if (results[1]["status"] === 400) {
           document.querySelector("#webdisconnected_mizboon a").click();
         }
@@ -1158,7 +1157,7 @@ $(document).ready(function () {
   }
 
   // price
-
+  // this mutationobserver handels price pop up
   const priceTargetElementId = "elementor-popup-modal-7426";
   const priceObserver = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
@@ -1196,6 +1195,7 @@ $(document).ready(function () {
   //
 
   // discount
+  // this mutationobserver handels discount pop up
   const discountTargetElementId = "elementor-popup-modal-7242";
   const discountObserver = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
@@ -1239,7 +1239,7 @@ $(document).ready(function () {
   //
 
   // pop up form submited
-
+  // this mutationobserver handels rentamon login form
   let form_submited = new MutationObserver((mutaionlist) => {
     for (const mutation of mutaionlist) {
       if (mutation.type === "childList") {
@@ -1316,6 +1316,9 @@ function isActiveHandler(id, isRed) {
 
 // debugger;
 
+// this is calendar config
+
+// for changing max date change value in maxDate: new persianDate
 $(window).on("load", function () {
   $(".inline").pDatepicker({
     initialValue: false,
