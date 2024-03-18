@@ -1,6 +1,6 @@
 // this is rentamon main api url.
 let apiHostMainUrl = "https://rentamon.chbk.run";
-let apiHostMainUrlF = "https://rentamon-api.chbk.run"
+let apiHostMainUrlF = "https://rentamon-api.chbk.run";
 
 // each panel needs a user id. user id is hidden in the page
 let rentamon_user_id = document
@@ -1323,7 +1323,8 @@ $(window).on("load", function () {
     },
     inline: true,
     minDate: new persianDate().startOf("day"),
-    maxDate: new persianDate().add("years", 1).month(2).endOf("month"),
+    maxDate: new persianDate([1403, 1, 31]),
+    // maxDate: new persianDate().add("years", 1).month(2).endOf("month"),
     // maxDate: new persianDate().
     // maxDate: new persianDate()
     //   .add("month", 3)
