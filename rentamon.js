@@ -217,8 +217,6 @@ function otherStatus(other) {
       return "unblocked";
     case null:
       return "unblocked";
-    case undefined:
-      return "unblocked";
   }
 }
 
