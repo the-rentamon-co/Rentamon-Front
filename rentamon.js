@@ -1029,6 +1029,7 @@ function rentamoning() {
             const bookedStatus = Object.entries(status).find(
               ([key, value]) => value === "booked"
             );
+            console.log(bookedStatus)
             // gets booked-days style and name of that website is shown
             if (bookedStatus) {
               days[i].parentElement.classList.add("booked-days");
