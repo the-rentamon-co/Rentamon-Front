@@ -277,14 +277,14 @@ function otaghakStatus(otaghak) {
   }
   if (
     otaghak["isBlocked"] === true &&
-    otaghak["blockedType"] === "BlockedManually"
-  ) {
-    return "blocked";
-  } else if (
-    otaghak["isBlocked"] === true &&
     otaghak["blockedType"] === "BlockedByBooking"
   ) {
     return "booked";
+  } else if (
+    otaghak["isBlocked"] === true &&
+    otaghak["blockedType"] === "BlockedManually"
+  ) {
+    return "blocked";
   } else if (
     otaghak["isBlocked"] === false &&
     otaghak["blockedType"] === null
