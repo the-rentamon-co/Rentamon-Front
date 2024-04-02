@@ -265,6 +265,8 @@ function mizboonStatus(mizboon) {
     return "booked";
   } else if (mizboon["booked"] === 0 && mizboon["closed"] === 0) {
     return "unblocked";
+  } else if (mizboon["booked"] === 1 && mizboon["closed"] === 0) {
+    return "booked";
   } else {
     return "not sure";
   }
