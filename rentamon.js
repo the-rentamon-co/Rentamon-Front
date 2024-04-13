@@ -306,20 +306,18 @@ function rentamonApiCaller(
   method = "GET"
 ) {
   return new Promise(function (resolve, reject) {
-    var section = document.querySelectorAll(`.website_row.${website}`);
-    section.forEach((sel) => (sel.style.display = "block"));
-    var falsi = document.querySelectorAll(
-      `.elementor-section.${website} .status_false`
-    );
-    falsi.forEach((fal) => (fal.style.display = "none"));
-    var trui = document.querySelectorAll(
-      `.elementor-section.${website} .status_true`
-    );
-    trui.forEach((tru) => (tru.style.display = "none"));
-    var pendi = document.querySelectorAll(
-      `.elementor-section.${website} .status_true`
-    );
-    pendi.forEach((pnd) => (pnd.style.display = "block"));
+    document
+      .querySelectorAll(`.website_row.${website}`)
+      .forEach((a) => (a.style.display = "block"));
+    document
+      .querySelectorAll(`.elementor-section.${website} .status_true`)
+      .forEach((b) => (b.style.display = "none"));
+    document
+      .querySelectorAll(`.elementor-section.${website} .status_false`)
+      .forEach((c) => (c.style.display = "none"));
+    document
+      .querySelectorAll(`.elementor-section.${website} .status_pending`)
+      .forEach((c) => (c.style.display = "block"));
     console.log("We Got Here!")
     $.ajax({
       timeout: 25000,
@@ -340,16 +338,32 @@ function rentamonApiCaller(
         // result of this ajax call is shown to user
         if (response_status && website !== "otherv2" && status === true) {
           if (response.final_status === true) {
+            var section = document.querySelectorAll(`.website_row.${website}`);
             section.forEach((sel) => (sel.style.display = "block"));
+            var falsi = document.querySelectorAll(
+              `.elementor-section.${website} .status_false`
+            );
             falsi.forEach((fal) => (fal.style.display = "none"));
+            var trui = document.querySelectorAll(
+              `.elementor-section.${website} .status_true`
+            );
             trui.forEach((tru) => (tru.style.display = "block"));
-            pendi.forEach((pnd) => (pnd.style.display = "none"));
-            
+            document
+              .querySelectorAll(`.elementor-section.${website} .status_pending`)
+              .forEach((c) => (c.style.display = "none"));
           } else if (response.final_status === false) {
-            section.forEach((sel) => (sel.style.display = "block"));
-            falsi.forEach((fal) => (fal.style.display = "block"));
-            trui.forEach((tru) => (tru.style.display = "none"));
-            pendi.forEach((pnd) => (pnd.style.display = "none"));
+            document
+              .querySelectorAll(`.website_row.${website}`)
+              .forEach((a) => (a.style.display = "block"));
+            document
+              .querySelectorAll(`.elementor-section.${website} .status_true`)
+              .forEach((b) => (b.style.display = "none"));
+            document
+              .querySelectorAll(`.elementor-section.${website} .status_false`)
+              .forEach((c) => (c.style.display = "block"));
+            document
+              .querySelectorAll(`.elementor-section.${website} .status_pending`)
+              .forEach((c) => (c.style.display = "none"));
           }
         }
         resolve(response);
