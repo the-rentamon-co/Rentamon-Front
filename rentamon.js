@@ -345,14 +345,15 @@ function rentamonApiCaller(
               `.elementor-section.${website} .status_false`
             );
             falsi.forEach((fal) => (fal.style.display = "none"));
-            var pendi = document.querySelectorAll(
-              `.elementor-section.${website} .status_pending`
-            );
-            pendi.forEach((pend) => (pend.style.display = "none"));
             var trui = document.querySelectorAll(
               `.elementor-section.${website} .status_true`
             );
             trui.forEach((tru) => (tru.style.display = "block"));
+            // setting pending to none
+            document
+              .querySelectorAll(`.elementor-section.${website} .status_pending`)
+              .forEach((c) => (c.style.display = "none"));
+
           } else if (response.final_status === false) {
             document
               .querySelectorAll(`.website_row.${website}`)
@@ -361,12 +362,12 @@ function rentamonApiCaller(
               .querySelectorAll(`.elementor-section.${website} .status_true`)
               .forEach((b) => (b.style.display = "none"));
             document
-              .querySelectorAll(`.elementor-section.${website} .status_pending`)
-              .forEach((c) => (c.style.display = "none"));
-            document
               .querySelectorAll(`.elementor-section.${website} .status_false`)
-              .forEach((d) => (d.style.display = "block"));
-            
+              .forEach((c) => (c.style.display = "block"));
+            // setting pending to none
+            document
+              .querySelectorAll(`.elementor-section.${website} .status_pending`)
+              .forEach((c) => (c.style.display = "none")); 
           }
         }
         resolve(response);
