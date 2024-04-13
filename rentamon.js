@@ -345,6 +345,10 @@ function rentamonApiCaller(
               `.elementor-section.${website} .status_false`
             );
             falsi.forEach((fal) => (fal.style.display = "none"));
+            var pendi = document.querySelectorAll(
+              `.elementor-section.${website} .status_pending`
+            );
+            pendi.forEach((pend) => (pend.style.display = "none"));
             var trui = document.querySelectorAll(
               `.elementor-section.${website} .status_true`
             );
@@ -357,8 +361,12 @@ function rentamonApiCaller(
               .querySelectorAll(`.elementor-section.${website} .status_true`)
               .forEach((b) => (b.style.display = "none"));
             document
+              .querySelectorAll(`.elementor-section.${website} .status_pending`)
+              .forEach((c) => (c.style.display = "none"));
+            document
               .querySelectorAll(`.elementor-section.${website} .status_false`)
-              .forEach((c) => (c.style.display = "block"));
+              .forEach((d) => (d.style.display = "block"));
+            
           }
         }
         resolve(response);
