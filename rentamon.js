@@ -306,12 +306,6 @@ function rentamonApiCaller(
   method = "GET"
 ) {
   return new Promise(function (resolve, reject) {
-    console.log(document.querySelectorAll(`.website_row.${website}`))
-    document.querySelectorAll(`.website_row.${website}`).forEach((a) => (a.style.display = "block"));
-    document.querySelectorAll(`.elementor-section.${website} .status_true`).forEach((b) => (b.style.display = "none"));
-    document.querySelectorAll(`.elementor-section.${website} .status_false`).forEach((c) => (c.style.display = "none"));
-    document.querySelectorAll(`.elementor-section.${website} .status_pending`).forEach((d) => (d.style.display = "block"));
-    console.log("We Got Here!")
     $.ajax({
       timeout: 25000,
       url: routes[website][action],
@@ -322,6 +316,21 @@ function rentamonApiCaller(
           rentamon_room_id: rentamon_room_id,
           rentamon_id: rentamon_user_id,
         },
+      },
+      beforeSend: function(xhr) {
+      document
+        .querySelectorAll(`.website_row.${website}`)
+        .forEach((a) => (a.style.display = "block"));
+      document
+        .querySelectorAll(`.elementor-section.${website} .status_true`)
+        .forEach((b) => (b.style.display = "none"));
+      document
+        .querySelectorAll(`.elementor-section.${website} .status_false`)
+        .forEach((c) => (c.style.display = "none"));
+      document
+        .querySelectorAll(`.elementor-section.${website} .status_pending`)
+        .forEach((c) => (c.style.display = "block"));
+      console.log("I got here!")
       },
       success: function (response) {
         console.log(website, response, status); 
