@@ -317,70 +317,44 @@ function rentamonApiCaller(
           rentamon_id: rentamon_user_id,
         },
       },
-      beforeSend: function(xhr) {
-      var response_status = document.querySelector(".response_status")
-      document
-        .querySelectorAll(`.website_row .${website}`)
-        .forEach((a) => (a.style.display = "block"));
-      document
-        .querySelectorAll(`.elementor-section .${website} .status_true`)
-        .forEach((b) => (b.style.display = "none"));
-      document
-        .querySelectorAll(`.elementor-section .${website} .status_false`)
-        .forEach((c) => (c.style.display = "block"));
-      document
-        .querySelectorAll(`.elementor-section .${website} .status_pending`)
-        .forEach((c) => (c.style.display = "none"));
-        console.log("I got here!", response_status);
-      },
       success: function (response) {
-        console.log(website, response, status); 
-
+        console.log(website, response, status);
         var response_status = document.querySelector(".response_status");
 
         // result of this ajax call is shown to user
         if (response_status && website !== "otherv2" && status === true) {
           if (response.final_status === true) {
-            var section = document.querySelectorAll(`.website_row .${website}`);
+            var section = document.querySelectorAll(`.website_row.${website}`);
             section.forEach((sel) => (sel.style.display = "block"));
             var falsi = document.querySelectorAll(
-              `.elementor-section .${website} .status_false`
+              `.elementor-section.${website} .status_false`
             );
             falsi.forEach((fal) => (fal.style.display = "none"));
             var trui = document.querySelectorAll(
-              `.elementor-section .${website} .status_true`
+              `.elementor-section.${website} .status_true`
             );
             trui.forEach((tru) => (tru.style.display = "block"));
-            document
-              .querySelectorAll(`.elementor-section .${website} .status_pending`)
-              .forEach((c) => (c.style.display = "none"));
           } else if (response.final_status === false) {
             document
-              .querySelectorAll(`.website_row .${website}`)
+              .querySelectorAll(`.website_row.${website}`)
               .forEach((a) => (a.style.display = "block"));
             document
-              .querySelectorAll(`.elementor-section .${website} .status_true`)
+              .querySelectorAll(`.elementor-section.${website} .status_true`)
               .forEach((b) => (b.style.display = "none"));
             document
-              .querySelectorAll(`.elementor-section .${website} .status_false`)
+              .querySelectorAll(`.elementor-section.${website} .status_false`)
               .forEach((c) => (c.style.display = "block"));
-            document
-              .querySelectorAll(`.elementor-section .${website} .status_pending`)
-              .forEach((c) => (c.style.display = "none"));
           }
         }
         resolve(response);
       },
       error: function (error) {
         console.error(website, error);
-        statusReceived = true; // Set the flag to true when status is received
-        clearTimeout(timeoutId); // Clear the timeout since status is received
         reject(error);
       },
     });
   });
 }
-
 
 // this function is called when block option is selected
 // if there are selected days, it starts requesting for block to each website
