@@ -306,18 +306,11 @@ function rentamonApiCaller(
   method = "GET"
 ) {
   return new Promise(function (resolve, reject) {
-    document
-      .querySelectorAll(`.website_row.${website}`)
-      .forEach((a) => (a.style.display = "block"));
-    document
-      .querySelectorAll(`.elementor-section.${website} .status_true`)
-      .forEach((b) => (b.style.display = "none"));
-    document
-      .querySelectorAll(`.elementor-section.${website} .status_false`)
-      .forEach((c) => (c.style.display = "none"));
-    document
-      .querySelectorAll(`.elementor-section.${website} .status_pending`)
-      .forEach((c) => (c.style.display = "block"));
+    console.log(document.querySelectorAll(`.website_row.${website}`))
+    document.querySelectorAll(`.website_row.${website}`).forEach((a) => (a.style.display = "block"));
+    document.querySelectorAll(`.elementor-section.${website} .status_true`).forEach((b) => (b.style.display = "none"));
+    document.querySelectorAll(`.elementor-section.${website} .status_false`).forEach((c) => (c.style.display = "none"));
+    document.querySelectorAll(`.elementor-section.${website} .status_pending`).forEach((d) => (d.style.display = "block"));
     console.log("We Got Here!")
     $.ajax({
       timeout: 25000,
