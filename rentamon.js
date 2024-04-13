@@ -298,7 +298,6 @@ function otaghakStatus(otaghak) {
 }
 
 // this function makes a request to rentamon api
-// this function makes a request to rentamon api
 function rentamonApiCaller(
   website,
   data,
@@ -316,7 +315,7 @@ function rentamonApiCaller(
   var trui = document.querySelectorAll(
     `.elementor-section.${website} .status_true`
   );
-  trui.forEach((tru) => (tru.style.display = "block"));
+  trui.forEach((tru) => (tru.style.display = "none")); // initially set to none
 
   return new Promise(function (resolve, reject) {
     $.ajax({
@@ -334,7 +333,7 @@ function rentamonApiCaller(
         console.log(website, response, status);
         var response_status = document.querySelector(".response_status");
 
-        // result of this ajax call is shown to user
+        // result of this ajax call is shown to the user
         if (response_status && website !== "otherv2" && status === true) {
           if (response.final_status === true) {
             section.forEach((sel) => (sel.style.display = "block"));
@@ -355,6 +354,7 @@ function rentamonApiCaller(
     });
   });
 }
+
 
 
 
