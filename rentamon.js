@@ -315,7 +315,8 @@ function rentamonApiCaller(
         document
           .querySelectorAll(`.elementor-section.${website} .status_pending`)
           .forEach((c) => (c.style.display = "block"));
-          console.log("got here to add pending", response_status)
+          console.log("got here to add pending")
+          console.log(statusReceived)
 
       }
     }, 5000); // 5000 milliseconds = 5 seconds
@@ -370,7 +371,7 @@ function rentamonApiCaller(
               `.elementor-section.${website} .status_pending`
             );
             pendi.forEach((pnd) => (pnd.style.display = "none")); // Hide pending
-            console.log("got here to do hid pending", response_status)
+            console.log("got here to do hid pending", statusReceived)
           }
         }
         resolve(response);
