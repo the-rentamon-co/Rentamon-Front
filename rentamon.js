@@ -315,6 +315,7 @@ function rentamonApiCaller(
         document
           .querySelectorAll(`.elementor-section.${website} .status_pending`)
           .forEach((c) => (c.style.display = "block"));
+          console.log("got here to add pending")
       }
     }, 5000); // 5000 milliseconds = 5 seconds
 
@@ -353,7 +354,7 @@ function rentamonApiCaller(
             var pendi = document.querySelectorAll(
               `.elementor-section.${website} .status_pending`
             );
-            pendi.forEach((pnd) => (pnd.style.display = "none"));
+            pendi.forEach((pnd) => (pnd.style.display = "none")); // Hide pending
           } else if (response.final_status === false) {
             document
               .querySelectorAll(`.website_row.${website}`)
@@ -365,9 +366,10 @@ function rentamonApiCaller(
               .querySelectorAll(`.elementor-section.${website} .status_false`)
               .forEach((c) => (c.style.display = "block"));
             var pendi = document.querySelectorAll(
-          `.elementor-section.${website} .status_pending`
-        );
-        pendi.forEach((pnd) => (pnd.style.display = "none")); // Hide pending
+              `.elementor-section.${website} .status_pending`
+            );
+            pendi.forEach((pnd) => (pnd.style.display = "none")); // Hide pending
+            console.log("got here to do hid pending")
           }
         }
         resolve(response);
