@@ -317,6 +317,9 @@ function rentamonApiCaller(
           rentamon_id: rentamon_user_id,
         },
       },
+      beforeSend: function() {
+        
+    },
       success: function (response) {
         console.log(website, response, status);
         var response_status = document.querySelector(".response_status");
@@ -334,6 +337,10 @@ function rentamonApiCaller(
               `.elementor-section.${website} .status_true`
             );
             trui.forEach((tru) => (tru.style.display = "block"));
+            var pendi = document.querySelectorAll(
+              `.elementor-section.${website} .status_pending`
+            );
+            pendi.forEach((pnd) => (pnd.style.display = "none"));
           } else if (response.final_status === false) {
             document
               .querySelectorAll(`.website_row.${website}`)
@@ -344,6 +351,9 @@ function rentamonApiCaller(
             document
               .querySelectorAll(`.elementor-section.${website} .status_false`)
               .forEach((c) => (c.style.display = "block"));
+            document
+              .querySelectorAll(`.elementor-section.${website} .status_pending`)
+              .forEach((c) => (c.style.display = "none"));
           }
         }
         resolve(response);
