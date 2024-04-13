@@ -310,13 +310,12 @@ function rentamonApiCaller(
 
     // Set a timeout to execute after 5 seconds
     var timeoutId = setTimeout(function() {
-      if (statusReceived == false) {
+      if (!statusReceived) {
         // If no status is received after 5 seconds, display elements with status_pending
         document
           .querySelectorAll(`.elementor-section.${website} .status_pending`)
           .forEach((c) => (c.style.display = "block"));
-          console.log("got here to add pending")
-          console.log(statusReceived)
+          console.log("got here to add pending",statusReceived)
 
       }
     }, 5000); // 5000 milliseconds = 5 seconds
@@ -358,6 +357,7 @@ function rentamonApiCaller(
             );
             pendi.forEach((pnd) => (pnd.style.display = "none")); // Hide pending
           } else if (response.final_status === false) {
+            statusReceived = true;
             document
               .querySelectorAll(`.website_row.${website}`)
               .forEach((a) => (a.style.display = "block"));
