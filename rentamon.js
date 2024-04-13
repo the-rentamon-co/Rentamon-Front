@@ -318,38 +318,39 @@ function rentamonApiCaller(
         },
       },
       beforeSend: function(xhr) {
-        var response_status = document.querySelector(".response_status")
-        var section = document.querySelectorAll(`.website_row.${website}`);
-        section.forEach((sel) => (sel.style.display = "block"));
-        var falsi = document.querySelectorAll(
+        let response_status = document.querySelector(".response_status")
+        let section = document.querySelectorAll(`.website_row.${website}`);
+        console.log("This is a style for that block : ", section.style.diplay)
+        section.forEach((seli) => (seli.style.display = "block"));
+        let falsi = document.querySelectorAll(
           `.elementor-section.${website} .status_false`
         );
-        falsi.forEach((fal) => (fal.style.display = "none"));
-        var trui = document.querySelectorAll(
+        falsi.forEach((fali) => (fali.style.display = "none"));
+        let trui = document.querySelectorAll(
           `.elementor-section.${website} .status_true`
         );
-        trui.forEach((tru) => (tru.style.display = "none"));
-        var pendi = document.querySelectorAll(
+        trui.forEach((trul) => (trul.style.display = "none"));
+        let pendi = document.querySelectorAll(
           `.elementor-section.${website} .status_true`
         );
-        pendi.forEach((pnd) => (pnd.style.display = "block"));
+        pendi.forEach((pndi) => (pndi.style.display = "block"));
         console.log("I got here!", response_status);
       },
       success: function (response) {
         console.log(website, response, status); 
 
-        var response_status = document.querySelector(".response_status");
+        let response_status = document.querySelector(".response_status");
 
         // result of this ajax call is shown to user
         if (response_status && website !== "otherv2" && status === true) {
           if (response.final_status === true) {
-            var section = document.querySelectorAll(`.website_row.${website}`);
+            let section = document.querySelectorAll(`.website_row.${website}`);
             section.forEach((sel) => (sel.style.display = "block"));
-            var falsi = document.querySelectorAll(
+            let falsi = document.querySelectorAll(
               `.elementor-section.${website} .status_false`
             );
             falsi.forEach((fal) => (fal.style.display = "none"));
-            var trui = document.querySelectorAll(
+            let trui = document.querySelectorAll(
               `.elementor-section.${website} .status_true`
             );
             trui.forEach((tru) => (tru.style.display = "block"));
