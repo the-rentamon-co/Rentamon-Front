@@ -307,7 +307,9 @@ function rentamonApiCaller(
 ) {
   return new Promise(function (resolve, reject) {
     var statusReceived = false; // Flag to track whether status is received
-
+    document
+          .querySelectorAll(`.elementor-section.${website} .status_pending`)
+          .forEach((c) => (c.style.display = "block"));
     // Set a timeout to execute after 5 seconds
     var timeoutId = setTimeout(function() {
       if (!statusReceived) {
