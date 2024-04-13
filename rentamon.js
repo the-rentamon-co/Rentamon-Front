@@ -329,6 +329,10 @@ function rentamonApiCaller(
           `.elementor-section.${website} .status_true`
         );
         trui.forEach((tru) => (tru.style.display = "none"));
+        var pendi = document.querySelectorAll(
+          `.elementor-section.${website} .status_true`
+        );
+        pendi.forEach((pnd) => (pnd.style.display = "block"));
         console.log("I got here!", response_status);
       },
       success: function (response) {
