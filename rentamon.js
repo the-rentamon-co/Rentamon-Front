@@ -350,10 +350,10 @@ function rentamonApiCaller(
             );
             trui.forEach((tru) => (tru.style.display = "block"));
             // setting pending to none
-            document
-              .querySelectorAll(`.elementor-section.${website} .status_pending`)
-              .forEach((d) => (d.style.display = "none"));
-
+            var pendi = document.querySelectorAll(
+              `.elementor-section.${website} .status_pending`
+            );
+            pendi.forEach((pnd) => (pnd.style.display = "none"));
           } else if (response.final_status === false) {
             document
               .querySelectorAll(`.website_row.${website}`)
@@ -365,9 +365,10 @@ function rentamonApiCaller(
               .querySelectorAll(`.elementor-section.${website} .status_false`)
               .forEach((c) => (c.style.display = "block"));
             // setting pending to none
-            document
-              .querySelectorAll(`.elementor-section.${website} .status_pending`)
-              .forEach((d) => (d.style.display = "none !important")); 
+            var pendi = document.querySelectorAll(
+              `.elementor-section.${website} .status_pending`
+            );
+            pendi.forEach((pnd) => (pnd.style.display = "none"));
           }
         }
         resolve(response);
