@@ -349,6 +349,9 @@ function rentamonApiCaller(
               `.elementor-section.${website} .status_true`
             );
             trui.forEach((tru) => (tru.style.display = "block"));
+            document
+            .querySelectorAll(`.elementor-section.${website} .status_pending`)
+            .forEach((c) => (c.style.display = "none"));
           } else if (response.final_status === false) {
             document
               .querySelectorAll(`.website_row.${website}`)
