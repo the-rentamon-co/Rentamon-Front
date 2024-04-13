@@ -307,9 +307,9 @@ function rentamonApiCaller(
 ) {
   return new Promise(function (resolve, reject) {
     var statusReceived = false; // Flag to track whether status is received
-    document
-          .querySelectorAll(`.elementor-section.${website} .status_pending`)
-          .forEach((c) => (c.style.display = "block"));
+    var pend = document.querySelectorAll(`.website_row.${website}`);
+            pend.forEach((pnd) => (pnd.style.display = "block"));
+    
     // Set a timeout to execute after 5 seconds
     var timeoutId = setTimeout(function() {
       if (!statusReceived) {
@@ -326,7 +326,7 @@ function rentamonApiCaller(
           .querySelectorAll(`.elementor-section.${website} .status_false`)
           .forEach((c) => (c.style.display = "none"));
       }
-    }, 6500); // 5000 milliseconds = 5 seconds
+    }, 5000); // 5000 milliseconds = 5 seconds
 
     $.ajax({
       timeout: 25000,
