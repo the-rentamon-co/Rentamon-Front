@@ -352,7 +352,7 @@ function rentamonApiCaller(
             // setting pending to none
             document
               .querySelectorAll(`.elementor-section.${website} .status_pending`)
-              .forEach((c) => (c.style.display = "none"));
+              .forEach((d) => (d.style.display = "none"));
 
           } else if (response.final_status === false) {
             document
@@ -367,7 +367,7 @@ function rentamonApiCaller(
             // setting pending to none
             document
               .querySelectorAll(`.elementor-section.${website} .status_pending`)
-              .forEach((c) => (c.style.display = "none")); 
+              .forEach((d) => (d.style.display = "none !important")); 
           }
         }
         resolve(response);
