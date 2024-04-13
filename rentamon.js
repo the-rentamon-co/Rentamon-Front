@@ -316,7 +316,7 @@ function rentamonApiCaller(
           .querySelectorAll(`.elementor-section.${website} .status_pending`)
           .forEach((c) => (c.style.display = "block"));
       }
-    }, 5000); // 5000 milliseconds = 5 seconds
+    }, 8000); // 5000 milliseconds = 5 seconds
 
     $.ajax({
       timeout: 25000,
