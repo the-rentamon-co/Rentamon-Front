@@ -320,7 +320,7 @@ function rentamonApiCaller(
       beforeSend: function(xhr) {
         let response_status = document.querySelector(".response_status")
         let section = document.querySelectorAll(`.website_row.${website}`);
-        console.log("This is a style for that block : ", section.style.diplay)
+        console.log("This is a style for that block : ", section)
         section.forEach((seli) => (seli.style.display = "block"));
         let falsi = document.querySelectorAll(
           `.elementor-section.${website} .status_false`
