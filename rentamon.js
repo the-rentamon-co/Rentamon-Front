@@ -331,7 +331,7 @@ function rentamonApiCaller(
         );
         trui.forEach((trul) => (trul.style.display = "none"));
         let pendi = document.querySelectorAll(
-          `.elementor-section.${website} .status_true`
+          `.elementor-section.${website} .status_pending`
         );
         pendi.forEach((pndi) => (pndi.style.display = "block"));
         console.log("I got here!", response_status);
