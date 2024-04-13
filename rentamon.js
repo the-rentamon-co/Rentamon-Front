@@ -309,6 +309,7 @@ function rentamonApiCaller(
     document
           .querySelectorAll(`.elementor-section.${website} .status_pending`)
           .forEach((c) => (c.style.display = "block"));
+    console.log("We Got Here!")
     $.ajax({
       timeout: 25000,
       url: routes[website][action],
