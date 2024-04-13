@@ -316,7 +316,7 @@ function rentamonApiCaller(
           .querySelectorAll(`.elementor-section.${website} .status_pending`)
           .forEach((c) => (c.style.display = "block"));
       }
-    }, 2000); // 5000 milliseconds = 5 seconds
+    }, 5000); // 5000 milliseconds = 5 seconds
 
     $.ajax({
       timeout: 25000,
@@ -364,11 +364,10 @@ function rentamonApiCaller(
             document
               .querySelectorAll(`.elementor-section.${website} .status_false`)
               .forEach((c) => (c.style.display = "block"));
-            // setting pending to none
             var pendi = document.querySelectorAll(
-              `.elementor-section.${website} .status_pending`
-            );
-            pendi.forEach((pnd) => (pnd.style.display = "none"));
+          `.elementor-section.${website} .status_pending`
+        );
+        pendi.forEach((pnd) => (pnd.style.display = "none")); // Hide pending
           }
         }
         resolve(response);
