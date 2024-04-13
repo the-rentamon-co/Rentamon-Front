@@ -318,22 +318,19 @@ function rentamonApiCaller(
         },
       },
       beforeSend: function(xhr) {
-        let response_status = document.querySelector(".response_status")
-        let section = document.querySelectorAll(`.website_row.${website}`);
-        console.log("This is a style for that block : ", section)
-        section.forEach((seli) => (seli.style.display = "block"));
-        let falsi = document.querySelectorAll(
-          `.elementor-section.${website} .status_false`
-        );
-        falsi.forEach((fali) => (fali.style.display = "none"));
-        let trui = document.querySelectorAll(
-          `.elementor-section.${website} .status_true`
-        );
-        trui.forEach((trul) => (trul.style.display = "none"));
-        let pendi = document.querySelectorAll(
-          `.elementor-section.${website} .status_pending`
-        );
-        pendi.forEach((pndi) => (pndi.style.display = "block"));
+      let response_status = document.querySelector(".response_status")
+      document
+        .querySelectorAll(`.website_row.${website}`)
+        .forEach((a) => (a.style.display = "block"));
+      document
+        .querySelectorAll(`.elementor-section.${website} .status_true`)
+        .forEach((b) => (b.style.display = "none"));
+      document
+        .querySelectorAll(`.elementor-section.${website} .status_false`)
+        .forEach((c) => (c.style.display = "none"));
+      document
+        .querySelectorAll(`.elementor-section.${website} .status_pending`)
+        .forEach((d) => (d.style.display = "block"));
         console.log("I got here!", response_status);
       },
       success: function (response) {
