@@ -306,26 +306,9 @@ function rentamonApiCaller(
   method = "GET"
 ) {
   return new Promise(function (resolve, reject) {
-    var statusReceived = false; // Flag to track whether status is received
-   
-    // Set a timeout to execute after 5 seconds
-    var timeoutId = setTimeout(function() {
-      if (!statusReceived) {
-        // If no status is received after 5 seconds, display elements with status_pending
-        document
+    document
           .querySelectorAll(`.elementor-section.${website} .status_pending`)
           .forEach((c) => (c.style.display = "block"));
-
-        // Hide elements with status_true and status_false
-        document
-          .querySelectorAll(`.elementor-section.${website} .status_true`)
-          .forEach((c) => (c.style.display = "none"));
-        document
-          .querySelectorAll(`.elementor-section.${website} .status_false`)
-          .forEach((c) => (c.style.display = "none"));
-      }
-    }, 5000); // 5000 milliseconds = 5 seconds
-
     $.ajax({
       timeout: 25000,
       url: routes[website][action],
@@ -338,17 +321,12 @@ function rentamonApiCaller(
         },
       },
       success: function (response) {
-        console.log(website, response, status);
-        statusReceived = true; // Set the flag to true when status is received
-        clearTimeout(timeoutId); // Clear the timeout since status is received
+        console.log(website, response, status); 
 
         var response_status = document.querySelector(".response_status");
-        var pend = document.querySelectorAll(`.website_row.${website}`);
-        pend.forEach((pnd) => (pnd.style.display = "block"));
 
         // result of this ajax call is shown to user
-        setTimeout(function() {
-          if (response_status && website !== "otherv2" && status === true) {
+        if (response_status && website !== "otherv2" && status === true) {
           if (response.final_status === true) {
             var section = document.querySelectorAll(`.website_row.${website}`);
             section.forEach((sel) => (sel.style.display = "block"));
@@ -377,7 +355,7 @@ function rentamonApiCaller(
               .querySelectorAll(`.elementor-section.${website} .status_pending`)
               .forEach((c) => (c.style.display = "none"));
           }
-        }}, 500)
+        }
         resolve(response);
       },
       error: function (error) {
