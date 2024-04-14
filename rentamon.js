@@ -484,6 +484,11 @@ async function unblockBtnClicked() {
         )
       );
     });
+    var response_status = document.querySelector(".response_status");
+
+    if (response_status) {
+      document.querySelector(".response_status_pop a").click();
+    }
     const apicalls = [
       rentamonApiCaller(
         (website = "otherv2"),
@@ -555,11 +560,6 @@ async function unblockBtnClicked() {
         (action = "unblock")
       ),
     ];
-    var response_status = document.querySelector(".response_status");
-
-    if (response_status) {
-      document.querySelector(".response_status_pop a").click();
-    }
     const resps = await Promise.all(apicalls);
     rentamoning();
   } else {
@@ -584,6 +584,10 @@ async function reserveOther() {
         )
       );
     });
+    var response_status = document.querySelector(".response_status");
+    if (response_status) {
+      document.querySelector(".response_status_pop a").click();
+    }
     const apicalls = [
       rentamonApiCaller(
         (website = "otherv2"),
@@ -656,10 +660,6 @@ async function reserveOther() {
         (action = "block")
       ),
     ];
-    var response_status = document.querySelector(".response_status");
-    if (response_status) {
-      document.querySelector(".response_status_pop a").click();
-    }
     const resps = await Promise.all(apicalls);
     rentamoning();
   } else {
