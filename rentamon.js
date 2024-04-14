@@ -345,6 +345,12 @@ function rentamonApiCaller(
             document
             .querySelectorAll(`.elementor-section.${className} .status_pending`)
             .forEach((c) => (c.style.display = "block"));
+            document
+            .querySelectorAll(`.elementor-section.${className} .status_false`)
+            .forEach((c) => (c.style.display = "none"));
+            document
+            .querySelectorAll(`.elementor-section.${className} .status_true`)
+            .forEach((c) => (c.style.display = "none"));
           });
           non_discount.forEach(className => {
           document
