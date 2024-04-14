@@ -319,11 +319,20 @@ function rentamonApiCaller(
       },
       beforeSend: function () {
         if (action == "discount"){
-          const non_discount = ['otaghak', 'mizboon', 'jajiga', 'shab', 'mihmansho'];
-          non_discount.forEach(className => {
-          document
+          if (website == 'homsa' || website == 'jabama' || website == 'otaghak'){
+            document
             .querySelectorAll(`.website_row.${className}`)
-            .forEach(element => {element.style.display = "none";});});
+            .forEach(element => {element.style.display = "block";})
+            document
+            .querySelectorAll(`.elementor-section.${website} .status_pending`)
+            .forEach((c) => (c.style.display = "block"));
+          }else{
+            const non_discount = ['mizboon', 'jajiga', 'shab', 'mihmansho'];
+            non_discount.forEach(className => {
+            document
+              .querySelectorAll(`.website_row.${className}`)
+              .forEach(element => {element.style.display = "none";});});
+          }
         }
         else{
         document
