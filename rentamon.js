@@ -319,29 +319,38 @@ function rentamonApiCaller(
       },
       beforeSend: function () {
 
-        if (action == "discount"){
-          
-          const non_discount = ['mizboon', 'jajiga', 'shab', 'mihmansho'];
-          non_discount.forEach(className => {
+        if (action !== "discount"){
           document
-            .querySelectorAll(`.website_row.${className}`)
-            .forEach(element => {element.style.display = "none";});});
+            .querySelectorAll(`.website_row.${website}`)
+            .forEach((a) => (a.style.display = "block"));
+          document
+            .querySelectorAll(`.elementor-section.${website} .status_true`)
+            .forEach((b) => (b.style.display = "none"));
+          document
+            .querySelectorAll(`.elementor-section.${website} .status_false`)
+            .forEach((c) => (c.style.display = "none"));
+          document
+            .querySelectorAll(`.elementor-section.${website} .status_pending`)
+            .forEach((c) => (c.style.display = "block"));
+          console.log("Anything happend after condition!?");
           
         }
         else{
-        document
-          .querySelectorAll(`.website_row.${website}`)
-          .forEach((a) => (a.style.display = "block"));
-        document
-          .querySelectorAll(`.elementor-section.${website} .status_true`)
-          .forEach((b) => (b.style.display = "none"));
-        document
-          .querySelectorAll(`.elementor-section.${website} .status_false`)
-          .forEach((c) => (c.style.display = "none"));
-        document
-          .querySelectorAll(`.elementor-section.${website} .status_pending`)
-          .forEach((c) => (c.style.display = "block"));
-        console.log("Anything happend after condition!?");
+          const non_discount = ['mizboon', 'jajiga', 'shab', 'mihmansho'];
+          const with_discount = ['jabama', 'homsa', 'otaghak'];
+          with_discount.forEach(className => {
+            document
+            .querySelectorAll(`.website_row.${className}`)
+            .forEach(element => {element.style.display = "block";});
+            document
+            .querySelectorAll(`.elementor-section.${website} .status_pending`)
+            .forEach((c) => (c.style.display = "block"));
+          });
+          non_discount.forEach(className => {
+          document
+            .querySelectorAll(`.website_row.${className}`)
+            .forEach(element => {element.style.display = "none";});
+            });
         }
       },
       success: function (response) {
