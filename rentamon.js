@@ -318,6 +318,7 @@ function rentamonApiCaller(
         },
       },
       beforeSend: function () {
+        console.log(action, 'here is the action');
         if (action == "discount"){  
           if(website == 'homsa' || website == 'jabama' || website || 'otaghak'){
             console.log("came here in conditions!")
