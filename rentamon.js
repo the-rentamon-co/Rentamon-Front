@@ -317,7 +317,7 @@ function rentamonApiCaller(
           rentamon_id: rentamon_user_id,
         },
       },
-      beforeSend: function (action) {
+      beforeSend: function () {
         if (action == "discount"){  
           if(website == 'homsa' || website == 'jabama' || website || 'otaghak'){
             console.log("came here in conditions!")
