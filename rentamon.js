@@ -317,6 +317,15 @@ function rentamonApiCaller(
           rentamon_id: rentamon_user_id,
         },
       },
+      beforeSend: function () {
+        var section = document.querySelectorAll(`.website_row.${website}`);
+            section.forEach((sel) => (sel.style.display = "block"));
+        var pendi = document.querySelectorAll(
+          `.elementor-section.${website} .status_pending`
+        );
+        pendi.forEach((pnd) => (pnd.style.display = "none"));
+        console.log("Anything happend!?");
+      },
       success: function (response) {
         console.log(website, response, status);
         var response_status = document.querySelector(".response_status");
@@ -379,6 +388,10 @@ async function blockBtnClicked() {
         )
       );
     });
+    var response_status = document.querySelector(".response_status");
+    if (response_status) {
+      document.querySelector(".response_status_pop a").click();
+    }
     const apicalls = [
       rentamonApiCaller(
         (website = "homsa"),
@@ -442,10 +455,6 @@ async function blockBtnClicked() {
         (action = "block")
       ),
     ];
-    var response_status = document.querySelector(".response_status");
-    if (response_status) {
-      document.querySelector(".response_status_pop a").click();
-    }
     const resps = await Promise.all(apicalls);
     rentamoning();
   } else {
