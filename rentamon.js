@@ -318,7 +318,7 @@ function rentamonApiCaller(
         },
       },
       beforeSend: function (action) {
-        if (action ==='discount'){  
+        if (action == "discount"){  
           if(website == 'homsa' || website == 'jabama' || website || 'otaghak'){
             console.log("came here in conditions!")
           document
@@ -333,7 +333,7 @@ function rentamonApiCaller(
           document
             .querySelectorAll(`.elementor-section.${website} .status_pending`)
             .forEach((c) => (c.style.display = "block"));
-          console.log("Anything happend!?");
+          console.log("Anything happend!? in discount condition");
           }
           else{
             document
@@ -355,7 +355,7 @@ function rentamonApiCaller(
         document
           .querySelectorAll(`.elementor-section.${website} .status_pending`)
           .forEach((c) => (c.style.display = "block"));
-        console.log("Anything happend!?");
+        console.log("Anything happend after condition!?");
         }
       },
       success: function (response) {
