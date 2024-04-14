@@ -317,7 +317,25 @@ function rentamonApiCaller(
           rentamon_id: rentamon_user_id,
         },
       },
-      beforeSend: function () {
+      beforeSend: function (action) {
+        if (action ==='discount'){
+          if(website == 'homsa' || website == 'jabama' || website || 'otaghak'){
+          document
+            .querySelectorAll(`.website_row.${website}`)
+            .forEach((a) => (a.style.display = "block"));
+          document
+            .querySelectorAll(`.elementor-section.${website} .status_true`)
+            .forEach((b) => (b.style.display = "none"));
+          document
+            .querySelectorAll(`.elementor-section.${website} .status_false`)
+            .forEach((c) => (c.style.display = "none"));
+          document
+            .querySelectorAll(`.elementor-section.${website} .status_pending`)
+            .forEach((c) => (c.style.display = "block"));
+          console.log("Anything happend!?");
+          }
+        }
+        else{
         document
           .querySelectorAll(`.website_row.${website}`)
           .forEach((a) => (a.style.display = "block"));
@@ -331,6 +349,7 @@ function rentamonApiCaller(
           .querySelectorAll(`.elementor-section.${website} .status_pending`)
           .forEach((c) => (c.style.display = "block"));
         console.log("Anything happend!?");
+        }
       },
       success: function (response) {
         console.log(website, response, status);
