@@ -343,7 +343,7 @@ function rentamonApiCaller(
             .querySelectorAll(`.website_row.${className}`)
             .forEach(element => {element.style.display = "block";});
             document
-            .querySelectorAll(`.elementor-section.${website} .status_pending`)
+            .querySelectorAll(`.elementor-section.${className} .status_pending`)
             .forEach((c) => (c.style.display = "block"));
           });
           non_discount.forEach(className => {
