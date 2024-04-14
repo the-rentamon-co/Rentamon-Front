@@ -318,12 +318,18 @@ function rentamonApiCaller(
         },
       },
       beforeSend: function () {
-        var section = document.querySelectorAll(`.website_row.${website}`);
-            section.forEach((sel) => (sel.style.display = "block"));
-        var pendi = document.querySelectorAll(
-          `.elementor-section.${website} .status_pending`
-        );
-        pendi.forEach((pnd) => (pnd.style.display = "none"));
+        document
+          .querySelectorAll(`.website_row.${website}`)
+          .forEach((a) => (a.style.display = "block"));
+        document
+          .querySelectorAll(`.elementor-section.${website} .status_true`)
+          .forEach((b) => (b.style.display = "none"));
+        document
+          .querySelectorAll(`.elementor-section.${website} .status_false`)
+          .forEach((c) => (c.style.display = "none"));
+        document
+          .querySelectorAll(`.elementor-section.${website} .status_pending`)
+          .forEach((c) => (c.style.display = "block"));
         console.log("Anything happend!?");
       },
       success: function (response) {
