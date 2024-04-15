@@ -147,7 +147,7 @@ function getweb(id){
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    return response.json();
+    return response;
   })
   .then(data => {
     console.log('Data received:', data);
@@ -454,11 +454,10 @@ function rentamonApiCaller(
 async function blockBtnClicked() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
   
-  console.log(getweb(rentamon_user_id));
+getweb(rentamon_user_id)
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   console.log(rentamon_user_id);
-  getweb.then(res => console.log(res));
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
