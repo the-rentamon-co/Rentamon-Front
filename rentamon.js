@@ -112,50 +112,8 @@ const fetchData = async (url) => {
   return data;
 };
 
-const regWebsites = async (rentamon_user_id) => {
-  const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`);
-  const data = await response.json();
-  return data;
-};
+// getting user's registered websites 
 
-// const registeredWebsites = async (webid) => {
-//   const url = `https://api-rentamon.liara.run/websites?id=${webid}`;
-//   const response = await fetch(url);
-//   response.then(res => {
-//       // Access the `websites` array from the resolved response object
-//       const websitesArray = res.websites;
-//       return websitesArray;
-//   }).catch(error => {
-//       console.error("An error occurred in getting websites:", error);
-//   });
-//   const data = await response.json();
-//   return data;
-// };
-// function registeredWebsites(wbid){
-//   fetch(`https://api-rentamon.liara.run/websites?id=${wbid}`)
-//     .then(response => {
-//       return response.websites;
-//   })
-//   .catch(error => {
-//       console.error("An error occurred:", error);
-//   });
-// }
-
-function getweb(id){
-  fetch(`https://api-rentamon.liara.run/websites?id=${id}`)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response;
-  })
-  .then(data => {
-    console.log('Data received:', data);
-  })
-  .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
-  });
-}
 // converting persian number into integer
 function persianToInteger(persianString) {
   const persianNumerals = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
@@ -361,48 +319,48 @@ function rentamonApiCaller(
           rentamon_id: rentamon_user_id,
         },
       },
-      beforeSend: function () {
+      // beforeSend: function () {
 
-        if (action !== "discount"){
-          document
-            .querySelectorAll(`.website_row.${website}`)
-            .forEach((a) => (a.style.display = "block"));
-          document
-            .querySelectorAll(`.elementor-section.${website} .status_true`)
-            .forEach((b) => (b.style.display = "none"));
-          document
-            .querySelectorAll(`.elementor-section.${website} .status_false`)
-            .forEach((c) => (c.style.display = "none"));
-          document
-            .querySelectorAll(`.elementor-section.${website} .status_pending`)
-            .forEach((c) => (c.style.display = "block"));
-          console.log("Anything happend after condition!?");
+      //   if (action !== "discount"){
+      //     document
+      //       .querySelectorAll(`.website_row.${website}`)
+      //       .forEach((a) => (a.style.display = "block"));
+      //     document
+      //       .querySelectorAll(`.elementor-section.${website} .status_true`)
+      //       .forEach((b) => (b.style.display = "none"));
+      //     document
+      //       .querySelectorAll(`.elementor-section.${website} .status_false`)
+      //       .forEach((c) => (c.style.display = "none"));
+      //     document
+      //       .querySelectorAll(`.elementor-section.${website} .status_pending`)
+      //       .forEach((c) => (c.style.display = "block"));
+      //     console.log("Anything happend after condition!?");
           
-        }
-        else{
-          const non_discount = ['mizboon', 'jajiga', 'shab', 'mihmansho'];
-          const with_discount = ['jabama', 'homsa', 'otaghak'];
-          with_discount.forEach(className => {
-            document
-            .querySelectorAll(`.website_row.${className}`)
-            .forEach(element => {element.style.display = "block";});
-            document
-            .querySelectorAll(`.elementor-section.${className} .status_pending`)
-            .forEach((c) => (c.style.display = "block"));
-            document
-            .querySelectorAll(`.elementor-section.${className} .status_false`)
-            .forEach((c) => (c.style.display = "none"));
-            document
-            .querySelectorAll(`.elementor-section.${className} .status_true`)
-            .forEach((c) => (c.style.display = "none"));
-          });
-          non_discount.forEach(className => {
-          document
-            .querySelectorAll(`.website_row.${className}`)
-            .forEach(element => {element.style.display = "none";});
-            });
-        }
-      },
+      //   }
+      //   else{
+      //     const non_discount = ['mizboon', 'jajiga', 'shab', 'mihmansho'];
+      //     const with_discount = ['jabama', 'homsa', 'otaghak'];
+      //     with_discount.forEach(className => {
+      //       document
+      //       .querySelectorAll(`.website_row.${className}`)
+      //       .forEach(element => {element.style.display = "block";});
+      //       document
+      //       .querySelectorAll(`.elementor-section.${className} .status_pending`)
+      //       .forEach((c) => (c.style.display = "block"));
+      //       document
+      //       .querySelectorAll(`.elementor-section.${className} .status_false`)
+      //       .forEach((c) => (c.style.display = "none"));
+      //       document
+      //       .querySelectorAll(`.elementor-section.${className} .status_true`)
+      //       .forEach((c) => (c.style.display = "none"));
+      //     });
+      //     non_discount.forEach(className => {
+      //     document
+      //       .querySelectorAll(`.website_row.${className}`)
+      //       .forEach(element => {element.style.display = "none";});
+      //       });
+      //   }
+      // },
       success: function (response) {
         console.log(website, response, status);
         var response_status = document.querySelector(".response_status");
@@ -453,12 +411,9 @@ function rentamonApiCaller(
 // if there are selected days, it starts requesting for block to each website
 async function blockBtnClicked() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
-  
-  let sth = getweb(rentamon_user_id)
-  console.log(sth.websites)
+
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
-  console.log(rentamon_user_id);
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
