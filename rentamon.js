@@ -111,8 +111,12 @@ const fetchData = async (url) => {
   const data = await response.json();
   return data;
 };
-var regWebsites = [];
 
+const regWebsites = async (rentamon_user_id) => {
+  const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`);
+  const data = await response.json();
+  return data;
+};
 
 // const registeredWebsites = async (webid) => {
 //   const url = `https://api-rentamon.liara.run/websites?id=${webid}`;
@@ -127,15 +131,15 @@ var regWebsites = [];
 //   const data = await response.json();
 //   return data;
 // };
-function registeredWebsites(wbid){
-  fetch(`https://api-rentamon.liara.run/websites?id=${wbid}`)
-    .then(response => {
-      return response.websites;
-  })
-  .catch(error => {
-      console.error("An error occurred:", error);
-  });
-}
+// function registeredWebsites(wbid){
+//   fetch(`https://api-rentamon.liara.run/websites?id=${wbid}`)
+//     .then(response => {
+//       return response.websites;
+//   })
+//   .catch(error => {
+//       console.error("An error occurred:", error);
+//   });
+// }
 
 
 // converting persian number into integer
@@ -439,7 +443,6 @@ async function blockBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   console.log(rentamon_user_id);
-  registeredWebsites(rentamon_user_id)
   console.log('registered websites : ', regWebsites);
   if (selected.length > 0) {
     selected.forEach((z) => {
