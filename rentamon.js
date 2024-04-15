@@ -431,6 +431,7 @@ async function blockBtnClicked() {
 
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
+  console.log(rentamon_user_id);
   let regWebsites  = registeredWebsites(rentamon_user_id);
   console.log('registered websites : ', regWebsites);
   if (selected.length > 0) {
