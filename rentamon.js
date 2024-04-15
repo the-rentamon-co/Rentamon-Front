@@ -453,17 +453,12 @@ function rentamonApiCaller(
 // if there are selected days, it starts requesting for block to each website
 async function blockBtnClicked() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
-  let rw = fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`)
-    .then(response => {
-      return response.websites;
-  })
-  .catch(error => {
-      console.error("An error occurred:", error);
-  });
+  
+  console.log(getweb(rentamon_user_id));
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   console.log(rentamon_user_id);
-  rw.then(res => console.log(res));
+  regWebsites.then(res => console.log(res));
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
