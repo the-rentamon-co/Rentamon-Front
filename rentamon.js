@@ -115,6 +115,13 @@ const fetchData = async (url) => {
 const registeredWebsites = async (webid) => {
   const url = `https://api-rentamon.liara.run/websites?id=${webid}`;
   const response = await fetch(url);
+  response.then(res => {
+      // Access the `websites` array from the resolved response object
+      const websitesArray = res.websites;
+      return websitesArray;
+  }).catch(error => {
+      console.error("An error occurred in getting websites:", error);
+  });
   const data = await response.json();
   return data;
 };
