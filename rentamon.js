@@ -439,7 +439,7 @@ async function blockBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   console.log(rentamon_user_id);
-  regWebsites = registeredWebsites(rentamon_user_id)
+  registeredWebsites(rentamon_user_id)
   console.log('registered websites : ', regWebsites);
   if (selected.length > 0) {
     selected.forEach((z) => {
