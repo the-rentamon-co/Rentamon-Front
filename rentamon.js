@@ -141,7 +141,21 @@ const regWebsites = async (rentamon_user_id) => {
 //   });
 // }
 
-
+function getweb(id){
+  fetch(`https://api-rentamon.liara.run/websites?id=${id}`)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Data received:', data);
+  })
+  .catch(error => {
+    console.error('There was a problem with the fetch operation:', error);
+  });
+}
 // converting persian number into integer
 function persianToInteger(persianString) {
   const persianNumerals = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
@@ -439,13 +453,15 @@ function rentamonApiCaller(
 // if there are selected days, it starts requesting for block to each website
 async function blockBtnClicked() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
-  let rw = fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`)
-    .then(response => {
-      return response.websites;
-  })
-  .catch(error => {
-      console.error("An error occurred:", error);
-  });
+  // let rw = fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`)
+  //   .then(response => {
+  //     return response.websites;
+  // })
+  // .catch(error => {
+  //     console.error("An error occurred:", error);
+  // });
+  getweb(rentamon_user_id);
+  console.log(getweb(rentamon_user_id));
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   console.log(rentamon_user_id);
