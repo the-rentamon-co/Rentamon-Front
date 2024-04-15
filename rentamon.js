@@ -449,7 +449,7 @@ async function blockBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   console.log(rentamon_user_id);
-  console.log(rw);
+  console.log(rw.then());
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
