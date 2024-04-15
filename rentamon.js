@@ -454,7 +454,8 @@ function rentamonApiCaller(
 async function blockBtnClicked() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
   
-getweb(rentamon_user_id)
+  let sth = getweb(rentamon_user_id)
+  console.log(sth.websites)
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   console.log(rentamon_user_id);
