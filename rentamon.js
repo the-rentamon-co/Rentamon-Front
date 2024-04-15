@@ -119,7 +119,7 @@ function registeredWebsites(websiteId) {
   try {
       const response =fetch(url);
 
-      const data = response;
+      const data = response.json();
       return data;
   } catch (error) {
       console.error("An error occurred:", error);
