@@ -114,7 +114,7 @@ const fetchData = async (url) => {
 
 // getting user's registered websites 
 function registeredWebsites(websiteId) {
-  const url = `https://api-rentamon.liara.run/websites?id=${websiteId}`;
+  const url = `https://api-rentamon.liara.run/websites?id=${websiteId.substring(0, 8)}`;
 
   try {
       const response =fetch(url);
