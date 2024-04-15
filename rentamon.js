@@ -432,7 +432,7 @@ async function blockBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   let regWebsites  = registeredWebsites(rentamon_user_id);
-  console.log('registered websites : ',websites);
+  console.log('registered websites : ',regWebsites);
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
