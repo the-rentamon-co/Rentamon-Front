@@ -112,19 +112,37 @@ const fetchData = async (url) => {
   return data;
 };
 
-const registeredWebsites = async (webid) => {
-  const url = `https://api-rentamon.liara.run/websites?id=${webid}`;
-  const response = await fetch(url);
-  response.then(res => {
-      // Access the `websites` array from the resolved response object
-      const websitesArray = res.websites;
-      return websitesArray;
-  }).catch(error => {
-      console.error("An error occurred in getting websites:", error);
+// const registeredWebsites = async (webid) => {
+//   const url = `https://api-rentamon.liara.run/websites?id=${webid}`;
+//   const response = await fetch(url);
+//   response.then(res => {
+//       // Access the `websites` array from the resolved response object
+//       const websitesArray = res.websites;
+//       return websitesArray;
+//   }).catch(error => {
+//       console.error("An error occurred in getting websites:", error);
+//   });
+//   const data = await response.json();
+//   return data;
+// };
+function registeredWebsites(wbid){
+  fetch(`https://api-rentamon.liara.run/websites?id=${webid}`)
+  .then(response => {
+      if (!response.ok) {
+          throw new Error(`Failed to fetch data. Status code: ${response.status}`);
+      }
+      return response.json();
+  })
+  .then(data => {
+      const websitesArray = data.websites;
+      console.log(websitesArray); // Output: ["mihmansho", "shab", "mizboon", ...]
+      return websitesArray
+      // Now you can use the `websitesArray` as needed
+  })
+  .catch(error => {
+      console.error("An error occurred:", error);
   });
-  const data = await response.json();
-  return data;
-};
+}
 
 
 // converting persian number into integer
