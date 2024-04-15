@@ -453,15 +453,13 @@ function rentamonApiCaller(
 // if there are selected days, it starts requesting for block to each website
 async function blockBtnClicked() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
-  // let rw = fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`)
-  //   .then(response => {
-  //     return response.websites;
-  // })
-  // .catch(error => {
-  //     console.error("An error occurred:", error);
-  // });
-  getweb(rentamon_user_id);
-  console.log(getweb(rentamon_user_id));
+  let rw = fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`)
+    .then(response => {
+      return response.websites;
+  })
+  .catch(error => {
+      console.error("An error occurred:", error);
+  });
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   console.log(rentamon_user_id);
