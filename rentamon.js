@@ -111,6 +111,8 @@ const fetchData = async (url) => {
   const data = await response.json();
   return data;
 };
+var regWebsites = [];
+
 
 // const registeredWebsites = async (webid) => {
 //   const url = `https://api-rentamon.liara.run/websites?id=${webid}`;
@@ -127,17 +129,8 @@ const fetchData = async (url) => {
 // };
 function registeredWebsites(wbid){
   fetch(`https://api-rentamon.liara.run/websites?id=${wbid}`)
-  .then(response => {
-      if (!response.ok) {
-          throw new Error(`Failed to fetch data. Status code: ${response.status}`);
-      }
-      return response.json();
-  })
-  .then(data => {
-      const websitesArray = data.websites;
-      console.log(websitesArray); // Output: ["mihmansho", "shab", "mizboon", ...]
-      return websitesArray
-      // Now you can use the `websitesArray` as needed
+    .then(response => {
+      return response.websites;
   })
   .catch(error => {
       console.error("An error occurred:", error);
@@ -446,7 +439,7 @@ async function blockBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   console.log(rentamon_user_id);
-  let regWebsites  = registeredWebsites(rentamon_user_id).then(response => {return response})
+  regWebsites = registeredWebsites(rentamon_user_id)
   console.log('registered websites : ', regWebsites);
   if (selected.length > 0) {
     selected.forEach((z) => {
