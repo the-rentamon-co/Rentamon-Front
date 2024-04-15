@@ -112,6 +112,25 @@ const fetchData = async (url) => {
   return data;
 };
 
+// getting user's registered websites 
+async function registeredWebsites(websiteId) {
+  const url = `https://api-rentamon.liara.run/websites?id=${websiteId}`;
+
+  try {
+      const response = await fetch(url);
+
+      if (!response.ok) {
+          throw new Error(`Failed to fetch data. Status code: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+  } catch (error) {
+      console.error("An error occurred:", error);
+      return null;
+  }
+}
+
 // converting persian number into integer
 function persianToInteger(persianString) {
   const persianNumerals = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
@@ -317,48 +336,48 @@ function rentamonApiCaller(
           rentamon_id: rentamon_user_id,
         },
       },
-      // beforeSend: function () {
+      beforeSend: function () {
 
-      //   if (action !== "discount"){
-      //     document
-      //       .querySelectorAll(`.website_row.${website}`)
-      //       .forEach((a) => (a.style.display = "block"));
-      //     document
-      //       .querySelectorAll(`.elementor-section.${website} .status_true`)
-      //       .forEach((b) => (b.style.display = "none"));
-      //     document
-      //       .querySelectorAll(`.elementor-section.${website} .status_false`)
-      //       .forEach((c) => (c.style.display = "none"));
-      //     document
-      //       .querySelectorAll(`.elementor-section.${website} .status_pending`)
-      //       .forEach((c) => (c.style.display = "block"));
-      //     console.log("Anything happend after condition!?");
+        if (action !== "discount"){
+          document
+            .querySelectorAll(`.website_row.${website}`)
+            .forEach((a) => (a.style.display = "block"));
+          document
+            .querySelectorAll(`.elementor-section.${website} .status_true`)
+            .forEach((b) => (b.style.display = "none"));
+          document
+            .querySelectorAll(`.elementor-section.${website} .status_false`)
+            .forEach((c) => (c.style.display = "none"));
+          document
+            .querySelectorAll(`.elementor-section.${website} .status_pending`)
+            .forEach((c) => (c.style.display = "block"));
+          console.log("Anything happend after condition!?");
           
-      //   }
-      //   else{
-      //     const non_discount = ['mizboon', 'jajiga', 'shab', 'mihmansho'];
-      //     const with_discount = ['jabama', 'homsa', 'otaghak'];
-      //     with_discount.forEach(className => {
-      //       document
-      //       .querySelectorAll(`.website_row.${className}`)
-      //       .forEach(element => {element.style.display = "block";});
-      //       document
-      //       .querySelectorAll(`.elementor-section.${className} .status_pending`)
-      //       .forEach((c) => (c.style.display = "block"));
-      //       document
-      //       .querySelectorAll(`.elementor-section.${className} .status_false`)
-      //       .forEach((c) => (c.style.display = "none"));
-      //       document
-      //       .querySelectorAll(`.elementor-section.${className} .status_true`)
-      //       .forEach((c) => (c.style.display = "none"));
-      //     });
-      //     non_discount.forEach(className => {
-      //     document
-      //       .querySelectorAll(`.website_row.${className}`)
-      //       .forEach(element => {element.style.display = "none";});
-      //       });
-      //   }
-      // },
+        }
+        else{
+          const non_discount = ['mizboon', 'jajiga', 'shab', 'mihmansho'];
+          const with_discount = ['jabama', 'homsa', 'otaghak'];
+          with_discount.forEach(className => {
+            document
+            .querySelectorAll(`.website_row.${className}`)
+            .forEach(element => {element.style.display = "block";});
+            document
+            .querySelectorAll(`.elementor-section.${className} .status_pending`)
+            .forEach((c) => (c.style.display = "block"));
+            document
+            .querySelectorAll(`.elementor-section.${className} .status_false`)
+            .forEach((c) => (c.style.display = "none"));
+            document
+            .querySelectorAll(`.elementor-section.${className} .status_true`)
+            .forEach((c) => (c.style.display = "none"));
+          });
+          non_discount.forEach(className => {
+          document
+            .querySelectorAll(`.website_row.${className}`)
+            .forEach(element => {element.style.display = "none";});
+            });
+        }
+      },
       success: function (response) {
         console.log(website, response, status);
         var response_status = document.querySelector(".response_status");
@@ -412,6 +431,8 @@ async function blockBtnClicked() {
 
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
+  let regWebsites  = registeredWebsites(rentamon_user_id);
+  console.log('registered websites : ',websites);
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
@@ -425,34 +446,41 @@ async function blockBtnClicked() {
     if (response_status) {
       document.querySelector(".response_status_pop a").click();
     }
-    const apicalls = [
-      rentamonApiCaller(
+    const apicalls = [];
+
+    // here we check to see if website is registered then call the api
+    if(regWebsites.includes('homsa')){
+      apicalls.push(rentamonApiCaller(
         (website = "homsa"),
         (data = {
           rentamon_room_id: routes["homsa"]["room"],
           days: selectedDate.join(","),
         }),
         (action = "block")
-      ),
-
-      rentamonApiCaller(
+      ))
+    }
+    if(regWebsites.includes('mihmansho')){
+      apicalls.push(rentamonApiCaller(
         (website = "mihmansho"),
         (data = {
           rentamon_room_id: routes["mihmansho"]["room"],
           days: selectedDate.join(","),
         }),
         (action = "block")
-      ),
-
-      rentamonApiCaller(
+      ))
+    }
+    if(regWebsites.includes('jabama')){
+      apicalls.push(rentamonApiCaller(
         (website = "jabama"),
         (data = {
           rentamon_room_id: routes["jabama"]["room"],
           days: selectedDate.join(","),
         }),
-        (action = "block")
-      ),
-      rentamonApiCaller(
+        (action = "block"))
+      )
+    }
+    if(regWebsites.includes('jajiga')){}
+      apicalls.push(rentamonApiCaller(
         (website = "jajiga"),
         (data = {
           dates: selectedDate.join(","),
@@ -460,8 +488,9 @@ async function blockBtnClicked() {
           disable_count: 1,
         }),
         (action = "block")
-      ),
-      rentamonApiCaller(
+      ))
+    if(regWebsites.includes('shab')){
+      apicalls.push(rentamonApiCaller(
         (website = "shab"),
         (data = {
           rentamon_room_id: routes["shab"]["room"],
@@ -469,16 +498,20 @@ async function blockBtnClicked() {
           disabled: 1,
         }),
         (action = "block")
-      ),
-      rentamonApiCaller(
+      ))
+    }
+    if(regWebsites.includes('mizboon')){
+      apicalls.push(rentamonApiCaller(
         (website = "mizboon"),
         (data = {
           days: selectedDate.join(","),
           rentamon_room_id: routes["mizboon"]["room"],
         }),
         (action = "block")
-      ),
-      rentamonApiCaller(
+      ))
+    }
+    if(regWebsites.includes('otaghak')){
+      apicalls.push(rentamonApiCaller(
         (website = "otaghak"),
         (data = {
           rentamon_room_id: routes["otaghak"]["room"],
@@ -486,8 +519,8 @@ async function blockBtnClicked() {
           blockDays: selectedDate.join(","),
         }),
         (action = "block")
-      ),
-    ];
+      ))
+    }
     const resps = await Promise.all(apicalls);
     rentamoning();
   } else {
