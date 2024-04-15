@@ -446,9 +446,8 @@ async function blockBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   console.log(rentamon_user_id);
-  let regWebsites  = registeredWebsites(rentamon_user_id);
+  let regWebsites  = registeredWebsites(rentamon_user_id).then(response => {return response})
   console.log('registered websites : ', regWebsites);
-  console.log('registered websites function it self : ', registeredWebsites(rentamon_user_id));
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
