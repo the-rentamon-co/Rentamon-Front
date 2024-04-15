@@ -114,14 +114,10 @@ const fetchData = async (url) => {
 
 // getting user's registered websites 
 function registeredWebsites(websiteId) {
-  const url = `https://api-rentamon.liara.run/websites?id=${websiteId.substring(0, 8)}`;
+  const url = `https://api-rentamon.liara.run/websites?id=${websiteId}`;
 
   try {
       const response =fetch(url);
-
-      if (!response.ok) {
-          throw new Error(`Failed to fetch data. Status code: ${response.status}`);
-      }
 
       const data = response;
       return data;
