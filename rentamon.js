@@ -338,37 +338,37 @@ function rentamonApiCaller(
         else{
           if(website == "homsa" || website == "jabama" || website == "otaghak"){
             document
-            .querySelectorAll(`.website_row.${className}`)
+            .querySelectorAll(`.website_row.${website}`)
             .forEach(element => {element.style.display = "block";});
             document
-            .querySelectorAll(`.elementor-section.${className} .status_pending`)
+            .querySelectorAll(`.elementor-section.${website} .status_pending`)
             .forEach((c) => (c.style.display = "block"));
             document
-            .querySelectorAll(`.elementor-section.${className} .status_false`)
+            .querySelectorAll(`.elementor-section.${website} .status_false`)
             .forEach((c) => (c.style.display = "none"));
             document
-            .querySelectorAll(`.elementor-section.${className} .status_true`)
+            .querySelectorAll(`.elementor-section.${website} .status_true`)
             .forEach((c) => (c.style.display = "none"));
             console.log("GOt in here")
           }
           else{
             document
-            .querySelectorAll(`.website_row.${className}`)
+            .querySelectorAll(`.website_row.${website}`)
             .forEach(element => {element.style.display = "block";});
             document
-            .querySelectorAll(`.elementor-section.${className} .status_pending`)
+            .querySelectorAll(`.elementor-section.${website} .status_pending`)
             .forEach((c) => (c.style.display = "none"));
             document
-            .querySelectorAll(`.elementor-section.${className} .status_false`)
+            .querySelectorAll(`.elementor-section.${website} .status_false`)
             .forEach((c) => (c.style.display = "block"));
             document
-            .querySelectorAll(`.elementor-section.${className} .status_true`)
+            .querySelectorAll(`.elementor-section.${website} .status_true`)
             .forEach((c) => (c.style.display = "none"));
             console.log("GOt in here11111")
           }
-          non_discount.forEach(className => {
+          non_discount.forEach(website => {
           document
-            .querySelectorAll(`.website_row.${className}`)
+            .querySelectorAll(`.website_row.${website}`)
             .forEach(element => {element.style.display = "none";});
             });
             console.log("GOt in here222")
