@@ -409,7 +409,7 @@ function rentamonApiCaller(
 // if there are selected days, it starts requesting for block to each website
 async function blockBtnClicked() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
-  const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`);
+  const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}&room_id=${rentamon_room_id}`);
   const regweb = await response.json();
   const regWebsites = await regweb.websites;
 
@@ -516,7 +516,7 @@ async function blockBtnClicked() {
 // if there are selected days, it starts requesting for unblock to each website
 async function unblockBtnClicked() {
 
-  const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`);
+  const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}&room_id=${rentamon_room_id}`);
   const regweb = await response.json();
   const regWebsites = await regweb.websites;
 
@@ -639,7 +639,7 @@ async function unblockBtnClicked() {
 // if there are selected days, it starts requesting for block to each website and resrve to rentamon
 async function reserveOther() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
-  const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`);
+  const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}&room_id=${rentamon_room_id}`);
   const regweb = await response.json();
   const regWebsites = await regweb.websites;
 
