@@ -2,6 +2,7 @@
   document
     .querySelector("#popup_sumbit_price")
     .addEventListener("click", async () => {
+      console.log(rentamon_user_id);
       const dates = document.querySelector("#form-field-dates").value;
       const price = document.querySelector("#form-field-price").value;
       const hfrri = document.querySelector("#form-field-h_f_r_r_i").value;
@@ -11,7 +12,7 @@
       const regweb = await response.json();
       const regWebsites = await regweb.websites;
 
-  console.log(JSON.stringify(regweb));
+      console.log(JSON.stringify(regweb));
 
       document.querySelector(".response_status_pop a").click();
       const apicalls = [
