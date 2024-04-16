@@ -112,8 +112,6 @@ const fetchData = async (url) => {
   return data;
 };
 
-// getting user's registered websites 
-
 // converting persian number into integer
 function persianToInteger(persianString) {
   const persianNumerals = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
@@ -501,6 +499,12 @@ async function blockBtnClicked() {
 // this function is called when unblock option is selected
 // if there are selected days, it starts requesting for unblock to each website
 async function unblockBtnClicked() {
+
+  const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`);
+  const json = await response.json();
+
+  console.log(JSON.stringify(json));
+
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
@@ -589,6 +593,7 @@ async function unblockBtnClicked() {
         (action = "unblock")
       ),
     ];
+    console.log(json);
     const resps = await Promise.all(apicalls);
     rentamoning();
   } else {
