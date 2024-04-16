@@ -323,7 +323,6 @@ async function rentamonApiCaller(
         },
       },
       beforeSend: async function () {
-        console.log(JSON.stringify(regweb));
         if (action !== "discount"){
           document
             .querySelectorAll(`.website_row.${website}`)
@@ -341,36 +340,36 @@ async function rentamonApiCaller(
           
         }
         else{
-          if(website == "homsa" || website == "jabama" || website == "otaghak"){
-            document
-            .querySelectorAll(`.website_row.${website}`)
-            .forEach(element => {element.style.display = "block";});
-            document
-            .querySelectorAll(`.elementor-section.${website} .status_pending`)
-            .forEach((c) => (c.style.display = "block"));
-            document
-            .querySelectorAll(`.elementor-section.${website} .status_false`)
-            .forEach((c) => (c.style.display = "none"));
-            document
-            .querySelectorAll(`.elementor-section.${website} .status_true`)
-            .forEach((c) => (c.style.display = "none"));
-            console.log("GOt in here")
-          }
-          else{
-            document
-            .querySelectorAll(`.website_row.${website}`)
-            .forEach(element => {element.style.display = "block";});
-            document
-            .querySelectorAll(`.elementor-section.${website} .status_pending`)
-            .forEach((c) => (c.style.display = "none"));
-            document
-            .querySelectorAll(`.elementor-section.${website} .status_false`)
-            .forEach((c) => (c.style.display = "block"));
-            document
-            .querySelectorAll(`.elementor-section.${website} .status_true`)
-            .forEach((c) => (c.style.display = "none"));
-            console.log("GOt in here11111")
-          }
+          regWebsites.forEach(web => {
+            if(web == "homsa" || web == "jabama" || web == "otaghak"){
+              document
+              .querySelectorAll(`.website_row.${web}`)
+              .forEach((a) => (a.style.display = "block"));
+              document
+                .querySelectorAll(`.elementor-section.${web} .status_true`)
+                .forEach((b) => (b.style.display = "none"));
+              document
+                .querySelectorAll(`.elementor-section.${web} .status_false`)
+                .forEach((c) => (c.style.display = "none"));
+              document
+              .querySelectorAll(`.elementor-section.${web} .status_pending`)
+              .forEach((c) => (c.style.display = "block"));
+            }
+            else{
+              document
+              .querySelectorAll(`.website_row.${web}`)
+              .forEach((a) => (a.style.display = "block"));
+              document
+                .querySelectorAll(`.elementor-section.${web} .status_true`)
+                .forEach((b) => (b.style.display = "none"));
+              document
+                .querySelectorAll(`.elementor-section.${web} .status_false`)
+                .forEach((c) => (c.style.display = "block"));
+              document
+              .querySelectorAll(`.elementor-section.${web} .status_pending`)
+              .forEach((c) => (c.style.display = "none"));
+            }    
+          });
         }
       },
       success: function (response) {
