@@ -358,13 +358,13 @@ async function rentamonApiCaller(
             else{
               document
               .querySelectorAll(`.website_row.${web}`)
-              .forEach((a) => (a.style.display = "block"));
+              .forEach((a) => (a.style.display = "none"));
               document
                 .querySelectorAll(`.elementor-section.${web} .status_true`)
                 .forEach((b) => (b.style.display = "none"));
               document
                 .querySelectorAll(`.elementor-section.${web} .status_false`)
-                .forEach((c) => (c.style.display = "block"));
+                .forEach((c) => (c.style.display = "none"));
               document
               .querySelectorAll(`.elementor-section.${web} .status_pending`)
               .forEach((c) => (c.style.display = "none"));
