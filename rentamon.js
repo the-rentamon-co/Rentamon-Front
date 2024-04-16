@@ -409,7 +409,11 @@ function rentamonApiCaller(
 // if there are selected days, it starts requesting for block to each website
 async function blockBtnClicked() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
+  const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`);
+  const regweb = await response.json();
+  const regWebsites = await regweb.websites;
 
+  console.log(JSON.stringify(regweb));
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   if (selected.length > 0) {
@@ -425,34 +429,40 @@ async function blockBtnClicked() {
     if (response_status) {
       document.querySelector(".response_status_pop a").click();
     }
-    const apicalls = [
-      rentamonApiCaller(
+    const apicalls = [];
+
+    if(regWebsites.includes('homsa')){
+      apicalls.push(rentamonApiCaller(
         (website = "homsa"),
         (data = {
           rentamon_room_id: routes["homsa"]["room"],
           days: selectedDate.join(","),
         }),
         (action = "block")
-      ),
-
-      rentamonApiCaller(
+      ))
+    }
+    if(regWebsites.includes('mihmansho')){
+      apicalls.push(rentamonApiCaller(
         (website = "mihmansho"),
         (data = {
           rentamon_room_id: routes["mihmansho"]["room"],
           days: selectedDate.join(","),
         }),
         (action = "block")
-      ),
-
-      rentamonApiCaller(
+      ))
+    }
+    if(regWebsites.includes('jabama')){
+      apicalls.push(rentamonApiCaller(
         (website = "jabama"),
         (data = {
           rentamon_room_id: routes["jabama"]["room"],
           days: selectedDate.join(","),
         }),
-        (action = "block")
-      ),
-      rentamonApiCaller(
+        (action = "block"))
+      )
+    }
+    if(regWebsites.includes('jajiga')){}
+      apicalls.push(rentamonApiCaller(
         (website = "jajiga"),
         (data = {
           dates: selectedDate.join(","),
@@ -460,8 +470,9 @@ async function blockBtnClicked() {
           disable_count: 1,
         }),
         (action = "block")
-      ),
-      rentamonApiCaller(
+      ))
+    if(regWebsites.includes('shab')){
+      apicalls.push(rentamonApiCaller(
         (website = "shab"),
         (data = {
           rentamon_room_id: routes["shab"]["room"],
@@ -469,16 +480,20 @@ async function blockBtnClicked() {
           disabled: 1,
         }),
         (action = "block")
-      ),
-      rentamonApiCaller(
+      ))
+    }
+    if(regWebsites.includes('mizboon')){
+      apicalls.push(rentamonApiCaller(
         (website = "mizboon"),
         (data = {
           days: selectedDate.join(","),
           rentamon_room_id: routes["mizboon"]["room"],
         }),
         (action = "block")
-      ),
-      rentamonApiCaller(
+      ))
+    }
+    if(regWebsites.includes('otaghak')){
+      apicalls.push(rentamonApiCaller(
         (website = "otaghak"),
         (data = {
           rentamon_room_id: routes["otaghak"]["room"],
@@ -486,8 +501,9 @@ async function blockBtnClicked() {
           blockDays: selectedDate.join(","),
         }),
         (action = "block")
-      ),
-    ];
+      ))
+    }
+    
     const resps = await Promise.all(apicalls);
     rentamoning();
   } else {
@@ -502,6 +518,7 @@ async function unblockBtnClicked() {
 
   const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`);
   const regweb = await response.json();
+  const regWebLst = await regweb.websites;
 
   console.log(JSON.stringify(regweb));
 
@@ -594,14 +611,6 @@ async function unblockBtnClicked() {
       ),
     ];
     console.log(regweb);
-    regWebLst = await regweb.websites;
-    const filteredApicalls2 = apicalls.filter(call => regweb.websites.includes(call.website));
-    const filteredApicalls = apicalls.filter(call => regweb.websites.includes(call[0]));
-    const filteredApicalls3 = apicalls.filter(call => regWebLst.includes(call[0]));
-
-    console.log("the new test 1" ,filteredApicalls);
-    console.log("the new test 2" ,filteredApicalls2);
-    console.log("the new test 3" ,filteredApicalls3);
     console.log(regWebLst);
     const resps = await Promise.all(apicalls);
     rentamoning();
