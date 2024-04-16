@@ -595,8 +595,8 @@ async function unblockBtnClicked() {
     ];
     console.log(regweb);
     regWebLst = await regweb.websites;
-    const filteredApicalls2 = apicalls.filter(call => regweb.includes(call.website));
-    const filteredApicalls = apicalls.filter(call => regweb.includes(call[0]));
+    const filteredApicalls2 = apicalls.filter(call => regweb.websites.includes(call.website));
+    const filteredApicalls = apicalls.filter(call => regweb.websites.includes(call[0]));
     const filteredApicalls3 = apicalls.filter(call => regWebLst.includes(call[0]));
 
     console.log("the new test 1" ,filteredApicalls);
