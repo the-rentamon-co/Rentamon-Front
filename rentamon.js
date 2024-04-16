@@ -518,7 +518,7 @@ async function unblockBtnClicked() {
 
   const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`);
   const regweb = await response.json();
-  const regWebLst = await regweb.websites;
+  const regWebsites = await regweb.websites;
 
   console.log(JSON.stringify(regweb));
 
@@ -539,6 +539,7 @@ async function unblockBtnClicked() {
     if (response_status) {
       document.querySelector(".response_status_pop a").click();
     }
+    // adding api calls if user has registered in the website
     const apicalls = [
       rentamonApiCaller(
         (website = "otherv2"),
@@ -549,32 +550,41 @@ async function unblockBtnClicked() {
         }),
         (action = "blockUnblock")
       ),
+    ]
 
-      rentamonApiCaller(
+    if(regWebsites.includes('homsa')){
+      apicalls.push(rentamonApiCaller(
         (website = "homsa"),
         (data = {
           rentamon_room_id: routes["homsa"]["room"],
           days: selectedDate.join(","),
         }),
         (action = "unblock")
-      ),
-      rentamonApiCaller(
+      ))
+    }
+    if(regWebsites.includes('mihmansho')){
+      apicalls.push(rentamonApiCaller(
         (website = "mihmansho"),
         (data = {
           rentamon_room_id: routes["mihmansho"]["room"],
           days: selectedDate.join(","),
         }),
         (action = "unblock")
-      ),
-      rentamonApiCaller(
+      ))
+    }
+    if(regWebsites.includes('jabama')){
+      apicalls.push(rentamonApiCaller(
         (website = "jabama"),
         (data = {
           rentamon_room_id: routes["jabama"]["room"],
           days: selectedDate.join(","),
         }),
         (action = "unblock")
-      ),
-      rentamonApiCaller(
+      )
+      )
+    }
+    if(regWebsites.includes('jajiga')){}
+      apicalls.push(rentamonApiCaller(
         (website = "jajiga"),
         (data = {
           dates: selectedDate.join(","),
@@ -582,8 +592,9 @@ async function unblockBtnClicked() {
           disable_count: 0,
         }),
         (action = "unblock")
-      ),
-      rentamonApiCaller(
+      ))
+    if(regWebsites.includes('shab')){
+      apicalls.push(rentamonApiCaller(
         (website = "shab"),
         (data = {
           rentamon_room_id: routes["shab"]["room"],
@@ -591,16 +602,20 @@ async function unblockBtnClicked() {
           disabled: 0,
         }),
         (action = "unblock")
-      ),
-      rentamonApiCaller(
+      ))
+    }
+    if(regWebsites.includes('mizboon')){
+      apicalls.push(rentamonApiCaller(
         (website = "mizboon"),
         (data = {
           days: selectedDate.join(","),
           rentamon_room_id: routes["mizboon"]["room"],
         }),
         (action = "unblock")
-      ),
-      rentamonApiCaller(
+      ))
+    }
+    if(regWebsites.includes('otaghak')){
+      apicalls.push(rentamonApiCaller(
         (website = "otaghak"),
         (data = {
           rentamon_room_id: routes["otaghak"]["room"],
@@ -608,8 +623,9 @@ async function unblockBtnClicked() {
           blockDays: null,
         }),
         (action = "unblock")
-      ),
-    ];
+      ))
+    }
+
     console.log(regweb);
     console.log(regWebLst);
     const resps = await Promise.all(apicalls);
