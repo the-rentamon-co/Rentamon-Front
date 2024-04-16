@@ -1004,7 +1004,7 @@ function rentamoning() {
         `?rentamon_room_id=${routes.otherv2.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,
 
       routes.mihmansho.calendar +
-        `?rentamon_room_id=${routes.mihmansho.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
+        `?rentamon_room_id=${routes.mihmansho.room}&rentamon_id=54564${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
 
       routes.homsa.calendar +
         `?rentamon_room_id=${routes.homsa.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
