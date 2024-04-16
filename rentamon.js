@@ -331,7 +331,7 @@ function rentamonApiCaller(
           document
             .querySelectorAll(`.elementor-section.${website} .status_pending`)
             .forEach((c) => (c.style.display = "block"));
-          console.log("Anything happend after condition!?");
+          console.log("Anything happend after condition 2222!?");
         if (action == "discount"){
           if(website == "homsa" || website == "jabama" || website == "otaghak"){
           document
@@ -346,11 +346,12 @@ function rentamonApiCaller(
           document
             .querySelectorAll(`.elementor-section.${website} .status_pending`)
             .forEach((c) => (c.style.display = "block"));
-          console.log("Anything happend after condition!?");
+          console.log("Anything happend after condition 111!?");
           }else{
             document
             .querySelectorAll(`.website_row.${website}`)
             .forEach((a) => (a.style.display = "none"));
+            console.log("Anything happend after condition 333!?");
 
           }
         
