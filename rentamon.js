@@ -318,7 +318,6 @@ function rentamonApiCaller(
         },
       },
       beforeSend: function () {
-        if(websites){console.log("got here !!!!!")}
         if (action !== "discount"){
           document
             .querySelectorAll(`.website_row.${website}`)
