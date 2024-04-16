@@ -298,13 +298,18 @@ function otaghakStatus(otaghak) {
 }
 
 // this function makes a request to rentamon api
-function rentamonApiCaller(
+async function rentamonApiCaller(
   website,
   data,
   action,
   status = true,
   method = "GET"
 ) {
+  const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`);
+  const regweb = await response.json();
+  const regWebsites = await regweb.websites;
+  console.log(JSON.stringify(regweb));
+
   return new Promise(function (resolve, reject) {
     $.ajax({
       timeout: 25000,
@@ -317,7 +322,8 @@ function rentamonApiCaller(
           rentamon_id: rentamon_user_id,
         },
       },
-      beforeSend: function () {
+      beforeSend: async function () {
+        console.log(JSON.stringify(regweb));
         if (action !== "discount"){
           document
             .querySelectorAll(`.website_row.${website}`)
@@ -348,7 +354,7 @@ function rentamonApiCaller(
             document
             .querySelectorAll(`.elementor-section.${website} .status_true`)
             .forEach((c) => (c.style.display = "none"));
-            console.log("GOt in here", websites)
+            console.log("GOt in here")
           }
           else{
             document
@@ -363,7 +369,7 @@ function rentamonApiCaller(
             document
             .querySelectorAll(`.elementor-section.${website} .status_true`)
             .forEach((c) => (c.style.display = "none"));
-            console.log("GOt in here11111",websites)
+            console.log("GOt in here11111")
           }
         }
       },
