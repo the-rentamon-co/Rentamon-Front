@@ -322,7 +322,7 @@ async function rentamonApiCaller(
           rentamon_id: rentamon_user_id,
         },
       },
-      beforeSend: async function () {
+      beforeSend: function () {
         if (action !== "discount"){
           document
             .querySelectorAll(`.website_row.${website}`)
