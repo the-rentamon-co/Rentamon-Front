@@ -27,84 +27,84 @@
         ),];
       
   // here we check to see if website is registered then call the api
-  if(regWebsites.includes('homsa')){
-      apicalls.push(rentamonApiCaller(
-        (website = "homsa"),
+    if(regWebsites.includes('homsa')){
+        apicalls.push(rentamonApiCaller(
+          (website = "homsa"),
+          (data = {
+            rentamon_room_id: routes["homsa"]["room"],
+            days: dates,
+            price: price,
+          }),
+          (action = "price")
+        ))
+      }
+      if(regWebsites.includes('mihmansho')){
+        apicalls.push(rentamonApiCaller(
+          (website = "mihmansho"),
+          (data = {
+            rentamon_room_id: routes["mihmansho"]["room"],
+            days: dates,
+            price: price,
+          }),
+          (action = "price")
+        ))
+      }
+      if(regWebsites.includes('jabama')){
+        apicalls.push(rentamonApiCaller(
+          (website = "jabama"),
+          (data = {
+            rentamon_room_id: routes["jabama"]["room"],
+            days: dates,
+            price: price,
+            discount: 0,
+          }),
+          (action = "price")
+        )
+        )
+      }
+      if(regWebsites.includes('jajiga')){}
+        apicalls.push(rentamonApiCaller(
+          (website = "jajiga"),
+          (data = {
+            dates: dates,
+            rentamon_room_id: routes["jajiga"]["room"],
+            price: price,
+          }),
+          (action = "price")
+        ))
+      if(regWebsites.includes('shab')){
+        apicalls.push(rentamonApiCaller(
+          (website = "shab"),
+          (data = {
+            rentamon_room_id: routes["shab"]["room"],
+            dates: dates,
+            price: price,
+          }),
+          (action = "price")
+        ))
+      }
+      if(regWebsites.includes('mizboon')){
+        apicalls.push(rentamonApiCaller(
+          (website = "mizboon"),
+          (data = {
+            days: dates,
+            rentamon_room_id: routes["mizboon"]["room"],
+            price: price,
+          }),
+          (action = "price")
+        ))
+      }
+      if(regWebsites.includes('otaghak')){
+        apicalls.push(rentamonApiCaller(
+        (website = "otaghak"),
         (data = {
-          rentamon_room_id: routes["homsa"]["room"],
+          rentamon_room_id: routes["otaghak"]["room"],
           days: dates,
           price: price,
         }),
         (action = "price")
       ))
-    }
-    if(regWebsites.includes('mihmansho')){
-      apicalls.push(rentamonApiCaller(
-        (website = "mihmansho"),
-        (data = {
-          rentamon_room_id: routes["mihmansho"]["room"],
-          days: dates,
-          price: price,
-        }),
-        (action = "price")
-      ))
-    }
-    if(regWebsites.includes('jabama')){
-      apicalls.push(rentamonApiCaller(
-        (website = "jabama"),
-        (data = {
-          rentamon_room_id: routes["jabama"]["room"],
-          days: dates,
-          price: price,
-          discount: 0,
-        }),
-        (action = "price")
-      )
-      )
-    }
-    if(regWebsites.includes('jajiga')){}
-      apicalls.push(rentamonApiCaller(
-        (website = "jajiga"),
-        (data = {
-          dates: dates,
-          rentamon_room_id: routes["jajiga"]["room"],
-          price: price,
-        }),
-        (action = "price")
-      ))
-    if(regWebsites.includes('shab')){
-      apicalls.push(rentamonApiCaller(
-        (website = "shab"),
-        (data = {
-          rentamon_room_id: routes["shab"]["room"],
-          dates: dates,
-          price: price,
-        }),
-        (action = "price")
-      ))
-    }
-    if(regWebsites.includes('mizboon')){
-      apicalls.push(rentamonApiCaller(
-        (website = "mizboon"),
-        (data = {
-          days: dates,
-          rentamon_room_id: routes["mizboon"]["room"],
-          price: price,
-        }),
-        (action = "price")
-      ))
-    }
-    if(regWebsites.includes('otaghak')){
-      apicalls.push(rentamonApiCaller(
-      (website = "otaghak"),
-      (data = {
-        rentamon_room_id: routes["otaghak"]["room"],
-        days: dates,
-        price: price,
-      }),
-      (action = "price")
-    ))
-    }    
+      }    
       const resps = await Promise.all(apicalls);
       setTimeout(rentamoning, 2000);
     });
