@@ -627,7 +627,6 @@ async function unblockBtnClicked() {
     }
 
     console.log(regweb);
-    console.log(regWebLst);
     const resps = await Promise.all(apicalls);
     rentamoning();
   } else {
