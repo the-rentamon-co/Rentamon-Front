@@ -501,9 +501,9 @@ async function blockBtnClicked() {
 async function unblockBtnClicked() {
 
   const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`);
-  const json = await response.json();
+  const regweb = await response.json();
 
-  console.log(JSON.stringify(json));
+  console.log(JSON.stringify(regweb));
 
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
   let selected = document.querySelectorAll(".selected");
@@ -593,7 +593,8 @@ async function unblockBtnClicked() {
         (action = "unblock")
       ),
     ];
-    console.log(json);
+    console.log(regweb);
+    console.log(regweb.websites);
     const resps = await Promise.all(apicalls);
     rentamoning();
   } else {
