@@ -2,6 +2,11 @@
   document
     .querySelector("#popup_sumbit_discount")
     .addEventListener("click", async () => {
+      const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`);
+      const regweb = await response.json();
+      const regWebsites = await regweb.websites;
+      console.log(JSON.stringify(regweb));
+      console.log('Got here in disc');
       const discount = document.querySelector("#form-field-name").value;
       const dates = document.querySelector("#form-field-dates").value;
       const price = document.querySelector("#form-field-noDiscountPrice").value;
@@ -17,59 +22,77 @@
             discount: discount,
           }),
           (action = "discount")
-        ),
+        )];
 
-        rentamonApiCaller(
-          (website = "jabama"),
-          (data = {
-            rentamon_room_id: routes["jabama"]["room"],
-            days: dates,
-            price: price,
-            discount: discount,
-          }),
-          (action = "discount")
-        ),
+        
+        if(regWebsites.includes('jabama')){
+          apicalls.push(rentamonApiCaller(
+              (website = "jabama"),
+              (data = {
+                rentamon_room_id: routes["jabama"]["room"],
+                days: dates,
+                price: price,
+                discount: discount,
+              }),
+              (action = "discount")
+            ))
+          }
+        if(regWebsites.includes('otaghak')){
+          apicalls.push(rentamonApiCaller(
+            (website = "otaghak"),
+            (data = {
+              rentamon_room_id: routes["otaghak"]["room"],
+              unblockDays: dates,
+              blockDays: null,
+            }),
+            (action = "unblock"),
+            (status = false)
+          ));
+          apicalls.push(rentamonApiCaller(
+            (website = "otaghak"),
+            (data = {
+              rentamon_room_id: routes["jabama"]["room"],
+              effectiveDays: dates,
+              discountPercent: discount,
+            }),
+            (action = "discount")
+          ));
+        }
+        if(regWebsites.includes('homsa')){
+          apicalls.push(rentamonApiCaller(
+            (website = "homsa"),
+            (data = {
+              rentamon_room_id: routes["homsa"]["room"],
+              days: dates,
+            }),
+            (action = "unblock"),
+            (status = false)
+          ));
+          apicalls.push(rentamonApiCaller(
+            (website = "homsa"),
+            (data = {
+              rentamon_room_id: routes["jabama"]["room"],
+              days: dates,
+              price: price,
+              discount: discount,
+            }),
+            (action = "discount")
+          ));
+        }
 
-        rentamonApiCaller(
-          (website = "otaghak"),
-          (data = {
-            rentamon_room_id: routes["otaghak"]["room"],
-            unblockDays: dates,
-            blockDays: null,
-          }),
-          (action = "unblock"),
-          (status = false)
-        ),
-        rentamonApiCaller(
-          (website = "otaghak"),
-          (data = {
-            rentamon_room_id: routes["jabama"]["room"],
-            effectiveDays: dates,
-            discountPercent: discount,
-          }),
-          (action = "discount")
-        ),
-        rentamonApiCaller(
-          (website = "homsa"),
-          (data = {
-            rentamon_room_id: routes["homsa"]["room"],
-            days: dates,
-          }),
-          (action = "unblock"),
-          (status = false)
-        ),
-
-        rentamonApiCaller(
-          (website = "mizboon"),
-          (data = {
-            days: dates,
-            rentamon_room_id: routes["mizboon"]["room"],
-          }),
-          (action = "unblock"),
-          (status = false)
-        ),
-
-        rentamonApiCaller(
+        if(regWebsites.includes('mizboon')){
+          apicalls.push(rentamonApiCaller(
+            (website = "mizboon"),
+            (data = {
+              days: dates,
+              rentamon_room_id: routes["mizboon"]["room"],
+            }),
+            (action = "unblock"),
+            (status = false)
+          ));
+          }
+        if(regWebsites.includes('jajiga')){
+        apicalls.push(rentamonApiCaller(
           (website = "jajiga"),
           (data = {
             dates: dates,
@@ -78,9 +101,10 @@
           }),
           (action = "unblock"),
           (status = false)
-        ),
-
-        rentamonApiCaller(
+        ));
+        }
+        if(regWebsites.includes('shab')){
+          apicalls.push(rentamonApiCaller(
           (website = "shab"),
           (data = {
             rentamon_room_id: routes["shab"]["room"],
@@ -89,9 +113,10 @@
           }),
           (action = "unblock"),
           (status = false)
-        ),
-
-        rentamonApiCaller(
+        ));
+        }
+        if(regWebsites.includes('mihmansho')){
+          apicalls.push(rentamonApiCaller(
           (website = "mihmansho"),
           (data = {
             rentamon_room_id: routes["mihmansho"]["room"],
@@ -99,19 +124,8 @@
           }),
           (action = "unblock"),
           (status = false)
-        ),
-
-        rentamonApiCaller(
-          (website = "homsa"),
-          (data = {
-            rentamon_room_id: routes["jabama"]["room"],
-            days: dates,
-            price: price,
-            discount: discount,
-          }),
-          (action = "discount")
-        ),
-      ];
+        ));
+      }
       const resps = await Promise.all(apicalls);
       setTimeout(rentamoning, 2000);
     });
