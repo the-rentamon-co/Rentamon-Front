@@ -595,11 +595,14 @@ async function unblockBtnClicked() {
     ];
     console.log(regweb);
     regWebLst = await regweb.websites;
-    const filteredApicalls = apicalls.filter(call => regWebLst.includes(call.website));
-    const filteredApicalls2 = apicalls.filter(call => regweb.websites.includes(call.website));
+    const filteredApicalls2 = apicalls.filter(call => regweb.includes(call.website));
+    const filteredApicalls = apicalls.filter(call => regweb.includes(call[0]));
+    const filteredApicalls3 = apicalls.filter(call => regWebLst.includes(call[0]));
 
-    console.log("ssss" ,filteredApicalls);
-    console.log(filteredApicalls2);
+    console.log("the new test 1" ,filteredApicalls);
+    console.log("the new test 2" ,filteredApicalls2);
+    console.log("the new test 3" ,filteredApicalls3);
+    console.log(regWebLst);
     const resps = await Promise.all(apicalls);
     rentamoning();
   } else {
