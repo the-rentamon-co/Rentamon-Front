@@ -336,9 +336,7 @@ function rentamonApiCaller(
           
         }
         else{
-          const non_discount = ['mizboon', 'jajiga', 'shab', 'mihmansho'];
-          const with_discount = ['jabama', 'homsa', 'otaghak'];
-          with_discount.forEach(className => {
+          if(website == "homsa" || website == "jabama" || website == "otaghak"){
             document
             .querySelectorAll(`.website_row.${className}`)
             .forEach(element => {element.style.display = "block";});
@@ -352,7 +350,22 @@ function rentamonApiCaller(
             .querySelectorAll(`.elementor-section.${className} .status_true`)
             .forEach((c) => (c.style.display = "none"));
             console.log("GOt in here")
-          });
+          }
+          else{
+            document
+            .querySelectorAll(`.website_row.${className}`)
+            .forEach(element => {element.style.display = "block";});
+            document
+            .querySelectorAll(`.elementor-section.${className} .status_pending`)
+            .forEach((c) => (c.style.display = "none"));
+            document
+            .querySelectorAll(`.elementor-section.${className} .status_false`)
+            .forEach((c) => (c.style.display = "block"));
+            document
+            .querySelectorAll(`.elementor-section.${className} .status_true`)
+            .forEach((c) => (c.style.display = "none"));
+            console.log("GOt in here11111")
+          }
           non_discount.forEach(className => {
           document
             .querySelectorAll(`.website_row.${className}`)
