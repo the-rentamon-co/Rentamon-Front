@@ -351,12 +351,14 @@ function rentamonApiCaller(
             document
             .querySelectorAll(`.elementor-section.${className} .status_true`)
             .forEach((c) => (c.style.display = "none"));
+            console.log("GOt in here")
           });
           non_discount.forEach(className => {
           document
             .querySelectorAll(`.website_row.${className}`)
             .forEach(element => {element.style.display = "none";});
             });
+            console.log("GOt in here222")
         }
       },
       success: function (response) {
