@@ -298,18 +298,13 @@ function otaghakStatus(otaghak) {
 }
 
 // this function makes a request to rentamon api
-async function rentamonApiCaller(
+function rentamonApiCaller(
   website,
   data,
   action,
   status = true,
   method = "GET"
 ) {
-  const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}`);
-  const regweb = await response.json();
-  const regWebsites = await regweb.websites;
-  console.log(JSON.stringify(regweb));
-
   return new Promise(function (resolve, reject) {
     $.ajax({
       timeout: 25000,
@@ -323,6 +318,7 @@ async function rentamonApiCaller(
         },
       },
       beforeSend: function () {
+
         if (action !== "discount"){
           document
             .querySelectorAll(`.website_row.${website}`)
@@ -340,36 +336,27 @@ async function rentamonApiCaller(
           
         }
         else{
-          regWebsites.forEach(web => {
-            if(web == "homsa" || web == "jabama" || web == "otaghak"){
-              document
-              .querySelectorAll(`.website_row.${web}`)
-              .forEach((a) => (a.style.display = "block"));
-              document
-                .querySelectorAll(`.elementor-section.${web} .status_true`)
-                .forEach((b) => (b.style.display = "none"));
-              document
-                .querySelectorAll(`.elementor-section.${web} .status_false`)
-                .forEach((c) => (c.style.display = "none"));
-              document
-              .querySelectorAll(`.elementor-section.${web} .status_pending`)
-              .forEach((c) => (c.style.display = "block"));
-            }
-            else{
-              document
-              .querySelectorAll(`.website_row.${web}`)
-              .forEach((a) => (a.style.display = "none"));
-              document
-                .querySelectorAll(`.elementor-section.${web} .status_true`)
-                .forEach((b) => (b.style.display = "none"));
-              document
-                .querySelectorAll(`.elementor-section.${web} .status_false`)
-                .forEach((c) => (c.style.display = "none"));
-              document
-              .querySelectorAll(`.elementor-section.${web} .status_pending`)
-              .forEach((c) => (c.style.display = "none"));
-            }    
+          const non_discount = ['mizboon', 'jajiga', 'shab', 'mihmansho'];
+          const with_discount = ['jabama', 'homsa', 'otaghak'];
+          with_discount.forEach(className => {
+            document
+            .querySelectorAll(`.website_row.${className}`)
+            .forEach(element => {element.style.display = "block";});
+            document
+            .querySelectorAll(`.elementor-section.${className} .status_pending`)
+            .forEach((c) => (c.style.display = "block"));
+            document
+            .querySelectorAll(`.elementor-section.${className} .status_false`)
+            .forEach((c) => (c.style.display = "none"));
+            document
+            .querySelectorAll(`.elementor-section.${className} .status_true`)
+            .forEach((c) => (c.style.display = "none"));
           });
+          non_discount.forEach(className => {
+          document
+            .querySelectorAll(`.website_row.${className}`)
+            .forEach(element => {element.style.display = "none";});
+            });
         }
       },
       success: function (response) {
