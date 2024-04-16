@@ -23,20 +23,6 @@
           }),
           (action = "discount")
         )];
-
-        
-        if(regWebsites.includes('jabama')){
-          apicalls.push(rentamonApiCaller(
-              (website = "jabama"),
-              (data = {
-                rentamon_room_id: routes["jabama"]["room"],
-                days: dates,
-                price: price,
-                discount: discount,
-              }),
-              (action = "discount")
-            ))
-          }
         if(regWebsites.includes('otaghak')){
           apicalls.push(rentamonApiCaller(
             (website = "otaghak"),
@@ -79,8 +65,7 @@
             (action = "discount")
           ));
         }
-
-        if(regWebsites.includes('mizboon')){
+          if(regWebsites.includes('mizboon')){
           apicalls.push(rentamonApiCaller(
             (website = "mizboon"),
             (data = {
@@ -113,7 +98,7 @@
           }),
           (action = "unblock"),
           (status = false)
-        ));
+        ))
         }
         if(regWebsites.includes('mihmansho')){
           apicalls.push(rentamonApiCaller(
@@ -124,8 +109,20 @@
           }),
           (action = "unblock"),
           (status = false)
-        ));
+        ))
       }
+      if(regWebsites.includes('jabama')){
+          apicalls.push(rentamonApiCaller(
+              (website = "jabama"),
+              (data = {
+                rentamon_room_id: routes["jabama"]["room"],
+                days: dates,
+                price: price,
+                discount: discount,
+              }),
+              (action = "discount")
+            ))
+          }
       const resps = await Promise.all(apicalls);
       setTimeout(rentamoning, 2000);
     });
