@@ -771,6 +771,7 @@ function checkAction() {
 // this object is used when there is a site reservation and other websites need to be disabled
 let tobeDisabled = {
   homsa: (single) => {
+    console.log("GOOOOOOOOOOOT HEEEEEEEREEEEEE");
     rentamonApiCaller(
       (website = "homsa"),
       (data = {
