@@ -980,46 +980,39 @@ async function rentamoning() {
         .add("day", 1)
         .format("YYYY-MM-DD"),
     ];
-    const response = await fetch(`https://api-rentamon.liara.run/websites?id=${rentamon_user_id}&room_id=${rentamon_room_id}`);
-    const regweb = await response.json();
-    const rw = await regweb.websites;
-
-    console.log(rw);
-    const urls2 = [ routes.otherv2.calendar +
-      `?rentamon_room_id=${routes.otherv2.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,]
+    
     // urls for getting calendar info and data from rentamon api
     // for some websites if you want to get data in range of 01/01 until 01/10,
     // you have to pass 01/01 and 01/11. thats why in var range we have added one more day to last day in range
-    if(rw.includes("jabama")){
-      urls2.push(routes.jabama.calendar +
-        `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}&start_date=${range[0]}&end_date=${range[2]}`,)
-    }else{urls2.push('')}
-    if(rw.includes("mizboon")){
-      urls2.push(routes.mizboon.calendar +
-        `?rentamon_room_id=${routes.mizboon.room}&rentamon_id=${rentamon_user_id}&from=${range[0]}&to=${range[1]}`,)
-    }else{urls2.push('')}
-    if(rw.includes('otaghak')){
-      urls2.push(routes.otaghak.calendar +
-        `?rentamon_room_id=${routes.otaghak.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,)
-    }else{urls2.push('')}
-    if(rw.includes('jajiga')){
-      urls2.push(routes.jajiga.calendar +
-        `?rentamon_room_id=${routes.jajiga.room}&rentamon_id=${rentamon_user_id}&from=${range[0]}&to=${range[1]}`,)
-    }else{urls2.push('')}
-    if(rw.includes('shab')){
-      urls2.push(routes.shab.calendar +
-        `?rentamon_room_id=${routes.shab.room}&rentamon_id=${rentamon_user_id}&from_date=${range[0]}&to_date=${range[2]}`,)
-    }else{urls2.push('')}
-    if(rw.includes('mihmansho')){
-      urls2.push( routes.mihmansho.calendar +
-        `?rentamon_room_id=${routes.mihmansho.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,)
-    }else{urls2.push('')}
-    if(rw.includes('homsa')){
-      urls2.push( routes.homsa.calendar +
-        `?rentamon_room_id=${routes.homsa.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,)
-    }else{urls2.push('')}
-    console.log(urls2);
+    const urls2 = [
+      routes.jabama.calendar +
+        `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}&start_date=${range[0]}&end_date=${range[2]}`,
+
+      routes.mizboon.calendar +
+        `?rentamon_room_id=${routes.mizboon.room}&rentamon_id=${rentamon_user_id}&from=${range[0]}&to=${range[1]}`,
+
+      routes.otaghak.calendar +
+        `?rentamon_room_id=${routes.otaghak.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
+
+      routes.jajiga.calendar +
+        `?rentamon_room_id=${routes.jajiga.room}&rentamon_id=${rentamon_user_id}&from=${range[0]}&to=${range[1]}`,
+
+      routes.shab.calendar +
+        `?rentamon_room_id=${routes.shab.room}&rentamon_id=${rentamon_user_id}&from_date=${range[0]}&to_date=${range[2]}`,
+
+      routes.otherv2.calendar +
+        `?rentamon_room_id=${routes.otherv2.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,
+
+      routes.mihmansho.calendar +
+        `?rentamon_room_id=${routes.mihmansho.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
+
+      routes.homsa.calendar +
+        `?rentamon_room_id=${routes.homsa.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
+    ];
+
+    console.log(urls2, 'here is the results');
     const fetchPromises = urls2.map((url) => fetchData(url));
+
     availableDays.forEach((day) => {
       day.removeEventListener("click", handleDayClick);
       day.addEventListener("click", handleDayClick);
