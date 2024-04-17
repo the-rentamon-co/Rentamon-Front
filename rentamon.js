@@ -505,7 +505,7 @@ async function blockBtnClicked() {
     }
     
     const resps = await Promise.all(apicalls);
-    rentamoning();
+    await rentamoning();
   } else {
     alert(messages.notSelectedDay);
     document.querySelector(".loading-overlay-calendar").style.display = "none";
@@ -628,7 +628,7 @@ async function unblockBtnClicked() {
 
     console.log(regweb);
     const resps = await Promise.all(apicalls);
-    rentamoning();
+    await rentamoning();
   } else {
     alert(messages.notSelectedDay);
     document.querySelector(".loading-overlay-calendar").style.display = "none";
@@ -745,7 +745,7 @@ async function reserveOther() {
     }
   
     const resps = await Promise.all(apicalls);
-    rentamoning();
+    await rentamoning();
   } else {
     alert(messages.notSelectedDay);
     document.querySelector(".loading-overlay-calendar").style.display = "none";
@@ -934,7 +934,7 @@ function priceBtnClicked() {
 }
 
 // this is the main function that fetches data from websites based on calendar
-function rentamoning() {
+async function rentamoning() {
   document
     .querySelectorAll("form")
     .forEach((form) => form.removeEventListener("submit", rentamoning));
