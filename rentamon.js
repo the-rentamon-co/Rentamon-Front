@@ -934,7 +934,7 @@ function priceBtnClicked() {
 }
 
 // this is the main function that fetches data from websites based on calendar
-function rentamoning(regWebsites) {
+function rentamoning(rw) {
   document
     .querySelectorAll("form")
     .forEach((form) => form.removeEventListener("submit", rentamoning));
@@ -985,31 +985,31 @@ function rentamoning(regWebsites) {
     // urls for getting calendar info and data from rentamon api
     // for some websites if you want to get data in range of 01/01 until 01/10,
     // you have to pass 01/01 and 01/11. thats why in var range we have added one more day to last day in range
-    if(regWebsites.includes("jabama")){
+    if(rw.includes("jabama")){
       urls2.push(routes.jabama.calendar +
         `?rentamon_room_id=${routes.jabama.room}&rentamon_id=${rentamon_user_id}&start_date=${range[0]}&end_date=${range[2]}`,)
     }
-    if(regWebsites.includes("mizboon")){
+    if(rw.includes("mizboon")){
       urls2.push(routes.mizboon.calendar +
         `?rentamon_room_id=${routes.mizboon.room}&rentamon_id=${rentamon_user_id}&from=${range[0]}&to=${range[1]}`,)
     }
-    if(regWebsites.includes('otaghak')){
+    if(rw.includes('otaghak')){
       urls2.push(routes.otaghak.calendar +
         `?rentamon_room_id=${routes.otaghak.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,)
     }
-    if(regWebsites.includes('jajiga')){
+    if(rw.includes('jajiga')){
       urls2.push(routes.jajiga.calendar +
         `?rentamon_room_id=${routes.jajiga.room}&rentamon_id=${rentamon_user_id}&from=${range[0]}&to=${range[1]}`,)
     }
-    if(regWebsites.includes('shab')){
+    if(rw.includes('shab')){
       urls2.push(routes.shab.calendar +
         `?rentamon_room_id=${routes.shab.room}&rentamon_id=${rentamon_user_id}&from_date=${range[0]}&to_date=${range[2]}`,)
     }
-    if(regWebsites.includes('mihmansho')){
+    if(rw.includes('mihmansho')){
       urls2.push( routes.mihmansho.calendar +
         `?rentamon_room_id=${routes.mihmansho.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,)
     }
-    if(regWebsites.includes('homsa')){
+    if(rw.includes('homsa')){
       urls2.push( routes.homsa.calendar +
         `?rentamon_room_id=${routes.homsa.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,)
     }
