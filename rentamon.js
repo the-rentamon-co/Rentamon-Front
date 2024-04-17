@@ -1008,7 +1008,7 @@ async function rentamoning() {
     if(rw.includes('shab')){
       urls2.push(routes.shab.calendar +
         `?rentamon_room_id=${routes.shab.room}&rentamon_id=${rentamon_user_id}&from_date=${range[0]}&to_date=${range[2]}`,)
-    }else{urls2.push('')}
+    }else{urls2.push(null)}
     urls2.push(routes.otherv2.calendar +
       `?rentamon_room_id=${routes.otherv2.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,)
     if(rw.includes('mihmansho')){
@@ -1218,6 +1218,9 @@ async function rentamoning() {
           document.querySelector("#webdisconnected a").click();
         }
       })
+      // .catch((error) => {
+      //   console.error(error);
+      // });
   } else {
     document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
