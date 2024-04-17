@@ -1010,7 +1010,7 @@ function rentamoning() {
         `?rentamon_room_id=${routes.homsa.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`,
     ];
 
-    console.log(urls2);
+    console.log(urls2), 'here is the results';
     const fetchPromises = urls2.map((url) => fetchData(url));
 
     availableDays.forEach((day) => {
