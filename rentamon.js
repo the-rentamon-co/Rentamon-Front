@@ -980,6 +980,7 @@ function rentamoning(rw) {
         .add("day", 1)
         .format("YYYY-MM-DD"),
     ];
+    console.log(rw);
     const urls2 = [ routes.otherv2.calendar +
       `?rentamon_room_id=${routes.otherv2.room}&rentamon_id=${rentamon_user_id}&start=${range[0]}&end=${range[1]}`,]
     // urls for getting calendar info and data from rentamon api
