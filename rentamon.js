@@ -1218,9 +1218,6 @@ async function rentamoning() {
           document.querySelector("#webdisconnected a").click();
         }
       })
-      .catch((error) => {
-        console.error(error);
-      });
   } else {
     document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
