@@ -1050,7 +1050,7 @@ async function rentamoning() {
           }
           if (item.website_name == "mizboon") {
             console.log('status :' + item.status+ " data : "+ item.data + ' website : ' + item.website_name)
-            if (item.status["status"] === 200) {
+            if (item.status === 200) {
               calendars["mizboonStatus"] = item.data;
               isActiveHandler("#mizboon_icon_connected", false);
             } else if (item.status === 400) {
