@@ -1114,7 +1114,8 @@ async function rentamoning() {
             if (item.status === 200) {
               calendars["homsaStatus"] = item.data;
               isActiveHandler("#homsa_icon_connected", false);
-            } else if (item.status === 400) {
+            } else if (item["status"] === 400) {
+              console.log('got here in homsa 400 error')
               isActiveHandler("#homsa_icon_connected", true);
               check_is_valid("#homsa_icon_connected", "#webdisconnected_homsa");
             }
@@ -1302,8 +1303,10 @@ async function rentamoning() {
           if(item.website_name == "mihmansho" && item.status == 400){
             document.querySelector("#webdisconnected_mihmansho a").click();
           }
-          if (item.website_name == "homsa" && item.status == 400){
+          
+          if (item.website_name == "homsa" && item["status"] === 400){
             document.querySelector("#webdisconnected_homsa a").click();
+            console.log('status :' + item["status"] + " data : "+ item.data + ' website : ' + item.website_name)
           }
           
         });
