@@ -332,7 +332,6 @@ function rentamonApiCaller(
           document
             .querySelectorAll(`.elementor-section.${website} .status_pending`)
             .forEach((c) => (c.style.display = "block"));
-          console.log("Anything happend after condition!?");
           
         }
         else{
@@ -771,7 +770,6 @@ function checkAction() {
 // this object is used when there is a site reservation and other websites need to be disabled
 let tobeDisabled = {
   homsa: (single) => {
-    console.log("GOOOOOOOOOOOT HEEEEEEEREEEEEE");
     rentamonApiCaller(
       (website = "homsa"),
       (data = {
