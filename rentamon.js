@@ -1023,7 +1023,7 @@ async function rentamoning() {
       urls2.push( routes.homsa.calendar +
         `?rentamon_room_id=${routes.homsa.room}&rentamon_id=${rentamon_user_id}&startDate=${range[0]}&endDate=${range[1]}`)
     } 
-    
+
     console.log(urls2, 'here is the results');
     const fetchPromises = urls2.map((url) => fetchData(url));
 
@@ -1283,30 +1283,31 @@ async function rentamoning() {
         document.querySelector(".loading-overlay-calendar").style.display =
           "none";
 
-        // if status is 400 otp pop up is shown
-        if (results[1]["status"] === 400) {
-          document.querySelector("#webdisconnected_mizboon a").click();
-        }
-        if (results[2]["status"] === 400) {
-          document.querySelector("#webdisconnected_otaghak a").click();
-        }
-        if (results[3]["status"] === 400) {
-          document.querySelector("#webdisconnected_jajiga a").click();
-        }
-        if (results[4]["status"] === 400) {
-          document.querySelector("#webdisconnected_shab a").click();
-        }
-        if (results[6]["status"] === 400) {
-          document.querySelector("#webdisconnected_mihmansho a").click();
-        }
-
-        if (results[7]["status"] === 400) {
-          document.querySelector("#webdisconnected_homsa a").click();
-        }
-
-        if (results[0]["status"] === 400) {
-          document.querySelector("#webdisconnected a").click();
-        }
+        results.forEach(item => {
+          if (item.website_name == "jabama" && item.status == 400) {
+            document.querySelector("#webdisconnected a").click();
+          }
+          if (item.website_name == "mizboon" && item.status == 400) {
+            document.querySelector("#webdisconnected_mizboon a").click();
+          }
+          if (item.website_name == "otaghak" && item.status == 400) {
+            document.querySelector("#webdisconnected_otaghak a").click();
+          }
+          if (item.website_name == "jajiga" && item.status == 400){
+            document.querySelector("#webdisconnected_jajiga a").click();
+          }
+          if (item.website_name == "shab" && item.status == 400){
+            document.querySelector("#webdisconnected_shab a").click();
+          }
+          if(item.website_name == "mihmansho" && item.status == 400){
+            document.querySelector("#webdisconnected_mihmansho a").click();
+          }
+          if (item.website_name == "homsa" && item.status == 400){
+            document.querySelector("#webdisconnected_homsa a").click();
+          }
+          
+        });
+        
       })
       .catch((error) => {
         console.error(error);
