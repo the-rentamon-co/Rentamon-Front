@@ -1024,6 +1024,10 @@ async function rentamoning() {
       .then((results) => {
         console.log(results);
         var calendars = {};
+        
+        if(results.some(e => e.website_name == 'jabama')) {
+          console.log("We got jabama stat")
+        }
 
         // if ststus response from api is 200 the data fetched from api is stored in calendars object
         // and the jabama icon is getting styled based on isActiveHandler function
