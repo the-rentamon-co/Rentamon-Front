@@ -1023,79 +1023,159 @@ async function rentamoning() {
     Promise.all(fetchPromises)
       .then((results) => {
         console.log(results);
-        var calendars = {};
-        
-        if(results.some(e => e.website_name == 'jabama')) {
-          console.log("We got jabama stat")
-        }
+        var calendars = {}; 
+        results.forEach(item => {
+          if (item.website_name == "jabama") {
+            console.log('status :' + item.status+ " data : "+ item.data + ' website : ' + item.website_name)
+            if (item.status === 200) {
+              calendars["jabamaStatus"] = item.data;
+              isActiveHandler("#jabama_icon_connected", false);
+            }else if (item.status === 400) {
+              isActiveHandler("#jabama_icon_connected", true);
+              check_is_valid("#jabama_icon_connected", "#webdisconnected");
+            }
+          }
+          if (item.website_name == "mizboon") {
+            console.log('status :' + item.status+ " data : "+ item.data + ' website : ' + item.website_name)
+            if (item.status["status"] === 200) {
+              calendars["mizboonStatus"] = item.data;
+              isActiveHandler("#mizboon_icon_connected", false);
+            } else if (item.status === 400) {
+              isActiveHandler("#mizboon_icon_connected", true);
+              check_is_valid("#mizboon_icon_connected", "#webdisconnected_mizboon");
+            }
+          }
+          if (item.website_name == "otaghak") {
+            console.log('status :' + item.status+ " data : "+ item.data + ' website : ' + item.website_name)
+            if (item.status=== 200) {
+              calendars["otaghakStatus"] = item.data;
+              isActiveHandler("#otaghak_icon_connected", false);
+            } else if (item.status === 400) {
+              isActiveHandler("#otaghak_icon_connected", true);
+              check_is_valid("#otaghak_icon_connected", "#webdisconnected_otaghak");
+            }
+          }
+          if (item.website_name == "jajiga"){
+            console.log('status :' + item.status+ " data : "+ item.data + ' website : ' + item.website_name)
+            if (item.status === 200) {
+              calendars["jajigaStatus"] = item.data;
+              isActiveHandler("#jajiga_icon_connected", false);
+            } else if (item.status === 400) {
+              isActiveHandler("#jajiga_icon_connected", true);
+              check_is_valid("#jajiga_icon_connected", "#webdisconnected_jajiga");
+            }
+          }
+          if (item.website_name == "shab"){
+            console.log('status :' + item.status+ " data : "+ item.data + ' website : ' + item.website_name)
+            if (item.status === 200) {
+              calendars["shabStatus"] = item.data;
+              isActiveHandler("#shab_icon_connected", false);
+            } else if (item.status === 400) {
+              isActiveHandler("#shab_icon_connected", true);
+              check_is_valid("#shab_icon_connected", "#webdisconnected_shab");
+            }
+          }
+          if (item.website_name == "other"){
+            console.log('status :' + item.status+ " data : "+ item.data + ' website : ' + item.website_name)
+            if (item.status === 200) {
+              calendars["otherStatus"] = item.data;
+            }
+          }
+          if(item.website_name == "mihmansho"){
+            console.log('status :' + item.status+ " data : "+ item.data + ' website : ' + item.website_name)
+            if (item.status === 200) {
+              calendars["mihmanshoStatus"] = item.data;
+              isActiveHandler("#mihmansho_icon_connected", false);
+            } else if (item.status === 400) {
+              isActiveHandler("#mihmansho_icon_connected", true);
+              check_is_valid(
+                "#mihmansho_icon_connected",
+                "#webdisconnected_mihmansho"
+              );
+            }
+          }
+          if (item.website_name == "homsa"){
+            console.log('status :' + item.status+ " data : "+ item.data + ' website : ' + item.website_name)
+            if (item.status === 200) {
+              calendars["homsaStatus"] = item.data;
+              isActiveHandler("#homsa_icon_connected", false);
+            } else if (item.status === 400) {
+              isActiveHandler("#homsa_icon_connected", true);
+              check_is_valid("#homsa_icon_connected", "#webdisconnected_homsa");
+            }
+    
+          }
+      });
+      
 
         // if ststus response from api is 200 the data fetched from api is stored in calendars object
         // and the jabama icon is getting styled based on isActiveHandler function
-        if (results[0]["status"] === 200) {
-          calendars["jabamaStatus"] = results[0]["data"];
-          isActiveHandler("#jabama_icon_connected", false);
+        // if (results[0]["status"] === 200) {
+        //   calendars["jabamaStatus"] = results[0]["data"];
+        //   isActiveHandler("#jabama_icon_connected", false);
 
-          // if the status is 400 it means there is problem with token or sth, icon gets styled
-        } else if (results[0]["status"] === 400) {
-          isActiveHandler("#jabama_icon_connected", true);
-          check_is_valid("#jabama_icon_connected", "#webdisconnected");
-        }
+        //   // if the status is 400 it means there is problem with token or sth, icon gets styled
+        // } else if (results[0]["status"] === 400) {
+        //   isActiveHandler("#jabama_icon_connected", true);
+        //   check_is_valid("#jabama_icon_connected", "#webdisconnected");
+        // }
 
-        if (results[1]["status"] === 200) {
-          calendars["mizboonStatus"] = results[1]["data"];
-          isActiveHandler("#mizboon_icon_connected", false);
-        } else if (results[1]["status"] === 400) {
-          isActiveHandler("#mizboon_icon_connected", true);
-          check_is_valid("#mizboon_icon_connected", "#webdisconnected_mizboon");
-        }
+        // if (results[1]["status"] === 200) {
+        //   calendars["mizboonStatus"] = results[1]["data"];
+        //   isActiveHandler("#mizboon_icon_connected", false);
+        // } else if (results[1]["status"] === 400) {
+        //   isActiveHandler("#mizboon_icon_connected", true);
+        //   check_is_valid("#mizboon_icon_connected", "#webdisconnected_mizboon");
+        // }
 
-        if (results[2]["status"] === 200) {
-          calendars["otaghakStatus"] = results[2]["data"];
-          isActiveHandler("#otaghak_icon_connected", false);
-        } else if (results[2]["status"] === 400) {
-          isActiveHandler("#otaghak_icon_connected", true);
-          check_is_valid("#otaghak_icon_connected", "#webdisconnected_otaghak");
-        }
+        // if (results[2]["status"] === 200) {
+        //   calendars["otaghakStatus"] = results[2]["data"];
+        //   isActiveHandler("#otaghak_icon_connected", false);
+        // } else if (results[2]["status"] === 400) {
+        //   isActiveHandler("#otaghak_icon_connected", true);
+        //   check_is_valid("#otaghak_icon_connected", "#webdisconnected_otaghak");
+        // }
 
-        if (results[3]["status"] === 200) {
-          calendars["jajigaStatus"] = results[3]["data"];
-          isActiveHandler("#jajiga_icon_connected", false);
-        } else if (results[3]["status"] === 400) {
-          isActiveHandler("#jajiga_icon_connected", true);
-          check_is_valid("#jajiga_icon_connected", "#webdisconnected_jajiga");
-        }
+        // if (results[3]["status"] === 200) {
+        //   calendars["jajigaStatus"] = results[3]["data"];
+        //   isActiveHandler("#jajiga_icon_connected", false);
+        // } else if (results[3]["status"] === 400) {
+        //   isActiveHandler("#jajiga_icon_connected", true);
+        //   check_is_valid("#jajiga_icon_connected", "#webdisconnected_jajiga");
+        // }
 
-        if (results[4]["status"] === 200) {
-          calendars["shabStatus"] = results[4]["data"];
-          isActiveHandler("#shab_icon_connected", false);
-        } else if (results[4]["status"] === 400) {
-          isActiveHandler("#shab_icon_connected", true);
-          check_is_valid("#shab_icon_connected", "#webdisconnected_shab");
-        }
+        // if (results[4]["status"] === 200) {
+        //   calendars["shabStatus"] = results[4]["data"];
+        //   isActiveHandler("#shab_icon_connected", false);
+        // } else if (results[4]["status"] === 400) {
+        //   isActiveHandler("#shab_icon_connected", true);
+        //   check_is_valid("#shab_icon_connected", "#webdisconnected_shab");
+        // }
 
-        if (results[5]["status"] === 200) {
-          calendars["otherStatus"] = results[5]["data"];
-        }
+        // if (results[5]["status"] === 200) {
+        //   calendars["otherStatus"] = results[5]["data"];
+        // }
 
-        if (results[6]["status"] === 200) {
-          calendars["mihmanshoStatus"] = results[6]["data"];
-          isActiveHandler("#mihmansho_icon_connected", false);
-        } else if (results[6]["status"] === 400) {
-          isActiveHandler("#mihmansho_icon_connected", true);
-          check_is_valid(
-            "#mihmansho_icon_connected",
-            "#webdisconnected_mihmansho"
-          );
-        }
+        // if (results[6]["status"] === 200) {
+        //   calendars["mihmanshoStatus"] = results[6]["data"];
+        //   isActiveHandler("#mihmansho_icon_connected", false);
+        // } else if (results[6]["status"] === 400) {
+        //   isActiveHandler("#mihmansho_icon_connected", true);
+        //   check_is_valid(
+        //     "#mihmansho_icon_connected",
+        //     "#webdisconnected_mihmansho"
+        //   );
+        // }
 
-        if (results[7]["status"] === 200) {
-          calendars["homsaStatus"] = results[7]["data"];
-          isActiveHandler("#homsa_icon_connected", false);
-        } else if (results[7]["status"] === 400) {
-          isActiveHandler("#homsa_icon_connected", true);
-          check_is_valid("#homsa_icon_connected", "#webdisconnected_homsa");
-        }
-
+        // if (results[7]["status"] === 200) {
+        //   calendars["homsaStatus"] = results[7]["data"];
+        //   isActiveHandler("#homsa_icon_connected", false);
+        // } else if (results[7]["status"] === 400) {
+        //   isActiveHandler("#homsa_icon_connected", true);
+        //   check_is_valid("#homsa_icon_connected", "#webdisconnected_homsa");
+        // }
+        var other_result = results.find(item => item.website_name === "other");
+        console.log(other_result)
         if (JSON.stringify(calendars) !== "{}") {
           for (let i = 0; i < availableDays.length; i++) {
             var status = {};
@@ -1105,11 +1185,11 @@ async function rentamoning() {
             // getting price, discount from rentamon calendar result
             if ("otherStatus" in calendars) {
               let origPrice =
-                parseInt(parseInt(results[5]["data"][i]["price"]) / 1000) ||
+                parseInt(parseInt(other_result["data"][i]["price"]) / 1000) ||
                 null;
               let discountedPrice =
                 parseInt(
-                  parseInt(results[5]["data"][i]["discounted_price"]) / 1000
+                  parseInt(other_result["data"][i]["discounted_price"]) / 1000
                 ) || null;
 
               // if we have a discount, we apply and style to day
