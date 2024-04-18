@@ -1285,22 +1285,22 @@ async function rentamoning() {
           "none";
 
         results.forEach(item => {
-          if (item.website_name == "jabama" && item.status == 400) {
+          if (item.website_name == "jabama" && item["status"] === 400) {
             document.querySelector("#webdisconnected a").click();
           }
-          if (item.website_name == "mizboon" && item.status == 400) {
+          if (item.website_name == "mizboon" && item["status"] === 400) {
             document.querySelector("#webdisconnected_mizboon a").click();
           }
-          if (item.website_name == "otaghak" && item.status == 400) {
+          if (item.website_name == "otaghak" && item["status"] === 400) {
             document.querySelector("#webdisconnected_otaghak a").click();
           }
-          if (item.website_name == "jajiga" && item.status == 400){
+          if (item.website_name == "jajiga" && item["status"] === 400){
             document.querySelector("#webdisconnected_jajiga a").click();
           }
-          if (item.website_name == "shab" && item.status == 400){
+          if (item.website_name == "shab" && item["status"] === 400){
             document.querySelector("#webdisconnected_shab a").click();
           }
-          if(item.website_name == "mihmansho" && item.status == 400){
+          if(item.website_name == "mihmansho" && item["status"] === 400){
             document.querySelector("#webdisconnected_mihmansho a").click();
           }
           
