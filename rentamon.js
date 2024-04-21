@@ -1547,7 +1547,7 @@ $(window).on("load", function () {
     },
     inline: true,
     minDate: new persianDate().startOf("day"),
-    maxDate: new persianDate([1403, 2, 31]),
+    maxDate: new persianDate([1403, 3, 31]),
     // maxDate: new persianDate().add("years", 1).month(2).endOf("month"),
     // maxDate: new persianDate().
     // maxDate: new persianDate()
