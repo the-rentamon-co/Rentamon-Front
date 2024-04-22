@@ -1198,6 +1198,8 @@ async function rentamoning() {
             }
             // getting price, discount from rentamon calendar result
             if ("otherStatus" in calendars) {
+              console.log("this is the log for price ",other_result["data"][i]["price"] )
+              console.log("this is the log for discounted_price",other_result["data"][i]["discounted_price"] )
               let origPrice =
                 parseInt(parseInt(other_result["data"][i]["price"]) / 1000) ||
                 null;
