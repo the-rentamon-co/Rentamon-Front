@@ -505,6 +505,7 @@ async function blockBtnClicked() {
     
     const resps = await Promise.all(apicalls);
     await rentamoning();
+    document.querySelector(".loading-overlay-calendar").style.display = "none";
   } else {
     alert(messages.notSelectedDay);
     document.querySelector(".loading-overlay-calendar").style.display = "none";
@@ -1317,7 +1318,7 @@ async function rentamoning() {
       });
   } else {
     document.querySelector(".loading-overlay-calendar").style.display = "none";
-  }
+    }
 }
 
 $(document).ready(function () {
