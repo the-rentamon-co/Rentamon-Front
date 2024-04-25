@@ -460,7 +460,7 @@ async function blockBtnClicked() {
         (action = "block"))
       )
     }
-    if(regWebsites.includes('jajiga')){}
+    if(regWebsites.includes('jajiga')){
       apicalls.push(rentamonApiCaller(
         (website = "jajiga"),
         (data = {
@@ -470,6 +470,7 @@ async function blockBtnClicked() {
         }),
         (action = "block")
       ))
+    }
     if(regWebsites.includes('shab')){
       apicalls.push(rentamonApiCaller(
         (website = "shab"),
@@ -582,7 +583,7 @@ async function unblockBtnClicked() {
       )
       )
     }
-    if(regWebsites.includes('jajiga')){}
+    if(regWebsites.includes('jajiga')){
       apicalls.push(rentamonApiCaller(
         (website = "jajiga"),
         (data = {
@@ -592,6 +593,7 @@ async function unblockBtnClicked() {
         }),
         (action = "unblock")
       ))
+    }
     if(regWebsites.includes('shab')){
       apicalls.push(rentamonApiCaller(
         (website = "shab"),
@@ -700,7 +702,7 @@ async function reserveOther() {
       )
       )
     }
-    if(regWebsites.includes('jajiga')){}
+    if(regWebsites.includes('jajiga')){
       apicalls.push(rentamonApiCaller(
         (website = "jajiga"),
         (data = {
@@ -710,6 +712,7 @@ async function reserveOther() {
         }),
         (action = "block")
       ))
+    }
     if(regWebsites.includes('shab')){
       apicalls.push(rentamonApiCaller(
         (website = "shab"),
