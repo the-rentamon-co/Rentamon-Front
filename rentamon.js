@@ -875,7 +875,8 @@ function disconnectedBtnClicked() {
             node.nodeType === Node.ELEMENT_NODE &&
             node.id.includes(disconnectTargetElementId) &&
             !node.id.includes("7426") &&
-            !node.id.includes("7242")
+            !node.id.includes("7242") &&
+            !node.id.includes("12237")
         );
         if (targetElement) {
           let icon = mutation.addedNodes[0].querySelector(".eicon-close");
