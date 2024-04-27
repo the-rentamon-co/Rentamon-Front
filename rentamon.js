@@ -217,6 +217,20 @@ function otherStatus(other) {
       return "unblocked";
     case null:
       return "unblocked";
+    case "mizboon canceled":
+      return "unblocked";
+    case "otaghak canceled":
+      return "unblocked";
+    case "mihmansho canceled":
+      return "unblocked";
+    case "homsa canceled":
+      return "unblocked";
+    case "shab canceled":
+      return "unblocked";
+    case "jabama canceled":
+      return "unblocked";
+    case "jajiga canceled":
+      return "unblocked";
   }
 }
 
