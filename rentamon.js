@@ -231,6 +231,20 @@ function otherStatus(other) {
       return "unblocked";
     case "jajiga canceled":
       return "unblocked";
+     case "mizboon booked":
+      return "booked";
+    case "otaghak booked":
+      return "booked";
+    case "mihmansho booked":
+      return "booked";
+    case "homsa booked":
+      return "booked";
+    case "shab booked":
+      return "booked";
+    case "jabama booked":
+      return "booked";
+    case "jajiga booked":
+      return "booked";
   }
 }
 
