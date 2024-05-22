@@ -311,3 +311,188 @@ async function checkAuthOnLoad() {
     return true
   }
 }
+
+
+$(document).ready(function () {
+  const webdisconnectedJabamaBtn = document.querySelector("#webdisconnected");
+  const webdisconnectedOtaghakBtn = document.querySelector(
+    "#webdisconnected_otaghak"
+  );
+  const webdisconnectedJajigaBtn = document.querySelector(
+    "#webdisconnected_jajiga"
+  );
+  const webdisconnectedShabBtn = document.querySelector(
+    "#webdisconnected_shab"
+  );
+  const webdisconnectedMihmanshoBtn = document.querySelector(
+    "#webdisconnected_mihmansho"
+  );
+  const webdisconnectedHomsaBtn = document.querySelector(
+    "#webdisconnected_homsa"
+  );
+  const webdisconnectedMizboonBtn = document.querySelector(
+    "#webdisconnected_mizboon"
+  );
+
+  if (webdisconnectedMizboonBtn !== null) {
+    webdisconnectedMizboonBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+  if (webdisconnectedHomsaBtn !== null) {
+    webdisconnectedHomsaBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+
+  if (webdisconnectedMihmanshoBtn !== null) {
+    webdisconnectedMihmanshoBtn.addEventListener(
+      "click",
+      disconnectedBtnClicked
+    );
+  }
+
+  if (webdisconnectedJabamaBtn !== null) {
+    webdisconnectedJabamaBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+
+  if (webdisconnectedOtaghakBtn !== null) {
+    webdisconnectedOtaghakBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+  if (webdisconnectedJajigaBtn !== null) {
+    webdisconnectedJajigaBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+  if (webdisconnectedShabBtn !== null) {
+    webdisconnectedShabBtn.addEventListener("click", disconnectedBtnClicked);
+  }
+
+  // price
+  // this mutationobserver handels price pop up
+  const priceTargetElementId = "elementor-popup-modal-7426";
+  const priceObserver = new MutationObserver((mutationsList) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === "childList") {
+        const addedNodes = Array.from(mutation.addedNodes);
+        const targetElement = addedNodes.find(
+          (node) =>
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.id.includes(priceTargetElementId)
+        );
+        if (targetElement) {
+          let selected = document.querySelectorAll(".selected");
+          let selectedDate = [];
+          selected.forEach((z) => {
+            z.classList.remove("selected");
+            selectedDate.push(
+              new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+                "YYYY-MM-DD"
+              )
+            );
+          });
+          document.querySelector('input[name="form_fields[dates]"').value =
+            selectedDate;
+          document.querySelector('input[name="form_fields[h_f_r_i]"').value =
+            rentamon_user_id;
+          document.querySelector('input[name="form_fields[h_f_r_r_i]"').value =
+            rentamon_room_id;
+        }
+      }
+    }
+  });
+
+  priceObserver.observe(document.body, { childList: true, subtree: true });
+
+  //
+
+  // discount
+  // this mutationobserver handels discount pop up
+  const discountTargetElementId = "elementor-popup-modal-7242";
+  const discountObserver = new MutationObserver((mutationsList) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === "childList") {
+        const addedNodes = Array.from(mutation.addedNodes);
+        const targetElement = addedNodes.find(
+          (node) =>
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.id.includes(discountTargetElementId)
+        );
+
+        if (targetElement) {
+          let selected = document.querySelectorAll(".selected");
+          let selectedDate = [];
+          let jabamaPrice = [];
+          selected.forEach((z) => {
+            z.classList.remove("selected");
+            selectedDate.push(
+              new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+                "YYYY-MM-DD"
+              )
+            );
+            jabamaPrice.push(z.getAttribute("price-from-rentamon"));
+          });
+          document.querySelector('input[name="form_fields[dates]"').value =
+            selectedDate;
+          document.querySelector(
+            'input[name="form_fields[noDiscountPrice]"'
+          ).value = jabamaPrice[0];
+
+          document.querySelector('input[name="form_fields[h_f_r_i]"').value =
+            rentamon_user_id;
+          document.querySelector('input[name="form_fields[h_f_r_r_i]"').value =
+            rentamon_room_id;
+        }
+      }
+    }
+  });
+  discountObserver.observe(document.body, { childList: true, subtree: true });
+
+  //
+
+  // pop up form submited
+  // this mutationobserver handels rentamon login form
+  let form_submited = new MutationObserver((mutaionlist) => {
+    for (const mutation of mutaionlist) {
+      if (mutation.type === "childList") {
+        const removedNodes = Array.from(mutation.removedNodes);
+        if (removedNodes.length > 0) {
+          const targetElement = removedNodes.find(
+            (node) =>
+              node.nodeType === Node.ELEMENT_NODE &&
+              node.nodeName === "SPAN" &&
+              node.className.includes("elementor-form-spinner") &&
+              (mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes(
+                "7242"
+              ) ||
+                mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes(
+                  "7426"
+                ))
+          );
+          if (targetElement) {
+            setTimeout(rentamoning, 2000);
+          }
+        }
+      }
+    }
+  });
+
+  form_submited.observe(document.body, { childList: true, subtree: true });
+
+  //
+
+  document.querySelector(".submit").addEventListener("click", checkAction);
+  document.querySelectorAll('input[name="block"]').forEach((elem) => {
+    elem.addEventListener("change", (e) => {
+      const actionBtn = document.querySelector(".btnActionCont button");
+      if (e.target.className === "discount") {
+        actionBtn.removeEventListener("click", checkAction);
+        actionBtn.removeEventListener("click", priceBtnClicked);
+        actionBtn.addEventListener("click", discountBtnClicked);
+      } else if (e.target.className === "price") {
+        actionBtn.removeEventListener("click", checkAction);
+        actionBtn.removeEventListener("click", discountBtnClicked);
+        actionBtn.addEventListener("click", priceBtnClicked);
+      } else {
+        actionBtn.addEventListener("click", checkAction);
+        document.querySelector(".btnActionCont button").className = "submit";
+        actionBtn.removeEventListener("click", discountBtnClicked);
+        actionBtn.removeEventListener("click", priceBtnClicked);
+      }
+    });
+  });
+});

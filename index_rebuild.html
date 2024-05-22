@@ -15,13 +15,73 @@
   <body>
     <div class="rentamon"></div>
     <script>
+      // function for checking authentication
+      
+      // first function for getting cookies
+        function getCookie(name) {
+          const nameEQ = name + "=";
+          const ca = document.cookie.split(';');
+          for (let i = 0; i < ca.length; i++) {
+              let c = ca[i];
+              while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+              if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+          }
+          return null;
+      }
+    
+        // Function to verify token
+    async function verifyToken(token) {
+        const url = 'https://rentamon-api.liara.run/auth/token/verify/';
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ token: token }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Token verification failed with status: ${response.status}`);
+            }
+
+            return true;
+        } catch (error) {
+            console.error('Error verifying token:', error);
+            return false;
+        }
+    }
+    
+    async function checkAuthOnLoad() {
+        const accessToken = getCookie('auth_token');
+        const refreshToken = getCookie('refresh_token');
+        console.log('Refresh :',refreshToken)
+        console.log('Access :',accessToken)
+        if (!accessToken || !refreshToken) {
+          return true;
+        }
+      
+        const isAccessTokenValid = await verifyToken(accessToken, 'access');
+        console.log("Access Token Status :",isAccessTokenValid)
+        if (!isAccessTokenValid) {
+          const isRefreshTokenValid = await verifyToken(refreshToken, 'refresh');
+          console.log("Refresh Token Status :",isRefreshTokenValid)
+          if (!isRefreshTokenValid) {
+            return true;
+          } else {
+            return true // TODO : adding the refresh token handler 
+          }
+        }else{
+          return true
+        }
+      } 
+      // starting the page
       var rBody = document.querySelector(".rentamon");
       var newDiv = document.createElement("div");
       var newScript = document.createElement("script");
       newScript.src =
         "https://the-rentamon-co.github.io/Rentamon-Front/retnamon_rebuild.js?ver=1.1.02";
-      newScript.defer = true;
-        newDiv.innerHTML = `<div class="loading-overlay-calendar" style="display: none">
+      newDiv.innerHTML = `<div class="loading-overlay-calendar" style="display: none">
       <div class="loading-spinner-calendar"></div>
       <p class="loading-text-calendar">در حال دریافت اطلاعات تقویم ها</p>
     </div>
@@ -86,10 +146,13 @@
     <div class="btnActionCont">
       <button class="submit">اعمال تغییرات</button>
     </div>`;
+
       var c = Object.fromEntries(
         document.cookie.split("; ").map((x) => x.split("="))
       );
-      if (document.addEventListener('DOMContentLoaded', checkAuthOnLoad)) {
+      status = document.addEventListener('DOMContentLoaded', checkAuthOnLoad)
+      console.log(status)
+      if (true) {
         rBody.appendChild(newDiv);
         rBody.appendChild(newScript);
       } else {
@@ -120,7 +183,7 @@
           childList: true,
           subtree: true,
         });
-      } 
+      }
     </script>
   </body>
 </html>
