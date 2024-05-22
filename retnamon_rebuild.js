@@ -8,43 +8,61 @@ url = {
   discount: apiHostMainUrl + "/setdiscount/",
 }
 
-
+// this is the main function that fetches data from websites based on calendar
 async function rentamoning() {
-  // Remove the event listener from all forms to prevent multiple submissions
-  document.querySelectorAll("form").forEach(form => {
-    form.removeEventListener("submit", rentamoning);
-  });
+  document
+    .querySelectorAll("form")
+    .forEach((form) => form.removeEventListener("submit", rentamoning));
 
-  // Display the loading overlay
-  // document.querySelector(".loading-overlay-calendar").style.display = "flex";
+  // starts loading when this function is called
+  document.querySelector(".loading-overlay-calendar").style.display = "flex";
 
-  // Reset all inputs with the name "block"
-  document.querySelectorAll('input[name="block"]').forEach(input => {
-    input.checked = false;
-  });
+  // resets every action input
+  document
+    .querySelectorAll('input[name="block"]')
+    .forEach((i) => (i.checked = false));
+  var availableDays = [];
 
-  // Get all available days in the datepicker
-  const availableDays = Array.from(
-    document.querySelectorAll(".datepicker-day-view td:not(.disabled)")
-  ).filter(td => {
-    const isOtherMonth = td.firstElementChild.classList.contains("other-month");
-    if (isOtherMonth) {
+  // selecting start and end of each days range
+  var allTds = document.querySelectorAll(
+    ".datepicker-day-view td:not(.disabled)"
+  );
+  allTds.forEach((td) => {
+    if (!td.firstElementChild.classList.contains("other-month")) {
+      availableDays.push(td);
+    } else {
       td.classList.add("other-month");
-      return false;
     }
-    return true;
   });
-
-  // If there are available days, generate the date range
   if (availableDays.length > 0) {
-    const firstDayUnix = parseInt(availableDays[0].getAttribute("data-unix"));
-    const lastDayUnix = parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"));
-
-    const range = [
-      new persianDate(firstDayUnix).format("YYYY-MM-DD"),
-      new persianDate(lastDayUnix).format("YYYY-MM-DD"),
-      new persianDate(lastDayUnix).add("day", 1).format("YYYY-MM-DD")
+    var days = document.querySelectorAll(
+      ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
+    );
+    var range = [
+      new persianDate(
+        parseInt(availableDays[0].getAttribute("data-unix"))
+      ).format("YYYY-MM-DD"),
+      new persianDate(
+        parseInt(
+          availableDays[availableDays.length - 1].getAttribute("data-unix")
+        )
+      ).format("YYYY-MM-DD"),
+      new persianDate(
+        parseInt(
+          availableDays[availableDays.length - 1].getAttribute("data-unix")
+        )
+      )
+        .add("day", 1)
+        .format("YYYY-MM-DD"),
     ];
+    
+    
+    availableDays.forEach((day) => {
+      day.removeEventListener("click", handleDayClick);
+      day.addEventListener("click", handleDayClick);
+    });
+  } else {
+    document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
 }
 
