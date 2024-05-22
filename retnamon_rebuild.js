@@ -227,34 +227,6 @@ $(document).ready(function () {
     "#webdisconnected_mizboon"
   );
 
-  if (webdisconnectedMizboonBtn !== null) {
-    webdisconnectedMizboonBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-  if (webdisconnectedHomsaBtn !== null) {
-    webdisconnectedHomsaBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-
-  if (webdisconnectedMihmanshoBtn !== null) {
-    webdisconnectedMihmanshoBtn.addEventListener(
-      "click",
-      disconnectedBtnClicked
-    );
-  }
-
-  if (webdisconnectedJabamaBtn !== null) {
-    webdisconnectedJabamaBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-
-  if (webdisconnectedOtaghakBtn !== null) {
-    webdisconnectedOtaghakBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-  if (webdisconnectedJajigaBtn !== null) {
-    webdisconnectedJajigaBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-  if (webdisconnectedShabBtn !== null) {
-    webdisconnectedShabBtn.addEventListener("click", disconnectedBtnClicked);
-  }
-
   // price
   // this mutationobserver handels price pop up
   const priceTargetElementId = "elementor-popup-modal-7426";
