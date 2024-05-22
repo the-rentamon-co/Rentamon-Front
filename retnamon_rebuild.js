@@ -101,8 +101,8 @@ function priceBtnClicked() {
 // this function is called when block option is selected
 // if there are selected days, it starts requesting for block to each website
 async function blockBtnClicked() {
-  document.querySelector(".loading-overlay-calendar").style.display = "flex";
-
+  // document.querySelector(".loading-overlay-calendar").style.display = "flex";
+  console.log("got here ")
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   if (selected.length > 0) {
