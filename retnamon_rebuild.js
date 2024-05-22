@@ -15,7 +15,7 @@ async function rentamoning() {
     .forEach((form) => form.removeEventListener("submit", rentamoning));
 
   // starts loading when this function is called
-  document.querySelector(".loading-overlay-calendar").style.display = "flex";
+  // document.querySelector(".loading-overlay-calendar").style.display = "flex";
 
   // resets every action input
   document
