@@ -123,13 +123,12 @@ $(window).on("load", function () {
 
 async function rentamoning() {
   // Remove the event listener from all forms to prevent multiple submissions
-  document.addEventListener('DOMContentLoaded', checkAuthOnLoad)
   document.querySelectorAll("form").forEach(form => {
     form.removeEventListener("submit", rentamoning);
   });
 
   // Display the loading overlay
-  document.querySelector(".loading-overlay-calendar").style.display = "flex";
+  // document.querySelector(".loading-overlay-calendar").style.display = "flex";
 
   // Reset all inputs with the name "block"
   document.querySelectorAll('input[name="block"]').forEach(input => {
