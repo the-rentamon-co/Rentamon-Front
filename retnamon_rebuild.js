@@ -103,7 +103,6 @@ function priceBtnClicked() {
 async function blockBtnClicked() {
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
 
-  console.log(JSON.stringify(regweb));
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   if (selected.length > 0) {
@@ -379,7 +378,7 @@ $(document).ready(function () {
 
   form_submited.observe(document.body, { childList: true, subtree: true });
 
-  //
+
 
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
@@ -539,3 +538,12 @@ $(window).on("load", function () {
     console.log("padding gone");
   }
 });
+
+// this is a function for when user selects a day, and that day need to get a class
+function handleDayClick(e) {
+  if (e.target.parentElement.tagName === "TD") {
+    e.target.parentElement.classList.toggle("selected");
+  } else if (e.target.tagName === "TD") {
+    e.target.classList.toggle("selected");
+  }
+}
