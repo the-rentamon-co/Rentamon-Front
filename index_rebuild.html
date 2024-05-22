@@ -1,0 +1,128 @@
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://rentamon.com/wp-content/rentamon-content-files/persian-datepicker.css?ver=1.0.1"
+    />
+    <script src="https://rentamon.com/wp-content/rentamon-content-files/jquery-2.2.4.min.js?ver=1.0.1"></script>
+    <script src="https://rentamon.com/wp-content/rentamon-content-files/persian-date.js?ver=1.0.1"></script>
+    <script src="https://the-rentamon-co.github.io/Rentamon-Front/persian-datepicker.js?ver=1.1.02"></script>
+    <link
+      rel="stylesheet"
+      href="https://the-rentamon-co.github.io/Rentamon-Front/rentamon.css"
+    />
+  </head>
+  <body>
+    <div class="rentamon"></div>
+    <script>
+      var rBody = document.querySelector(".rentamon");
+      var newDiv = document.createElement("div");
+      var newScript = document.createElement("script");
+      newScript.src =
+        "https://the-rentamon-co.github.io/Rentamon-Front/retnamon_rebuild.js?ver=1.1.02";
+      newScript.defer = true;
+        newDiv.innerHTML = `<div class="loading-overlay-calendar" style="display: none">
+      <div class="loading-spinner-calendar"></div>
+      <p class="loading-text-calendar">در حال دریافت اطلاعات تقویم ها</p>
+    </div>
+    <div class="inline"></div>
+    <script>alert("hi")<\/script>
+    <div class="form">
+      <label>
+        <input
+          type="radio"
+          id="reserve"
+          name="block"
+          value="reserve"
+          class="reserve"
+        />
+
+        رزرو</label
+      >
+
+      <label>
+        <input
+          type="radio"
+          id="block"
+          name="block"
+          value="block"
+          class="block"
+        />
+        غیرفعال</label
+      >
+
+      <label>
+        <input
+          type="radio"
+          id="unblock"
+          name="block"
+          value="unblock"
+          class="unblock"
+        />
+
+        خالی</label
+      >
+
+      <label
+        ><input
+          type="radio"
+          id="price"
+          name="block"
+          value="price"
+          class="price"
+        />قیمت</label
+      >
+
+      <label
+        ><input
+          type="radio"
+          id="discount"
+          name="block"
+          value="discount"
+          class="discount"
+        />تخفیف %</label
+      >
+    </div>
+    <div class="btnActionCont">
+      <button class="submit">اعمال تغییرات</button>
+    </div>`;
+      var c = Object.fromEntries(
+        document.cookie.split("; ").map((x) => x.split("="))
+      );
+      if (document.addEventListener('DOMContentLoaded', checkAuthOnLoad)) {
+        rBody.appendChild(newDiv);
+        rBody.appendChild(newScript);
+      } else {
+        var t = document.querySelector("#webdisconnected_rentamon a");
+        const popup = "elementor-popup-modal";
+        const timer = setInterval(() => {
+          t.click();
+          console.log("clicked");
+        }, 1000);
+        const popupObserver = new MutationObserver((mutationsList) => {
+          for (const mutation of mutationsList) {
+            if (mutation.type === "childList") {
+              const addedNodes = Array.from(mutation.addedNodes);
+              const targetElement = addedNodes.find(
+                (node) =>
+                  node.nodeType === Node.ELEMENT_NODE && node.id.includes(popup)
+              );
+
+              if (targetElement) {
+                clearInterval(timer);
+                console.log("done");
+              }
+            }
+          }
+        });
+
+        popupObserver.observe(document.body, {
+          childList: true,
+          subtree: true,
+        });
+      } 
+    </script>
+  </body>
+</html>
+
+

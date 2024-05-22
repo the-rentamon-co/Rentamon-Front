@@ -292,7 +292,7 @@ async function unblockBtnClicked() {
   }
 }
 
-async function checkAuthOnLoad() {
+export async function checkAuthOnLoad() {
   const accessToken = getCookie('auth_token');
   const refreshToken = getCookie('refresh_token');
 
