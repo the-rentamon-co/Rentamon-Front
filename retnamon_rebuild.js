@@ -121,20 +121,8 @@ async function blockBtnClicked() {
     const apicalls = [];
 
     
-    if(regWebsites.includes('otaghak')){
-      apicalls.push(rentamonApiCaller(
-        (website = "otaghak"),
-        (data = {
-          rentamon_room_id: routes["otaghak"]["room"],
-          unblockDays: null,
-          blockDays: selectedDate.join(","),
-        }),
-        (action = "block")
-      ))
-    }
     
-    const resps = await Promise.all(apicalls);
-    await rentamoning();
+    console.log('GOT HERE');
   } else {
     alert(messages.notSelectedDay);
     document.querySelector(".loading-overlay-calendar").style.display = "none";
