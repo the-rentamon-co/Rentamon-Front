@@ -58,7 +58,7 @@
         console.log('Refresh :',refreshToken)
         console.log('Access :',accessToken)
         if (!accessToken || !refreshToken) {
-          return true;
+          return false;
         }
       
         const isAccessTokenValid = await verifyToken(accessToken, 'access');
@@ -67,7 +67,7 @@
           const isRefreshTokenValid = await verifyToken(refreshToken, 'refresh');
           console.log("Refresh Token Status :",isRefreshTokenValid)
           if (!isRefreshTokenValid) {
-            return true;
+            return false;
           } else {
             return true // TODO : adding the refresh token handler 
           }
@@ -152,7 +152,7 @@
       );
       status = document.addEventListener('DOMContentLoaded', checkAuthOnLoad)
       console.log("this is auth Load : ", status)
-      if (true) {
+      if (staus) {
         rBody.appendChild(newDiv);
         rBody.appendChild(newScript);
       } else {
