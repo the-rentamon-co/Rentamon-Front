@@ -519,7 +519,7 @@ async function performAction(actionType, days, price = 0, discount = 0) {
           data.discount = discount;
           break;
       case 'setBlock':
-          url = 'https://rentamon-api.liara.run/api/setblock/';
+          url = 'https://rentamon-api.liara.run/api/setblock';
           break;
       case 'setUnblock':
           url = 'https://rentamon-api.liara.run/api/setunblock/';
