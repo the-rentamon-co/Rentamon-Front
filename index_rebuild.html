@@ -52,29 +52,34 @@
         }
     }
     
-    async function checkAuthOnLoad() {
-        const accessToken = getCookie('auth_token');
-        const refreshToken = getCookie('refresh_token');
-        console.log('Refresh :',refreshToken)
-        console.log('Access :',accessToken)
-        if (!accessToken || !refreshToken) {
+  async function checkAuthOnLoad() {
+      const accessToken = getCookie('auth_token');
+      const refreshToken = getCookie('refresh_token');
+      console.log('Refresh :', refreshToken);
+      console.log('Access :', accessToken);
+  
+      if (!accessToken || !refreshToken) {
           return false;
-        }
-      
-        const isAccessTokenValid = await verifyToken(accessToken, 'access');
-        console.log("Access Token Status :",isAccessTokenValid)
-        if (!isAccessTokenValid) {
+      }
+  
+      const isAccessTokenValid = await verifyToken(accessToken, 'access');
+      console.log("Access Token Status :", isAccessTokenValid);
+  
+      if (!isAccessTokenValid) {
           const isRefreshTokenValid = await verifyToken(refreshToken, 'refresh');
-          console.log("Refresh Token Status :",isRefreshTokenValid)
+          console.log("Refresh Token Status :", isRefreshTokenValid);
+  
           if (!isRefreshTokenValid) {
-            return false;
+              return false;
           } else {
-            return true // TODO : adding the refresh token handler 
+              // TODO: Add the refresh token handler here
+              return true;
           }
-        }else{
-          return true
-        }
-      } 
+      } else {
+          return true;
+      }
+  }
+  
       // starting the page
       var rBody = document.querySelector(".rentamon");
       var newDiv = document.createElement("div");
@@ -150,40 +155,44 @@
       var c = Object.fromEntries(
         document.cookie.split("; ").map((x) => x.split("="))
       );
-      status = document.addEventListener('DOMContentLoaded', checkAuthOnLoad)
-      console.log("this is auth Load : ", status)
-      if (staus) {
-        rBody.appendChild(newDiv);
-        rBody.appendChild(newScript);
-      } else {
-        var t = document.querySelector("#webdisconnected_rentamon a");
-        const popup = "elementor-popup-modal";
-        const timer = setInterval(() => {
-          t.click();
-          console.log("clicked");
-        }, 1000);
-        const popupObserver = new MutationObserver((mutationsList) => {
-          for (const mutation of mutationsList) {
-            if (mutation.type === "childList") {
-              const addedNodes = Array.from(mutation.addedNodes);
-              const targetElement = addedNodes.find(
-                (node) =>
-                  node.nodeType === Node.ELEMENT_NODE && node.id.includes(popup)
-              );
-
-              if (targetElement) {
-                clearInterval(timer);
-                console.log("done");
-              }
-            }
-          }
-        });
- 
-        popupObserver.observe(document.body, {
-          childList: true,
-          subtree: true,
-        });
-      }
+      document.addEventListener('DOMContentLoaded', async () => {
+        const status = await checkAuthOnLoad();
+        console.log("This is auth load:", status);
+    
+        if (status) {
+            rBody.appendChild(newDiv);
+            rBody.appendChild(newScript);
+        } else {
+            const t = document.querySelector("#webdisconnected_rentamon a");
+            const popup = "elementor-popup-modal";
+            const timer = setInterval(() => {
+                t.click();
+                console.log("clicked");
+            }, 1000);
+    
+            const popupObserver = new MutationObserver((mutationsList) => {
+                for (const mutation of mutationsList) {
+                    if (mutation.type === "childList") {
+                        const addedNodes = Array.from(mutation.addedNodes);
+                        const targetElement = addedNodes.find(
+                            (node) =>
+                                node.nodeType === Node.ELEMENT_NODE && node.id.includes(popup)
+                        );
+    
+                        if (targetElement) {
+                            clearInterval(timer);
+                            console.log("done");
+                        }
+                    }
+                }
+            });
+    
+            popupObserver.observe(document.body, {
+                childList: true,
+                subtree: true,
+            });
+        }
+    });
     </script>
   </body>
 </html>
