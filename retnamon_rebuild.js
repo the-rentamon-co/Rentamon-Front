@@ -118,11 +118,10 @@ async function blockBtnClicked() {
     if (response_status) {
       document.querySelector(".response_status_pop a").click();
     }
-    const apicalls = [];
-
+    final_response = await performAction('setBlock',selectedDate.join(","))
     
     
-    console.log('GOT HERE');
+    console.log('GOT HERE', final_response);
   } else {
     alert(messages.notSelectedDay);
     document.querySelector(".loading-overlay-calendar").style.display = "none";
@@ -207,25 +206,7 @@ async function checkAuthOnLoad() {
 
 
 $(document).ready(function () {
-  const webdisconnectedJabamaBtn = document.querySelector("#webdisconnected");
-  const webdisconnectedOtaghakBtn = document.querySelector(
-    "#webdisconnected_otaghak"
-  );
-  const webdisconnectedJajigaBtn = document.querySelector(
-    "#webdisconnected_jajiga"
-  );
-  const webdisconnectedShabBtn = document.querySelector(
-    "#webdisconnected_shab"
-  );
-  const webdisconnectedMihmanshoBtn = document.querySelector(
-    "#webdisconnected_mihmansho"
-  );
-  const webdisconnectedHomsaBtn = document.querySelector(
-    "#webdisconnected_homsa"
-  );
-  const webdisconnectedMizboonBtn = document.querySelector(
-    "#webdisconnected_mizboon"
-  );
+ 
 
   // price
   // this mutationobserver handels price pop up
@@ -507,3 +488,65 @@ function handleDayClick(e) {
     e.target.classList.toggle("selected");
   }
 }
+
+// Function to get a cookie by name
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+// Function to perform the action
+async function performAction(actionType, days, price = 0, discount = 0) {
+  const authToken = getCookie('auth_token');
+  if (!authToken) {
+      throw new Error('No auth token found');
+  }
+
+  let url = '';
+  let method = 'POST';
+  let data = { days };
+
+  switch (actionType) {
+      case 'setPrice':
+          url = 'https://rentamon-api.liara.run/api/setprice/';
+          if (price === 0) throw new Error('Price is required for setPrice');
+          data.price = price;
+          break;
+      case 'setDiscount':
+          url = 'https://rentamon-api.liara.run/api/setdiscount/';
+          if (discount === 0) throw new Error('Discount is required for setDiscount');
+          data.discount = discount;
+          break;
+      case 'setBlock':
+          url = 'https://rentamon-api.liara.run/api/setblock/';
+          break;
+      case 'setUnblock':
+          url = 'https://rentamon-api.liara.run/api/setunblock/';
+          break;
+      default:
+          throw new Error('Invalid action type');
+  }
+
+  try {
+      const response = await fetch(url, {
+          method: method,
+          headers: {
+              'Authorization': `Bearer ${authToken}`,
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result;
+  } catch (error) {
+      console.error('Error performing action:', error);
+      throw error;
+  }
+}
+
