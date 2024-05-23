@@ -1,7 +1,7 @@
 // main.js
-import { rentamoning, blockBtnClicked, unblockBtnClicked, priceBtnClicked, checkAction } from './handlers.js';
-import { setupMutationObservers } from './mutationObservers.js';
-import { initializeDatePicker } from './calendar.js';
+import { rentamoning, blockBtnClicked, unblockBtnClicked, priceBtnClicked, checkAction } from '.handlers.js';
+import { setupMutationObservers } from '.mutationObservers.js';
+import { initializeDatePicker } from '.calendar.js';
 
 $(document).ready(function () {
   initializeDatePicker();
