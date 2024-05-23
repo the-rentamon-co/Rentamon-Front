@@ -281,7 +281,7 @@ $(document).ready(function () {
         if (targetElement) {
           let selected = document.querySelectorAll(".selected");
           let selectedDate = [];
-          let jabamaPrice = [];
+          let jabamaPrice = []; 
           selected.forEach((z) => {
             z.classList.remove("selected");
             selectedDate.push(
