@@ -97,7 +97,20 @@ function priceBtnClicked() {
   }
 }
 
-
+// this function is called when user select discount action
+// there is a elemntor pop up which is wating for a element with class discount-submit to be clicked and then it shows a pop up
+function discountBtnClicked() {
+  let selected = document.querySelectorAll(".selected");
+  if (selected.length > 0) {
+    var dis_div = document.createElement("div");
+    dis_div.style.display = "none";
+    dis_div.className = "discount-submit";
+    document.body.appendChild(dis_div);
+    dis_div.click();
+  } else {
+    alert(messages.notSelectedDay);
+  }
+}
 // this function is called when block option is selected
 // if there are selected days, it starts requesting for block to each website
 async function blockBtnClicked() {
@@ -127,7 +140,6 @@ async function blockBtnClicked() {
     document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
 }
-
 // this function is called when unblock option is selected
 // if there are selected days, it starts requesting for unblock to each website
 async function unblockBtnClicked() {
@@ -150,29 +162,10 @@ async function unblockBtnClicked() {
       document.querySelector(".response_status_pop a").click();
     }
     // adding api calls if user has registered in the website
-    const apicalls = [
-      rentamonApiCaller(
-        (website = "otherv2"),
-        (data = {
-          action: "available",
-          rentamon_room_id: routes["otherv2"]["room"],
-          days: selectedDate.join(","),
-        }),
-        (action = "blockUnblock")
-      ),
-    ]
-
-    if(regWebsites.includes('otaghak')){
-      apicalls.push(rentamonApiCaller(
-        (website = "otaghak"),
-        (data = {
-          rentamon_room_id: routes["otaghak"]["room"],
-          unblockDays: selectedDate.join(","),
-          blockDays: null,
-        }),
-        (action = "unblock")
-      ))
-    }
+    final_response = await performAction('setUnblock',selectedDate.join(","))
+    
+    
+    console.log('GOT HERE', final_response);
 
     console.log(regweb);
     const resps = await Promise.all(apicalls);
@@ -182,7 +175,6 @@ async function unblockBtnClicked() {
     document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
 }
-
 async function checkAuthOnLoad() {
   const accessToken = getCookie('auth_token');
   const refreshToken = getCookie('refresh_token');
