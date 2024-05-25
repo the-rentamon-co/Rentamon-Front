@@ -329,14 +329,10 @@ $(document).ready(function () {
               new persianDate(parseInt(z.getAttribute("data-unix"))).format(
                 "YYYY-MM-DD"
               )
-            );
+            ); 
           });
           document.querySelector('input[name="form_fields[dates]"').value =
             selectedDate;
-          document.querySelector('input[name="form_fields[h_f_r_i]"').value =
-            rentamon_user_id;
-          document.querySelector('input[name="form_fields[h_f_r_r_i]"').value =
-            rentamon_room_id;
         }
       }
     }
