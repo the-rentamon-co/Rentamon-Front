@@ -310,7 +310,7 @@ $(document).ready(function () {
 
   // price
   // this mutationobserver handels price pop up
-  const priceTargetElementId = "elementor-popup-modal-7426";
+  const priceTargetElementId = "elementor-popup-modal-16017";
   const priceObserver = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
       if (mutation.type === "childList") {
@@ -333,10 +333,6 @@ $(document).ready(function () {
           });
           document.querySelector('input[name="form_fields[dates]"').value =
             selectedDate;
-          document.querySelector('input[name="form_fields[h_f_r_i]"').value =
-            rentamon_user_id;
-          document.querySelector('input[name="form_fields[h_f_r_r_i]"').value =
-            rentamon_room_id;
         }
       }
     }
