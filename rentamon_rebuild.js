@@ -202,7 +202,7 @@ function priceBtnClicked() {
   if (selected.length > 0) {
     var price_div = document.createElement("div");
     price_div.style.display = "none";
-    price_div.className = "price-submit";
+    price_div.className = "price-submit-rebuild";
     document.body.appendChild(price_div);
     price_div.click();
   } else {
