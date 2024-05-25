@@ -278,10 +278,6 @@ async function unblockBtnClicked() {
     
     
     console.log('GOT HERE', final_response);
-
-    console.log(regweb);
-    const resps = await Promise.all(apicalls);
-    await rentamoning();
   } else {
     alert(messages.notSelectedDay);
     document.querySelector(".loading-overlay-calendar").style.display = "none";
@@ -500,7 +496,7 @@ async function performAction(actionType, days, price = 0, discount = 0) {
 
   switch (actionType) {
       case 'setPrice':
-          url = 'https://rentamon-api.liara.run/api/setprice/';
+          url = 'https://rentamon-api.liara.run/api/setprice';
           if (price === 0) throw new Error('Price is required for setPrice');
           data.price = price;
           break;
