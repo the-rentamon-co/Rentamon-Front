@@ -257,7 +257,6 @@ async function blockBtnClicked() {
 // if there are selected days, it starts requesting for unblock to each website
 async function unblockBtnClicked() {
 
-  document.querySelector(".loading-overlay-calendar").style.display = "flex";
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   if (selected.length > 0) {
@@ -275,7 +274,7 @@ async function unblockBtnClicked() {
       document.querySelector(".response_status_pop a").click();
     }
     // adding api calls if user has registered in the website
-    final_response = await performAction('setUnblock',selectedDate.join(","))
+    final_response = await performAction('setUnblock',selectedDate)
     
     
     console.log('GOT HERE', final_response);
@@ -514,7 +513,7 @@ async function performAction(actionType, days, price = 0, discount = 0) {
           url = 'https://rentamon-api.liara.run/api/setblock';
           break;
       case 'setUnblock':
-          url = 'https://rentamon-api.liara.run/api/setunblock/';
+          url = 'https://rentamon-api.liara.run/api/setunblock';
           break;
       default:
           throw new Error('Invalid action type');
