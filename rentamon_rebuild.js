@@ -23,7 +23,7 @@ async function rentamoning() {
   document.querySelectorAll("form").forEach((form) => form.removeEventListener("submit", rentamoning));
 
   // Show loading overlay
-  document.querySelector(".loading-overlay-calendar").style.display = "flex";
+  // document.querySelector(".loading-overlay-calendar").style.display = "flex";
 
   // Reset action inputs
   document.querySelectorAll('input[name="block"]').forEach((i) => (i.checked = false));
