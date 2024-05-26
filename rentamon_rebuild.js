@@ -10,6 +10,30 @@ let tehran = new Date(tehranTimestamp);
 let tehranzeroo = tehran.setHours(0, 0, 0, 0);
 
 
+const fetchData = async (url) => {
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
+
+// converting persian number into integer
+function persianToInteger(persianString) {
+  const persianNumerals = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+  const convertDigit = (digit) => persianNumerals.indexOf(digit);
+  const arabicString = persianString
+    .split("")
+    .map((char) => (persianNumerals.includes(char) ? convertDigit(char) : char))
+    .join("");
+  return parseInt(arabicString, 10);
+}
+
+// convert numbers into persian number string
+function convertToPersianNumber(number) {
+  const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+  return number.replace(/\d/g, (digit) => persianDigits[digit]);
+}
+
+
 url = {
   block: apiHostMainUrl + "/setblock/",
   unblock: apiHostMainUrl + "/setunblock/",
