@@ -20,23 +20,17 @@ url = {
 
 // this is the main function that fetches data from websites based on calendar
 async function rentamoning() {
-  document
-    .querySelectorAll("form")
-    .forEach((form) => form.removeEventListener("submit", rentamoning));
+  document.querySelectorAll("form").forEach((form) => form.removeEventListener("submit", rentamoning));
 
-  // starts loading when this function is called
-  // document.querySelector(".loading-overlay-calendar").style.display = "flex";
+  // Show loading overlay
+  document.querySelector(".loading-overlay-calendar").style.display = "flex";
 
-  // resets every action input
-  document
-    .querySelectorAll('input[name="block"]')
-    .forEach((i) => (i.checked = false));
+  // Reset action inputs
+  document.querySelectorAll('input[name="block"]').forEach((i) => (i.checked = false));
+  var availableDays = [];
 
-  
-  // selecting start and end of each days range
-  var allTds = document.querySelectorAll(
-    ".datepicker-day-view td:not(.disabled)"
-  );
+  // Select non-disabled days from the calendar
+  var allTds = document.querySelectorAll(".datepicker-day-view td:not(.disabled)");
   allTds.forEach((td) => {
     if (!td.firstElementChild.classList.contains("other-month")) {
       availableDays.push(td);
@@ -44,33 +38,68 @@ async function rentamoning() {
       td.classList.add("other-month");
     }
   });
+
   if (availableDays.length > 0) {
-    var days = document.querySelectorAll(
-      ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
-    );
+    var days = document.querySelectorAll(".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)");
     var range = [
-      new persianDate(
-        parseInt(availableDays[0].getAttribute("data-unix"))
-      ).format("YYYY-MM-DD"),
-      new persianDate(
-        parseInt(
-          availableDays[availableDays.length - 1].getAttribute("data-unix")
-        )
-      ).format("YYYY-MM-DD"),
-      new persianDate(
-        parseInt(
-          availableDays[availableDays.length - 1].getAttribute("data-unix")
-        )
-      )
-        .add("day", 1)
-        .format("YYYY-MM-DD"),
+      new persianDate(parseInt(availableDays[0].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+      new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+      new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).add("day", 1).format("YYYY-MM-DD"),
     ];
-    
-    
+
+    // Fetch calendar data from the unified API
+    const response = await fetch(`https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}`);
+    const result = await response.json();
+    const calendarData = result.calendar;
+
+    console.log(calendarData, 'Fetched calendar data');
+
     availableDays.forEach((day) => {
       day.removeEventListener("click", handleDayClick);
       day.addEventListener("click", handleDayClick);
     });
+
+    if (calendarData && calendarData.length > 0) {
+      for (let i = 0; i < availableDays.length; i++) {
+        let dayData = calendarData[i];
+        let status = dayData.status;
+        let price = dayData.price;
+        let discountPercentage = dayData.discount_percentage;
+
+        let origPrice = parseInt(price) / 1000 || null;
+        let discountedPrice = origPrice;
+
+        // Apply discount if available
+        if (discountPercentage) {
+          discountedPrice = origPrice - (origPrice * discountPercentage / 100);
+        }
+
+        // Update day UI based on the status and price information
+        if (status === "blocked") {
+          days[i].parentElement.classList.add("blocked-days");
+          days[i].parentElement.querySelector(".price").innerHTML = "";
+          days[i].parentElement.style.border = "0px solid";
+        } else {
+          days[i].parentElement.classList.remove("blocked-days");
+          days[i].parentElement.classList.remove("booked-days");
+          if (discountedPrice !== null) {
+            days[i].parentElement.querySelector(".price").innerHTML = convertToPersianNumber(discountedPrice.toLocaleString().replace(/,/g, "/"));
+            days[i].parentElement.style.border = "2px solid #8165D6";
+          } else {
+            days[i].parentElement.querySelector(".price").innerHTML = "";
+            days[i].parentElement.style.border = "0px solid";
+          }
+        }
+
+        // Update booking information
+        if (status === "booked") {
+          days[i].parentElement.classList.add("booked-days");
+          days[i].parentElement.querySelector(".reserved").innerHTML = dayData.website;
+        }
+      }
+    }
+
+    document.querySelector(".loading-overlay-calendar").style.display = "none";
   } else {
     document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
