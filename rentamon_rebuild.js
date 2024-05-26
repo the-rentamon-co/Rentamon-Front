@@ -119,7 +119,7 @@ async function rentamoning() {
         } else {
           days[i].parentElement.classList.remove("blocked-days");
           days[i].parentElement.classList.remove("booked-days");
-          if (discountedPrice !== null) {
+          if (discountedPrice !== 0) {
             days[i].parentElement.querySelector(".price").innerHTML = convertToPersianNumber(discountedPrice.toLocaleString().replace(/,/g, "/"));
             days[i].parentElement.style.border = "2px solid #8165D6";
           } else {
@@ -129,7 +129,7 @@ async function rentamoning() {
         }
 
         // Update booking information
-        if (status === "booked") {
+        if (status === "reserved") {
           days[i].parentElement.classList.add("booked-days");
           days[i].parentElement.querySelector(".reserved").innerHTML = dayData.website;
         }
