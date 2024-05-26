@@ -33,6 +33,28 @@ function convertToPersianNumber(number) {
   return number.replace(/\d/g, (digit) => persianDigits[digit]);
 }
 
+function reservedViewer(text){
+  switch (text){
+    case 'host':
+      return 'رزرو';
+    case 'jabama':
+      return 'جاباما';
+    case 'jajiga':
+      return 'جاجیگا';
+    case 'shab':
+      return 'شب';
+    case 'homsa':
+      return 'هومسا';
+    case 'mizboon':
+      return 'میزبون';
+    case 'mihmansho':
+      return 'میهمان شو';
+    case 'otaghak':
+      return 'اتاقک';
+    
+  }
+     
+}
 
 url = {
   block: apiHostMainUrl + "/setblock/",
@@ -131,7 +153,7 @@ async function rentamoning() {
         // Update booking information
         if (status === "reserved") {
           days[i].parentElement.classList.add("booked-days");
-          days[i].parentElement.querySelector(".reserved").innerHTML = dayData.website;
+          days[i].parentElement.querySelector(".reserved").innerHTML = reservedViewer(dayData.website);
         }
       }
     }
