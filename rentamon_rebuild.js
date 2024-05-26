@@ -48,7 +48,20 @@ async function rentamoning() {
     ];
 
     // Fetch calendar data from the unified API
-    const response = await fetch(`https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}`);
+    const authToken = getCookie('auth_token');
+    if (!authToken) {
+        throw new Error('No auth token found');
+    }
+    const headers = {
+      'Authorization': `Bearer ${authToken}`,
+      'Content-Type': 'application/json'
+    };
+
+    // Fetch calendar data from the unified API with headers
+    const response = await fetch(`https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}`, {
+      method: 'GET',
+      headers: headers
+    });
     const result = await response.json();
     const calendarData = result.calendar;
 
@@ -430,6 +443,10 @@ async function performAction(actionType, days, price = 0, discount = 0) {
           break;
       case 'setUnblock':
           url = 'https://rentamon-api.liara.run/api/setunblock';
+          break;
+      case 'setUnblock':
+          url = 'https://rentamon-api.liara.run/api/getcalendar';
+          method = 'GET'
           break;
       default:
           throw new Error('Invalid action type');
