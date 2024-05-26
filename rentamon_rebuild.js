@@ -31,8 +31,8 @@ async function rentamoning() {
   document
     .querySelectorAll('input[name="block"]')
     .forEach((i) => (i.checked = false));
-  var availableDays = [];
 
+  
   // selecting start and end of each days range
   var allTds = document.querySelectorAll(
     ".datepicker-day-view td:not(.disabled)"
@@ -66,183 +66,127 @@ async function rentamoning() {
         .format("YYYY-MM-DD"),
     ];
     
+    
     availableDays.forEach((day) => {
       day.removeEventListener("click", handleDayClick);
       day.addEventListener("click", handleDayClick);
     });
+  } else {
+    document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
-  // Assuming `response` is the JSON object received from the server
-  response = await performAction('getCalendar',start_date,end_date)
-      
-      
-  console.log('GOT HERE', response);
-  const calendarData = response.calendar;
+}
 
-  // Convert the calendarData into a map for easier access
-  const calendarMap = calendarData.reduce((map, entry) => {
-    map[entry.date] = entry;
-    return map;
-  }, {});
+// this is a function for when user selects a day, and that day need to get a class
+function handleDayClick(e) {
+  if (e.target.parentElement.tagName === "TD") {
+    e.target.parentElement.classList.toggle("selected");
+  } else if (e.target.tagName === "TD") {
+    e.target.classList.toggle("selected");
+  }
+}
 
-  const days = document.querySelectorAll('.table-days td');
-
-  days.forEach((day) => {
-    const unixDate = day.getAttribute('data-unix');
-    const persianDateInstance = new persianDate(parseInt(unixDate));
-    const formattedDate = persianDateInstance.format('YYYY-MM-DD');
-
-    if (calendarMap[formattedDate]) {
-      const { status, price, discount_percentage, website } = calendarMap[formattedDate];
-
-      if (status === 'blocked') {
-        day.classList.add('blocked-days');
-        day.querySelector('.price').innerHTML = '';
-        day.style.border = '0px solid';
-        day.querySelector('.reserved').innerHTML = ''; // Assuming no website name for blocked dates
-      } else {
-        day.classList.remove('blocked-days');
-        day.querySelector('.reserved').innerHTML = website;
-
-        if (price !== null) {
-          const origPrice = parseInt(price) / 1000;
-          const discountedPrice = discount_percentage ? origPrice * (1 - discount_percentage / 100) : origPrice;
-          day.querySelector('.price').innerHTML = convertToPersianNumber(discountedPrice.toLocaleString().replace(/,/g, "/"));
-
-          if (discountedPrice < origPrice) {
-            day.style.border = '2px solid #8165D6';
-          } else {
-            day.style.border = '0px solid';
-          }
-
-          day.setAttribute('price-from-rentamon', origPrice * 10000);
-        } else {
-          day.querySelector('.price').innerHTML = '';
-          day.style.border = '0px solid';
-        }
-      }
-    } else {
-      day.classList.remove('blocked-days');
-      day.querySelector('.price').innerHTML = '';
-      day.style.border = '0px solid';
-      day.querySelector('.reserved').innerHTML = '';
+// this function ckecks witch action btn is ckecked
+function checkAction() {
+  let action = document.querySelector('input[name="block"]:checked');
+  if (action) {
+    if (action.value === "block") {
+      blockBtnClicked();
+    } else if (action.value === "reserve") {
+      reserveOther();
+    } else if (action.value === "unblock") {
+      unblockBtnClicked();
     }
-  });
-
-  document.querySelector('.loading-overlay-calendar').style.display = 'none';
-
+  } else {
+    // alert(messages.notSelectedDay);
   }
+}
 
-  // this is a function for when user selects a day, and that day need to get a class
-  function handleDayClick(e) {
-    if (e.target.parentElement.tagName === "TD") {
-      e.target.parentElement.classList.toggle("selected");
-    } else if (e.target.tagName === "TD") {
-      e.target.classList.toggle("selected");
+function priceBtnClicked() {
+  let selected = document.querySelectorAll(".selected");
+  if (selected.length > 0) {
+    var price_div = document.createElement("div");
+    price_div.style.display = "none";
+    price_div.className = "price-submit2";
+    document.body.appendChild(price_div);
+    price_div.click();
+  } else {
+    alert(messages.notSelectedDay);
+  }
+}
+
+// this function is called when user select discount action
+// there is a elemntor pop up which is wating for a element with class discount-submit to be clicked and then it shows a pop up
+function discountBtnClicked() {
+  let selected = document.querySelectorAll(".selected");
+  if (selected.length > 0) {
+    var dis_div = document.createElement("div");
+    dis_div.style.display = "none";
+    dis_div.className = "discount-submit";
+    document.body.appendChild(dis_div);
+    dis_div.click();
+  } else {
+    alert(messages.notSelectedDay);
+  }
+}
+// this function is called when block option is selected
+// if there are selected days, it starts requesting for block to each website
+async function blockBtnClicked() {
+  // document.querySelector(".loading-overlay-calendar").style.display = "flex";
+  console.log("got here ")
+  let selected = document.querySelectorAll(".selected");
+  let selectedDate = [];
+  if (selected.length > 0) {
+    selected.forEach((z) => {
+      z.classList.remove("selected");
+      selectedDate.push(
+        new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+          "YYYY-MM-DD"
+        )
+      );
+    });
+    var response_status = document.querySelector(".response_status");
+    if (response_status) {
+      document.querySelector(".response_status_pop a").click();
     }
+    final_response = await performAction('setBlock',selectedDate)
+    
+    
+    console.log('GOT HERE', final_response);
+  } else {
+    alert(messages.notSelectedDay);
+    document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
+}
+// this function is called when unblock option is selected
+// if there are selected days, it starts requesting for unblock to each website
+async function unblockBtnClicked() {
 
-  // this function ckecks witch action btn is ckecked
-  function checkAction() {
-    let action = document.querySelector('input[name="block"]:checked');
-    if (action) {
-      if (action.value === "block") {
-        blockBtnClicked();
-      } else if (action.value === "reserve") {
-        reserveOther();
-      } else if (action.value === "unblock") {
-        unblockBtnClicked();
-      }
-    } else {
-      // alert(messages.notSelectedDay);
-    }
-  }
+  let selected = document.querySelectorAll(".selected");
+  let selectedDate = [];
+  if (selected.length > 0) {
+    selected.forEach((z) => {
+      z.classList.remove("selected");
+      selectedDate.push(
+        new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+          "YYYY-MM-DD"
+        )
+      );
+    });
+    var response_status = document.querySelector(".response_status");
 
-  function priceBtnClicked() {
-    let selected = document.querySelectorAll(".selected");
-    if (selected.length > 0) {
-      var price_div = document.createElement("div");
-      price_div.style.display = "none";
-      price_div.className = "price-submit2";
-      document.body.appendChild(price_div);
-      price_div.click();
-    } else {
-      alert(messages.notSelectedDay);
+    if (response_status) {
+      document.querySelector(".response_status_pop a").click();
     }
+    // adding api calls if user has registered in the website
+    final_response = await performAction('setUnblock',selectedDate)
+    
+    
+    console.log('GOT HERE', final_response);
+  } else {
+    alert(messages.notSelectedDay);
+    document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
-
-  // this function is called when user select discount action
-  // there is a elemntor pop up which is wating for a element with class discount-submit to be clicked and then it shows a pop up
-  function discountBtnClicked() {
-    let selected = document.querySelectorAll(".selected");
-    if (selected.length > 0) {
-      var dis_div = document.createElement("div");
-      dis_div.style.display = "none";
-      dis_div.className = "discount-submit";
-      document.body.appendChild(dis_div);
-      dis_div.click();
-    } else {
-      alert(messages.notSelectedDay);
-    }
-  }
-  // this function is called when block option is selected
-  // if there are selected days, it starts requesting for block to each website
-  async function blockBtnClicked() {
-    // document.querySelector(".loading-overlay-calendar").style.display = "flex";
-    console.log("got here ")
-    let selected = document.querySelectorAll(".selected");
-    let selectedDate = [];
-    if (selected.length > 0) {
-      selected.forEach((z) => {
-        z.classList.remove("selected");
-        selectedDate.push(
-          new persianDate(parseInt(z.getAttribute("data-unix"))).format(
-            "YYYY-MM-DD"
-          )
-        );
-      });
-      var response_status = document.querySelector(".response_status");
-      if (response_status) {
-        document.querySelector(".response_status_pop a").click();
-      }
-      final_response = await performAction('setBlock',selectedDate)
-      
-      
-      console.log('GOT HERE', final_response);
-    } else {
-      alert(messages.notSelectedDay);
-      document.querySelector(".loading-overlay-calendar").style.display = "none";
-    }
-  }
-  // this function is called when unblock option is selected
-  // if there are selected days, it starts requesting for unblock to each website
-  async function unblockBtnClicked() {
-
-    let selected = document.querySelectorAll(".selected");
-    let selectedDate = [];
-    if (selected.length > 0) {
-      selected.forEach((z) => {
-        z.classList.remove("selected");
-        selectedDate.push(
-          new persianDate(parseInt(z.getAttribute("data-unix"))).format(
-            "YYYY-MM-DD"
-          )
-        );
-      });
-      var response_status = document.querySelector(".response_status");
-
-      if (response_status) {
-        document.querySelector(".response_status_pop a").click();
-      }
-      // adding api calls if user has registered in the website
-      final_response = await performAction('setUnblock',selectedDate)
-      
-      
-      console.log('GOT HERE', final_response);
-    } else {
-      alert(messages.notSelectedDay);
-      document.querySelector(".loading-overlay-calendar").style.display = "none";
-    }
-  }
+}
 async function checkAuthOnLoad() {
   const accessToken = getCookie('auth_token');
   const refreshToken = getCookie('refresh_token');
@@ -448,7 +392,7 @@ async function performAction(actionType, days, price = 0, discount = 0) {
           data.price = price;
           break;
       case 'setDiscount':
-          url = 'https://rentamon-api.liara.run/api/setdiscount';
+          url = 'https://rentamon-api.liara.run/api/setdiscount/';
           if (discount === 0) throw new Error('Discount is required for setDiscount');
           data.discount = discount;
           break;
@@ -457,9 +401,6 @@ async function performAction(actionType, days, price = 0, discount = 0) {
           break;
       case 'setUnblock':
           url = 'https://rentamon-api.liara.run/api/setunblock';
-          break;
-      case 'getCalendar':
-          url = 'https://rentamon-api.liara.run/api/getcalendar';
           break;
       default:
           throw new Error('Invalid action type');
@@ -486,6 +427,7 @@ async function performAction(actionType, days, price = 0, discount = 0) {
       throw error;
   }
 }
+
 
 // for changing max date change value in maxDate: new persianDate
 $(window).on("load", function () {
