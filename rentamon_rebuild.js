@@ -104,14 +104,14 @@ async function rentamoning() {
     };
 
     // Fetch calendar data from the unified API with headers
-    const response = await fetch(`https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}`, {
-      method: 'GET',
-      headers: headers
-    });
-    const result = await response.json();
-    const calendarData = result.calendar;
+    // const response = await fetch(`https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}`, {
+    //   method: 'GET',
+    //   headers: headers
+    // });
+    // const result = await response.json();
+    // const calendarData = result.calendar;
 
-    console.log(calendarData, 'Fetched calendar data');
+    // console.log(calendarData, 'Fetched calendar data');
 
     availableDays.forEach((day) => {
       day.removeEventListener("click", handleDayClick);
@@ -120,13 +120,13 @@ async function rentamoning() {
 
     if (calendarData && calendarData.length > 0) {
       for (let i = 0; i < availableDays.length; i++) {
-        let dayData = calendarData[i];
-        let status = dayData.status;
-        let price = dayData.price;
+        let dayData = null // calendarData[i];
+        let status = null //dayData.status;
+        let price = null // dayData.price;
         let discountPercentage = dayData.discount_percentage;
 
-        let origPrice = parseInt(price) / 1000 || null;
-        let discountedPrice = origPrice;
+        let origPrice = null // parseInt(price) / 1000 || null;
+        let discountedPrice = null //origPrice;
 
         // Apply discount if available
         if (discountPercentage) {
