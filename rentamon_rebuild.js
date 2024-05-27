@@ -278,8 +278,8 @@ function setDisplay(selector, display) {
   document.querySelector(selector).style.display = display;
 }
 
-function setStyleToPending() {
-  for (var website of activeWebsites.data) {
+function setStyleToPending(websites = activeWebsites.data) {
+  for (var website of websites) {
     var row_selector = `.website_row.${website}`;
     var status_selector = `.elementor-section.${website} .status_pending`;
     setDisplay(row_selector, "block");
