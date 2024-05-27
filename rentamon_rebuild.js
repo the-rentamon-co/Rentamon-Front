@@ -490,7 +490,7 @@ async function performAction(actionType, days, price = 0, discount = 0) {
       case 'setUnblock':
           url = 'https://rentamon-api.liara.run/api/setunblock';
           break;
-      case 'setUnblock':
+      case 'getCalendar':
           url = 'https://rentamon-api.liara.run/api/getcalendar';
           method = 'GET'
           break;
