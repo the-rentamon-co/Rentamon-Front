@@ -230,7 +230,7 @@ function discountBtnClicked() {
   if (selected.length > 0) {
     var dis_div = document.createElement("div");
     dis_div.style.display = "none";
-    dis_div.className = "discount-submit";
+    dis_div.className = "discount-submit-rebuild";
     document.body.appendChild(dis_div);
     dis_div.click();
   } else {
@@ -374,7 +374,7 @@ $(document).ready(function () {
 
   // discount
   // this mutationobserver handels discount pop up
-  const discountTargetElementId = "elementor-popup-modal-7242";
+  const discountTargetElementId = "elementor-popup-modal-16027";
   const discountObserver = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
       if (mutation.type === "childList") {
