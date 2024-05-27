@@ -30,7 +30,7 @@
       }
     
         // Function to verify token
-    async function verifyToken(token) {
+     function verifyToken(token) {
         const url = 'https://rentamon-api.liara.run/auth/token/verify/';
         try {
             const response = await fetch(url, {
@@ -52,7 +52,7 @@
         }
     }
     
-  async function checkAuthOnLoad() {
+  function checkAuthOnLoad() {
       const accessToken = getCookie('auth_token');
       const refreshToken = getCookie('refresh_token');
       console.log('Refresh :', refreshToken);
