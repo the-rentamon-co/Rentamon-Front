@@ -259,6 +259,8 @@ async function blockBtnClicked() {
     }
     final_response = await performAction("setBlock", selectedDate);
 
+    setStatusStyle(final_response)
+
     console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
