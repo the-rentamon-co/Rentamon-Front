@@ -525,6 +525,11 @@ async function performAction(actionType, days, price = null, discount = null) {
       url = "https://rentamon-api.liara.run/api/getcalendar";
       method = "GET";
       break;
+
+    case "activeWebsites":
+      url = "https://rentamon-api.liara.run/api/websites";
+      method = "GET";
+      break;
     default:
       throw new Error("Invalid action type");
   }
