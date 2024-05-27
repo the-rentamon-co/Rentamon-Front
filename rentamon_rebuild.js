@@ -63,7 +63,6 @@ url = {
 
 // this is the main function that fetches data from websites based on calendar
 async function rentamoning() {
-
   // getting active website list
   // NOT USING AWAIT
   // TODO: add await if needed
@@ -547,7 +546,7 @@ async function performAction(actionType, days, price = null, discount = null) {
         Authorization: `Bearer ${authToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: method !== "GET" ? JSON.stringify(data) : undefined,
     });
 
     if (!response.ok) {
