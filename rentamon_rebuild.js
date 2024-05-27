@@ -273,8 +273,8 @@ function setDisplay(selector, display) {
 
 function setStatusStyle(responses) {
   const response_mapper = {
-    succeed: "status_true",
-    failed: "status_failed",
+    succeed: ".status_true",
+    failed: ".status_failed",
   };
 
   for (var website in response) {
