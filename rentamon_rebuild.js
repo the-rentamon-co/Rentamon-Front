@@ -63,6 +63,12 @@ url = {
 
 // this is the main function that fetches data from websites based on calendar
 async function rentamoning() {
+
+  // getting active website list
+  // NOT USING AWAIT
+  // TODO: add await if needed
+  // TODO: add null for days in the main function if needed
+  const activeWebsites = performAction("activeWebsites", null);
   document
     .querySelectorAll("form")
     .forEach((form) => form.removeEventListener("submit", rentamoning));
