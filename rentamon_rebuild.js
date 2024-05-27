@@ -9,7 +9,6 @@ let tehranTimestamp = currentDate.toLocaleString("en-US", {
 let tehran = new Date(tehranTimestamp);
 let tehranzeroo = tehran.setHours(0, 0, 0, 0);
 
-
 const fetchData = async (url) => {
   const response = await fetch(url);
   const data = await response.json();
@@ -33,27 +32,25 @@ function convertToPersianNumber(number) {
   return number.replace(/\d/g, (digit) => persianDigits[digit]);
 }
 
-function reservedViewer(text){
-  switch (text){
-    case 'host':
-      return 'رزرو';
-    case 'jabama':
-      return 'جاباما';
-    case 'jajiga':
-      return 'جاجیگا';
-    case 'shab':
-      return 'شب';
-    case 'homsa':
-      return 'هومسا';
-    case 'mizboon':
-      return 'میزبون';
-    case 'mihmansho':
-      return 'میهمان شو';
-    case 'otaghak':
-      return 'اتاقک';
-    
+function reservedViewer(text) {
+  switch (text) {
+    case "host":
+      return "رزرو";
+    case "jabama":
+      return "جاباما";
+    case "jajiga":
+      return "جاجیگا";
+    case "shab":
+      return "شب";
+    case "homsa":
+      return "هومسا";
+    case "mizboon":
+      return "میزبون";
+    case "mihmansho":
+      return "میهمان شو";
+    case "otaghak":
+      return "اتاقک";
   }
-     
 }
 
 url = {
@@ -62,21 +59,27 @@ url = {
   calendar: apiHostMainUrl + "/getcalendar",
   price: apiHostMainUrl + "/setprice/",
   discount: apiHostMainUrl + "/setdiscount/",
-}
+};
 
 // this is the main function that fetches data from websites based on calendar
 async function rentamoning() {
-  document.querySelectorAll("form").forEach((form) => form.removeEventListener("submit", rentamoning));
+  document
+    .querySelectorAll("form")
+    .forEach((form) => form.removeEventListener("submit", rentamoning));
 
   // Show loading overlay
   // document.querySelector(".loading-overlay-calendar").style.display = "flex";
 
   // Reset action inputs
-  document.querySelectorAll('input[name="block"]').forEach((i) => (i.checked = false));
+  document
+    .querySelectorAll('input[name="block"]')
+    .forEach((i) => (i.checked = false));
   var availableDays = [];
 
   // Select non-disabled days from the calendar
-  var allTds = document.querySelectorAll(".datepicker-day-view td:not(.disabled)");
+  var allTds = document.querySelectorAll(
+    ".datepicker-day-view td:not(.disabled)"
+  );
   allTds.forEach((td) => {
     if (!td.firstElementChild.classList.contains("other-month")) {
       availableDays.push(td);
@@ -86,21 +89,35 @@ async function rentamoning() {
   });
 
   if (availableDays.length > 0) {
-    var days = document.querySelectorAll(".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)");
+    var days = document.querySelectorAll(
+      ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
+    );
     var range = [
-      new persianDate(parseInt(availableDays[0].getAttribute("data-unix"))).format("YYYY-MM-DD"),
-      new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
-      new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).add("day", 1).format("YYYY-MM-DD"),
+      new persianDate(
+        parseInt(availableDays[0].getAttribute("data-unix"))
+      ).format("YYYY-MM-DD"),
+      new persianDate(
+        parseInt(
+          availableDays[availableDays.length - 1].getAttribute("data-unix")
+        )
+      ).format("YYYY-MM-DD"),
+      new persianDate(
+        parseInt(
+          availableDays[availableDays.length - 1].getAttribute("data-unix")
+        )
+      )
+        .add("day", 1)
+        .format("YYYY-MM-DD"),
     ];
 
     // Fetch calendar data from the unified API
-    const authToken = getCookie('auth_token');
+    const authToken = getCookie("auth_token");
     if (!authToken) {
-        throw new Error('No auth token found');
+      throw new Error("No auth token found");
     }
     const headers = {
-      'Authorization': `Bearer ${authToken}`,
-      'Content-Type': 'application/json'
+      Authorization: `Bearer ${authToken}`,
+      "Content-Type": "application/json",
     };
 
     // Fetch calendar data from the unified API with headers
@@ -120,17 +137,17 @@ async function rentamoning() {
 
     if (calendarData && calendarData.length > 0) {
       for (let i = 0; i < availableDays.length; i++) {
-        let dayData = null // calendarData[i];
-        let status = null //dayData.status;
-        let price = null // dayData.price;
+        let dayData = null; // calendarData[i];
+        let status = null; //dayData.status;
+        let price = null; // dayData.price;
         let discountPercentage = dayData.discount_percentage;
 
-        let origPrice = null // parseInt(price) / 1000 || null;
-        let discountedPrice = null //origPrice;
+        let origPrice = null; // parseInt(price) / 1000 || null;
+        let discountedPrice = null; //origPrice;
 
         // Apply discount if available
         if (discountPercentage) {
-          discountedPrice = origPrice - (origPrice * discountPercentage / 100);
+          discountedPrice = origPrice - (origPrice * discountPercentage) / 100;
         }
 
         // Update day UI based on the status and price information
@@ -142,7 +159,10 @@ async function rentamoning() {
           days[i].parentElement.classList.remove("blocked-days");
           days[i].parentElement.classList.remove("booked-days");
           if (discountedPrice !== 0) {
-            days[i].parentElement.querySelector(".price").innerHTML = convertToPersianNumber(discountedPrice.toLocaleString().replace(/,/g, "/"));
+            days[i].parentElement.querySelector(".price").innerHTML =
+              convertToPersianNumber(
+                discountedPrice.toLocaleString().replace(/,/g, "/")
+              );
             days[i].parentElement.style.border = "2px solid #8165D6";
           } else {
             days[i].parentElement.querySelector(".price").innerHTML = "";
@@ -153,7 +173,8 @@ async function rentamoning() {
         // Update booking information
         if (status === "reserved") {
           days[i].parentElement.classList.add("booked-days");
-          days[i].parentElement.querySelector(".reserved").innerHTML = reservedViewer(dayData.website);
+          days[i].parentElement.querySelector(".reserved").innerHTML =
+            reservedViewer(dayData.website);
         }
       }
     }
@@ -220,7 +241,7 @@ function discountBtnClicked() {
 // if there are selected days, it starts requesting for block to each website
 async function blockBtnClicked() {
   // document.querySelector(".loading-overlay-calendar").style.display = "flex";
-  console.log("got here ")
+  console.log("got here ");
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   if (selected.length > 0) {
@@ -236,19 +257,23 @@ async function blockBtnClicked() {
     if (response_status) {
       document.querySelector(".response_status_pop a").click();
     }
-    final_response = await performAction('setBlock',selectedDate)
-    
-    
-    console.log('GOT HERE', final_response);
+    final_response = await performAction("setBlock", selectedDate);
+
+    console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
     document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
 }
+
+// a function for changin display of an element
+function setDisplay(selector, display) {
+  document.querySelector(selector).style.display = display;
+}
+
 // this function is called when unblock option is selected
 // if there are selected days, it starts requesting for unblock to each website
 async function unblockBtnClicked() {
-
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   if (selected.length > 0) {
@@ -266,40 +291,36 @@ async function unblockBtnClicked() {
       document.querySelector(".response_status_pop a").click();
     }
     // adding api calls if user has registered in the website
-    final_response = await performAction('setUnblock',selectedDate)
-    
-    
-    console.log('GOT HERE', final_response);
+    final_response = await performAction("setUnblock", selectedDate);
+
+    console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
     document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
 }
 async function checkAuthOnLoad() {
-  const accessToken = getCookie('auth_token');
-  const refreshToken = getCookie('refresh_token');
+  const accessToken = getCookie("auth_token");
+  const refreshToken = getCookie("refresh_token");
 
   if (!accessToken || !refreshToken) {
     return false;
   }
 
-  const isAccessTokenValid = await verifyToken(accessToken, 'access');
+  const isAccessTokenValid = await verifyToken(accessToken, "access");
   if (!isAccessTokenValid) {
-    const isRefreshTokenValid = await verifyToken(refreshToken, 'refresh');
+    const isRefreshTokenValid = await verifyToken(refreshToken, "refresh");
     if (!isRefreshTokenValid) {
       return false;
     } else {
-      return false // TODO : adding the refresh token handler 
+      return false; // TODO : adding the refresh token handler
     }
-  }else{
-    return true
+  } else {
+    return true;
   }
 }
 
-
 $(document).ready(function () {
- 
-
   // price
   // this mutationobserver handels price pop up
   const priceTargetElementId = "elementor-popup-modal-16017";
@@ -321,7 +342,7 @@ $(document).ready(function () {
               new persianDate(parseInt(z.getAttribute("data-unix"))).format(
                 "YYYY-MM-DD"
               )
-            ); 
+            );
           });
           document.querySelector('input[name="form_fields[dates]"').value =
             selectedDate;
@@ -350,7 +371,7 @@ $(document).ready(function () {
         if (targetElement) {
           let selected = document.querySelectorAll(".selected");
           let selectedDate = [];
-          let jabamaPrice = []; 
+          let jabamaPrice = [];
           selected.forEach((z) => {
             z.classList.remove("selected");
             selectedDate.push(
@@ -407,8 +428,6 @@ $(document).ready(function () {
 
   form_submited.observe(document.body, { childList: true, subtree: true });
 
-
-
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
     elem.addEventListener("change", (e) => {
@@ -454,72 +473,71 @@ function isActiveHandler(id, isRed) {
   }
 }
 
-
 // Function to get a cookie by name
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
+  if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
 // Function to perform the action
 async function performAction(actionType, days, price = 0, discount = 0) {
-  const authToken = getCookie('auth_token');
+  const authToken = getCookie("auth_token");
   if (!authToken) {
-      throw new Error('No auth token found');
+    throw new Error("No auth token found");
   }
 
-  let url = '';
-  let method = 'POST';
+  let url = "";
+  let method = "POST";
   let data = { days };
 
   switch (actionType) {
-      case 'setPrice':
-          url = 'https://rentamon-api.liara.run/api/setprice';
-          if (price === 0) throw new Error('Price is required for setPrice');
-          data.price = price;
-          break;
-      case 'setDiscount':
-          url = 'https://rentamon-api.liara.run/api/setdiscount/';
-          if (discount === 0) throw new Error('Discount is required for setDiscount');
-          data.discount = discount;
-          break;
-      case 'setBlock':
-          url = 'https://rentamon-api.liara.run/api/setblock';
-          break;
-      case 'setUnblock':
-          url = 'https://rentamon-api.liara.run/api/setunblock';
-          break;
-      case 'getCalendar':
-          url = 'https://rentamon-api.liara.run/api/getcalendar';
-          method = 'GET'
-          break;
-      default:
-          throw new Error('Invalid action type');
+    case "setPrice":
+      url = "https://rentamon-api.liara.run/api/setprice";
+      if (price === 0) throw new Error("Price is required for setPrice");
+      data.price = price;
+      break;
+    case "setDiscount":
+      url = "https://rentamon-api.liara.run/api/setdiscount/";
+      if (discount === 0)
+        throw new Error("Discount is required for setDiscount");
+      data.discount = discount;
+      break;
+    case "setBlock":
+      url = "https://rentamon-api.liara.run/api/setblock";
+      break;
+    case "setUnblock":
+      url = "https://rentamon-api.liara.run/api/setunblock";
+      break;
+    case "getCalendar":
+      url = "https://rentamon-api.liara.run/api/getcalendar";
+      method = "GET";
+      break;
+    default:
+      throw new Error("Invalid action type");
   }
 
   try {
-      const response = await fetch(url, {
-          method: method,
-          headers: {
-              'Authorization': `Bearer ${authToken}`,
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-      });
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
-      if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-      }
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
-      const result = await response.json();
-      return result;
+    const result = await response.json();
+    return result;
   } catch (error) {
-      console.error('Error performing action:', error);
-      throw error;
+    console.error("Error performing action:", error);
+    throw error;
   }
 }
-
 
 // for changing max date change value in maxDate: new persianDate
 $(window).on("load", function () {
