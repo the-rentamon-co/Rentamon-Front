@@ -493,7 +493,7 @@ function getCookie(name) {
 }
 
 // Function to perform the action
-async function performAction(actionType, days, price = 0, discount = 0) {
+async function performAction(actionType, days, price = null, discount = null) {
   const authToken = getCookie("auth_token");
   if (!authToken) {
     throw new Error("No auth token found");
@@ -511,7 +511,7 @@ async function performAction(actionType, days, price = 0, discount = 0) {
       break;
     case "setDiscount":
       url = "https://rentamon-api.liara.run/api/setdiscount/";
-      if (discount === 0)
+      if (discount === null)
         throw new Error("Discount is required for setDiscount");
       data.discount = discount;
       break;
