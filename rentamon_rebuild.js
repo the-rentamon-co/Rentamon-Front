@@ -277,9 +277,9 @@ function setStatusStyle(responses) {
     failed: ".status_failed",
   };
 
-  for (var website in response) {
+  for (var website in responses) {
     var row_selector = `.website_row.${website}`;
-    var status = response[website];
+    var status = responses[website];
     var status_selector = `.elementor-section.${website} ${response_mapper[status]}`;
 
     setDisplay(row_selector, "block");
