@@ -259,7 +259,7 @@ async function blockBtnClicked() {
     }
     final_response = await performAction("setBlock", selectedDate);
 
-    setStatusStyle(final_response)
+    setStatusStyle(final_response.data)
 
     console.log("GOT HERE", final_response);
   } else {
