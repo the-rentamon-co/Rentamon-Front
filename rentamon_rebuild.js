@@ -8,6 +8,7 @@ let tehranTimestamp = currentDate.toLocaleString("en-US", {
 });
 let tehran = new Date(tehranTimestamp);
 let tehranzeroo = tehran.setHours(0, 0, 0, 0);
+let activeWebsites
 
 const fetchData = async (url) => {
   const response = await fetch(url);
@@ -67,7 +68,7 @@ async function rentamoning() {
   // NOT USING AWAIT
   // TODO: add await if needed
   // TODO: add null for days in the main function if needed
-  const activeWebsites = performAction("activeWebsites", null);
+  activeWebsites = performAction("activeWebsites", null);
   document
     .querySelectorAll("form")
     .forEach((form) => form.removeEventListener("submit", rentamoning));
