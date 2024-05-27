@@ -309,7 +309,7 @@ async function unblockBtnClicked() {
     }
     // adding api calls if user has registered in the website
     final_response = await performAction("setUnblock", selectedDate);
-
+    setStatusStyle(final_response.data)
     console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
