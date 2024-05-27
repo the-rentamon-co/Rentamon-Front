@@ -279,7 +279,7 @@ function setDisplay(selector, display) {
 }
 
 function setStyleToPending() {
-  for (var website in activeWebsites.data) {
+  for (var website of activeWebsites.data) {
     var row_selector = `.website_row.${website}`;
     var status_selector = `.elementor-section.${website} .status_pending`;
     setDisplay(row_selector, "block");
