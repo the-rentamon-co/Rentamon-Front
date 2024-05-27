@@ -8,7 +8,7 @@ let tehranTimestamp = currentDate.toLocaleString("en-US", {
 });
 let tehran = new Date(tehranTimestamp);
 let tehranzeroo = tehran.setHours(0, 0, 0, 0);
-let activeWebsites
+let activeWebsites;
 
 const fetchData = async (url) => {
   const response = await fetch(url);
@@ -260,6 +260,7 @@ async function blockBtnClicked() {
     var response_status = document.querySelector(".response_status");
     if (response_status) {
       document.querySelector(".response_status_pop a").click();
+      setStyleToPending();
     }
     final_response = await performAction("setBlock", selectedDate);
 
@@ -277,18 +278,30 @@ function setDisplay(selector, display) {
   document.querySelector(selector).style.display = display;
 }
 
+function setStyleToPending() {
+  for (var website in activeWebsites.data) {
+    var row_selector = `.website_row.${website}`;
+    var status_selector = `.elementor-section.${website} .status_pending`;
+    setDisplay(row_selector, "block");
+    setDisplay(status_selector, "block");
+  }
+}
+
 function setStatusStyle(responses) {
   const response_mapper = {
     succeed: ".status_true",
     failed: ".status_false",
+    pending: ".status_pending",
   };
 
   for (var website in responses) {
-    var row_selector = `.website_row.${website}`;
+    // var row_selector = `.website_row.${website}`;
     var status = responses[website];
     var status_selector = `.elementor-section.${website} ${response_mapper[status]}`;
+    var pending_selector = `.elementor-section.${website} ${response_mapper.pending}`;
 
-    setDisplay(row_selector, "block");
+    // setDisplay(row_selector, "block");
+    setDisplay(pending_selector, "none");
     setDisplay(status_selector, "block");
   }
 }
@@ -310,6 +323,7 @@ async function unblockBtnClicked() {
 
     if (response_status) {
       document.querySelector(".response_status_pop a").click();
+      setStyleToPending();
     }
     // adding api calls if user has registered in the website
     final_response = await performAction("setUnblock", selectedDate);
