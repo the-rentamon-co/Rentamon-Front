@@ -510,7 +510,7 @@ async function performAction(actionType, days, price = null, discount = null) {
       data.price = price;
       break;
     case "setDiscount":
-      url = "https://rentamon-api.liara.run/api/setdiscount/";
+      url = "https://rentamon-api.liara.run/api/setdiscount";
       if (discount === null)
         throw new Error("Discount is required for setDiscount");
       data.discount = discount;
