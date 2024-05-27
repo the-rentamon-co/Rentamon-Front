@@ -271,6 +271,20 @@ function setDisplay(selector, display) {
   document.querySelector(selector).style.display = display;
 }
 
+function setStatusStyle(responses) {
+  const response_mapper = {
+    succeed: "status_true",
+    failed: "status_failed",
+  };
+
+  for (var website in response) {
+    var row_selector = `.website_row.${website}`;
+    var status_selector = response_mapper.response.website.status;
+
+    setDisplay(row_selector, "block");
+    setDisplay(status_selector, "block");
+  }
+}
 // this function is called when unblock option is selected
 // if there are selected days, it starts requesting for unblock to each website
 async function unblockBtnClicked() {
