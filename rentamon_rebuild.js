@@ -328,7 +328,9 @@ async function blockBtnClicked() {
     final_response = await performAction("setBlock", selectedDate);
 
     status_responses = Object.keys(final_response.data);
+    console.log(status_responses)
     if (status_responses.every((rep) => rep === "succeed")) {
+      console.log("GOT in if");
       setBlockHelper(selected);
     }
     setStatusStyle(final_response.data);
