@@ -80,7 +80,7 @@ function priceHandeler(element, status, main_price, discounted_price) {
 async function rentamoning() {
   // getting active website list
   // TODO: add null for days in the main function if needed
-  activeWebsites = await performAction("activeWebsites", null);
+  // activeWebsites = await performAction("activeWebsites", null);
   document
     .querySelectorAll("form")
     .forEach((form) => form.removeEventListener("submit", rentamoning));
@@ -148,6 +148,7 @@ async function rentamoning() {
     );
     const result = await response.json();
     const calendarData = result.calendar;
+    activeWebsites = result.status
 
     console.log(calendarData, "Fetched calendar data");
 
