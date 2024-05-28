@@ -92,10 +92,9 @@ function setAvailableHelper(elements) {
 }
 function setBookedkHelper(elements) {
   elements.forEach((elm) => {
-    elm.parentElement.classList.add("booked-days");
-    elm.parentElement.querySelector(".reserved").innerHTML = reservedViewer(
-      dayData.website
-    );
+    elm.elem.parentElement.classList.add("booked-days");
+    elm.elem.parentElement.querySelector(".reserved").innerHTML =
+      reservedViewer(elm.website);
   });
 }
 
@@ -204,7 +203,7 @@ async function rentamoning() {
             break;
 
           case "reserved":
-            setBookedkHelper([days[i]]);
+            setBookedkHelper([{ elem: days[i], website: dayData.website }]);
             // days[i].parentElement.classList.add("booked-days");
             // days[i].parentElement.querySelector(".reserved").innerHTML =
             //   reservedViewer(dayData.website);
