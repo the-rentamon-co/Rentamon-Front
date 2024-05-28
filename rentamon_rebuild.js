@@ -71,7 +71,7 @@ function priceHandeler(element, status, main_price, discounted_price) {
         discounted_price.toLocaleString().replace(/,/g, "/")
       );
     element.parentElement.classList.add("discounted-days");
-  } else {
+  } else if (main_price) {
     element.parentElement.querySelector(".price").innerHTML =
       convertToPersianNumber(main_price.toLocaleString().replace(/,/g, "/"));
   }

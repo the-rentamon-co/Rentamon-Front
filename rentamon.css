@@ -55,7 +55,7 @@ body {
 }
 
 .discounted-days {
-  border: 2px solid #8165D6
+  border: 2px solid #8165D6 !important;
 }
 
 .booked-days {
