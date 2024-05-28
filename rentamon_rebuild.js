@@ -213,6 +213,21 @@ async function rentamoning() {
     const calendarData = result.calendar;
     activeWebsites = result.status;
 
+    for (let website in activeWebsites) {
+      if (activeWebsites.website === "succeed") {
+        isActiveHandler(websiteWidgets.website.icon_selector, false);
+      } else {
+        isActiveHandler(websiteWidgets.website.icon_selector, true);
+        check_is_valid(
+          websiteWidgets.website.icon_selector,
+          websiteWidgets.website.popup_id_selector
+        );
+        document
+          .querySelector(websiteWidgets.website.popup_link_selector)
+          .click();
+      }
+    }
+
     console.log(calendarData, "Fetched calendar data");
 
     availableDays.forEach((day) => {
