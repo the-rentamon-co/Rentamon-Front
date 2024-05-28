@@ -76,6 +76,13 @@ function priceHandeler(element, status, main_price, discounted_price) {
       convertToPersianNumber(main_price.toLocaleString().replace(/,/g, "/"));
   }
 }
+
+function setBlockHelper(elements) {
+  elements.forEach((elm) => {
+    elm.parentElement.classList.add("blocked-days");
+    elm.parentElement.querySelector(".price").innerHTML = "";
+  });
+}
 // this is the main function that fetches data from websites based on calendar
 async function rentamoning() {
   // getting active website list
@@ -148,7 +155,7 @@ async function rentamoning() {
     );
     const result = await response.json();
     const calendarData = result.calendar;
-    activeWebsites = result.status
+    activeWebsites = result.status;
 
     console.log(calendarData, "Fetched calendar data");
 
@@ -174,9 +181,9 @@ async function rentamoning() {
 
         switch (status) {
           case "blocked":
-            days[i].parentElement.classList.add("blocked-days");
-            days[i].parentElement.querySelector(".price").innerHTML = "";
-
+            setBlockHelper(days[i]);
+            // days[i].parentElement.classList.add("blocked-days");
+            // days[i].parentElement.querySelector(".price").innerHTML = "";
             priceHandeler(days[i], status, origPrice, discountedPrice);
             break;
 
