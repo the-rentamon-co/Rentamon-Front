@@ -10,6 +10,44 @@ let tehran = new Date(tehranTimestamp);
 let tehranzeroo = tehran.setHours(0, 0, 0, 0);
 let activeWebsites;
 
+const websiteWidgets = {
+  jabama: {
+    popup_id_selector: "#webdisconnected",
+    popup_link_selector: "#webdisconnected a",
+    icon_selector: "#jabama_icon_connected",
+  },
+  jajiga: {
+    popup_id_selector: "#webdisconnected_jajiga",
+    popup_link_selector: "#webdisconnected_jajiga a",
+    icon_selector: "#jajiga_icon_connected",
+  },
+  shab: {
+    popup_id_selector: "#webdisconnected_shab",
+    popup_link_selector: "#webdisconnected_shab a",
+    icon_selector: "#shab_icon_connected",
+  },
+  mihmansho: {
+    popup_id_selector: "#webdisconnected_mihmansho",
+    popup_link_selector: "#webdisconnected_mihmansho a",
+    icon_selector: "#mihmansho_icon_connected",
+  },
+  homsa: {
+    popup_id_selector: "#webdisconnected_homsa",
+    popup_link_selector: "#webdisconnected_homsa a",
+    icon_selector: "#homsa_icon_connected",
+  },
+  otaghak: {
+    popup_id_selector: "#webdisconnected_otaghak",
+    popup_link_selector: "#webdisconnected_otaghak a",
+    icon_selector: "#otaghak_icon_connected",
+  },
+  mizboon: {
+    popup_id_selector: "#webdisconnected_mizboon",
+    popup_link_selector: "#webdisconnected_mizboon a",
+    icon_selector: "#mizboon_icon_connected",
+  },
+};
+
 const fetchData = async (url) => {
   const response = await fetch(url);
   const data = await response.json();
@@ -174,6 +212,21 @@ async function rentamoning() {
     const result = await response.json();
     const calendarData = result.calendar;
     activeWebsites = result.status;
+
+    for (let website in activeWebsites) {
+      if (activeWebsites.website === "succeed") {
+        isActiveHandler(websiteWidgets.website.icon_selector, false);
+      } else {
+        isActiveHandler(websiteWidgets.website.icon_selector, true);
+        check_is_valid(
+          websiteWidgets.website.icon_selector,
+          websiteWidgets.website.popup_id_selector
+        );
+        document
+          .querySelector(websiteWidgets.website.popup_link_selector)
+          .click();
+      }
+    }
 
     console.log(calendarData, "Fetched calendar data");
 
