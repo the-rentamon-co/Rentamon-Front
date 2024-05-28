@@ -181,7 +181,7 @@ async function rentamoning() {
 
         switch (status) {
           case "blocked":
-            setBlockHelper(days[i]);
+            setBlockHelper([days[i]]);
             // days[i].parentElement.classList.add("blocked-days");
             // days[i].parentElement.querySelector(".price").innerHTML = "";
             priceHandeler(days[i], status, origPrice, discountedPrice);
