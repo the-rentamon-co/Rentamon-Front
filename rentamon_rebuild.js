@@ -83,6 +83,22 @@ function setBlockHelper(elements) {
     elm.parentElement.querySelector(".price").innerHTML = "";
   });
 }
+
+function setAvailableHelper(elements) {
+  elements.forEach((elm) => {
+    elm.parentElement.classList.remove("blocked-days");
+    elm.parentElement.classList.remove("booked-days");
+  });
+}
+function setBookedkHelper(elements) {
+  elements.forEach((elm) => {
+    elm.parentElement.classList.add("booked-days");
+    elm.parentElement.querySelector(".reserved").innerHTML = reservedViewer(
+      dayData.website
+    );
+  });
+}
+
 // this is the main function that fetches data from websites based on calendar
 async function rentamoning() {
   // getting active website list
@@ -188,15 +204,17 @@ async function rentamoning() {
             break;
 
           case "reserved":
-            days[i].parentElement.classList.add("booked-days");
-            days[i].parentElement.querySelector(".reserved").innerHTML =
-              reservedViewer(dayData.website);
+            setBookedkHelper([days[i]]);
+            // days[i].parentElement.classList.add("booked-days");
+            // days[i].parentElement.querySelector(".reserved").innerHTML =
+            //   reservedViewer(dayData.website);
             priceHandeler(days[i], status, origPrice, discountedPrice);
             break;
 
           default:
-            days[i].parentElement.classList.remove("blocked-days");
-            days[i].parentElement.classList.remove("booked-days");
+            setAvailableHelper([days[i]]);
+            // days[i].parentElement.classList.remove("blocked-days");
+            // days[i].parentElement.classList.remove("booked-days");
             priceHandeler(days[i], status, origPrice, discountedPrice);
         }
 
