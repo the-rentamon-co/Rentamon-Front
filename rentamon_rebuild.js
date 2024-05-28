@@ -328,13 +328,10 @@ async function blockBtnClicked() {
     final_response = await performAction("setBlock", selectedDate);
 
     status_responses = Object.keys(final_response.data);
-
     if (status_responses.every((rep) => rep === "succeed")) {
       setBlockHelper(selected);
     }
-
     setStatusStyle(final_response.data);
-
     console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
@@ -396,6 +393,10 @@ async function unblockBtnClicked() {
     }
     // adding api calls if user has registered in the website
     final_response = await performAction("setUnblock", selectedDate);
+    status_responses = Object.keys(final_response.data);
+    if (status_responses.every((rep) => rep === "succeed")) {
+      setAvailableHelper(selected);
+    }
     setStatusStyle(final_response.data);
     console.log("GOT HERE", final_response);
   } else {
