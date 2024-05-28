@@ -214,16 +214,16 @@ async function rentamoning() {
     activeWebsites = result.status;
 
     for (let website in activeWebsites) {
-      if (activeWebsites.website === "succeed") {
-        isActiveHandler(websiteWidgets.website.icon_selector, false);
+      if (activeWebsites[website] === "succeed") {
+        isActiveHandler(websiteWidgets[website].icon_selector, false);
       } else {
-        isActiveHandler(websiteWidgets.website.icon_selector, true);
+        isActiveHandler(websiteWidgets[website].icon_selector, true);
         check_is_valid(
-          websiteWidgets.website.icon_selector,
-          websiteWidgets.website.popup_id_selector
+          websiteWidgets[website].icon_selector,
+          websiteWidgets[website].popup_id_selector
         );
         document
-          .querySelector(websiteWidgets.website.popup_link_selector)
+          .querySelector(websiteWidgets[website].popup_link_selector)
           .click();
       }
     }
