@@ -311,6 +311,7 @@ async function blockBtnClicked() {
   console.log("got here ");
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
+  let spans = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
@@ -319,6 +320,8 @@ async function blockBtnClicked() {
           "YYYY-MM-DD"
         )
       );
+
+      spans.push(z.querySelector("span"));
     });
     var response_status = document.querySelector(".response_status");
     if (response_status) {
@@ -326,12 +329,9 @@ async function blockBtnClicked() {
       setStyleToPending();
     }
     final_response = await performAction("setBlock", selectedDate);
-
     status_responses = Object.values(final_response.data);
-    console.log(status_responses)
     if (status_responses.every((rep) => rep === "succeed")) {
-      console.log("GOT in if");
-      setBlockHelper(selected);
+      setBlockHelper(spans);
     }
     setStatusStyle(final_response.data);
     console.log("GOT HERE", final_response);
@@ -378,6 +378,8 @@ function setStatusStyle(responses) {
 async function unblockBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
+  let spans = [];
+
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
@@ -386,6 +388,7 @@ async function unblockBtnClicked() {
           "YYYY-MM-DD"
         )
       );
+      spans.push(z.querySelector("span"));
     });
     var response_status = document.querySelector(".response_status");
 
@@ -397,7 +400,7 @@ async function unblockBtnClicked() {
     final_response = await performAction("setUnblock", selectedDate);
     status_responses = Object.values(final_response.data);
     if (status_responses.every((rep) => rep === "succeed")) {
-      setAvailableHelper(selected);
+      setAvailableHelper(spans);
     }
     setStatusStyle(final_response.data);
     console.log("GOT HERE", final_response);
