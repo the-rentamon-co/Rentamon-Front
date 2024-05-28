@@ -62,6 +62,20 @@ url = {
   discount: apiHostMainUrl + "/setdiscount/",
 };
 
+function priceHandeler(element, status, main_price, discounted_price) {
+  if (status === "blocked") {
+    element.parentElement.querySelector(".price").innerHTML = "";
+  } else if (discounted_price) {
+    element.parentElement.querySelector(".price").innerHTML =
+      convertToPersianNumber(
+        discounted_price.toLocaleString().replace(/,/g, "/")
+      );
+    element.parentElement.classList.add("discounted-days");
+  } else {
+    element.parentElement.querySelector(".price").innerHTML =
+      convertToPersianNumber(main_price.toLocaleString().replace(/,/g, "/"));
+  }
+}
 // this is the main function that fetches data from websites based on calendar
 async function rentamoning() {
   // getting active website list
@@ -150,39 +164,60 @@ async function rentamoning() {
         let discountPercentage = dayData.discount_percentage;
 
         let origPrice = parseInt(price) / 1000 || null;
-        let discountedPrice = origPrice;
+        let discountedPrice = 0;
 
         // Apply discount if available
         if (discountPercentage) {
           discountedPrice = origPrice - (origPrice * discountPercentage) / 100;
         }
 
-        // Update day UI based on the status and price information
-        if (status === "blocked") {
-          days[i].parentElement.classList.add("blocked-days");
-          days[i].parentElement.querySelector(".price").innerHTML = "";
-          // days[i].parentElement.style.border = "0px solid";
-        } else {
-          days[i].parentElement.classList.remove("blocked-days");
-          days[i].parentElement.classList.remove("booked-days");
-          if (discountedPrice !== 0) {
-            days[i].parentElement.querySelector(".price").innerHTML =
-              convertToPersianNumber(
-                discountedPrice.toLocaleString().replace(/,/g, "/")
-              );
-            days[i].parentElement.style.border = "2px solid #8165D6";
-          } else {
+        switch (status) {
+          case "blocked":
+            days[i].parentElement.classList.add("blocked-days");
             days[i].parentElement.querySelector(".price").innerHTML = "";
-            days[i].parentElement.style.border = "0px solid";
-          }
+
+            priceHandeler(days[i], status, origPrice, discountedPrice);
+            break;
+
+          case "reserved":
+            days[i].parentElement.classList.add("booked-days");
+            days[i].parentElement.querySelector(".reserved").innerHTML =
+              reservedViewer(dayData.website);
+            priceHandeler(days[i], status, origPrice, discountedPrice);
+            break;
+
+          default:
+            days[i].parentElement.classList.remove("blocked-days");
+            days[i].parentElement.classList.remove("booked-days");
+            priceHandeler(days[i], status, origPrice, discountedPrice);
         }
 
+        // Update day UI based on the status and price information
+        // if (status === "blocked") {
+        // days[i].parentElement.classList.add("blocked-days");
+        // days[i].parentElement.querySelector(".price").innerHTML = "";
+        // days[i].parentElement.style.border = "0px solid";
+        // } else {
+        // days[i].parentElement.classList.remove("blocked-days");
+        // days[i].parentElement.classList.remove("booked-days");
+        // if (discountedPrice !== 0) {
+        // days[i].parentElement.querySelector(".price").innerHTML =
+        //   convertToPersianNumber(
+        //     discountedPrice.toLocaleString().replace(/,/g, "/")
+        //   );
+        // days[i].parentElement.style.border = "2px solid #8165D6";
+        // } else {
+        // days[i].parentElement.querySelector(".price").innerHTML = "";
+        // days[i].parentElement.style.border = "0px solid";
+        // }
+        // }
+
         // Update booking information
-        if (status === "reserved") {
-          days[i].parentElement.classList.add("booked-days");
-          days[i].parentElement.querySelector(".reserved").innerHTML =
-            reservedViewer(dayData.website);
-        }
+        // if (status === "reserved") {
+        //   days[i].parentElement.classList.add("booked-days");
+        //   days[i].parentElement.querySelector(".reserved").innerHTML =
+        //     reservedViewer(dayData.website);
+        // }
       }
     }
 
