@@ -330,6 +330,7 @@ async function blockBtnClicked() {
     }
     final_response = await performAction("setBlock", selectedDate);
     status_responses = Object.values(final_response.data);
+    console.log(spans)
     if (status_responses.every((rep) => rep === "succeed")) {
       setBlockHelper(spans);
     }
