@@ -125,14 +125,17 @@ async function rentamoning() {
     };
 
     // Fetch calendar data from the unified API with headers
-    const response = await fetch(`https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}`, {
-      method: 'GET',
-      headers: headers
-    });
+    const response = await fetch(
+      `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}`,
+      {
+        method: "GET",
+        headers: headers,
+      }
+    );
     const result = await response.json();
     const calendarData = result.calendar;
 
-    console.log(calendarData, 'Fetched calendar data');
+    console.log(calendarData, "Fetched calendar data");
 
     availableDays.forEach((day) => {
       day.removeEventListener("click", handleDayClick);
@@ -158,7 +161,7 @@ async function rentamoning() {
         if (status === "blocked") {
           days[i].parentElement.classList.add("blocked-days");
           days[i].parentElement.querySelector(".price").innerHTML = "";
-          days[i].parentElement.style.border = "0px solid";
+          // days[i].parentElement.style.border = "0px solid";
         } else {
           days[i].parentElement.classList.remove("blocked-days");
           days[i].parentElement.classList.remove("booked-days");

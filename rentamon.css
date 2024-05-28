@@ -2,6 +2,7 @@ body {
   padding: 0;
   margin: 0;
 }
+
 /* Added CSS by Faghih */
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td {
   height: 70px;
@@ -50,6 +51,7 @@ body {
 
 .blocked-days {
   background-color: #fbb142 !important;
+  border: 0px solid
 }
 
 .booked-days {
