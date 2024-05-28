@@ -79,7 +79,7 @@ function priceHandeler(element, status, main_price, discounted_price) {
 
 function setBlockHelper(elements) {
   elements.forEach((elm) => {
-    elem.parentElement.classList.remove("discounted-days");
+    // elem.parentElement.classList.remove("discounted-days");
     elm.parentElement.classList.add("blocked-days");
     elm.parentElement.querySelector(".price").innerHTML = "";
   });
@@ -87,14 +87,14 @@ function setBlockHelper(elements) {
 
 function setAvailableHelper(elements) {
   elements.forEach((elm) => {
-    elem.parentElement.classList.remove("discounted-days");
+    // elem.parentElement.classList.remove("discounted-days");
     elm.parentElement.classList.remove("blocked-days");
     elm.parentElement.classList.remove("booked-days");
   });
 }
 function setBookedkHelper(elements) {
   elements.forEach((elm) => {
-    elem.parentElement.classList.remove("discounted-days");
+    // elem.parentElement.classList.remove("discounted-days");
     elm.elem.parentElement.classList.add("booked-days");
     elm.elem.parentElement.querySelector(".reserved").innerHTML =
       reservedViewer(elm.website);
@@ -333,7 +333,7 @@ async function blockBtnClicked() {
     }
     final_response = await performAction("setBlock", selectedDate);
     status_responses = Object.values(final_response.data);
-    console.log(spans);
+    // console.log(spans);
     if (status_responses.every((rep) => rep === "succeed")) {
       setBlockHelper(spans);
     }
