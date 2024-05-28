@@ -327,7 +327,7 @@ async function blockBtnClicked() {
     }
     final_response = await performAction("setBlock", selectedDate);
 
-    status_responses = Object.keys(final_response.data);
+    status_responses = Object.values(final_response.data);
     console.log(status_responses)
     if (status_responses.every((rep) => rep === "succeed")) {
       console.log("GOT in if");
@@ -395,7 +395,7 @@ async function unblockBtnClicked() {
     }
     // adding api calls if user has registered in the website
     final_response = await performAction("setUnblock", selectedDate);
-    status_responses = Object.keys(final_response.data);
+    status_responses = Object.values(final_response.data);
     if (status_responses.every((rep) => rep === "succeed")) {
       setAvailableHelper(selected);
     }
