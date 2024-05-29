@@ -129,13 +129,8 @@ function setAvailableHelper(elements, selectedDate = "") {
     const element = elements[i];
     let day = "";
     if (selectedDate !== "") {
-      let x = [];
-      selectedDate[i].split("-").forEach((selected) => {
-        x.push(persianToInteger(selected))
-      })
-      selectedDate[i] = x.join("-");
-      console.log("Day in Availablity function: ", selectedDate[i])
-      day = new persianDate(selectedDate[i].split("-")).toCalendar('gregorian')
+      // console.log("Day in Availablity function: ", selectedDate[i])
+      day = selectedDate[i]
       console.log("Day in Availablity function: ", day)
       const storedData = localStorage.getItem('calendar_data');
       const jsonData = JSON.parse(storedData);
@@ -486,6 +481,7 @@ function setStatusStyle(responses) {
 async function unblockBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
+  let gregorianSelectedDate = [];
   let spans = [];
 
   if (selected.length > 0) {
@@ -496,9 +492,11 @@ async function unblockBtnClicked() {
           "YYYY-MM-DD"
         )
       );
+      gregorianSelectedDate.push(
+        new Date(parseInt(z.getAttribute("data-unix"))).toISOString().substring(0, 10)
+      );
       spans.push(z.querySelector("span"));
     });
-    console.log("Day: ", selectedDate[0])
     var response_status = document.querySelector(".response_status");
 
     if (response_status) {
@@ -509,7 +507,7 @@ async function unblockBtnClicked() {
     final_response = await performAction("setUnblock", selectedDate,property_id= 39);
     status_responses = Object.values(final_response.status);
     if (status_responses.every((rep) => rep === "succeed")) {
-      setAvailableHelper(spans, selectedDate);
+      setAvailableHelper(spans, gregorianSelectedDate);
     }
     setStatusStyle(final_response.status);
     console.log("GOT HERE", final_response);
