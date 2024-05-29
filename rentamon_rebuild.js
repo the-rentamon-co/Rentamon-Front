@@ -143,7 +143,7 @@ function setAvailableHelper(elements, selectedDate = "") {
       const persianNumberWithCommas = (persianNum) =>
         persianNum
           .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          .replace(/\B(?=(\d{3})+(?!\d))/g, "/")
           .replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
       if (day.discount_percentage > 0) {
         const discount_percentage = day.discount_percentage;
