@@ -101,37 +101,51 @@ url = {
 };
 
 function priceHandeler(element, status, main_price, discounted_price) {
-  if (status === "blocked") {
-    element.parentElement.querySelector(".price").innerHTML = "";
-  } else if (discounted_price) {
-    element.parentElement.querySelector(".price").innerHTML =
-      convertToPersianNumber(
-        discounted_price.toLocaleString().replace(/,/g, "/")
-      );
-    element.parentElement.classList.add("discounted-days");
-  } else if (main_price) {
-    element.parentElement.querySelector(".price").innerHTML =
-      convertToPersianNumber(main_price.toLocaleString().replace(/,/g, "/"));
+  if (!element.parentElement.classList.contains("blocked-days")) {
+    const persianNumberWithCommas = (persianNum) =>
+      persianNum
+        .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+        .replace(/\B(?=(\d{3})+(?!\d))/g, "/")
+        .replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+
+    const persianNumberToPlain = (persianNum) =>
+      persianNum
+        .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+        .replace(/\//g, "");
+
+    if (status === "blocked") {
+      element.parentElement.querySelector(".price").innerHTML = "";
+      element.parentElement.classList.add("blocked-days");
+      // ____________________________________________________________
+    } else if (discounted_price) {
+      element.parentElement.querySelector(".price").innerHTML =
+        persianNumberWithCommas(convertToPersianNumber(discounted_price));
+
+      element.parentElement.classList.add("discounted-days");
+    } else if (main_price) {
+      element.parentElement.querySelector(".price").innerHTML =
+        persianNumberWithCommas(convertToPersianNumber(main_price));
+
+      element.parentElement.classList.remove("discounted-days");
+    }
   }
 }
 
 function setBlockHelper(elements) {
   elements.forEach((elm) => {
-    // elem.parentElement.classList.remove("discounted-days");
-    elm.parentElement.classList.add("blocked-days");
     elm.parentElement.querySelector(".price").innerHTML = "";
+    elm.parentElement.classList.remove("discounted-days");
+    elm.parentElement.classList.remove("booked-days");
+    elm.parentElement.classList.add("blocked-days");
   });
 }
 
 function setAvailableHelper(elements, selectedDate = "") {
-  console.log("Days that are selected: ", selectedDate);
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     let day = "";
     if (selectedDate !== "") {
-      // console.log("Day in Availablity function: ", selectedDate[i])
       day = selectedDate[i];
-      console.log("Day in Availablity function: ", day);
       const storedData = localStorage.getItem("calendar_data");
       const jsonData = JSON.parse(storedData);
       const filteredData = jsonData.calendar.find((item) => item.date === day);
@@ -165,18 +179,14 @@ function setAvailableHelper(elements, selectedDate = "") {
       element.parentElement.classList.remove("discounted-days");
     }
   }
-  // elements.forEach((elm) => {
-  //   // elem.parentElement.classList.remove("discounted-days");
-  //   elm.parentElement.classList.remove("blocked-days");
-  //   elm.parentElement.classList.remove("booked-days");
-  // });
 }
 function setBookedkHelper(elements) {
   elements.forEach((elm) => {
-    // elem.parentElement.classList.remove("discounted-days");
-    elm.elem.parentElement.classList.add("booked-days");
-    elm.elem.parentElement.querySelector(".reserved").innerHTML =
-      reservedViewer(elm.website);
+    elm.parentElement.classList.remove("discounted-days");
+    elm.parentElement.classList.add("booked-days");
+    elm.parentElement.querySelector(".reserved").innerHTML = reservedViewer(
+      elm.website
+    );
   });
 }
 
