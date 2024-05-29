@@ -129,7 +129,7 @@ function setAvailableHelper(elements, selectedDate = "") {
     const element = elements[i];
     let day = "";
     if (selectedDate !== "") {
-      day = new persianDate(selectedDate[i]).toGregorian();
+      day = selectedDate[i]
       const storedData = localStorage.getItem('calendar_data');
       const jsonData = JSON.parse(storedData);
       const filteredData = jsonData.calendar.find(item => item.date === day);
