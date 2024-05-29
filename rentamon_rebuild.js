@@ -124,25 +124,46 @@ function setBlockHelper(elements) {
 }
 
 function setAvailableHelper(elements, selectedDate = "") {
-  console.log("Days that are selected: ", selectedDate)
+  console.log("Days that are selected: ", selectedDate);
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     let day = "";
     if (selectedDate !== "") {
       // console.log("Day in Availablity function: ", selectedDate[i])
-      day = selectedDate[i]
-      console.log("Day in Availablity function: ", day)
-      const storedData = localStorage.getItem('calendar_data');
+      day = selectedDate[i];
+      console.log("Day in Availablity function: ", day);
+      const storedData = localStorage.getItem("calendar_data");
       const jsonData = JSON.parse(storedData);
-      const filteredData = jsonData.calendar.find(item => item.date === day);
+      const filteredData = jsonData.calendar.find((item) => item.date === day);
       day = filteredData;
     }
     element.parentElement.classList.remove("blocked-days");
     element.parentElement.classList.remove("booked-days");
-    if (day)
-      element.parentElement.querySelector(".price").innerHTML = day.price;
-    else
-    element.parentElement.querySelector(".price").innerHTML = ""
+    if (day) {
+      if (day.discount_percentage > 0) {
+        const discount_percentage = day.discount_percentage;
+        const price = parseInt(day.price) / 1000 || null;
+        const discountedPrice = price - (price * discount_percentage) / 100;
+        element.parentElement.querySelector(".price").innerHTML =
+        String(
+          convertToPersianNumber(discountedPrice)
+        )
+          .match(/\d{1,3}/g)
+          .join("/");
+        element.parentElement.classList.add("discounted-days");
+      } else {
+        const price = parseInt(day.price) / 1000 || null;
+        element.parentElement.querySelector(".price").innerHTML = String(
+          convertToPersianNumber(price)
+        )
+          .match(/\d{1,3}/g)
+          .join("/");
+        element.parentElement.classList.remove("discounted-days");
+      }
+    } else {
+      element.parentElement.querySelector(".price").innerHTML = "";
+      element.parentElement.classList.remove("discounted-days");
+    }
   }
   // elements.forEach((elm) => {
   //   // elem.parentElement.classList.remove("discounted-days");
@@ -230,7 +251,7 @@ async function rentamoning() {
       }
     );
     const result = await response.json();
-    localStorage.setItem("calendar_data", JSON.stringify(result))
+    localStorage.setItem("calendar_data", JSON.stringify(result));
     const calendarData = result.calendar;
     activeWebsites = result.status;
 
@@ -338,7 +359,6 @@ function handleDayClick(e) {
   }
 }
 async function reserveOther() {
-
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   if (selected.length > 0) {
@@ -354,7 +374,11 @@ async function reserveOther() {
     if (response_status) {
       document.querySelector(".response_status_pop a").click();
     }
-    final_response = await performAction("setReserve", selectedDate,property_id= 39);
+    final_response = await performAction(
+      "setReserve",
+      selectedDate,
+      (property_id = 39)
+    );
     status_responses = Object.values(final_response.status);
   } else {
     alert(messages.notSelectedDay);
@@ -427,11 +451,15 @@ async function blockBtnClicked() {
       document.querySelector(".response_status_pop a").click();
       setStyleToPending();
     }
-    final_response = await performAction("setBlock", selectedDate,property_id= 39);
-    console.log("Response Data: ", final_response)
+    final_response = await performAction(
+      "setBlock",
+      selectedDate,
+      (property_id = 39)
+    );
+    console.log("Response Data: ", final_response);
     // const f_response = [final_response.status]
     status_responses = Object.values(final_response.status);
-    console.log("status Response Data: ", status_responses)
+    console.log("status Response Data: ", status_responses);
     // console.log(spans);
     if (status_responses.every((rep) => rep === "succeed")) {
       setBlockHelper(spans);
@@ -493,7 +521,9 @@ async function unblockBtnClicked() {
         )
       );
       gregorianSelectedDate.push(
-        new Date(parseInt(z.getAttribute("data-unix"))).toISOString().substring(0, 10)
+        new Date(parseInt(z.getAttribute("data-unix")))
+          .toISOString()
+          .substring(0, 10)
       );
       spans.push(z.querySelector("span"));
     });
@@ -504,7 +534,11 @@ async function unblockBtnClicked() {
       setStyleToPending();
     }
     // adding api calls if user has registered in the website
-    final_response = await performAction("setUnblock", selectedDate,property_id= 39);
+    final_response = await performAction(
+      "setUnblock",
+      selectedDate,
+      (property_id = 39)
+    );
     status_responses = Object.values(final_response.status);
     if (status_responses.every((rep) => rep === "succeed")) {
       setAvailableHelper(spans, gregorianSelectedDate);
@@ -693,7 +727,13 @@ function getCookie(name) {
 }
 
 // Function to perform the action
-async function performAction(actionType, days, price = null, discount = null,property_id= 39) {
+async function performAction(
+  actionType,
+  days,
+  price = null,
+  discount = null,
+  property_id = 39
+) {
   const authToken = getCookie("auth_token");
   if (!authToken) {
     throw new Error("No auth token found");
@@ -701,15 +741,15 @@ async function performAction(actionType, days, price = null, discount = null,pro
 
   let url = "";
   let method = "POST";
-  let corrected_days = []
+  let corrected_days = [];
   days.forEach((day) => {
-    const x = []
+    const x = [];
     day.split("-").forEach((number_of_date) => {
-      x.push(persianToInteger(number_of_date))
-    })
-    corrected_days.push(x.join("-"))
-  })
-  days = corrected_days
+      x.push(persianToInteger(number_of_date));
+    });
+    corrected_days.push(x.join("-"));
+  });
+  days = corrected_days;
   let data = { days, property_id };
 
   switch (actionType) {
@@ -726,13 +766,13 @@ async function performAction(actionType, days, price = null, discount = null,pro
       break;
     case "setBlock":
       url = "https://rentamon-api.liara.run/api/setblock";
-      data.requested_by = 'user';
-      data.request_for = 'block';
+      data.requested_by = "user";
+      data.request_for = "block";
       break;
     case "setReserve":
       url = "https://rentamon-api.liara.run/api/setblock";
-      data.requested_by = 'user';
-      data.request_for = 'reserve';
+      data.requested_by = "user";
+      data.request_for = "reserve";
       break;
     case "setUnblock":
       url = "https://rentamon-api.liara.run/api/setunblock";
