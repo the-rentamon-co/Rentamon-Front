@@ -397,6 +397,11 @@ async function reserveOther() {
       (property_id = 39)
     );
     status_responses = Object.values(final_response.status);
+    if (status_responses.every((rep) => rep === "succeed")) {
+      setBookedkHelper(spans);
+    }
+    setStatusStyle(final_response.status);
+    console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
   }
