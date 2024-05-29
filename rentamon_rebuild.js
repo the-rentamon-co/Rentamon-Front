@@ -129,13 +129,13 @@ function setAvailableHelper(elements, selectedDate = "") {
     const element = elements[i];
     let day = "";
     if (selectedDate !== "") {
-      day = selectedDate[i]
+      day = new persianDate(selectedDate[i].split("-")).toCalendar('gregorian')
+      console.log("Day in Availablity function: ", day)
       const storedData = localStorage.getItem('calendar_data');
       const jsonData = JSON.parse(storedData);
       const filteredData = jsonData.calendar.find(item => item.date === day);
       day = filteredData;
     }
-    console.log("Day in Availablity function: ", day)
     element.parentElement.classList.remove("blocked-days");
     element.parentElement.classList.remove("booked-days");
     if (day)
