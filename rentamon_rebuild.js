@@ -488,6 +488,7 @@ async function unblockBtnClicked() {
       );
       spans.push(z.querySelector("span"));
     });
+    console.log("Day: ", selectedDate[0])
     var response_status = document.querySelector(".response_status");
 
     if (response_status) {
@@ -692,6 +693,13 @@ async function performAction(actionType, days, price = null, discount = null,pro
 
   let url = "";
   let method = "POST";
+  let corrected_days = []
+  days.forEach((day) => {
+    corrected_days.push(
+      new persianDate(day).toGregorian()
+    );
+  })
+  days = corrected_days
   let data = { days, property_id };
 
   switch (actionType) {
