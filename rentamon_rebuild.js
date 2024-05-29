@@ -198,8 +198,8 @@ function setBookedkHelper(elements) {
     // if (elm.parentElement)
     //   if (elm.parentElement.classList)
     //     elm.parentElement.classList.remove("discounted-days");
-    elm.parentElement.classList.add("booked-days");
-    elm.parentElement.querySelector(".reserved").innerHTML = reservedViewer(
+    elm.classList.add("booked-days");
+    elm.querySelector(".reserved").innerHTML = reservedViewer(
       elm.website
     );
   });
