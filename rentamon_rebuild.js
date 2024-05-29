@@ -502,7 +502,7 @@ async function unblockBtnClicked() {
     final_response = await performAction("setUnblock", selectedDate,property_id= 39);
     status_responses = Object.values(final_response.status);
     if (status_responses.every((rep) => rep === "succeed")) {
-      setAvailableHelper(spans);
+      setAvailableHelper(spans, selectedDate);
     }
     setStatusStyle(final_response.status);
     console.log("GOT HERE", final_response);
