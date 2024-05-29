@@ -394,7 +394,7 @@ async function blockBtnClicked() {
       document.querySelector(".response_status_pop a").click();
       setStyleToPending();
     }
-    final_response = await performAction("setBlock", selectedDate);
+    final_response = await performAction("setBlock", selectedDate,property_id= 39);
     status_responses = Object.values(final_response.data);
     // console.log(spans);
     if (status_responses.every((rep) => rep === "succeed")) {
@@ -464,7 +464,7 @@ async function unblockBtnClicked() {
       setStyleToPending();
     }
     // adding api calls if user has registered in the website
-    final_response = await performAction("setUnblock", selectedDate);
+    final_response = await performAction("setUnblock", selectedDate,property_id= 39);
     status_responses = Object.values(final_response.data);
     if (status_responses.every((rep) => rep === "succeed")) {
       setAvailableHelper(spans);
@@ -653,7 +653,7 @@ function getCookie(name) {
 }
 
 // Function to perform the action
-async function performAction(actionType, days, price = null, discount = null) {
+async function performAction(actionType, days, property_id, price = null, discount = null,property_id= 39) {
   const authToken = getCookie("auth_token");
   if (!authToken) {
     throw new Error("No auth token found");
@@ -661,7 +661,7 @@ async function performAction(actionType, days, price = null, discount = null) {
 
   let url = "";
   let method = "POST";
-  let data = { days };
+  let data = { days, property_id };
 
   switch (actionType) {
     case "setPrice":
@@ -677,6 +677,13 @@ async function performAction(actionType, days, price = null, discount = null) {
       break;
     case "setBlock":
       url = "https://rentamon-api.liara.run/api/setblock";
+      data.requested_by = 'user';
+      data.request_for = 'block';
+      break;
+    case "setReserve":
+      url = "https://rentamon-api.liara.run/api/setblock";
+      data.requested_by = 'user';
+      data.request_for = 'reserve';
       break;
     case "setUnblock":
       url = "https://rentamon-api.liara.run/api/setunblock";
@@ -685,7 +692,6 @@ async function performAction(actionType, days, price = null, discount = null) {
       url = "https://rentamon-api.liara.run/api/getcalendar";
       method = "GET";
       break;
-
     case "activeWebsites":
       url = "https://rentamon-api.liara.run/api/websites";
       method = "GET";
