@@ -426,6 +426,7 @@ async function blockBtnClicked() {
       setStyleToPending();
     }
     final_response = await performAction("setBlock", selectedDate,property_id= 39);
+    console.log("Response Data: ", final_response)
     status_responses = Object.values(final_response.data);
     // console.log(spans);
     if (status_responses.every((rep) => rep === "succeed")) {
@@ -684,17 +685,6 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-
-function convertPersianToLatinNumerals(persianNumber) {
-  const persianNumerals = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-  const latinNumerals = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-
-  return persianNumber.split('').map(char => {
-    const index = persianNumerals.indexOf(char);
-    return index !== -1 ? latinNumerals[index] : char;
-  }).join('');
-}
-
 // Function to perform the action
 async function performAction(actionType, days, price = null, discount = null,property_id= 39) {
   const authToken = getCookie("auth_token");
@@ -708,7 +698,7 @@ async function performAction(actionType, days, price = null, discount = null,pro
   days.forEach((day) => {
     const x = []
     day.split("-").forEach((number_of_date) => {
-      x.push(convertPersianToLatinNumerals(number_of_date))
+      x.push(persianToInteger(number_of_date))
     })
     corrected_days.push(x.join("-"))
   })
