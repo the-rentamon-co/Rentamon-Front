@@ -140,7 +140,7 @@ function setAvailableHelper(elements, selectedDate = "") {
     element.parentElement.classList.remove("blocked-days");
     element.parentElement.classList.remove("booked-days");
     if (day)
-      element.parentElement.querySelector(".price").innerHTML = day;
+      element.parentElement.querySelector(".price").innerHTML = day.price;
     else
     element.parentElement.querySelector(".price").innerHTML = ""
   }
