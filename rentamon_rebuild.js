@@ -140,24 +140,24 @@ function setAvailableHelper(elements, selectedDate = "") {
     element.parentElement.classList.remove("blocked-days");
     element.parentElement.classList.remove("booked-days");
     if (day) {
+      const persianNumberWithCommas = (persianNum) =>
+        persianNum
+          .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          .replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
       if (day.discount_percentage > 0) {
         const discount_percentage = day.discount_percentage;
         const price = parseInt(day.price) / 1000 || null;
         const discountedPrice = price - (price * discount_percentage) / 100;
         element.parentElement.querySelector(".price").innerHTML =
-        String(
-          convertToPersianNumber(String(discountedPrice))
-        )
-          .match(/[\u06F0-\u06F9]{1,3}/g)
-          .join("/");
+          persianNumberWithCommas(
+            convertToPersianNumber(String(discountedPrice))
+          );
         element.parentElement.classList.add("discounted-days");
       } else {
         const price = parseInt(day.price) / 1000 || null;
-        element.parentElement.querySelector(".price").innerHTML = String(
-          convertToPersianNumber(String(price))
-        )
-          .match(/[\u06F0-\u06F9]{1,3}/g)
-          .join("/");
+        element.parentElement.querySelector(".price").innerHTML =
+          persianNumberWithCommas(convertToPersianNumber(String(price)));
         element.parentElement.classList.remove("discounted-days");
       }
     } else {
