@@ -148,7 +148,7 @@ function setAvailableHelper(elements, selectedDate = "") {
         String(
           convertToPersianNumber(String(discountedPrice))
         )
-          .match(/\d{1,3}/g)
+          .match(/[\u06F0-\u06F9]{1,3}/g)
           .join("/");
         element.parentElement.classList.add("discounted-days");
       } else {
@@ -156,7 +156,7 @@ function setAvailableHelper(elements, selectedDate = "") {
         element.parentElement.querySelector(".price").innerHTML = String(
           convertToPersianNumber(String(price))
         )
-          .match(/\d{1,3}/g)
+          .match(/[\u06F0-\u06F9]{1,3}/g)
           .join("/");
         element.parentElement.classList.remove("discounted-days");
       }
