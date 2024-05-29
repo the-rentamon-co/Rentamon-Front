@@ -422,41 +422,14 @@ function checkAction() {
   }
 }
 
-async function priceBtnClicked() {
+function priceBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   if (selected.length > 0) {
-    let selectedDate = [];
-    let spans = [];
-    selected.forEach((z) => {
-      z.classList.remove("selected");
-      selectedDate.push(
-        new persianDate(parseInt(z.getAttribute("data-unix"))).format(
-          "YYYY-MM-DD"
-        )
-      );
-
-      spans.push(z.querySelector("span"));
-    });
-    var response_status = document.querySelector(".response_status");
-    if (response_status) {
-      document.querySelector(".response_status_pop a").click();
-      setStyleToPending();
-    }
-    final_response = await performAction(
-      "setPrice",
-      selectedDate,
-      (property_id = 39)
-    );
-    status_responses = Object.values(final_response.status);
-    if (status_responses.every((rep) => rep === "succeed"))
-      setBlockHelper(spans);
-    setStatusStyle(final_response.status);
-    console.log("GOT HERE", final_response);
-    // var price_div = document.createElement("div");
-    // price_div.style.display = "none";
-    // price_div.className = "price-submit2";
-    // document.body.appendChild(price_div);
-    // price_div.click();
+    var price_div = document.createElement("div");
+    price_div.style.display = "none";
+    price_div.className = "price-submit2";
+    document.body.appendChild(price_div);
+    price_div.click();
   } else {
     alert(messages.notSelectedDay);
   }
