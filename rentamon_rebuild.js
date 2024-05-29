@@ -115,18 +115,21 @@ function priceHandeler(element, status, main_price, discounted_price) {
 
     if (status === "blocked") {
       element.parentElement.querySelector(".price").innerHTML = "";
-      element.parentElement.classList.add("blocked-days");
+      if (!element.parentElement.classList.contains("blocked-days"))
+        element.parentElement.classList.add("blocked-days");
       // ____________________________________________________________
     } else if (discounted_price) {
       element.parentElement.querySelector(".price").innerHTML =
-        persianNumberWithCommas(convertToPersianNumber(String(discounted_price)));
-
-      element.parentElement.classList.add("discounted-days");
+        persianNumberWithCommas(
+          convertToPersianNumber(String(discounted_price))
+        );
+      if (!element.parentElement.classList.contains("discounted-days"))
+        element.parentElement.classList.add("discounted-days");
     } else if (main_price) {
       element.parentElement.querySelector(".price").innerHTML =
         persianNumberWithCommas(convertToPersianNumber(String(main_price)));
-
-      element.parentElement.classList.remove("discounted-days");
+      if (element.parentElement.classList.contains("discounted-days"))
+        element.parentElement.classList.remove("discounted-days");
     }
   }
 }
@@ -134,7 +137,8 @@ function priceHandeler(element, status, main_price, discounted_price) {
 function setBlockHelper(elements) {
   elements.forEach((elm) => {
     elm.parentElement.querySelector(".price").innerHTML = "";
-    elm.parentElement.classList.remove("discounted-days");
+    if (elm.parentElement.classList.contains("discounted-days"))
+      elm.parentElement.classList.remove("discounted-days");
     elm.parentElement.classList.remove("booked-days");
     elm.parentElement.classList.add("blocked-days");
   });
@@ -151,8 +155,10 @@ function setAvailableHelper(elements, selectedDate = "") {
       const filteredData = jsonData.calendar.find((item) => item.date === day);
       day = filteredData;
     }
-    element.parentElement.classList.remove("blocked-days");
-    element.parentElement.classList.remove("booked-days");
+    if (element.parentElement.classList.contains("blocked-days"))
+      element.parentElement.classList.remove("blocked-days");
+    if (element.parentElement.classList.contains("booked-days"))
+      element.parentElement.classList.remove("booked-days");
     if (day) {
       const persianNumberWithCommas = (persianNum) =>
         persianNum
@@ -168,24 +174,28 @@ function setAvailableHelper(elements, selectedDate = "") {
             persianNumberWithCommas(
               convertToPersianNumber(String(discountedPrice))
             );
-          element.parentElement.classList.add("discounted-days");
+          if (!element.parentElement.classList.contains("discounted-days"))
+            element.parentElement.classList.add("discounted-days");
         } else {
           const price = parseInt(day.price) / 1000 || null;
           element.parentElement.querySelector(".price").innerHTML =
             persianNumberWithCommas(convertToPersianNumber(String(price)));
-          element.parentElement.classList.remove("discounted-days");
+          if (element.parentElement.classList.contains("discounted-days"))
+            element.parentElement.classList.remove("discounted-days");
         }
       }
     } else {
       element.parentElement.querySelector(".price").innerHTML = "";
-      element.parentElement.classList.remove("discounted-days");
+      if (element.parentElement.classList.contains("discounted-days"))
+        element.parentElement.classList.remove("discounted-days");
     }
-    element.parentElement.querySelector(".reserved").innerHTML = ""
+    element.parentElement.querySelector(".reserved").innerHTML = "";
   }
 }
 function setBookedkHelper(elements) {
   elements.forEach((elm) => {
-    elm.parentElement.classList.remove("discounted-days");
+    if (elm.parentElement.classList.contains("discounted-days"))
+      elm.parentElement.classList.remove("discounted-days");
     elm.parentElement.classList.add("booked-days");
     elm.parentElement.querySelector(".reserved").innerHTML = reservedViewer(
       elm.website
