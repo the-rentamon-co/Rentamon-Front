@@ -135,6 +135,7 @@ function setAvailableHelper(elements, selectedDate = "") {
       const filteredData = jsonData.calendar.find(item => item.date === day);
       day = filteredData;
     }
+    console.log("Day in Availablity function: ", day)
     element.parentElement.classList.remove("blocked-days");
     element.parentElement.classList.remove("booked-days");
     if (day)
