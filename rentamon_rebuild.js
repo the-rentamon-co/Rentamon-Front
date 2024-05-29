@@ -118,19 +118,16 @@ function priceHandeler(element, status, main_price, discounted_price) {
 
   if (status === "blocked") {
     element.parentElement.querySelector(".price").innerHTML = "";
-    if (!element.parentElement.classList)
-      element.parentElement.classList.add("blocked-days");
+    element.parentElement.classList.add("blocked-days");
     // ____________________________________________________________
   } else if (discounted_price) {
     element.parentElement.querySelector(".price").innerHTML =
       persianNumberWithCommas(convertToPersianNumber(String(discounted_price)));
-    if (!element.parentElement.classList)
-      element.parentElement.classList.add("discounted-days");
+    element.parentElement.classList.add("discounted-days");
   } else if (main_price) {
     element.parentElement.querySelector(".price").innerHTML =
       persianNumberWithCommas(convertToPersianNumber(String(main_price)));
-    if (element.parentElement.classList)
-      element.parentElement.classList.remove("discounted-days");
+    element.parentElement.classList.remove("discounted-days");
     // }
   }
 }
@@ -175,20 +172,17 @@ function setAvailableHelper(elements, selectedDate = "") {
             persianNumberWithCommas(
               convertToPersianNumber(String(discountedPrice))
             );
-          if (!element.parentElement.classList)
-            element.parentElement.classList.add("discounted-days");
+          element.parentElement.classList.add("discounted-days");
         } else {
           const price = parseInt(day.price) / 1000 || null;
           element.parentElement.querySelector(".price").innerHTML =
             persianNumberWithCommas(convertToPersianNumber(String(price)));
-          if (element.parentElement.classList)
-            element.parentElement.classList.remove("discounted-days");
+          element.parentElement.classList.remove("discounted-days");
         }
       }
     } else {
       element.parentElement.querySelector(".price").innerHTML = "";
-      if (element.parentElement.classList)
-        element.parentElement.classList.remove("discounted-days");
+      element.parentElement.classList.remove("discounted-days");
     }
     element.parentElement.querySelector(".reserved").innerHTML = "";
   }
