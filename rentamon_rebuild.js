@@ -684,6 +684,17 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
+
+function convertPersianToLatinNumerals(persianNumber) {
+  const persianNumerals = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+  const latinNumerals = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+  return persianNumber.split('').map(char => {
+    const index = persianNumerals.indexOf(char);
+    return index !== -1 ? latinNumerals[index] : char;
+  }).join('');
+}
+
 // Function to perform the action
 async function performAction(actionType, days, price = null, discount = null,property_id= 39) {
   const authToken = getCookie("auth_token");
@@ -694,11 +705,12 @@ async function performAction(actionType, days, price = null, discount = null,pro
   let url = "";
   let method = "POST";
   let corrected_days = []
-  
   days.forEach((day) => {
-    corrected_days.push(
-      new persianDate(day).toCalendar('gregorian')
-    );
+    const x = []
+    day.split("-").forEach((number_of_date) => {
+      x.push(convertPersianToLatinNumerals(number_of_date))
+    })
+    corrected_days.push(x.join("-"))
   })
   days = corrected_days
   let data = { days, property_id };
