@@ -326,7 +326,29 @@ function handleDayClick(e) {
     e.target.classList.toggle("selected");
   }
 }
+async function reserveOther() {
 
+  let selected = document.querySelectorAll(".selected");
+  let selectedDate = [];
+  if (selected.length > 0) {
+    selected.forEach((z) => {
+      z.classList.remove("selected");
+      selectedDate.push(
+        new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+          "YYYY-MM-DD"
+        )
+      );
+    });
+    var response_status = document.querySelector(".response_status");
+    if (response_status) {
+      document.querySelector(".response_status_pop a").click();
+    }
+    final_response = await performAction("setReserve", selectedDate,property_id= 39);
+    status_responses = Object.values(final_response.data);
+  } else {
+    alert(messages.notSelectedDay);
+  }
+}
 // this function ckecks witch action btn is ckecked
 function checkAction() {
   let action = document.querySelector('input[name="block"]:checked');
@@ -653,7 +675,7 @@ function getCookie(name) {
 }
 
 // Function to perform the action
-async function performAction(actionType, days, property_id, price = null, discount = null,property_id= 39) {
+async function performAction(actionType, days, price = null, discount = null,property_id= 39) {
   const authToken = getCookie("auth_token");
   if (!authToken) {
     throw new Error("No auth token found");
