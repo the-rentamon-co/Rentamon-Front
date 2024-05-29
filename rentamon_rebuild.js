@@ -129,6 +129,12 @@ function setAvailableHelper(elements, selectedDate = "") {
     const element = elements[i];
     let day = "";
     if (selectedDate !== "") {
+      let x = [];
+      selectedDate[i].split("-").forEach((selected) => {
+        x.push(persianToInteger(selected))
+      })
+      selectedDate[i] = x.join("-");
+      console.log("Day in Availablity function: ", selectedDate[i])
       day = new persianDate(selectedDate[i].split("-")).toCalendar('gregorian')
       console.log("Day in Availablity function: ", day)
       const storedData = localStorage.getItem('calendar_data');
