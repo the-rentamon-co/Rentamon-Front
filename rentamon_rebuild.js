@@ -159,25 +159,28 @@ function setAvailableHelper(elements, selectedDate = "") {
           .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
           .replace(/\B(?=(\d{3})+(?!\d))/g, "/")
           .replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
-      if (day.discount_percentage > 0) {
-        const discount_percentage = day.discount_percentage;
-        const price = parseInt(day.price) / 1000 || null;
-        const discountedPrice = price - (price * discount_percentage) / 100;
-        element.parentElement.querySelector(".price").innerHTML =
-          persianNumberWithCommas(
-            convertToPersianNumber(String(discountedPrice))
-          );
-        element.parentElement.classList.add("discounted-days");
-      } else {
-        const price = parseInt(day.price) / 1000 || null;
-        element.parentElement.querySelector(".price").innerHTML =
-          persianNumberWithCommas(convertToPersianNumber(String(price)));
-        element.parentElement.classList.remove("discounted-days");
+      if (day.price) {
+        if (day.discount_percentage && day.discount_percentage > 0) {
+          const discount_percentage = day.discount_percentage;
+          const price = parseInt(day.price) / 1000 || null;
+          const discountedPrice = price - (price * discount_percentage) / 100;
+          element.parentElement.querySelector(".price").innerHTML =
+            persianNumberWithCommas(
+              convertToPersianNumber(String(discountedPrice))
+            );
+          element.parentElement.classList.add("discounted-days");
+        } else {
+          const price = parseInt(day.price) / 1000 || null;
+          element.parentElement.querySelector(".price").innerHTML =
+            persianNumberWithCommas(convertToPersianNumber(String(price)));
+          element.parentElement.classList.remove("discounted-days");
+        }
       }
     } else {
       element.parentElement.querySelector(".price").innerHTML = "";
       element.parentElement.classList.remove("discounted-days");
     }
+    elm.parentElement.querySelector(".reserved").innerHTML = ""
   }
 }
 function setBookedkHelper(elements) {
