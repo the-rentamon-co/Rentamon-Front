@@ -427,13 +427,14 @@ async function blockBtnClicked() {
     }
     final_response = await performAction("setBlock", selectedDate,property_id= 39);
     console.log("Response Data: ", final_response)
-    status_responses = Object.values(final_response);
+    // const f_response = [final_response.status]
+    status_responses = Object.values(final_response.status);
     console.log("status Response Data: ", status_responses)
     // console.log(spans);
-    if (status_responses[1].every((rep) => rep === "succeed")) {
+    if (status_responses.every((rep) => rep === "succeed")) {
       setBlockHelper(spans);
     }
-    setStatusStyle(final_response.data);
+    setStatusStyle(final_response.status);
     console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
