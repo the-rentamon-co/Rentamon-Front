@@ -195,13 +195,10 @@ function setAvailableHelper(elements, selectedDate = "") {
 }
 function setBookedkHelper(elements) {
   elements.forEach((elm) => {
-    // if (elm.parentElement)
-    //   if (elm.parentElement.classList)
-    //     elm.parentElement.classList.remove("discounted-days");
-    elm.classList.add("booked-days");
-    elm.querySelector(".reserved").innerHTML = reservedViewer(
-      elm.website
-    );
+    elm.elem.parentElement.classList.remove("discounted-days");
+    elm.elem.parentElement.classList.add("booked-days");
+    elm.elem.parentElement.querySelector(".reserved").innerHTML =
+      reservedViewer(elm.website);
   });
 }
 
