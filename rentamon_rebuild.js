@@ -101,43 +101,44 @@ url = {
 };
 
 function priceHandeler(element, status, main_price, discounted_price) {
-  if (!element.parentElement.classList.contains("blocked-days")) {
-    const persianNumberWithCommas = (persianNum) =>
-      persianNum
-        .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
-        .replace(/\B(?=(\d{3})+(?!\d))/g, "/")
-        .replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+  // if (
+  //   element.parentElement.classList &&
+  //   !element.parentElement.classList.contains("blocked-days")
+  // ) {
+  const persianNumberWithCommas = (persianNum) =>
+    persianNum
+      .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+      .replace(/\B(?=(\d{3})+(?!\d))/g, "/")
+      .replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
 
-    const persianNumberToPlain = (persianNum) =>
-      persianNum
-        .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
-        .replace(/\//g, "");
+  const persianNumberToPlain = (persianNum) =>
+    persianNum
+      .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+      .replace(/\//g, "");
 
-    if (status === "blocked") {
-      element.parentElement.querySelector(".price").innerHTML = "";
-      if (!element.parentElement.classList.contains("blocked-days"))
-        element.parentElement.classList.add("blocked-days");
-      // ____________________________________________________________
-    } else if (discounted_price) {
-      element.parentElement.querySelector(".price").innerHTML =
-        persianNumberWithCommas(
-          convertToPersianNumber(String(discounted_price))
-        );
-      if (!element.parentElement.classList.contains("discounted-days"))
-        element.parentElement.classList.add("discounted-days");
-    } else if (main_price) {
-      element.parentElement.querySelector(".price").innerHTML =
-        persianNumberWithCommas(convertToPersianNumber(String(main_price)));
-      if (element.parentElement.classList.contains("discounted-days"))
-        element.parentElement.classList.remove("discounted-days");
-    }
+  if (status === "blocked") {
+    element.parentElement.querySelector(".price").innerHTML = "";
+    if (!element.parentElement.classList)
+      element.parentElement.classList.add("blocked-days");
+    // ____________________________________________________________
+  } else if (discounted_price) {
+    element.parentElement.querySelector(".price").innerHTML =
+      persianNumberWithCommas(convertToPersianNumber(String(discounted_price)));
+    if (!element.parentElement.classList)
+      element.parentElement.classList.add("discounted-days");
+  } else if (main_price) {
+    element.parentElement.querySelector(".price").innerHTML =
+      persianNumberWithCommas(convertToPersianNumber(String(main_price)));
+    if (element.parentElement.classList)
+      element.parentElement.classList.remove("discounted-days");
+    // }
   }
 }
 
 function setBlockHelper(elements) {
   elements.forEach((elm) => {
     elm.parentElement.querySelector(".price").innerHTML = "";
-    if (elm.parentElement.classList.contains("discounted-days"))
+    if (elm.parentElement.classList)
       elm.parentElement.classList.remove("discounted-days");
     elm.parentElement.classList.remove("booked-days");
     elm.parentElement.classList.add("blocked-days");
@@ -174,19 +175,19 @@ function setAvailableHelper(elements, selectedDate = "") {
             persianNumberWithCommas(
               convertToPersianNumber(String(discountedPrice))
             );
-          if (!element.parentElement.classList.contains("discounted-days"))
+          if (!element.parentElement.classList)
             element.parentElement.classList.add("discounted-days");
         } else {
           const price = parseInt(day.price) / 1000 || null;
           element.parentElement.querySelector(".price").innerHTML =
             persianNumberWithCommas(convertToPersianNumber(String(price)));
-          if (element.parentElement.classList.contains("discounted-days"))
+          if (element.parentElement.classList)
             element.parentElement.classList.remove("discounted-days");
         }
       }
     } else {
       element.parentElement.querySelector(".price").innerHTML = "";
-      if (element.parentElement.classList.contains("discounted-days"))
+      if (element.parentElement.classList)
         element.parentElement.classList.remove("discounted-days");
     }
     element.parentElement.querySelector(".reserved").innerHTML = "";
@@ -194,7 +195,7 @@ function setAvailableHelper(elements, selectedDate = "") {
 }
 function setBookedkHelper(elements) {
   elements.forEach((elm) => {
-    if (elm.parentElement.classList.contains("discounted-days"))
+    if (elm.parentElement.classList)
       elm.parentElement.classList.remove("discounted-days");
     elm.parentElement.classList.add("booked-days");
     elm.parentElement.querySelector(".reserved").innerHTML = reservedViewer(
