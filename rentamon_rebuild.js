@@ -123,12 +123,22 @@ function setBlockHelper(elements) {
   });
 }
 
-function setAvailableHelper(elements) {
-  elements.forEach((elm) => {
-    // elem.parentElement.classList.remove("discounted-days");
-    elm.parentElement.classList.remove("blocked-days");
-    elm.parentElement.classList.remove("booked-days");
-  });
+function setAvailableHelper(elements, selectedDate = "") {
+  for (let i = 0; i < elements.length; i++) {
+    const element = elements[i];
+    let day = "";
+    if (selectedDate !== "") {
+      day = selectedDate[i];
+    }
+    element.parentElement.classList.remove("blocked-days");
+    element.parentElement.classList.remove("booked-days");
+    element.parentElement.querySelector(".price").innerHTML = day;
+  }
+  // elements.forEach((elm) => {
+  //   // elem.parentElement.classList.remove("discounted-days");
+  //   elm.parentElement.classList.remove("blocked-days");
+  //   elm.parentElement.classList.remove("booked-days");
+  // });
 }
 function setBookedkHelper(elements) {
   elements.forEach((elm) => {
@@ -388,7 +398,7 @@ async function blockBtnClicked() {
     status_responses = Object.values(final_response.data);
     // console.log(spans);
     if (status_responses.every((rep) => rep === "succeed")) {
-      setBlockHelper(spans);
+      setBlockHelper(spans, selectedDate);
     }
     setStatusStyle(final_response.data);
     console.log("GOT HERE", final_response);
