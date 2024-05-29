@@ -146,7 +146,7 @@ function setAvailableHelper(elements, selectedDate = "") {
         const discountedPrice = price - (price * discount_percentage) / 100;
         element.parentElement.querySelector(".price").innerHTML =
         String(
-          convertToPersianNumber(discountedPrice)
+          convertToPersianNumber(String(discountedPrice))
         )
           .match(/\d{1,3}/g)
           .join("/");
@@ -154,7 +154,7 @@ function setAvailableHelper(elements, selectedDate = "") {
       } else {
         const price = parseInt(day.price) / 1000 || null;
         element.parentElement.querySelector(".price").innerHTML = String(
-          convertToPersianNumber(price)
+          convertToPersianNumber(String(price))
         )
           .match(/\d{1,3}/g)
           .join("/");
