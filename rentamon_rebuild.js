@@ -128,11 +128,19 @@ function setAvailableHelper(elements, selectedDate = "") {
     const element = elements[i];
     let day = "";
     if (selectedDate !== "") {
-      day = selectedDate[i];
+      // day = selectedDate[i];
+      day = new persianDate(selectedDate[i]).toGregorian();
+      const storedData = localStorage.getItem('calendar_data');
+      const jsonData = JSON.parse(storedData);
+      const filteredData = jsonData.calendar.find(item => item.date === day);
+      day = filteredData;
     }
     element.parentElement.classList.remove("blocked-days");
     element.parentElement.classList.remove("booked-days");
-    element.parentElement.querySelector(".price").innerHTML = day;
+    if (day)
+      element.parentElement.querySelector(".price").innerHTML = day;
+    else
+    element.parentElement.querySelector(".price").innerHTML = ""
   }
   // elements.forEach((elm) => {
   //   // elem.parentElement.classList.remove("discounted-days");
@@ -220,6 +228,7 @@ async function rentamoning() {
       }
     );
     const result = await response.json();
+    localStorage.setItem("calendar_data", JSON.stringify(result))
     const calendarData = result.calendar;
     activeWebsites = result.status;
 
@@ -420,7 +429,7 @@ async function blockBtnClicked() {
     status_responses = Object.values(final_response.data);
     // console.log(spans);
     if (status_responses.every((rep) => rep === "succeed")) {
-      setBlockHelper(spans, selectedDate);
+      setBlockHelper(spans);
     }
     setStatusStyle(final_response.data);
     console.log("GOT HERE", final_response);
