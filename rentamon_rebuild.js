@@ -195,8 +195,9 @@ function setAvailableHelper(elements, selectedDate = "") {
 }
 function setBookedkHelper(elements) {
   elements.forEach((elm) => {
-    if (elm.parentElement.classList)
-      elm.parentElement.classList.remove("discounted-days");
+    if (elm.parentElement)
+      if (elm.parentElement.classList)
+        elm.parentElement.classList.remove("discounted-days");
     elm.parentElement.classList.add("booked-days");
     elm.parentElement.querySelector(".reserved").innerHTML = reservedViewer(
       elm.website
