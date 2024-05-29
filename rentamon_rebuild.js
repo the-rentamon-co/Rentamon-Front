@@ -119,12 +119,12 @@ function priceHandeler(element, status, main_price, discounted_price) {
       // ____________________________________________________________
     } else if (discounted_price) {
       element.parentElement.querySelector(".price").innerHTML =
-        persianNumberWithCommas(convertToPersianNumber(discounted_price));
+        persianNumberWithCommas(convertToPersianNumber(String(discounted_price)));
 
       element.parentElement.classList.add("discounted-days");
     } else if (main_price) {
       element.parentElement.querySelector(".price").innerHTML =
-        persianNumberWithCommas(convertToPersianNumber(main_price));
+        persianNumberWithCommas(convertToPersianNumber(String(main_price)));
 
       element.parentElement.classList.remove("discounted-days");
     }
