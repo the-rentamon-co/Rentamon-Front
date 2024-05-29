@@ -353,7 +353,7 @@ async function reserveOther() {
       document.querySelector(".response_status_pop a").click();
     }
     final_response = await performAction("setReserve", selectedDate,property_id= 39);
-    status_responses = Object.values(final_response.data);
+    status_responses = Object.values(final_response.status);
   } else {
     alert(messages.notSelectedDay);
   }
@@ -500,11 +500,11 @@ async function unblockBtnClicked() {
     }
     // adding api calls if user has registered in the website
     final_response = await performAction("setUnblock", selectedDate,property_id= 39);
-    status_responses = Object.values(final_response.data);
+    status_responses = Object.values(final_response.status);
     if (status_responses.every((rep) => rep === "succeed")) {
       setAvailableHelper(spans);
     }
-    setStatusStyle(final_response.data);
+    setStatusStyle(final_response.status);
     console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
