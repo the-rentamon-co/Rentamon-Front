@@ -180,7 +180,7 @@ function setAvailableHelper(elements, selectedDate = "") {
       element.parentElement.querySelector(".price").innerHTML = "";
       element.parentElement.classList.remove("discounted-days");
     }
-    elm.parentElement.querySelector(".reserved").innerHTML = ""
+    element.parentElement.querySelector(".reserved").innerHTML = ""
   }
 }
 function setBookedkHelper(elements) {
