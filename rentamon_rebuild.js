@@ -694,9 +694,10 @@ async function performAction(actionType, days, price = null, discount = null,pro
   let url = "";
   let method = "POST";
   let corrected_days = []
+  
   days.forEach((day) => {
     corrected_days.push(
-      new persianDate(day).toGregorian()
+      new persianDate(day).toCalendar('gregorian')
     );
   })
   days = corrected_days
