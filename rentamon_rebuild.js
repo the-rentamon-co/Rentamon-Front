@@ -389,6 +389,7 @@ async function reserveOther() {
     var response_status = document.querySelector(".response_status");
     if (response_status) {
       document.querySelector(".response_status_pop a").click();
+      setStyleToPending();
     }
     final_response = await performAction(
       "setReserve",
