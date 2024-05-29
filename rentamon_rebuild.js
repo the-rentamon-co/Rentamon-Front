@@ -124,11 +124,11 @@ function setBlockHelper(elements) {
 }
 
 function setAvailableHelper(elements, selectedDate = "") {
+  console.log("Days that are selected: ", selectedDate)
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     let day = "";
     if (selectedDate !== "") {
-      // day = selectedDate[i];
       day = new persianDate(selectedDate[i]).toGregorian();
       const storedData = localStorage.getItem('calendar_data');
       const jsonData = JSON.parse(storedData);
