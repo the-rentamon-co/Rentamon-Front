@@ -450,7 +450,7 @@ function priceBtnClicked() {
         );
         const calendar_data = localStorage.getItem("calendar_data");
         const jsonData = JSON.parse(calendar_data);
-        setStatusStyle(final_response.status);
+        setStatusStyle(final_response.data);
         selected.forEach((z) => {
           z.classList.remove("selected");
           const filteredData = jsonData.calendar.find(
