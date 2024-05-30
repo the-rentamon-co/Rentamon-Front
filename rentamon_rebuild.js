@@ -510,9 +510,7 @@ function discountBtnClicked() {
               return obj;
             }, {});
 
-          setStyleToPending(
-            activeWebsitesAsArray.filter((item) => with_discount.includes(item))
-          );
+          setStyleToPending(activeWebsitesAsArray);
         } else setStyleToPending();
         const final_response = await performAction(
           "setDiscount",
