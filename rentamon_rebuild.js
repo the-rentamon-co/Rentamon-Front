@@ -428,6 +428,7 @@ function priceBtnClicked() {
     var price_div = document.createElement("div");
     price_div.style.display = "none";
     price_div.className = "price-submit2";
+    console.log("Price submit2 Element: ", price_div)
     document.body.appendChild(price_div);
     price_div.click();
   } else {
