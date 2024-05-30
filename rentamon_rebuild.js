@@ -1,5 +1,11 @@
 let apiHostMainUrl = "https://api-rentamon.liara.run";
 
+// get prop_id from url for example:
+// rentamon.com/panel?prop_id=1
+const propertyIdFromQueryParams = new URL(
+  window.location.href
+).searchParams.get("prop_id");
+
 // this is calendar config
 let tehranTimeZone = "Asia/Tehran";
 let currentDate = new Date();
@@ -264,7 +270,7 @@ async function rentamoning() {
 
     // Fetch calendar data from the unified API with headers
     const response = await fetch(
-      `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}`,
+      `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
       {
         method: "GET",
         headers: headers,
@@ -475,7 +481,12 @@ function priceBtnClicked() {
             discountedPrice = price2 - (price2 * discount_percentage) / 100;
           }
 
-          priceHandeler(z.querySelector("span"), "", price / 1000, discountedPrice);
+          priceHandeler(
+            z.querySelector("span"),
+            "",
+            price / 1000,
+            discountedPrice
+          );
         });
 
         // setTimeout(rentamoning, 2000);
