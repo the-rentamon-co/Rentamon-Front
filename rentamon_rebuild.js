@@ -923,7 +923,8 @@ async function performAction(
   }
 
   try {
-    const response = await fetch(url + "?property_id=" + propertyIdFromQueryParams, {
+    data.property_id = propertyIdFromQueryParams;
+    const response = await fetch(url, {
       method: method,
       headers: {
         Authorization: `Bearer ${authToken}`,
