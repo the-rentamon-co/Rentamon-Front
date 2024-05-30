@@ -438,8 +438,7 @@ function priceBtnClicked() {
         console.log("Got here!");
         const dates = document.querySelector("#form-field-dates").value;
 
-        const price =
-          parseInt(document.querySelector("#form-field-price").value) / 1000;
+        let price = document.querySelector("#form-field-price").value;
 
         document.querySelector(".response_status_pop a").click();
         setStyleToPending();
@@ -462,6 +461,7 @@ function priceBtnClicked() {
           );
           let discountedPrice = 0;
           const discount_percentage = filteredData.discount_percentage;
+          price = price / 1000;
           if (discount_percentage) {
             discountedPrice = price - (price * discount_percentage) / 100;
           }
