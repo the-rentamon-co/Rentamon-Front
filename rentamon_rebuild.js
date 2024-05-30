@@ -502,10 +502,16 @@ function discountBtnClicked() {
           "#form-field-noDiscountPrice"
         ).value;
         document.querySelector(".response_status_pop a").click();
-        setStyleToPending();
-        // setStyleToPending(
-        //   activeWebsites.filter((item) => with_discount.includes(item))
-        // );
+        if (activeWebsites)
+          setStyleToPending(
+            activeWebsites.filter((item) => with_discount.includes(item))
+          );
+        else {
+          const activeWebsitesManual = await performAction("activeWebsites");
+          setStyleToPending(
+            activeWebsitesManual.filter((item) => with_discount.includes(item))
+          );
+        }
         const final_response = await performAction(
           "setDiscount",
           (days = dates.split(",")),
