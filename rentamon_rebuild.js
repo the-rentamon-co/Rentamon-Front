@@ -128,7 +128,9 @@ function priceHandeler(element, status, main_price, discounted_price) {
     element.parentElement.classList.add("discounted-days");
   } else if (main_price) {
     element.parentElement.querySelector(".price").innerHTML =
-      persianNumberWithCommas(convertToPersianNumber(String(main_price)));
+      persianNumberWithCommas(convertToPersianNumber(String(main_price))).split(
+        "."
+      )[0];
     element.parentElement.classList.remove("discounted-days");
     // }
   }
