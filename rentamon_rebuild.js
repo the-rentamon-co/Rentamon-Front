@@ -512,17 +512,12 @@ function discountBtnClicked() {
 
         selected.forEach((z) => {
           z.classList.remove("selected");
-          // const filteredData = jsonData.calendar.find(
-          //   (item) =>
-          //     item.date ===
-          //     new Date(parseInt(z.getAttribute("data-unix")))
-          //       .toISOString()
-          //       .substring(0, 10)
-          // );
+          z.classList.add("discounted-days");
           let discountedPrice = 0;
+          console.log("Price at discount function: ", price)
           if (price) {
-            price = price / 1000;
-            discountedPrice = price - (price * discount) / 100;
+            const price2 = price / 1000;
+            discountedPrice = price2 - (price2 * discount) / 100;
           }
 
           priceHandeler(z.querySelector("span"), "", price, discountedPrice);
