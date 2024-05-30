@@ -525,7 +525,7 @@ function discountBtnClicked() {
                 .substring(0, 10)
           );
           let price2 = filteredData.price
-          if (price) {
+          if (price2) {
             price2 = price2 / 1000;
             discountedPrice = price2 - (price2 * discount) / 100;
             price2 = price2 * 1000;
