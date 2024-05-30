@@ -524,14 +524,10 @@ function discountBtnClicked() {
                 .toISOString()
                 .substring(0, 10)
           );
-          let price2 = filteredData.price
+          let price2 = filteredData.price / 1000
           if (price2) {
-            price2 = price2 / 1000;
             discountedPrice = price2 - (price2 * discount) / 100;
-            price2 = price2 * 1000;
-            console.log("Discounted Price: ", discountedPrice)
           }
-
           priceHandeler(z.querySelector("span"), "", price2, discountedPrice);
         });
       });
