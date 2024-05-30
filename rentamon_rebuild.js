@@ -425,12 +425,50 @@ function checkAction() {
 function priceBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   if (selected.length > 0) {
-    var price_div = document.createElement("div");
-    price_div.style.display = "none";
-    price_div.className = "price-submit2";
-    console.log("Price submit2 Element: ", price_div)
-    document.body.appendChild(price_div);
-    price_div.click();
+    document
+      .querySelector("#popup_sumbit_price")
+      .addEventListener("click", async () => {
+        console.log("Got here!");
+        const dates = document.querySelector("#form-field-dates").value;
+
+        const price = document.querySelector("#form-field-price").value;
+
+        document.querySelector(".response_status_pop a").click();
+        setStyleToPending();
+        const final_response = await performAction(
+          "setPrice",
+          dates.split(","),
+          price
+        );
+        const calendar_data = localStorage.getItem("calendar_data");
+        const jsonData = JSON.parse(calendar_data);
+        setStatusStyle(final_response.status);
+        selected.forEach((z) => {
+          z.classList.remove("selected");
+          const filteredData = jsonData.calendar.find(
+            (item) =>
+              item.date ===
+              new Date(parseInt(z.getAttribute("data-unix")))
+                .toISOString()
+                .substring(0, 10)
+          );
+          let discountedPrice = 0;
+          const discount_percentage = filteredData.discount_percentage;
+          if (discount_percentage) {
+            discountedPrice = price - (price * discount_percentage) / 100;
+          }
+
+          priceHandeler(z.querySelector("span"), "", price, discountedPrice);
+        });
+
+        // setTimeout(rentamoning, 2000);
+      });
+    // var price_div = document.createElement("div");
+    // price_div.style.display = "none";
+    // price_div.className = "price-submit2";
+    // console.log("Price submit2 Element: ", price_div);
+    // document.body.appendChild(price_div);
+    // price_div.click();
   } else {
     alert(messages.notSelectedDay);
   }
