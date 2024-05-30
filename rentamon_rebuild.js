@@ -153,10 +153,10 @@ function setAvailableHelper(elements, selectedDate = "") {
       const filteredData = jsonData.calendar.find((item) => item.date === day);
       day = filteredData;
     }
-    if (element.parentElement.classList.contains("blocked-days"))
-      element.parentElement.classList.remove("blocked-days");
-    if (element.parentElement.classList.contains("booked-days"))
-      element.parentElement.classList.remove("booked-days");
+
+    element.parentElement.classList.remove("blocked-days");
+    element.parentElement.classList.remove("booked-days");
+
     if (day) {
       const persianNumberWithCommas = (persianNum) =>
         persianNum
@@ -164,7 +164,7 @@ function setAvailableHelper(elements, selectedDate = "") {
           .replace(/\B(?=(\d{3})+(?!\d))/g, "/")
           .replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
       if (day.price) {
-        if (day.discount_percentage && day.discount_percentage > 0) {
+        if (day.discount_percentage) {
           const discount_percentage = day.discount_percentage;
           const price = parseInt(day.price) / 1000 || null;
           const discountedPrice = price - (price * discount_percentage) / 100;
@@ -398,7 +398,9 @@ async function reserveOther() {
     );
     status_responses = Object.values(final_response.status);
     if (status_responses.every((rep) => rep === "succeed")) {
-      setBookedkHelper(spans);
+      selected.forEach((z) => {
+        setBookedkHelper({ elem: z, website: "host" });
+      });
     }
     setStatusStyle(final_response.status);
     console.log("GOT HERE", final_response);
@@ -524,7 +526,7 @@ function discountBtnClicked() {
                 .toISOString()
                 .substring(0, 10)
           );
-          let price2 = filteredData.price / 1000
+          let price2 = filteredData.price / 1000;
           if (price2) {
             discountedPrice = price2 - (price2 * discount) / 100;
           }
