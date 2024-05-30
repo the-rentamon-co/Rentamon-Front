@@ -425,18 +425,21 @@ function checkAction() {
 function priceBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   if (selected.length > 0) {
+    // this codes from here
     var price_div = document.createElement("div");
     price_div.style.display = "none";
     price_div.className = "price-submit2";
     document.body.appendChild(price_div);
     price_div.click();
+    // to here open price popup
     document
       .querySelector("#popup_sumbit_price")
       .addEventListener("click", async () => {
         console.log("Got here!");
         const dates = document.querySelector("#form-field-dates").value;
 
-        const price = document.querySelector("#form-field-price").value;
+        const price =
+          parseInt(document.querySelector("#form-field-price").value) / 1000;
 
         document.querySelector(".response_status_pop a").click();
         setStyleToPending();
