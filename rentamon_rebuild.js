@@ -510,13 +510,24 @@ function discountBtnClicked() {
         );
         setStatusStyle(final_response.data);
 
+        const calendar_data = localStorage.getItem("calendar_data");
+        const jsonData = JSON.parse(calendar_data);
+
         selected.forEach((z) => {
           z.classList.remove("selected");
           z.classList.add("discounted-days");
           let discountedPrice = 0;
-          console.log("Price at discount function: ", price)
+          const filteredData = jsonData.calendar.find(
+            (item) =>
+              item.date ===
+              new Date(parseInt(z.getAttribute("data-unix")))
+                .toISOString()
+                .substring(0, 10)
+          );
+          let price2 = filteredData.price
+          console.log("Price at discount function: ", price2);
           if (price) {
-            const price2 = price / 1000;
+            price2 = price2 / 1000;
             discountedPrice = price2 - (price2 * discount) / 100;
           }
 
