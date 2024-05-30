@@ -506,12 +506,7 @@ function discountBtnClicked() {
           setStyleToPending(
             activeWebsites.filter((item) => with_discount.includes(item))
           );
-        else {
-          const activeWebsitesManual = await performAction("activeWebsites");
-          setStyleToPending(
-            activeWebsitesManual.filter((item) => with_discount.includes(item))
-          );
-        }
+        else setStyleToPending();
         const final_response = await performAction(
           "setDiscount",
           (days = dates.split(",")),
