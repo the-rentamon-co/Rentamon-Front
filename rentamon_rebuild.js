@@ -425,6 +425,11 @@ function checkAction() {
 function priceBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   if (selected.length > 0) {
+    var price_div = document.createElement("div");
+    price_div.style.display = "none";
+    price_div.className = "price-submit2";
+    document.body.appendChild(price_div);
+    price_div.click();
     document
       .querySelector("#popup_sumbit_price")
       .addEventListener("click", async () => {
@@ -463,12 +468,6 @@ function priceBtnClicked() {
 
         // setTimeout(rentamoning, 2000);
       });
-    // var price_div = document.createElement("div");
-    // price_div.style.display = "none";
-    // price_div.className = "price-submit2";
-    // console.log("Price submit2 Element: ", price_div);
-    // document.body.appendChild(price_div);
-    // price_div.click();
   } else {
     alert(messages.notSelectedDay);
   }
