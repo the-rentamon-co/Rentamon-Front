@@ -531,7 +531,7 @@ function discountBtnClicked() {
             discountedPrice = price2 - (price2 * discount) / 100;
           }
 
-          priceHandeler(z.querySelector("span"), "", price, discountedPrice);
+          priceHandeler(z.querySelector("span"), "", price2, discountedPrice);
         });
         // setTimeout(rentamoning, 2000);
       });
