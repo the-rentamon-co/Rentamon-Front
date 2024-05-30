@@ -503,9 +503,10 @@ function discountBtnClicked() {
         ).value;
         document.querySelector(".response_status_pop a").click();
         if (activeWebsites) {
-          console.log("Active Websites: ", activeWebsites)
+          const activeWebsitesAsArray = Object.keys( activeWebsites)
+          console.log("Active Websites: ", activeWebsitesAsArray)
           setStyleToPending(
-            activeWebsites.filter((item) => with_discount.includes(item))
+            activeWebsitesAsArray.filter((item) => with_discount.includes(item))
           );
         } else {
           const activeWebsitesManual = await performAction("activeWebsites");
