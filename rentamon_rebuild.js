@@ -503,6 +503,7 @@ function discountBtnClicked() {
         ).value;
         document.querySelector(".response_status_pop a").click();
         if (activeWebsites) {
+          console.log("Active Websites: ", activeWebsites)
           setStyleToPending(
             activeWebsites.filter((item) => with_discount.includes(item))
           );
