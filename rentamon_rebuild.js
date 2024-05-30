@@ -122,7 +122,9 @@ function priceHandeler(element, status, main_price, discounted_price) {
     // ____________________________________________________________
   } else if (discounted_price) {
     element.parentElement.querySelector(".price").innerHTML =
-      persianNumberWithCommas(convertToPersianNumber(String(discounted_price)));
+      persianNumberWithCommas(
+        convertToPersianNumber(String(discounted_price))
+      ).split(".")[0];
     element.parentElement.classList.add("discounted-days");
   } else if (main_price) {
     element.parentElement.querySelector(".price").innerHTML =
@@ -465,9 +467,10 @@ function priceBtnClicked() {
           );
           let discountedPrice = 0;
           const discount_percentage = filteredData.discount_percentage;
-          price = price / 1000;
+
           if (discount_percentage) {
-            discountedPrice = price - (price * discount_percentage) / 100;
+            const price2 = price / 1000;
+            discountedPrice = price2 - (price2 * discount_percentage) / 100;
           }
 
           priceHandeler(z.querySelector("span"), "", price, discountedPrice);
