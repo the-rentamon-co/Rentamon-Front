@@ -529,6 +529,7 @@ function discountBtnClicked() {
             price2 = price2 / 1000;
             discountedPrice = price2 - (price2 * discount) / 100;
             price2 = price2 * 1000;
+            console.log("Discounted Price: ", discountedPrice)
           }
 
           priceHandeler(z.querySelector("span"), "", price2, discountedPrice);
