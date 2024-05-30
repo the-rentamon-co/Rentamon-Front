@@ -399,7 +399,7 @@ async function reserveOther() {
     status_responses = Object.values(final_response.status);
     if (status_responses.every((rep) => rep === "succeed")) {
       selected.forEach((z) => {
-        setBookedkHelper({ elem: z, website: "host" });
+        setBookedkHelper([{ elem: z, website: "host" }]);
       });
     }
     setStatusStyle(final_response.status);
