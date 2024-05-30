@@ -503,17 +503,17 @@ function discountBtnClicked() {
         ).value;
         document.querySelector(".response_status_pop a").click();
         if (activeWebsites) {
-          const activeWebsitesAsArray = Object.keys( activeWebsites)
-          console.log("Active Websites: ", activeWebsitesAsArray)
+          const activeWebsitesAsArray = Object.keys(activeWebsites)
+            .filter((key) => with_discount.includes(key))
+            .reduce((obj, key) => {
+              obj[key] = activeWebsites[key];
+              return obj;
+            }, {});
+
           setStyleToPending(
             activeWebsitesAsArray.filter((item) => with_discount.includes(item))
           );
-        } else {
-          const activeWebsitesManual = await performAction("activeWebsites");
-          setStyleToPending(
-            activeWebsitesManual.filter((item) => with_discount.includes(item))
-          );
-        }
+        } else setStyleToPending();
         const final_response = await performAction(
           "setDiscount",
           (days = dates.split(",")),
