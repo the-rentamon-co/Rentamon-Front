@@ -406,7 +406,7 @@ async function reserveOther() {
     final_response = await performAction(
       "setReserve",
       selectedDate,
-      (property_id = 39)
+      (property_id = propertyIdFromQueryParams)
     );
     status_responses = Object.values(final_response.status);
     if (status_responses.every((rep) => rep === "succeed")) {
@@ -588,7 +588,7 @@ async function blockBtnClicked() {
     final_response = await performAction(
       "setBlock",
       selectedDate,
-      (property_id = 39)
+      (property_id = propertyIdFromQueryParams)
     );
     console.log("Response Data: ", final_response);
     status_responses = Object.values(final_response.status);
@@ -670,10 +670,11 @@ async function unblockBtnClicked() {
     final_response = await performAction(
       "setUnblock",
       selectedDate,
-      (property_id = 39)
+      (property_id = propertyIdFromQueryParams)
     );
     status_responses = Object.values(final_response.status);
     if (status_responses.every((rep) => rep === "succeed")) {
+      console.log("Days of selection: ", selectedDate)
       setAvailableHelper(spans, gregorianSelectedDate);
     }
     setStatusStyle(final_response.status);
