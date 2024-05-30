@@ -498,9 +498,10 @@ function discountBtnClicked() {
           "#form-field-noDiscountPrice"
         ).value;
         document.querySelector(".response_status_pop a").click();
-        setStyleToPending(
-          activeWebsites.filter((item) => with_discount.includes(item))
-        );
+        setStyleToPending();
+        // setStyleToPending(
+        //   activeWebsites.filter((item) => with_discount.includes(item))
+        // );
         const final_response = await performAction(
           "setDiscount",
           (days = dates.split(",")),
@@ -511,13 +512,13 @@ function discountBtnClicked() {
 
         selected.forEach((z) => {
           z.classList.remove("selected");
-          const filteredData = jsonData.calendar.find(
-            (item) =>
-              item.date ===
-              new Date(parseInt(z.getAttribute("data-unix")))
-                .toISOString()
-                .substring(0, 10)
-          );
+          // const filteredData = jsonData.calendar.find(
+          //   (item) =>
+          //     item.date ===
+          //     new Date(parseInt(z.getAttribute("data-unix")))
+          //       .toISOString()
+          //       .substring(0, 10)
+          // );
           let discountedPrice = 0;
           if (price) {
             price = price / 1000;
