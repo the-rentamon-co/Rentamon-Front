@@ -377,6 +377,7 @@ function handleDayClick(e) {
 async function reserveOther() {
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
+  let spans = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
       z.classList.remove("selected");
@@ -385,6 +386,7 @@ async function reserveOther() {
           "YYYY-MM-DD"
         )
       );
+      spans.push(z.querySelector("span"));
     });
     var response_status = document.querySelector(".response_status");
     if (response_status) {
@@ -398,7 +400,7 @@ async function reserveOther() {
     );
     status_responses = Object.values(final_response.status);
     if (status_responses.every((rep) => rep === "succeed")) {
-      selected.forEach((z) => {
+      spans.forEach((z) => {
         setBookedkHelper([{ elem: z, website: "host" }]);
       });
     }
