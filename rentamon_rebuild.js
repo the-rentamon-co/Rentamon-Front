@@ -481,11 +481,53 @@ function priceBtnClicked() {
 function discountBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   if (selected.length > 0) {
+    // this codes from here
     var dis_div = document.createElement("div");
     dis_div.style.display = "none";
     dis_div.className = "discount-submit-rebuild";
     document.body.appendChild(dis_div);
     dis_div.click();
+    // to here open price popup
+    var with_discount = ["jabama", "homsa", "otaghak"];
+    document
+      .querySelector("#popup_sumbit_discount")
+      .addEventListener("click", async () => {
+        const discount = document.querySelector("#form-field-name").value;
+        const dates = document.querySelector("#form-field-dates").value;
+        const price = document.querySelector(
+          "#form-field-noDiscountPrice"
+        ).value;
+        document.querySelector(".response_status_pop a").click();
+        setStyleToPending(
+          activeWebsites.filter((item) => with_discount.includes(item))
+        );
+        const final_response = await performAction(
+          "setDiscount",
+          (days = dates.split(",")),
+          price,
+          discount
+        );
+        setStatusStyle(final_response.data);
+
+        selected.forEach((z) => {
+          z.classList.remove("selected");
+          const filteredData = jsonData.calendar.find(
+            (item) =>
+              item.date ===
+              new Date(parseInt(z.getAttribute("data-unix")))
+                .toISOString()
+                .substring(0, 10)
+          );
+          let discountedPrice = 0;
+          if (price) {
+            price = price / 1000;
+            discountedPrice = price - (price * discount) / 100;
+          }
+
+          priceHandeler(z.querySelector("span"), "", price, discountedPrice);
+        });
+        // setTimeout(rentamoning, 2000);
+      });
   } else {
     alert(messages.notSelectedDay);
   }
