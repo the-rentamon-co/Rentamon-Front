@@ -525,15 +525,14 @@ function discountBtnClicked() {
                 .substring(0, 10)
           );
           let price2 = filteredData.price
-          console.log("Price at discount function: ", price2);
           if (price) {
             price2 = price2 / 1000;
             discountedPrice = price2 - (price2 * discount) / 100;
+            price2 = price2 * 1000;
           }
 
           priceHandeler(z.querySelector("span"), "", price2, discountedPrice);
         });
-        // setTimeout(rentamoning, 2000);
       });
   } else {
     alert(messages.notSelectedDay);
