@@ -200,8 +200,37 @@ function setAvailableHelper(elements, selectedDate = "") {
     element.parentElement.querySelector(".reserved").innerHTML = "";
   }
 }
-function setBookedkHelper(elements) {
+
+function setBookedkHelper(elements, selectedDate = true) {
+  const persianNumberWithCommas = (persianNum) =>
+    persianNum
+      .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+      .replace(/\B(?=(\d{3})+(?!\d))/g, "/")
+      .replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+
+  const handlePriceOfReservedDays = (element) => {
+    let day = element.elem.parentElement.getAttribute("data-unix");
+    day = new Date(parseInt(day)).toISOString().substring(0, 10);
+
+    const storedData = localStorage.getItem("calendar_data");
+    const jsonData = JSON.parse(storedData);
+    const filteredData = jsonData.calendar.find((item) => item.date === day);
+    day = filteredData;
+
+    const discount_percentage = day.discount_percentage;
+    const price = parseInt(day.price) / 1000 || null;
+    const discountedPrice = price - (price * discount_percentage) / 100;
+    if (discountedPrice)
+      element.elem.parentElement.querySelector(".price").innerHTML =
+        persianNumberWithCommas(
+          convertToPersianNumber(String(discountedPrice))
+        );
+  };
+
   elements.forEach((elm) => {
+    if (selectedDate) {
+      handlePriceOfReservedDays(elm);
+    }
     elm.elem.parentElement.classList.remove("discounted-days");
     elm.elem.parentElement.classList.add("booked-days");
     elm.elem.parentElement.querySelector(".reserved").innerHTML =
@@ -390,6 +419,7 @@ function handleDayClick(e) {
 async function reserveOther() {
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
+  let gregorianSelectedDate = [];
   let spans = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
@@ -398,6 +428,11 @@ async function reserveOther() {
         new persianDate(parseInt(z.getAttribute("data-unix"))).format(
           "YYYY-MM-DD"
         )
+      );
+      gregorianSelectedDate.push(
+        new Date(parseInt(z.getAttribute("data-unix")))
+          .toISOString()
+          .substring(0, 10)
       );
       spans.push(z.querySelector("span"));
     });
