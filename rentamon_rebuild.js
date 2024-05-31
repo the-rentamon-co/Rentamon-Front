@@ -157,9 +157,9 @@ function setBlockHelper(elements) {
 
 function setAvailableHelper(elements, selectedDate = "") {
   for (let i = 0; i < elements.length; i++) {
-    let reserved = elm.parentElement.querySelector(".reserved");
+    const element = elements[i];
+    let reserved = element.parentElement.querySelector(".reserved");
     if (reserved.innerHTML === "" || reserved.innerHTML === "رزرو") {
-      const element = elements[i];
       let day = "";
       if (selectedDate !== "") {
         day = selectedDate[i];
