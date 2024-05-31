@@ -144,11 +144,14 @@ function priceHandeler(element, status, main_price, discounted_price) {
 
 function setBlockHelper(elements) {
   elements.forEach((elm) => {
-    elm.parentElement.querySelector(".price").innerHTML = "";
-    if (elm.parentElement.classList)
+    let reserved = elm.parentElement.querySelector(".reserved");
+    if (reserved.innerHTML === "" || reserved.innerHTML === "رزرو") {
+      elm.parentElement.querySelector(".price").innerHTML = "";
       elm.parentElement.classList.remove("discounted-days");
-    elm.parentElement.classList.remove("booked-days");
-    elm.parentElement.classList.add("blocked-days");
+      elm.parentElement.classList.remove("booked-days");
+      elm.parentElement.classList.add("blocked-days");
+      reserved.innerHTML = "";
+    }
   });
 }
 
@@ -674,7 +677,6 @@ async function unblockBtnClicked() {
     );
     status_responses = Object.values(final_response.status);
     if (status_responses.every((rep) => rep === "succeed")) {
-      console.log("Days of selection: ", selectedDate)
       setAvailableHelper(spans, gregorianSelectedDate);
     }
     setStatusStyle(final_response.status);
