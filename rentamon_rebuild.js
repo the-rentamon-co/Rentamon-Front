@@ -157,47 +157,52 @@ function setBlockHelper(elements) {
 
 function setAvailableHelper(elements, selectedDate = "") {
   for (let i = 0; i < elements.length; i++) {
-    const element = elements[i];
-    let day = "";
-    if (selectedDate !== "") {
-      day = selectedDate[i];
-      const storedData = localStorage.getItem("calendar_data");
-      const jsonData = JSON.parse(storedData);
-      const filteredData = jsonData.calendar.find((item) => item.date === day);
-      day = filteredData;
-    }
-
-    element.parentElement.classList.remove("blocked-days");
-    element.parentElement.classList.remove("booked-days");
-
-    if (day) {
-      const persianNumberWithCommas = (persianNum) =>
-        persianNum
-          .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
-          .replace(/\B(?=(\d{3})+(?!\d))/g, "/")
-          .replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
-      if (day.price) {
-        if (day.discount_percentage) {
-          const discount_percentage = day.discount_percentage;
-          const price = parseInt(day.price) / 1000 || null;
-          const discountedPrice = price - (price * discount_percentage) / 100;
-          element.parentElement.querySelector(".price").innerHTML =
-            persianNumberWithCommas(
-              convertToPersianNumber(String(discountedPrice))
-            );
-          element.parentElement.classList.add("discounted-days");
-        } else {
-          const price = parseInt(day.price) / 1000 || null;
-          element.parentElement.querySelector(".price").innerHTML =
-            persianNumberWithCommas(convertToPersianNumber(String(price)));
-          element.parentElement.classList.remove("discounted-days");
-        }
+    let reserved = elm.parentElement.querySelector(".reserved");
+    if (reserved.innerHTML === "" || reserved.innerHTML === "رزرو") {
+      const element = elements[i];
+      let day = "";
+      if (selectedDate !== "") {
+        day = selectedDate[i];
+        const storedData = localStorage.getItem("calendar_data");
+        const jsonData = JSON.parse(storedData);
+        const filteredData = jsonData.calendar.find(
+          (item) => item.date === day
+        );
+        day = filteredData;
       }
-    } else {
-      element.parentElement.querySelector(".price").innerHTML = "";
-      element.parentElement.classList.remove("discounted-days");
+
+      element.parentElement.classList.remove("blocked-days");
+      element.parentElement.classList.remove("booked-days");
+
+      if (day) {
+        const persianNumberWithCommas = (persianNum) =>
+          persianNum
+            .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+            .replace(/\B(?=(\d{3})+(?!\d))/g, "/")
+            .replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+        if (day.price) {
+          if (day.discount_percentage) {
+            const discount_percentage = day.discount_percentage;
+            const price = parseInt(day.price) / 1000 || null;
+            const discountedPrice = price - (price * discount_percentage) / 100;
+            element.parentElement.querySelector(".price").innerHTML =
+              persianNumberWithCommas(
+                convertToPersianNumber(String(discountedPrice))
+              );
+            element.parentElement.classList.add("discounted-days");
+          } else {
+            const price = parseInt(day.price) / 1000 || null;
+            element.parentElement.querySelector(".price").innerHTML =
+              persianNumberWithCommas(convertToPersianNumber(String(price)));
+            element.parentElement.classList.remove("discounted-days");
+          }
+        }
+      } else {
+        element.parentElement.querySelector(".price").innerHTML = "";
+        element.parentElement.classList.remove("discounted-days");
+      }
+      reserved.innerHTML = "";
     }
-    element.parentElement.querySelector(".reserved").innerHTML = "";
   }
 }
 
@@ -419,7 +424,6 @@ function handleDayClick(e) {
 async function reserveOther() {
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
-  let gregorianSelectedDate = [];
   let spans = [];
   if (selected.length > 0) {
     selected.forEach((z) => {
@@ -428,11 +432,6 @@ async function reserveOther() {
         new persianDate(parseInt(z.getAttribute("data-unix"))).format(
           "YYYY-MM-DD"
         )
-      );
-      gregorianSelectedDate.push(
-        new Date(parseInt(z.getAttribute("data-unix")))
-          .toISOString()
-          .substring(0, 10)
       );
       spans.push(z.querySelector("span"));
     });
