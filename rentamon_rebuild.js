@@ -291,7 +291,6 @@ async function rentamoning() {
           availableDays[availableDays.length - 1].getAttribute("data-unix")
         )
       )
-        .add("day", 1)
         .format("YYYY-MM-DD"),
     ];
 
