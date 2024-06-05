@@ -271,7 +271,7 @@ async function rentamoning() {
   // getting active website list
   // TODO: add null for days in the main function if needed
   // activeWebsites = await performAction("activeWebsites", null);
-  const user_info = await get_user_info();
+
   document
     .querySelectorAll("form")
     .forEach((form) => form.removeEventListener("submit", rentamoning));
@@ -328,6 +328,8 @@ async function rentamoning() {
       "Content-Type": "application/json",
     };
 
+    const user_info = await get_user_info();
+    await replace_user_info()
     // Fetch calendar data from the unified API with headers
     const response = await fetch(
       `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
