@@ -19,8 +19,8 @@ body {
 
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span:not(.other-month):hover,
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td.disabled span:not(.other-month) {
-  background-color: #f2f2f2;
-  color: #c3c3c3;
+  background-color: #F9F9F9;
+  color: #C3C3C3;
 }
 
 .datepicker-plot-area-inline-view .datepicker-day-view .table-days td span,
@@ -217,6 +217,6 @@ td.passed-days.disabled {
 
 /* for normal days */
 .datepicker-day-view .table-days td:not(.selected):not(.disabled):not(.blocked-days):not(.booked-days):not(.other-month) {
-  background-color: #e5e5e5 !important;
+  background-color: #FFFFFF !important;
   color: #203647 !important;
 }
