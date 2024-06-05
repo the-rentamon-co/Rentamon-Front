@@ -293,9 +293,17 @@ function replace_user_info(user_info) {
 }
 function panelsDropdown(responseData) {
   var dropdownContent = document.getElementById('dropdown-content');
+  var dropdownBtn = document.getElementById('dropdown-btn');
+  var properties = responseData.properties;
   var defaultProperty = responseData.user_info.property_name;
 
-  responseData.properties.forEach(function(property) {
+  if (properties.length === 1) {
+      dropdownBtn.disabled = true;
+      dropdownBtn.textContent = properties[0].property_name;
+      return;
+  }
+
+  properties.forEach(function(property) {
       var link = document.createElement('a');
       link.href = property.link;
       link.textContent = property.property_name;
@@ -307,7 +315,7 @@ function panelsDropdown(responseData) {
 
       // Set default selection
       if (property.property_name === defaultProperty) {
-          document.getElementById('dropdown-btn').textContent = property.property_name;
+          dropdownBtn.textContent = property.property_name;
       }
   });
 }
