@@ -301,7 +301,9 @@ function panelsDropdown(responseData) {
   if (properties.length === 1) {
       dropdownBtn.disabled = true;
       dropdownBtn.textContent = properties[0].property_name;
+      dropdown.classList.remove('multiple-properties'); // Remove the class to hide the arrow
   } else {
+      dropdown.classList.add('multiple-properties'); // Add the class to show the arrow
       properties.forEach(function(property) {
           var link = document.createElement('a');
           link.href = property.link;
