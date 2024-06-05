@@ -291,7 +291,6 @@ function replace_user_info(user_info) {
 }
 function panelsDropdown(responseData) {
   var dropdownContent = document.getElementById('dropdown-content');
-  var dropdown = document.getElementById('dropdown');
   var dropdownBtn = document.getElementById('dropdown-btn');
   var properties = responseData.properties;
   var defaultProperty = responseData.user_info.property_name;
@@ -299,24 +298,24 @@ function panelsDropdown(responseData) {
   if (properties.length === 1) {
       dropdownBtn.disabled = true;
       dropdownBtn.textContent = properties[0].property_name;
-  } else {
-      dropdown.classList.add('multiple-properties');
-      properties.forEach(function(property) {
-          var link = document.createElement('a');
-          link.href = property.link;
-          link.textContent = property.property_name;
-          link.addEventListener('click', function(event) {
-              event.preventDefault();
-              window.location.href = property.link;
-          });
-          dropdownContent.appendChild(link);
-
-          // Set default selection
-          if (property.property_name === defaultProperty) {
-              dropdownBtn.textContent = property.property_name;
-          }
-      });
+      return;
   }
+
+  properties.forEach(function(property) {
+      var link = document.createElement('a');
+      link.href = property.link;
+      link.textContent = property.property_name;
+      link.addEventListener('click', function(event) {
+          event.preventDefault();
+          window.location.href = property.link;
+      });
+      dropdownContent.appendChild(link);
+
+      // Set default selection
+      if (property.property_name === defaultProperty) {
+          dropdownBtn.textContent = property.property_name;
+      }
+  });
 }
 
 // this is the main function that fetches data from websites based on calendar
