@@ -329,7 +329,7 @@ async function rentamoning() {
     };
 
     const user_info = await get_user_info();
-    await replace_user_info()
+    await replace_user_info(user_info)
     // Fetch calendar data from the unified API with headers
     const response = await fetch(
       `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
