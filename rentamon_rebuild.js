@@ -242,61 +242,12 @@ function setBookedkHelper(elements, selectedDate = true) {
       reservedViewer(elm.website);
   });
 }
-async function get_user_info() {
-  const propertyId = new URL(window.location.href).searchParams.get("prop_id");
 
-  const authToken = getCookie("auth_token");
-  if (!authToken) {
-    throw new Error("No auth token found");
-  }
-  const response = await fetch(
-    `https://rentamon-api.liara.run/api/user_info?property_id=${propertyId}`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  const result = await response.json();
-  return result;
-}
-
-function replace_user_info(user_info) {
-  const image = document.querySelector("#profilepic div img");
-  const username = document.querySelector("#username div h1");
-  const creditdate = document.querySelector("#creditdate div h1");
-  const roomname = document.querySelector("#roomname div h1");
-  username.innerText =
-    user_info.user_info.first_name + " " + user_info.user_info.last_name;
-  if (!user_info.user_info.renewal_date)
-    creditdate.innerText = "پایان اشتراک: " + " " + "از پشتیبانی بپرس";
-  else {
-    let a = [];
-    const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-    const credit_gregorian_date = user_info.user_info.renewal_date.split("-");
-    credit_gregorian_date.forEach((number) => {
-      a.push(number.replace(/\d/g, (digit) => persianDigits[digit]));
-    });
-    const renewal_date = a.join("/");
-    creditdate.innerText = "پایان اشتراک: " + renewal_date;
-  }
-
-  roomname.innerText = user_info.user_info.property_name;
-
-  image.src = user_info.user_info.profile_pic_link;
-  image.srcset = user_info.user_info.profile_pic_link;
-}
 // this is the main function that fetches data from websites based on calendar
 async function rentamoning() {
   // getting active website list
   // TODO: add null for days in the main function if needed
   // activeWebsites = await performAction("activeWebsites", null);
-
   document
     .querySelectorAll("form")
     .forEach((form) => form.removeEventListener("submit", rentamoning));
@@ -353,8 +304,6 @@ async function rentamoning() {
       "Content-Type": "application/json",
     };
 
-    const user_info = await get_user_info();
-    replace_user_info(await user_info);
     // Fetch calendar data from the unified API with headers
     const response = await fetch(
       `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
@@ -496,7 +445,7 @@ async function reserveOther() {
       (property_id = propertyIdFromQueryParams)
     );
     status_responses = Object.values(final_response.status);
-    if (status_responses.includes("succeed")) {
+    if (status_responses.every((rep) => rep === "succeed")) {
       spans.forEach((z) => {
         setBookedkHelper([{ elem: z, website: "host" }]);
       });
@@ -760,7 +709,7 @@ async function unblockBtnClicked() {
       (property_id = propertyIdFromQueryParams)
     );
     status_responses = Object.values(final_response.status);
-    if (status_responses.includes("succeed")) {
+    if (status_responses.every((rep) => rep === "succeed")) {
       setAvailableHelper(spans, gregorianSelectedDate);
     }
     setStatusStyle(final_response.status);
