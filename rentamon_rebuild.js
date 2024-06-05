@@ -291,6 +291,27 @@ function replace_user_info(user_info) {
   image.src = user_info.user_info.profile_pic_link;
   image.srcset = user_info.user_info.profile_pic_link;
 }
+function panelsDropdown(responseData) {
+  var dropdownContent = document.getElementById('dropdown-content');
+  var defaultProperty = responseData.user_info.property_name;
+
+  responseData.properties.forEach(function(property) {
+      var link = document.createElement('a');
+      link.href = property.link;
+      link.textContent = property.property_name;
+      link.addEventListener('click', function(event) {
+          event.preventDefault();
+          window.location.href = property.link;
+      });
+      dropdownContent.appendChild(link);
+
+      // Set default selection
+      if (property.property_name === defaultProperty) {
+          document.getElementById('dropdown-btn').textContent = property.property_name;
+      }
+  });
+}
+
 // this is the main function that fetches data from websites based on calendar
 async function rentamoning() {
   // getting active website list
@@ -355,6 +376,7 @@ async function rentamoning() {
 
     const user_info = await get_user_info();
     replace_user_info(await user_info);
+    panelsDropdown(await user_info);
     // Fetch calendar data from the unified API with headers
     const response = await fetch(
       `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
