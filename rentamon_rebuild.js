@@ -242,12 +242,36 @@ function setBookedkHelper(elements, selectedDate = true) {
       reservedViewer(elm.website);
   });
 }
+async function get_user_info() {
+  const propertyId = new URL(window.location.href).searchParams.get("prop_id");
+
+  const authToken = getCookie("auth_token");
+  if (!authToken) {
+    throw new Error("No auth token found");
+  }
+  const response = await fetch(
+    `https://rentamon-api.liara.run/api/user_info?property_id=${propertyId}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  const result = await response.json();
+  return result;
+}
 
 // this is the main function that fetches data from websites based on calendar
 async function rentamoning() {
   // getting active website list
   // TODO: add null for days in the main function if needed
   // activeWebsites = await performAction("activeWebsites", null);
+  const user_info = await get_user_info();
   document
     .querySelectorAll("form")
     .forEach((form) => form.removeEventListener("submit", rentamoning));
