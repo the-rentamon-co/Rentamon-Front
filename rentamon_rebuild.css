@@ -142,7 +142,7 @@ label {
   direction: rtl;
   font-size: 20px;
   font-family: vazirmatn;
-  color: #444444 !important;
+  color: #e4defe;
   gap: 10px;
 }
 
@@ -217,6 +217,6 @@ td.passed-days.disabled {
 
 /* for normal days */
 .datepicker-day-view .table-days td:not(.selected):not(.disabled):not(.blocked-days):not(.booked-days):not(.other-month) {
-  background-color: #fb0000 !important;
+  background-color: #e5e5e5 !important;
   color: #203647 !important;
 }
