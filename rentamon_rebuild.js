@@ -18,39 +18,39 @@ let activeWebsites;
 
 const websiteWidgets = {
   jabama: {
-    popup_id_selector: "#webdisconnected",
-    popup_link_selector: "#webdisconnected a",
-    icon_selector: "#jabama_icon_connected",
+    popup_id_selector: "#newwebdisconnected_jabama",
+    popup_link_selector: "#newwebdisconnected a",
+    icon_selector: "#newjabama_icon_connected",
   },
   jajiga: {
-    popup_id_selector: "#webdisconnected_jajiga",
-    popup_link_selector: "#webdisconnected_jajiga a",
-    icon_selector: "#jajiga_icon_connected",
+    popup_id_selector: "#newwebdisconnected_jajiga",
+    popup_link_selector: "#newwebdisconnected_jajiga a",
+    icon_selector: "#newjajiga_icon_connected",
   },
   shab: {
-    popup_id_selector: "#webdisconnected_shab",
-    popup_link_selector: "#webdisconnected_shab a",
-    icon_selector: "#shab_icon_connected",
+    popup_id_selector: "#newwebdisconnected_shab",
+    popup_link_selector: "#newwebdisconnected_shab a",
+    icon_selector: "#newshab_icon_connected",
   },
   mihmansho: {
-    popup_id_selector: "#webdisconnected_mihmansho",
-    popup_link_selector: "#webdisconnected_mihmansho a",
-    icon_selector: "#mihmansho_icon_connected",
+    popup_id_selector: "#newwebdisconnected_mihmansho",
+    popup_link_selector: "#newwebdisconnected_mihmansho a",
+    icon_selector: "#newmihmansho_icon_connected",
   },
   homsa: {
-    popup_id_selector: "#webdisconnected_homsa",
-    popup_link_selector: "#webdisconnected_homsa a",
-    icon_selector: "#homsa_icon_connected",
+    popup_id_selector: "#newwebdisconnected_homsa",
+    popup_link_selector: "#newwebdisconnected_homsa a",
+    icon_selector: "#newhomsa_icon_connected",
   },
   otaghak: {
-    popup_id_selector: "#webdisconnected_otaghak",
-    popup_link_selector: "#webdisconnected_otaghak a",
-    icon_selector: "#otaghak_icon_connected",
+    popup_id_selector: "#newwebdisconnected_otaghak",
+    popup_link_selector: "#newwebdisconnected_otaghak a",
+    icon_selector: "#newotaghak_icon_connected",
   },
   mizboon: {
-    popup_id_selector: "#webdisconnected_mizboon",
-    popup_link_selector: "#webdisconnected_mizboon a",
-    icon_selector: "#mizboon_icon_connected",
+    popup_id_selector: "#newwebdisconnected_mizboon",
+    popup_link_selector: "#newwebdisconnected_mizboon a",
+    icon_selector: "#newmizboon_icon_connected",
   },
 };
 
