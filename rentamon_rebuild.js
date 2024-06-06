@@ -19,7 +19,7 @@ let activeWebsites;
 const websiteWidgets = {
   jabama: {
     popup_id_selector: "#newwebdisconnected_jabama",
-    popup_link_selector: "#newwebdisconnected a",
+    popup_link_selector: "#newwebdisconnected_jabama a",
     icon_selector: "#newjabama_icon_connected",
   },
   jajiga: {
