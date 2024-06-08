@@ -1063,68 +1063,66 @@ async function performAction(
     throw error;
   }
 }
+ function sendPhoneNumber() {
+        const phoneNumber = document.getElementById('phonenumber').value;
+        const website = document.getElementById('website_id').value;
 
-function sendPhoneNumber() {
-  const phoneNumber = document.getElementById('phonenumber').value;
-  const website = document.getElementById('websitename').value;
+        fetch('https://rentamon-api.liara.run/api/sendotp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                phone: phoneNumber,
+                website: website
+            })
+        })
+        .then(response => {
+            if (response.status === 200) {
+                alert('OTP sent successfully.');
+                // Store phone number in hidden field for OTP form
+                document.getElementById('storedPhoneNumber').value = phoneNumber;
+                // Optionally enable OTP input field and submission button here if necessary
+            } else {
+                alert('Failed to send OTP. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    }
 
-  fetch('https://rentamon-api.liara.run/api/sendotp', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-          phone: phoneNumber,
-          website: website
-      })
-  })
-  .then(response => {
-      if (response.status === 200) {
-          alert('OTP sent successfully.');
-          // Store phone number in hidden field for OTP form
-          document.getElementById('storedPhoneNumber').value = phoneNumber;
-          // Optionally enable OTP input field and submission button here if necessary
-      } else {
-          alert('Failed to send OTP. Please try again.');
-      }
-  })
-  .catch(error => {
-      console.error('Error:', error);
-      alert('An error occurred. Please try again.');
-  });
-}
+    // Function to verify OTP
+    function verifyOtp() {
+        const phoneNumber = document.getElementById('storedPhoneNumber').value;
+        const otpCode = document.getElementById('otpcode').value;
+        const website = document.getElementById('website_id').value;
 
-// Function to verify OTP
-function verifyOtp() {
-  const phoneNumber = document.getElementById('storedPhoneNumber').value;
-  const otpCode = document.getElementById('otpcode').value;
-  const website = document.getElementById('websitename').value;
-
-  fetch('https://rentamon-api.liara.run/api/verifyotp', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-          phone: phoneNumber,
-          otp: otpCode,
-          website: website
-      })
-  })
-  .then(response => {
-      if (response.status === 200) {
-          alert('OTP verified successfully.');
-          // Handle successful OTP verification here
-      } else {
-          alert('Failed to verify OTP. Please try again.');
-      }
-  })
-  .catch(error => {
-      console.error('Error:', error);
-      alert('An error occurred. Please try again.');
-  });
-}
-
+        fetch('https://rentamon-api.liara.run/api/verifyotp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                phone: phoneNumber,
+                otp: otpCode,
+                website: website
+            })
+        })
+        .then(response => {
+            if (response.status === 200) {
+                alert('OTP verified successfully.');
+                // Handle successful OTP verification here
+            } else {
+                alert('Failed to verify OTP. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    }
 // for changing max date change value in maxDate: new persianDate
 $(window).on("load", function () {
   $(".inline").pDatepicker({
