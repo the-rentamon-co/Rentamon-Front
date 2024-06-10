@@ -117,12 +117,12 @@ td span:last-child {
   padding: 12px 120px;
   border-radius: 30px !important;
   box-sizing: border-box;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .form {
   width: 100%;
-  padding-top: 40px;
+  padding-top: 20px;
   display: grid;
   grid-template-columns: auto auto auto;
   flex-direction: row;
