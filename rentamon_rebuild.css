@@ -86,7 +86,7 @@ span.other-month {
 button.block,
 button.unblock {
   border: 0px;
-  border-radius: 5px;
+  border-radius: 30px;
 }
 
 td.disabled span:first-child {
@@ -114,7 +114,7 @@ td span:last-child {
 .btnActionCont button {
   width: 100%;
   margin: 0;
-  padding: 8px 120px;
+  padding: 12px 120px;
   box-sizing: border-box;
   margin-top: 40px;
 }
