@@ -960,14 +960,14 @@ function isActiveHandler(id, isRed) {
     document.querySelector(`${id}`).style.display = "block";
     document.querySelector(`${id} div div div`).style.border =
       "4px #d71d1d solid";
-    document.querySelector(`${id} div div div`).style.borderRadius = "5px";
+    document.querySelector(`${id} div div div`).style.borderRadius = "30px";
     document.querySelector(`${id} div div div img`).style.filter =
       "grayscale(1)";
   } else if (isRed === false) {
     document.querySelector(`${id}`).style.display = "block";
     document.querySelector(`${id} div div div`).style.border =
       "4px #0c9d61 solid";
-    document.querySelector(`${id} div div div`).style.borderRadius = "5px";
+    document.querySelector(`${id} div div div`).style.borderRadius = "30px";
   }
 }
 
