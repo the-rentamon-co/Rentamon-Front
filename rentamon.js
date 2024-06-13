@@ -189,13 +189,13 @@ function jajigaStatus(jajiga) {
   if (
     jajiga["books_count"] === 0 &&
     jajiga["disable_count"] === 1 &&
-    jajiga["unavailable_type"] === "disabled"
+    jajiga["is_unavailable"] === "disabled"
   ) {
     return "blocked";
   } else if (
     jajiga["books_count"] === 1 &&
     jajiga["disable_count"] === 0 &&
-    jajiga["unavailable_type"] === "booked"
+    jajiga["is_unavailable"] === "booked"
   ) {
     return "booked";
   } else if (jajiga["books_count"] === 0 && jajiga["disable_count"] === 0) {
