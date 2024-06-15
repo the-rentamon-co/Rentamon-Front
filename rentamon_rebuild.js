@@ -297,6 +297,8 @@ function panelsDropdown(responseData) {
   var dropdownBtn = document.getElementById('dropdown-btn');
   var properties = responseData.properties;
   var defaultProperty = responseData.user_info.property_name;
+  
+  dropdownContent.innerHTML = '';
 
   if (properties.length === 1) {
       dropdownBtn.disabled = true;
