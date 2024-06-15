@@ -968,6 +968,8 @@ function isActiveHandler(id, isRed) {
     document.querySelector(`${id} div div div`).style.border =
       "4px #0c9d61 solid";
     document.querySelector(`${id} div div div`).style.borderRadius = "20px";
+    document.querySelector(`${id} div div div img`).style.filter =
+      "grayscale(0)";
   }
 }
 
