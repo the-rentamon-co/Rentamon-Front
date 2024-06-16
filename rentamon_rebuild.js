@@ -118,11 +118,19 @@ function priceHandeler(element, status, main_price, discounted_price) {
     element.parentElement.classList.add("blocked-days");
     return;
   } else if (discounted_price) {
-    element.parentElement.querySelector(".price").innerHTML =
-      persianNumberWithCommas(
-        convertToPersianNumber(String(discounted_price))
-      ).split(".")[0];
-    element.parentElement.classList.add("discounted-days");
+    if (discounted_price === main_price) {
+      element.parentElement.querySelector(".price").innerHTML =
+        persianNumberWithCommas(
+          convertToPersianNumber(String(discounted_price))
+        ).split(".")[0];
+        element.parentElement.classList.remove("discounted-days");
+    } else {
+      element.parentElement.querySelector(".price").innerHTML =
+        persianNumberWithCommas(
+          convertToPersianNumber(String(discounted_price))
+        ).split(".")[0];
+      element.parentElement.classList.add("discounted-days");
+    }
     return;
   } else if (main_price) {
     element.parentElement.querySelector(".price").innerHTML =
@@ -1067,7 +1075,7 @@ async function performAction(
   }
 }
 // for changing max date change value in maxDate: new persianDate
-$(window).on("load", function () {
+// $(window).on("load", function () {
   $(".inline").pDatepicker({
     initialValue: false,
     dayPicker: {
@@ -1176,4 +1184,4 @@ $(window).on("load", function () {
   } catch (error) {
     console.log("padding gone");
   }
-});
+// });
