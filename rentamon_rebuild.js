@@ -329,7 +329,7 @@ async function rentamoning() {
   // getting active website list
   // TODO: add null for days in the main function if needed
   // activeWebsites = await performAction("activeWebsites", null);
-  document.querySelector(".loading-overlay-calendar").style.display = "flex";
+  // document.querySelector(".loading-overlay-calendar").style.display = "flex";
   document
     .querySelectorAll("form")
     .forEach((form) => form.removeEventListener("submit", rentamoning));
