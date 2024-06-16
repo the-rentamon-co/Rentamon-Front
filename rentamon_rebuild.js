@@ -396,7 +396,7 @@ async function rentamoning() {
         method: "GET",
         headers: headers,
       }
-    ).then(document.querySelector(".loading-overlay-calendar").style.display = "none");
+    ).finally(document.querySelector(".loading-overlay-calendar").style.display = "none");
     const result = await response.json();
     localStorage.setItem("calendar_data", JSON.stringify(result));
     const calendarData = result.calendar;
