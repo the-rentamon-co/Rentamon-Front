@@ -107,38 +107,30 @@ url = {
 };
 
 function priceHandeler(element, status, main_price, discounted_price) {
-  // if (
-  //   element.parentElement.classList &&
-  //   !element.parentElement.classList.contains("blocked-days")
-  // ) {
   const persianNumberWithCommas = (persianNum) =>
     persianNum
       .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
       .replace(/\B(?=(\d{3})+(?!\d))/g, "/")
       .replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
 
-  const persianNumberToPlain = (persianNum) =>
-    persianNum
-      .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
-      .replace(/\//g, "");
-
   if (status === "blocked") {
     element.parentElement.querySelector(".price").innerHTML = "";
     element.parentElement.classList.add("blocked-days");
-    // ____________________________________________________________
+    return;
   } else if (discounted_price) {
     element.parentElement.querySelector(".price").innerHTML =
       persianNumberWithCommas(
         convertToPersianNumber(String(discounted_price))
       ).split(".")[0];
     element.parentElement.classList.add("discounted-days");
+    return;
   } else if (main_price) {
     element.parentElement.querySelector(".price").innerHTML =
       persianNumberWithCommas(convertToPersianNumber(String(main_price))).split(
         "."
       )[0];
     element.parentElement.classList.remove("discounted-days");
-    // }
+    return;
   }
 }
 
