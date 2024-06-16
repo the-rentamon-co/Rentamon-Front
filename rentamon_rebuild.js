@@ -400,6 +400,10 @@ async function rentamoning() {
     );
     const result = await response.json();
     if (result){ document.querySelector(".loading-overlay-calendar").style.display = "none"; }
+    else{ 
+      document.querySelector(".loading-overlay-calendar").style.display = "none";
+      console.log('خطایی رخ داده صفحه را مجددا بارگزاری نمایید')
+     }
     localStorage.setItem("calendar_data", JSON.stringify(result));
     const calendarData = result.calendar;
     activeWebsites = result.status;
