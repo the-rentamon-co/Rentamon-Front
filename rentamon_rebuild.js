@@ -329,7 +329,7 @@ async function rentamoning() {
   // getting active website list
   // TODO: add null for days in the main function if needed
   // activeWebsites = await performAction("activeWebsites", null);
-  // document.querySelector(".loading-overlay-calendar").style.display = "flex";
+  document.querySelector(".loading-overlay-calendar").style.display = "flex";
   document
     .querySelectorAll("form")
     .forEach((form) => form.removeEventListener("submit", rentamoning));
@@ -390,6 +390,7 @@ async function rentamoning() {
     replace_user_info(user_info);
     panelsDropdown(user_info);
     // Fetch calendar data from the unified API with headers
+    document.querySelector(".loading-overlay-calendar").style.display = "flex";
     const response = await fetch(
       `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
       {
@@ -398,6 +399,7 @@ async function rentamoning() {
       }
     );
     const result = await response.json();
+    if (result){ document.querySelector(".loading-overlay-calendar").style.display = "none"; }
     localStorage.setItem("calendar_data", JSON.stringify(result));
     const calendarData = result.calendar;
     activeWebsites = result.status;
