@@ -329,7 +329,7 @@ async function rentamoning() {
   // getting active website list
   // TODO: add null for days in the main function if needed
   // activeWebsites = await performAction("activeWebsites", null);
-
+  document.querySelector(".loading-overlay-calendar").style.display = "flex";
   document
     .querySelectorAll("form")
     .forEach((form) => form.removeEventListener("submit", rentamoning));
@@ -396,7 +396,7 @@ async function rentamoning() {
         method: "GET",
         headers: headers,
       }
-    );
+    ).then(document.querySelector(".loading-overlay-calendar").style.display = "none");
     const result = await response.json();
     localStorage.setItem("calendar_data", JSON.stringify(result));
     const calendarData = result.calendar;
