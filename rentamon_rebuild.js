@@ -398,12 +398,13 @@ async function rentamoning() {
         headers: headers,
       }
     );
-    const result = await response.json();
-    if (result){ document.querySelector(".loading-overlay-calendar").style.display = "none"; }
+    if (response.status == 200){ document.querySelector(".loading-overlay-calendar").style.display = "none"; }
     else{ 
       document.querySelector(".loading-overlay-calendar").style.display = "none";
       console.log('خطایی رخ داده صفحه را مجددا بارگزاری نمایید')
      }
+    const result = await response.json();
+    
     localStorage.setItem("calendar_data", JSON.stringify(result));
     const calendarData = result.calendar;
     activeWebsites = result.status;
