@@ -191,11 +191,11 @@ td.passed-days.disabled {
 }
 
 .loading-overlay-calendar .loading-spinner-calendar {
-  border: 12px solid #FCFCFC;
-  border-top: 12px solid #8165d6;
+  border: 10px solid #FCFCFC;
+  border-top: 10px solid #8165d6;
   border-radius: 50%;
-  width: 70px;
-  height: 70px;
+  width: 90px;
+  height: 90px;
   animation: spin 1.5s linear infinite;
 }
 
