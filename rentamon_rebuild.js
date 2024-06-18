@@ -123,7 +123,7 @@ function priceHandeler(element, status, main_price, discounted_price) {
         persianNumberWithCommas(
           convertToPersianNumber(String(discounted_price))
         ).split(".")[0];
-        element.parentElement.classList.remove("discounted-days");
+      element.parentElement.classList.remove("discounted-days");
     } else {
       element.parentElement.querySelector(".price").innerHTML =
         persianNumberWithCommas(
@@ -286,41 +286,40 @@ function replace_user_info(user_info) {
     creditdate.innerText = "پایان اشتراک: " + renewal_date;
   }
 
-
   image.src = user_info.user_info.profile_pic_link;
   image.srcset = user_info.user_info.profile_pic_link;
 }
 
 function panelsDropdown(responseData) {
-  var dropdownContent = document.getElementById('dropdown-content');
-  var dropdown = document.getElementById('dropdown');
-  var dropdownBtn = document.getElementById('dropdown-btn');
+  var dropdownContent = document.getElementById("dropdown-content");
+  var dropdown = document.getElementById("dropdown");
+  var dropdownBtn = document.getElementById("dropdown-btn");
   var properties = responseData.properties;
   var defaultProperty = responseData.user_info.property_name;
-  
-  dropdownContent.innerHTML = '';
+
+  dropdownContent.innerHTML = "";
 
   if (properties.length === 1) {
-      dropdownBtn.disabled = true;
-      dropdownBtn.textContent = properties[0].property_name;
-      dropdown.classList.remove('multiple-properties'); // Remove the class to hide the arrow
+    dropdownBtn.disabled = true;
+    dropdownBtn.textContent = properties[0].property_name;
+    dropdown.classList.remove("multiple-properties"); // Remove the class to hide the arrow
   } else {
-      dropdown.classList.add('multiple-properties'); // Add the class to show the arrow
-      properties.forEach(function(property) {
-          var link = document.createElement('a');
-          link.href = property.link;
-          link.textContent = property.property_name;
-          link.addEventListener('click', function(event) {
-              event.preventDefault();
-              window.location.href = property.link;
-          });
-          dropdownContent.appendChild(link);
-
-          // Set default selection
-          if (property.property_name === defaultProperty) {
-              dropdownBtn.textContent = property.property_name;
-          }
+    dropdown.classList.add("multiple-properties"); // Add the class to show the arrow
+    properties.forEach(function (property) {
+      var link = document.createElement("a");
+      link.href = property.link;
+      link.textContent = property.property_name;
+      link.addEventListener("click", function (event) {
+        event.preventDefault();
+        window.location.href = property.link;
       });
+      dropdownContent.appendChild(link);
+
+      // Set default selection
+      if (property.property_name === defaultProperty) {
+        dropdownBtn.textContent = property.property_name;
+      }
+    });
   }
 }
 
@@ -372,8 +371,7 @@ async function rentamoning() {
         parseInt(
           availableDays[availableDays.length - 1].getAttribute("data-unix")
         )
-      )
-        .format("YYYY-MM-DD"),
+      ).format("YYYY-MM-DD"),
     ];
 
     // Fetch calendar data from the unified API
@@ -398,22 +396,28 @@ async function rentamoning() {
         headers: headers,
       }
     );
-    if (response.status == 200){ document.querySelector(".loading-overlay-calendar").style.display = "none"; }
-    else{ 
-      document.querySelector(".loading-overlay-calendar").style.display = "none";
-      console.log('خطایی رخ داده صفحه را مجددا بارگزاری نمایید')
-     }
+    if (response.status == 200) {
+      document.querySelector(".loading-overlay-calendar").style.display =
+        "none";
+    } else {
+      document.querySelector(".loading-overlay-calendar").style.display =
+        "none";
+      console.log("خطایی رخ داده صفحه را مجددا بارگزاری نمایید");
+    }
     const result = await response.json();
-    
+
     localStorage.setItem("calendar_data", JSON.stringify(result));
     const calendarData = result.calendar;
     activeWebsites = result.status;
 
     for (let website in activeWebsites) {
-      console.log(activeWebsites[website])
-      if (activeWebsites[website] === "succeed") {
+      console.log(activeWebsites["status_code"]);
+      if (activeWebsites["status_code"] === 200) {
         isActiveHandler(websiteWidgets[website].icon_selector, false);
-      } else {
+      } else if (
+        activeWebsites["status_code"] === 400 ||
+        activeWebsites["status_code"] === 401
+      ) {
         isActiveHandler(websiteWidgets[website].icon_selector, true);
         check_is_valid(
           websiteWidgets[website].icon_selector,
@@ -1077,42 +1081,42 @@ async function performAction(
 }
 // for changing max date change value in maxDate: new persianDate
 // $(window).on("load", function () {
-  $(".inline").pDatepicker({
-    initialValue: false,
-    dayPicker: {
-      enabled: true,
-      titleFormat: "MMMM YYYY",
-    },
-    monthPicker: {
+$(".inline").pDatepicker({
+  initialValue: false,
+  dayPicker: {
+    enabled: true,
+    titleFormat: "MMMM YYYY",
+  },
+  monthPicker: {
+    enabled: false,
+    titleFormat: "YYYY",
+  },
+  yearPicker: {
+    enabled: false,
+    titleFormat: "YYYY",
+  },
+  inline: true,
+  minDate: new persianDate().startOf("day"),
+  maxDate: new persianDate([1403, 4, 31]),
+  // maxDate: new persianDate().add("years", 1).month(2).endOf("month"),
+  // maxDate: new persianDate().
+  // maxDate: new persianDate()
+  //   .add("month", 3)
+  //   .startOf("month")
+  //   .subtract("day", 1),
+  navigator: {
+    enabled: true,
+    scroll: {
       enabled: false,
-      titleFormat: "YYYY",
     },
-    yearPicker: {
-      enabled: false,
-      titleFormat: "YYYY",
+    text: {
+      btnNextText: ">",
+      btnPrevText: "<",
     },
-    inline: true,
-    minDate: new persianDate().startOf("day"),
-    maxDate: new persianDate([1403, 4, 31]),
-    // maxDate: new persianDate().add("years", 1).month(2).endOf("month"),
-    // maxDate: new persianDate().
-    // maxDate: new persianDate()
-    //   .add("month", 3)
-    //   .startOf("month")
-    //   .subtract("day", 1),
-    navigator: {
-      enabled: true,
-      scroll: {
-        enabled: false,
-      },
-      text: {
-        btnNextText: ">",
-        btnPrevText: "<",
-      },
-    },
-    format: "YYYY-MM-DD",
-    resoinsive: true,
-    template: `
+  },
+  format: "YYYY-MM-DD",
+  resoinsive: true,
+  template: `
       <div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
       <div class="navigator">
       <div class="datepicker-header">
@@ -1167,22 +1171,22 @@ async function performAction(
       </div>
     </div>
     `,
-  });
-  try {
-    document
-      .querySelectorAll(".elementor-widget-wrap.elementor-element-populated")
-      .forEach((a) => {
-        var aa = a.querySelector(".elementor-element");
+});
+try {
+  document
+    .querySelectorAll(".elementor-widget-wrap.elementor-element-populated")
+    .forEach((a) => {
+      var aa = a.querySelector(".elementor-element");
 
-        if (aa.getAttribute("data-widget_type") === "html.default") {
-          var b = aa.querySelector(".elementor-widget-container");
+      if (aa.getAttribute("data-widget_type") === "html.default") {
+        var b = aa.querySelector(".elementor-widget-container");
 
-          if (b.querySelector(".inline")) {
-            a.style.padding = 0;
-          }
+        if (b.querySelector(".inline")) {
+          a.style.padding = 0;
         }
-      });
-  } catch (error) {
-    console.log("padding gone");
-  }
+      }
+    });
+} catch (error) {
+  console.log("padding gone");
+}
 // });
