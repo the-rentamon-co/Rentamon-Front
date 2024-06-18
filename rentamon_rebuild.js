@@ -411,7 +411,7 @@ async function rentamoning() {
     activeWebsites = result.status;
 
     for (let website in activeWebsites) {
-      console.log(activeWebsites["status_code"]);
+      console.log(activeWebsites);
       if (activeWebsites["status_code"] === 200) {
         isActiveHandler(websiteWidgets[website].icon_selector, false);
       } else if (
