@@ -92,7 +92,7 @@ function reservedViewer(text) {
     case "mizboon":
       return "میزبون";
     case "mihmansho":
-      return "میهمان شو";
+      return "مهمانشو";
     case "otaghak":
       return "اتاقک";
   }
@@ -238,10 +238,14 @@ function setBookedkHelper(elements, selectedDate = true) {
     }
     elm.elem.parentElement.classList.remove("discounted-days");
     elm.elem.parentElement.classList.add("booked-days");
+    const persian_website = elm.website;
     elm.elem.parentElement.querySelector(".reserved").innerHTML =
       reservedViewer(elm.website);
+    if (persian_website == "mihmansho")
+      elm.elem.parentElement.querySelector(".reserved").style.fontSize = "14px";
   });
 }
+
 async function get_user_info() {
   const propertyId = new URL(window.location.href).searchParams.get("prop_id");
 
@@ -1083,7 +1087,6 @@ async function performAction(
   }
 }
 // for changing max date change value in maxDate: new persianDate
-// $(window).on("load", function () {
 $(".inline").pDatepicker({
   initialValue: false,
   dayPicker: {
@@ -1192,4 +1195,3 @@ try {
 } catch (error) {
   console.log("padding gone");
 }
-// });
