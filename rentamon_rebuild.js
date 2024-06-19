@@ -594,7 +594,7 @@ function priceBtnClicked() {
           price
         );
         const calendar_data = localStorage.getItem("calendar_data");
-        const jsonData = JSON.parse(calendar_data);
+        let jsonData = JSON.parse(calendar_data);
         setStatusStyle(final_response.data);
         selected.forEach((z) => {
           z.classList.remove("selected");
@@ -612,7 +612,7 @@ function priceBtnClicked() {
             const price2 = price / 1000;
             discountedPrice = price2 - (price2 * discount_percentage) / 100;
           }
-
+          filteredData.price = price;
           priceHandeler(
             z.querySelector("span"),
             "",
@@ -620,7 +620,8 @@ function priceBtnClicked() {
             discountedPrice
           );
         });
-
+        jsonData = JSON.stringify(jsonData);
+        localStorage.setItem("calendar_data", jsonData);
         // setTimeout(rentamoning, 2000);
       });
   } else {
@@ -669,7 +670,7 @@ function discountBtnClicked() {
         setStatusStyle(final_response.data);
 
         const calendar_data = localStorage.getItem("calendar_data");
-        const jsonData = JSON.parse(calendar_data);
+        let jsonData = JSON.parse(calendar_data);
 
         selected.forEach((z) => {
           z.classList.remove("selected");
@@ -687,7 +688,10 @@ function discountBtnClicked() {
             discountedPrice = price2 - (price2 * discount) / 100;
           }
           priceHandeler(z.querySelector("span"), "", price2, discountedPrice);
+          filteredData.discount_percentage = discount;
         });
+        jsonData = JSON.stringify(jsonData);
+        localStorage.setItem("calendar_data", jsonData);
       });
   } else {
     alert(messages.notSelectedDay);
