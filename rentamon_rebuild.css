@@ -37,13 +37,11 @@ body {
 
 .datepicker-plot-area-inline-view {
   font-size: 16px;
-  font-family: vazirmatn;
   padding-top: 10px;
 }
 
 .datepicker-plot-area-inline-view table {
   font-size: 16px;
-  font-family: vazirmatn;
   border-collapse: separate;
   border-spacing: 4px 4px;
   margin-bottom: 0 !important;
@@ -68,7 +66,7 @@ body {
 }
 
 .datepicker-plot-area-inline-view .datepicker-day-view .month-grid-box .header .header-row-cell {
-  font-family: vazirmatn;
+ 
 }
 
 span.other-month {
@@ -142,7 +140,6 @@ label {
   margin-bottom: 10px;
   direction: rtl;
   font-size: 20px;
-  font-family: vazirmatn;
   color: #444444; /* changed by nik */
   gap: 10px;
 }
@@ -150,7 +147,7 @@ label {
 .btnActionCont button {
   margin-top: 20px;
   font-size: 20px;
-  font-family: vazirmatn;
+  
   border: 0px;
   border-radius: 5px;
 }
