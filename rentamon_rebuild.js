@@ -419,7 +419,8 @@ async function rentamoning() {
         isActiveHandler(websiteWidgets[website].icon_selector, false);
       } else if (
         activeWebsites[website]["status_code"] === 400 ||
-        activeWebsites[website]["status_code"] === 401
+        activeWebsites[website]["status_code"] === 401 ||
+        activeWebsites[website]["status_code"] === 403
       ) {
         isActiveHandler(websiteWidgets[website].icon_selector, true);
         check_is_valid(
