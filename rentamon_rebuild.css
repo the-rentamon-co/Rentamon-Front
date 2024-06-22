@@ -142,7 +142,7 @@ label {
   margin-bottom: 10px;
   direction: rtl;
   font-size: 20px;
-  font-family: estedad;
+  font-family: estedad !important;
   color: #444444; /* changed by nik */
   gap: 10px;
 }
