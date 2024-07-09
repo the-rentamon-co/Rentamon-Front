@@ -300,7 +300,8 @@ function replace_user_info(user_info) {
     // credit_gregorian_date.forEach((number) => {
     //   a.push(number.replace(/\d/g, (digit) => persianDigits[digit]));
     // });
-    balance = user_info.user_info.balance_info.balance.slice(0, -1);
+    balance = user_info.user_info.balance_info.balance;
+    if (balance != 0) {balance.slice(0, -1)}
     console.log(balance)
     balance = formatPersianNumber(balance)
     console.log(balance)
