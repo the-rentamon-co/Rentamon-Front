@@ -278,7 +278,7 @@ function replace_user_info(user_info) {
   username.innerText =
     user_info.user_info.first_name + " " + user_info.user_info.last_name;
   if (!user_info.user_info.renewal_date)
-    creditdate.innerText = " کیف پول: " + " " + "از پشتیبانی بپرس";
+    creditdate.innerText = "  اعتبار: " + " " + "از پشتیبانی بپرس";
   else {
     let a = [];
     // const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
@@ -289,7 +289,7 @@ function replace_user_info(user_info) {
     balance = user_info.user_info.balance_info.balance
     balance = convertToPersianNumber(balance)
     const renewal_date = a.join("/");
-    creditdate.innerText = " کیف پول: " + balance;
+    creditdate.innerText = "  اعتبار: " + balance;
   }
 
   image.src = user_info.user_info.profile_pic_link;
