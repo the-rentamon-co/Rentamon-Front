@@ -60,6 +60,7 @@ const fetchData = async (url) => {
   return data;
 };
 
+
 // converting persian number into integer
 function persianToInteger(persianString) {
   const persianNumerals = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
@@ -70,7 +71,23 @@ function persianToInteger(persianString) {
     .join("");
   return parseInt(arabicString, 10);
 }
+// formater for credit
+function formatPersianNumber(input) {
+  // Check if the number is negative
+  let isNegative = input.startsWith('-');
+  
+  // Remove any existing dashes or spaces
+  input = input.replace(/[-\s]/g, '');
 
+  // Convert each digit to Persian numeral
+  let persianNumber = convertToPersianNumeral(input);
+
+  // Insert the slashes and format the number
+  let formattedNumber = persianNumber.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1/');
+
+  // Add the dash and space at the beginning if the number was negative
+  return isNegative ? `- ${formattedNumber}` : formattedNumber;
+}
 // convert numbers into persian number string
 function convertToPersianNumber(number) {
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
@@ -286,8 +303,9 @@ function replace_user_info(user_info) {
     // credit_gregorian_date.forEach((number) => {
     //   a.push(number.replace(/\d/g, (digit) => persianDigits[digit]));
     // });
-    balance = user_info.user_info.balance_info.balance
+    balance = int(user_info.user_info.balance_info.balance)/10
     balance = convertToPersianNumber(balance)
+    balance = formatPersianNumber(balance)
     const renewal_date = a.join("/");
     creditdate.innerText = "  اعتبار: " + balance;
   }
