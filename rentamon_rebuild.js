@@ -83,7 +83,7 @@ function formatPersianNumber(input) {
   let formattedNumber = input.replace(/\B(?=(\d{3})+(?!\d))/g, '/');
 
   // Add the dash and space at the beginning if the number was negative
-  return isNegative ? `- ${formattedNumber}` : formattedNumber;
+  return isNegative ? `${formattedNumber} -` : formattedNumber;
 }
 // convert numbers into persian number string
 function convertToPersianNumber(number) {
