@@ -287,7 +287,7 @@ function replace_user_info(user_info) {
     //   a.push(number.replace(/\d/g, (digit) => persianDigits[digit]));
     // });
     balance = user_info.user_info.balance_info.balance
-    balance = persianToInteger(balance)
+    balance = convertToPersianNumber(balance)
     const renewal_date = a.join("/");
     creditdate.innerText = " کیف پول: " + balance;
   }
