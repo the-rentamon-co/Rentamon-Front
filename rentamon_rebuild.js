@@ -308,7 +308,7 @@ function replace_user_info(user_info) {
     console.log(balance)
 
     const renewal_date = a.join("/");
-    creditdate.innerText = "  اعتبار: " + balance;
+    creditdate.innerText = "  اعتبار: " + balance + " تومان";
   }
 
   image.src = user_info.user_info.profile_pic_link;
