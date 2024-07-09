@@ -74,7 +74,7 @@ function persianToInteger(persianString) {
 // formater for credit
 function formatPersianNumber(input) {
   // Check if the number is negative
-  let isNegative = input.contains('-');
+  let isNegative = input.includes('-');
   
   // Remove any existing dashes or spaces
   input = input.replace(/[-\s]/g, '');
