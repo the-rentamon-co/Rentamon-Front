@@ -79,9 +79,6 @@ function formatPersianNumber(input) {
   // Remove any existing dashes or spaces
   input = input.replace(/[-\s]/g, '');
 
-  // Convert each digit to Persian numeral
-  let persianNumber = convertToPersianNumeral(input);
-
   // Insert the slashes and format the number
   let formattedNumber = persianNumber.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1/');
 
