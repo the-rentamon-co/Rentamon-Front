@@ -303,7 +303,6 @@ function replace_user_info(user_info) {
     balance = user_info.user_info.balance_info.balance;
     if (balance != "0") {
       balance = balance.slice(0, -1)
-      console.log("gOT IN HERE IN BALANCE")
     }
     console.log(balance)
     balance = formatPersianNumber(balance)
