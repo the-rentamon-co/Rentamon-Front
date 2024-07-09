@@ -278,16 +278,18 @@ function replace_user_info(user_info) {
   username.innerText =
     user_info.user_info.first_name + " " + user_info.user_info.last_name;
   if (!user_info.user_info.renewal_date)
-    creditdate.innerText = "پایان اشتراک: " + " " + "از پشتیبانی بپرس";
+    creditdate.innerText = " کیف پول: " + " " + "از پشتیبانی بپرس";
   else {
     let a = [];
-    const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-    const credit_gregorian_date = user_info.user_info.renewal_date.split("-");
-    credit_gregorian_date.forEach((number) => {
-      a.push(number.replace(/\d/g, (digit) => persianDigits[digit]));
-    });
+    // const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+    // const credit_gregorian_date = user_info.user_info.renewal_date.split("-");
+    // credit_gregorian_date.forEach((number) => {
+    //   a.push(number.replace(/\d/g, (digit) => persianDigits[digit]));
+    // });
+    balance = user_info.user_info.balance_info.balance
+    balance = persianToInteger(balance)
     const renewal_date = a.join("/");
-    creditdate.innerText = "پایان اشتراک: " + renewal_date;
+    creditdate.innerText = " کیف پول: " + balance;
   }
 
   image.src = user_info.user_info.profile_pic_link;
