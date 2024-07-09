@@ -301,7 +301,7 @@ function replace_user_info(user_info) {
     //   a.push(number.replace(/\d/g, (digit) => persianDigits[digit]));
     // });
     balance = user_info.user_info.balance_info.balance;
-    if (value != "0") {
+    if (balance != "0") {
       balance.slice(0, -1)
       console.log("gOT IN HERE IN BALANCE")
     }
