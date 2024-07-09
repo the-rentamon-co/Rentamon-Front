@@ -301,7 +301,10 @@ function replace_user_info(user_info) {
     //   a.push(number.replace(/\d/g, (digit) => persianDigits[digit]));
     // });
     balance = user_info.user_info.balance_info.balance;
-    if (balance != 0) {balance.slice(0, -1)}
+    if (value != "0") {
+      balance.slice(0, -1)
+      console.log("gOT IN HERE IN BALANCE")
+    }
     console.log(balance)
     balance = formatPersianNumber(balance)
     console.log(balance)
