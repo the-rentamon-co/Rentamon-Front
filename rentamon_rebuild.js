@@ -303,7 +303,7 @@ function replace_user_info(user_info) {
     // credit_gregorian_date.forEach((number) => {
     //   a.push(number.replace(/\d/g, (digit) => persianDigits[digit]));
     // });
-    balance = int(user_info.user_info.balance_info.balance)/10
+    balance = user_info.user_info.balance_info.balance.slice(0, -1);
     balance = convertToPersianNumber(balance)
     balance = formatPersianNumber(balance)
     const renewal_date = a.join("/");
