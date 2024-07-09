@@ -301,8 +301,12 @@ function replace_user_info(user_info) {
     //   a.push(number.replace(/\d/g, (digit) => persianDigits[digit]));
     // });
     balance = user_info.user_info.balance_info.balance.slice(0, -1);
+    console.log(balance)
     balance = formatPersianNumber(balance)
+    console.log(balance)
     balance = convertToPersianNumber(balance)
+    console.log(balance)
+
     const renewal_date = a.join("/");
     creditdate.innerText = "  اعتبار: " + balance;
   }
