@@ -755,7 +755,7 @@ async function blockBtnClicked() {
     status_responses = Object.values(final_response.status);
     console.log("status Response Data: ", status_responses);
     // console.log(spans);
-    if (status_responses.every((rep) => rep === "succeed")) {
+    if (status_responses.every((rep) => rep === "true")) {
       setBlockHelper(spans);
     }
     setStatusStyleV2(final_response.status);
