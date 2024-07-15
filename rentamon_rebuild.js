@@ -618,9 +618,10 @@ function priceBtnClicked() {
           dates.split(","),
           price
         );
+        console.log("this is the response : ", final_response.data)
         const calendar_data = localStorage.getItem("calendar_data");
         let jsonData = JSON.parse(calendar_data);
-        setStatusStyleV2(final_response.data);
+        setStatusStyleV2(final_response.data.status);
         selected.forEach((z) => {
           z.classList.remove("selected");
           const filteredData = jsonData.calendar.find(
