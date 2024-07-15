@@ -621,7 +621,7 @@ function priceBtnClicked() {
         console.log("this is the response : ", final_response.data)
         const calendar_data = localStorage.getItem("calendar_data");
         let jsonData = JSON.parse(calendar_data);
-        setStatusStyleV2(final_response.data.status);
+        setStatusStyleV2(final_response.data);
         selected.forEach((z) => {
           z.classList.remove("selected");
           const filteredData = jsonData.calendar.find(
@@ -756,7 +756,7 @@ async function blockBtnClicked() {
     status_responses = Object.values(final_response.status);
     console.log("status Response Data: ", status_responses);
     // console.log(spans);
-    if (status_responses.every((rep) => rep === "true")) {
+    if (status_responses.every((rep) => rep.final_status === "true")) {
       setBlockHelper(spans);
     }
     setStatusStyleV2(final_response.status);
