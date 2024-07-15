@@ -807,11 +807,11 @@ function setStatusStyleV2(responses) {
     pending: ".status_pending",
   };
 
-  for (var res in responses) {
+  for (var website in responses) {
     // var row_selector = `.website_row.${website}`;
-    var status = responses[res]['final_status'];
-    var status_selector = `.elementor-section.${responses[res].website} ${response_mapper[status]}`;
-    var pending_selector = `.elementor-section.${responses[res].website} ${response_mapper.pending}`;
+    var status = responses[website]['final_status'];
+    var status_selector = `.elementor-section.${website} ${response_mapper[status]}`;
+    var pending_selector = `.elementor-section.${website} ${response_mapper.pending}`;
 
     // setDisplay(row_selector, "block");
     setDisplay(pending_selector, "none");
