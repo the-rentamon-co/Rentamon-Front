@@ -566,12 +566,12 @@ async function reserveOther() {
       (property_id = propertyIdFromQueryParams)
     );
     status_responses = Object.values(final_response.status);
-    if (status_responses.includes("succeed")) {
+    if (status_responses.includes("true")) {
       spans.forEach((z) => {
         setBookedkHelper([{ elem: z, website: "host" }]);
       });
     }
-    setStatusStyle(final_response.status);
+    setStatusStyleV2(final_response.status);
     console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
