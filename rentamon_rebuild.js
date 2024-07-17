@@ -755,7 +755,8 @@ async function blockBtnClicked() {
     console.log("Response Data: ", final_response);
     status_responses = Object.values(final_response.status);
     console.log("status Response Data: ", status_responses);
-    // console.log(spans);
+    console.log('this is the returned status ',status_responses.every((rep) => rep.final_status === "true"));
+
     if (status_responses.every((rep) => rep.final_status === "true")) {
       console.log(rep.final_status)
       setBlockHelper(spans);
