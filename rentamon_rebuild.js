@@ -290,29 +290,31 @@ function replace_user_info(user_info) {
   const creditdate = document.querySelector("#creditdate div h1");
 
   username.innerText =
-    user_info.user_info.first_name + " " + user_info.user_info.last_name;
-  if (!user_info.user_info.renewal_date)
-    creditdate.innerText = "  اعتبار: " + " " + "از پشتیبانی بپرس";
-  else {
-    let a = [];
-    // const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-    // const credit_gregorian_date = user_info.user_info.renewal_date.split("-");
-    // credit_gregorian_date.forEach((number) => {
-    //   a.push(number.replace(/\d/g, (digit) => persianDigits[digit]));
-    // });
-    balance = user_info.user_info.balance_info.balance;
-    if (balance != "0") {
-      balance = balance.slice(0, -1)
-    }
-    console.log(balance)
-    balance = formatPersianNumber(balance)
-    console.log(balance)
-    balance = convertToPersianNumber(balance)
-    console.log(balance)
-
-    const renewal_date = a.join("/");
-    creditdate.innerText = "  اعتبار: " + balance + " تومان";
+  user_info.user_info.first_name + " " + user_info.user_info.last_name;
+  let a = [];
+  // const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+  // const credit_gregorian_date = user_info.user_info.renewal_date.split("-");
+  // credit_gregorian_date.forEach((number) => {
+  //   a.push(number.replace(/\d/g, (digit) => persianDigits[digit]));
+  // });
+  if (user_info.user_info.balance_info.balance){
+    var balance = user_info.user_info.balance_info.balance;
   }
+  else {
+    balance = ' خطای سرور '
+  }
+  if (balance != "0") {
+    balance = balance.slice(0, -1)
+  }
+  console.log(balance)
+  balance = formatPersianNumber(balance)
+  console.log(balance)
+  balance = convertToPersianNumber(balance)
+  console.log(balance)
+
+  const renewal_date = a.join("/");
+  creditdate.innerText = "  اعتبار: " + balance + " تومان";
+
 
   image.src = user_info.user_info.profile_pic_link;
   image.srcset = user_info.user_info.profile_pic_link;
@@ -441,7 +443,10 @@ async function rentamoning() {
     for (let website in activeWebsites) {
       if (activeWebsites[website]["status_code"] === 200) {
         isActiveHandler(websiteWidgets[website].icon_selector, false);
-      } else {
+      } else if (activeWebsites[website]["status_code"] === 500) {
+        isActiveHandler(websiteWidgets[website].icon_selector, true);
+      }
+      else {
         isActiveHandler(websiteWidgets[website].icon_selector, true);
         check_is_valid(
           websiteWidgets[website].icon_selector,
