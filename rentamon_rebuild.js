@@ -297,7 +297,7 @@ function replace_user_info(user_info) {
   // credit_gregorian_date.forEach((number) => {
   //   a.push(number.replace(/\d/g, (digit) => persianDigits[digit]));
   // });
-  if (user_info.user_info.balance_info.balance){
+  if (user_info.user_info.balance_info){
     var balance = user_info.user_info.balance_info.balance;
   }
   else {
