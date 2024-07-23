@@ -445,6 +445,10 @@ async function rentamoning() {
         isActiveHandler(websiteWidgets[website].icon_selector, false);
       } else if (activeWebsites[website]["status_code"] === 500) {
         isActiveHandler(websiteWidgets[website].icon_selector, true);
+        check_is_valid(
+          websiteWidgets[website].icon_selector,
+          websiteWidgets[website].popup_id_selector
+        );
       }
       else {
         isActiveHandler(websiteWidgets[website].icon_selector, true);
