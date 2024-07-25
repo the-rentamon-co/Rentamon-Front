@@ -681,7 +681,7 @@ function discountBtnClicked() {
       .addEventListener("click", async () => {
         const discount = document.querySelector("#form-field-name").value;
         const dates = document.querySelector("#form-field-dates").value;
-        const price = document.querySelector("#discount").value;
+        const price = document.querySelector("#discount_form_input").value;
         document.querySelector(".response_status_pop a").click();
         if (activeWebsites) {
           const activeWebsitesAsArray = Object.keys(activeWebsites)
