@@ -65,11 +65,25 @@ const fetchData = async (url) => {
 function persianToInteger(persianString) {
   const persianNumerals = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   const convertDigit = (digit) => persianNumerals.indexOf(digit);
-  const arabicString = persianString
-    .split("")
-    .map((char) => (persianNumerals.includes(char) ? convertDigit(char) : char))
-    .join("");
-  return parseInt(arabicString, 10);
+
+  // Split the date into parts
+  const parts = persianString.split("-");
+  // Convert each part from Persian numerals to Arabic numerals
+  const convertedParts = parts.map((part) =>
+    part
+      .split("")
+      .map((char) =>
+        persianNumerals.includes(char) ? convertDigit(char) : char
+      )
+      .join("")
+  );
+
+  // Pad month and day parts with leading zeros if necessary
+  const paddedParts = convertedParts.map((part, index) =>
+    index === 0 ? part : part.padStart(2, "0")
+  );
+
+  return paddedParts.join("-");
 }
 // formater for credit
 function formatPersianNumber(input) {
@@ -668,11 +682,13 @@ function priceBtnClicked() {
 function discountBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   if (selected.length > 0) {
+    // this codes from here
     var dis_div = document.createElement("div");
     dis_div.style.display = "none";
     dis_div.className = "discount-submit-rebuild";
     document.body.appendChild(dis_div);
     dis_div.click();
+    // to here open price popup
     var with_discount = ["jabama", "homsa", "otaghak", "shab", "jajiga"];
     document
       .querySelector("#popup_sumbit_discount")
@@ -691,12 +707,9 @@ function discountBtnClicked() {
 
           setStyleToPending(activeWebsitesAsArray);
         } else setStyleToPending();
-
-        const formattedDates = dates.split(",").map(formatDateWithLeadingZeros);
-        console.log(formattedDates, "therse are dates")
         const final_response = await performAction(
           "setDiscount",
-          formattedDates,
+          (days = dates.split(",")),
           price,
           discount
         );
@@ -730,15 +743,6 @@ function discountBtnClicked() {
     alert(messages.notSelectedDay);
   }
 }
-
-function formatDateWithLeadingZeros(dateStr) {
-  console.log("this is ",dateStr)
-  let [year, month, day] = dateStr.split("-");
-  if (month.length < 2) month = "0" + month;
-  if (day.length < 2) day = "0" + day;
-  return `${year}-${month}-${day}`;
-}
-
 // this function is called when block option is selected
 // if there are selected days, it starts requesting for block to each website
 async function blockBtnClicked() {
