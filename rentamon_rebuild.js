@@ -693,6 +693,7 @@ function discountBtnClicked() {
         } else setStyleToPending();
 
         const formattedDates = dates.split(",").map(formatDateWithLeadingZeros);
+        console.log(formattedDates, "therse are dates")
         const final_response = await performAction(
           "setDiscount",
           formattedDates,
@@ -731,6 +732,7 @@ function discountBtnClicked() {
 }
 
 function formatDateWithLeadingZeros(dateStr) {
+  console.log("this is ",dateStr)
   let [year, month, day] = dateStr.split("-");
   if (month.length < 2) month = "0" + month;
   if (day.length < 2) day = "0" + day;
