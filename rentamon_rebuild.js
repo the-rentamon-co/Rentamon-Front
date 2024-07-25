@@ -669,11 +669,11 @@ function discountBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   if (selected.length > 0) {
     // this codes from here
-    var dis_div = document.createElement("div");
-    dis_div.style.display = "none";
-    dis_div.className = "discount-submit-rebuild";
-    document.body.appendChild(dis_div);
-    dis_div.click();
+    // var dis_div = document.createElement("div");
+    // dis_div.style.display = "none";
+    // dis_div.className = "discount-submit-rebuild";
+    // document.body.appendChild(dis_div);
+    // dis_div.click();
     // to here open price popup
     var with_discount = ["jabama", "homsa", "otaghak"];
     document
@@ -681,9 +681,7 @@ function discountBtnClicked() {
       .addEventListener("click", async () => {
         const discount = document.querySelector("#form-field-name").value;
         const dates = document.querySelector("#form-field-dates").value;
-        const price = document.querySelector(
-          "#form-field-noDiscountPrice"
-        ).value;
+        const price = document.querySelector("#discount").value;
         document.querySelector(".response_status_pop a").click();
         if (activeWebsites) {
           const activeWebsitesAsArray = Object.keys(activeWebsites)
