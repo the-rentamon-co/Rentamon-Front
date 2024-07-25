@@ -674,7 +674,7 @@ function discountBtnClicked() {
     dis_div.className = "discount-submit-rebuild";
     document.body.appendChild(dis_div);
     dis_div.click();
-    to here open price popup
+    // to here open price popup
     var with_discount = ["jabama", "homsa", "otaghak"];
     document
       .querySelector("#popup_sumbit_discount")
