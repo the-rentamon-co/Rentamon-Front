@@ -669,12 +669,12 @@ function discountBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   if (selected.length > 0) {
     // this codes from here
-    // var dis_div = document.createElement("div");
-    // dis_div.style.display = "none";
-    // dis_div.className = "discount-submit-rebuild";
-    // document.body.appendChild(dis_div);
-    // dis_div.click();
-    // to here open price popup
+    var dis_div = document.createElement("div");
+    dis_div.style.display = "none";
+    dis_div.className = "discount-submit-rebuild";
+    document.body.appendChild(dis_div);
+    dis_div.click();
+    to here open price popup
     var with_discount = ["jabama", "homsa", "otaghak"];
     document
       .querySelector("#popup_sumbit_discount")
