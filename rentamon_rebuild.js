@@ -675,7 +675,7 @@ function discountBtnClicked() {
     document.body.appendChild(dis_div);
     dis_div.click();
     // to here open price popup
-    var with_discount = ["jabama", "homsa", "otaghak"];
+    var with_discount = ["jabama", "homsa", "otaghak", "shab", "jajiga"];
     document
       .querySelector("#popup_sumbit_discount")
       .addEventListener("click", async () => {
