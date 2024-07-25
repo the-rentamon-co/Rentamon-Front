@@ -679,9 +679,9 @@ function discountBtnClicked() {
     document
       .querySelector("#popup_sumbit_discount")
       .addEventListener("click", async () => {
-        const discount = document.querySelector("#form-field-name").value;
+        const discount = document.querySelector("#discount_form_input").value;
         const dates = document.querySelector("#form-field-dates").value;
-        const price = document.querySelector("#discount_form_input").value;
+        const price = document.querySelector("#form-field-name").value;
         document.querySelector(".response_status_pop a").click();
         if (activeWebsites) {
           const activeWebsitesAsArray = Object.keys(activeWebsites)
