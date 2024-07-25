@@ -668,13 +668,11 @@ function priceBtnClicked() {
 function discountBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   if (selected.length > 0) {
-    // this codes from here
     var dis_div = document.createElement("div");
     dis_div.style.display = "none";
     dis_div.className = "discount-submit-rebuild";
     document.body.appendChild(dis_div);
     dis_div.click();
-    // to here open price popup
     var with_discount = ["jabama", "homsa", "otaghak", "shab", "jajiga"];
     document
       .querySelector("#popup_sumbit_discount")
@@ -693,9 +691,11 @@ function discountBtnClicked() {
 
           setStyleToPending(activeWebsitesAsArray);
         } else setStyleToPending();
+
+        const formattedDates = dates.split(",").map(formatDateWithLeadingZeros);
         const final_response = await performAction(
           "setDiscount",
-          (days = dates.split(",")),
+          formattedDates,
           price,
           discount
         );
@@ -729,6 +729,14 @@ function discountBtnClicked() {
     alert(messages.notSelectedDay);
   }
 }
+
+function formatDateWithLeadingZeros(dateStr) {
+  let [year, month, day] = dateStr.split("-");
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+  return `${year}-${month}-${day}`;
+}
+
 // this function is called when block option is selected
 // if there are selected days, it starts requesting for block to each website
 async function blockBtnClicked() {
