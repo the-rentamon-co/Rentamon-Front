@@ -369,192 +369,127 @@ function panelsDropdown(responseData) {
 
 // this is the main function that fetches data from websites based on calendar
 async function rentamoning() {
-  // getting active website list
-  // TODO: add null for days in the main function if needed
-  // activeWebsites = await performAction("activeWebsites", null);
-  document.querySelector(".loading-overlay-calendar").style.display = "flex";
-  document
-    .querySelectorAll("form")
-    .forEach((form) => form.removeEventListener("submit", rentamoning));
+  try {
+      document.querySelector(".loading-overlay-calendar").style.display = "flex";
+      document.querySelectorAll("form").forEach((form) =>
+          form.removeEventListener("submit", rentamoning)
+      );
 
-  // Show loading overlay
-  // document.querySelector(".loading-overlay-calendar").style.display = "flex";
+      // Reset action inputs
+      document.querySelectorAll('input[name="block"]').forEach((i) => (i.checked = false));
+      let availableDays = [];
 
-  // Reset action inputs
-  document
-    .querySelectorAll('input[name="block"]')
-    .forEach((i) => (i.checked = false));
-  var availableDays = [];
+      // Select non-disabled days from the calendar
+      const allTds = document.querySelectorAll(
+          ".datepicker-day-view td:not(.disabled)"
+      );
+      allTds.forEach((td) => {
+          if (!td.firstElementChild.classList.contains("other-month")) {
+              availableDays.push(td);
+          } else {
+              td.classList.add("other-month");
+          }
+      });
 
-  // Select non-disabled days from the calendar
-  var allTds = document.querySelectorAll(
-    ".datepicker-day-view td:not(.disabled)"
-  );
-  allTds.forEach((td) => {
-    if (!td.firstElementChild.classList.contains("other-month")) {
-      availableDays.push(td);
-    } else {
-      td.classList.add("other-month");
-    }
-  });
+      if (availableDays.length > 0) {
+          const days = document.querySelectorAll(
+              ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
+          );
+          const range = [
+              new persianDate(parseInt(availableDays[0].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+              new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+              new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+          ];
 
-  if (availableDays.length > 0) {
-    var days = document.querySelectorAll(
-      ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
-    );
-    var range = [
-      new persianDate(
-        parseInt(availableDays[0].getAttribute("data-unix"))
-      ).format("YYYY-MM-DD"),
-      new persianDate(
-        parseInt(
-          availableDays[availableDays.length - 1].getAttribute("data-unix")
-        )
-      ).format("YYYY-MM-DD"),
-      new persianDate(
-        parseInt(
-          availableDays[availableDays.length - 1].getAttribute("data-unix")
-        )
-      ).format("YYYY-MM-DD"),
-    ];
+          const authToken = getCookie("auth_token");
+          if (!authToken) {
+              throw new Error("No auth token found");
+          }
 
-    // Fetch calendar data from the unified API
-    const authToken = getCookie("auth_token");
-    if (!authToken) {
-      throw new Error("No auth token found");
-    }
-    const headers = {
-      Authorization: `Bearer ${authToken}`,
-      "Content-Type": "application/json",
-    };
+          const headers = {
+              Authorization: `Bearer ${authToken}`,
+              "Content-Type": "application/json",
+          };
 
-    const user_info = await get_user_info();
-    replace_user_info(user_info);
-    panelsDropdown(user_info);
-    // Fetch calendar data from the unified API with headers
-    document.querySelector(".loading-overlay-calendar").style.display = "flex";
-    const response = await fetch(
-      `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
-      {
-        method: "GET",
-        headers: headers,
+          // Fetch user info and calendar data in parallel
+          const [user_info, response] = await Promise.all([
+              get_user_info(),
+              fetch(
+                  `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
+                  { method: "GET", headers: headers }
+              )
+          ]);
+
+          replace_user_info(user_info);
+          panelsDropdown(user_info);
+
+          if (response.status !== 200) {
+              throw new Error("Failed to fetch calendar data");
+          }
+
+          const result = await response.json();
+          localStorage.setItem("calendar_data", JSON.stringify(result));
+          const { calendar: calendarData, status: activeWebsites } = result;
+
+          for (let website in activeWebsites) {
+              const widget = websiteWidgets[website];
+              if (activeWebsites[website]["status_code"] === 200) {
+                  isActiveHandler(widget.icon_selector, false);
+              } else {
+                  isActiveHandler(widget.icon_selector, true);
+                  check_is_valid(widget.icon_selector, widget.popup_id_selector);
+                  if (activeWebsites[website]["status_code"] !== 500) {
+                      document.querySelector(widget.popup_link_selector).click();
+                  }
+              }
+          }
+
+          console.log(calendarData, "Fetched calendar data");
+
+          availableDays.forEach((day) => {
+              day.removeEventListener("click", handleDayClick);
+              day.addEventListener("click", handleDayClick);
+          });
+
+          if (calendarData && calendarData.length > 0) {
+              for (let i = 0; i < availableDays.length; i++) {
+                  const dayData = calendarData[i];
+                  const status = dayData.status;
+                  const price = dayData.price;
+                  const discountPercentage = dayData.discount_percentage;
+
+                  const origPrice = parseInt(price) / 1000 || null;
+                  let discountedPrice = 0;
+
+                  // Apply discount if available
+                  if (discountPercentage) {
+                      discountedPrice = origPrice - (origPrice * discountPercentage) / 100;
+                  }
+
+                  switch (status) {
+                      case "blocked":
+                          setBlockHelper([days[i]]);
+                          priceHandeler(days[i], status, origPrice, discountedPrice);
+                          break;
+                      case "reserved":
+                          setBookedkHelper([{ elem: days[i], website: dayData.website }]);
+                          priceHandeler(days[i], status, origPrice, discountedPrice);
+                          break;
+                      default:
+                          setAvailableHelper([days[i]]);
+                          priceHandeler(days[i], status, origPrice, discountedPrice);
+                  }
+              }
+          }
       }
-    );
-    if (response.status == 200) {
-      document.querySelector(".loading-overlay-calendar").style.display =
-        "none";
-    } else {
-      document.querySelector(".loading-overlay-calendar").style.display =
-        "none";
-      console.log("خطایی رخ داده صفحه را مجددا بارگزاری نمایید");
-    }
-    const result = await response.json();
 
-    localStorage.setItem("calendar_data", JSON.stringify(result));
-    const calendarData = result.calendar;
-    activeWebsites = result.status;
-
-    for (let website in activeWebsites) {
-      if (activeWebsites[website]["status_code"] === 200) {
-        isActiveHandler(websiteWidgets[website].icon_selector, false);
-      } else if (activeWebsites[website]["status_code"] === 500) {
-        isActiveHandler(websiteWidgets[website].icon_selector, true);
-        check_is_valid(
-          websiteWidgets[website].icon_selector,
-          websiteWidgets[website].popup_id_selector
-        );
-      }
-      else {
-        isActiveHandler(websiteWidgets[website].icon_selector, true);
-        check_is_valid(
-          websiteWidgets[website].icon_selector,
-          websiteWidgets[website].popup_id_selector
-        );
-        document
-          .querySelector(websiteWidgets[website].popup_link_selector)
-          .click();
-      }
-    }
-
-    console.log(calendarData, "Fetched calendar data");
-
-    availableDays.forEach((day) => {
-      day.removeEventListener("click", handleDayClick);
-      day.addEventListener("click", handleDayClick);
-    });
-
-    if (calendarData && calendarData.length > 0) {
-      for (let i = 0; i < availableDays.length; i++) {
-        let dayData = calendarData[i];
-        let status = dayData.status;
-        let price = dayData.price;
-        let discountPercentage = dayData.discount_percentage;
-
-        let origPrice = parseInt(price) / 1000 || null;
-        let discountedPrice = 0;
-
-        // Apply discount if available
-        if (discountPercentage) {
-          discountedPrice = origPrice - (origPrice * discountPercentage) / 100;
-        }
-
-        switch (status) {
-          case "blocked":
-            setBlockHelper([days[i]]);
-            // days[i].parentElement.classList.add("blocked-days");
-            // days[i].parentElement.querySelector(".price").innerHTML = "";
-            priceHandeler(days[i], status, origPrice, discountedPrice);
-            break;
-
-          case "reserved":
-            setBookedkHelper([{ elem: days[i], website: dayData.website }]);
-            // days[i].parentElement.classList.add("booked-days");
-            // days[i].parentElement.querySelector(".reserved").innerHTML =
-            //   reservedViewer(dayData.website);
-            priceHandeler(days[i], status, origPrice, discountedPrice);
-            break;
-
-          default:
-            setAvailableHelper([days[i]]);
-            // days[i].parentElement.classList.remove("blocked-days");
-            // days[i].parentElement.classList.remove("booked-days");
-            priceHandeler(days[i], status, origPrice, discountedPrice);
-        }
-
-        // Update day UI based on the status and price information
-        // if (status === "blocked") {
-        // days[i].parentElement.classList.add("blocked-days");
-        // days[i].parentElement.querySelector(".price").innerHTML = "";
-        // days[i].parentElement.style.border = "0px solid";
-        // } else {
-        // days[i].parentElement.classList.remove("blocked-days");
-        // days[i].parentElement.classList.remove("booked-days");
-        // if (discountedPrice !== 0) {
-        // days[i].parentElement.querySelector(".price").innerHTML =
-        //   convertToPersianNumber(
-        //     discountedPrice.toLocaleString().replace(/,/g, "/")
-        //   );
-        // days[i].parentElement.style.border = "2px solid #8165D6";
-        // } else {
-        // days[i].parentElement.querySelector(".price").innerHTML = "";
-        // days[i].parentElement.style.border = "0px solid";
-        // }
-        // }
-
-        // Update booking information
-        // if (status === "reserved") {
-        //   days[i].parentElement.classList.add("booked-days");
-        //   days[i].parentElement.querySelector(".reserved").innerHTML =
-        //     reservedViewer(dayData.website);
-        // }
-      }
-    }
-
-    document.querySelector(".loading-overlay-calendar").style.display = "none";
-  } else {
-    document.querySelector(".loading-overlay-calendar").style.display = "none";
+      document.querySelector(".loading-overlay-calendar").style.display = "none";
+  } catch (error) {
+      console.error("An error occurred:", error.message);
+      document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
 }
+
 
 // this is a function for when user selects a day, and that day need to get a class
 function handleDayClick(e) {
@@ -746,47 +681,49 @@ function discountBtnClicked() {
 // this function is called when block option is selected
 // if there are selected days, it starts requesting for block to each website
 async function blockBtnClicked() {
-  // document.querySelector(".loading-overlay-calendar").style.display = "flex";
-  console.log("got here ");
-  let selected = document.querySelectorAll(".selected");
-  let selectedDate = [];
-  let spans = [];
-  if (selected.length > 0) {
-    selected.forEach((z) => {
-      z.classList.remove("selected");
-      selectedDate.push(
-        new persianDate(parseInt(z.getAttribute("data-unix"))).format(
-          "YYYY-MM-DD"
-        )
-      );
+  try {
+      console.log("got here");
+      let selected = document.querySelectorAll(".selected");
+      let selectedDate = [];
+      let spans = [];
+      
+      if (selected.length > 0) {
+          selected.forEach((z) => {
+              z.classList.remove("selected");
+              selectedDate.push(
+                  new persianDate(parseInt(z.getAttribute("data-unix"))).format("YYYY-MM-DD")
+              );
+              spans.push(z.querySelector("span"));
+          });
+          
+          var response_status = document.querySelector(".response_status");
+          if (response_status) {
+              document.querySelector(".response_status_pop a").click();
+              setStyleToPending();
+          }
 
-      spans.push(z.querySelector("span"));
-    });
-    var response_status = document.querySelector(".response_status");
-    if (response_status) {
-      document.querySelector(".response_status_pop a").click();
-      setStyleToPending();
-    }
-    final_response = await performAction(
-      "setBlock",
-      selectedDate,
-      (property_id = propertyIdFromQueryParams)
-    );
-    console.log("Response Data: ", final_response);
-    status_responses = Object.values(final_response.status);
-    console.log("status Response Data: ", status_responses);
-    // console.log(spans);
-    if (status_responses.every((rep) => rep === "succeed")) {
-      setBlockHelper(spans);
-    }
-    setStatusStyle(final_response.status);
-    console.log("GOT HERE", final_response);
-  } else {
-    alert(messages.notSelectedDay);
-    document.querySelector(".loading-overlay-calendar").style.display = "none";
+          const final_response = await performAction("setBlock", selectedDate, { property_id: propertyIdFromQueryParams });
+          console.log("Response Data: ", final_response);
+          
+          const status_responses = Object.values(final_response.status);
+          console.log("status Response Data: ", status_responses);
+
+          if (status_responses.every((rep) => rep === "succeed")) {
+              setBlockHelper(spans);
+          }
+
+          // Ensure popup is opened before setting styles
+          await new Promise(resolve => setTimeout(resolve, 500));
+          setStatusStyle(final_response.status);
+          console.log("GOT HERE", final_response);
+      } else {
+          alert(messages.notSelectedDay);
+          document.querySelector(".loading-overlay-calendar").style.display = "none";
+      }
+  } catch (error) {
+      console.error("An error occurred in blockBtnClicked:", error);
   }
 }
-
 // a function for changin display of an element
 function setDisplay(selector, display) {
   document.querySelector(selector).style.display = display;
@@ -803,21 +740,32 @@ function setStyleToPending(websites = activeWebsites) {
 
 function setStatusStyle(responses) {
   const response_mapper = {
-    succeed: ".status_true",
-    failed: ".status_false",
-    pending: ".status_pending",
+      succeed: ".status_true",
+      failed: ".status_false",
+      pending: ".status_pending",
   };
 
   for (var website in responses) {
-    // var row_selector = `.website_row.${website}`;
-    var status = responses[website];
-    var status_selector = `.elementor-section.${website} ${response_mapper[status]}`;
-    var pending_selector = `.elementor-section.${website} ${response_mapper.pending}`;
+      const status = responses[website];
+      const status_selector = `.elementor-section.${website} ${response_mapper[status]}`;
+      const pending_selector = `.elementor-section.${website} ${response_mapper.pending}`;
 
-    // setDisplay(row_selector, "block");
-    setDisplay(pending_selector, "none");
-    setDisplay(status_selector, "block");
+      console.log(`Setting status for ${website}:`, status);
+      console.log(`Status selector: ${status_selector}`);
+      console.log(`Pending selector: ${pending_selector}`);
+
+      setDisplay(pending_selector, "none");
+      setDisplay(status_selector, "block");
   }
+}
+
+function setDisplay(selector, displayStyle) {
+  const elements = document.querySelectorAll(selector);
+  elements.forEach(element => {
+      element.style.display = displayStyle;
+      console.log(`Element:`, element);
+      console.log(`Set display: ${displayStyle}`);
+  });
 }
 // this function is called when unblock option is selected
 // if there are selected days, it starts requesting for unblock to each website
