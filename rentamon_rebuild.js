@@ -369,190 +369,123 @@ function panelsDropdown(responseData) {
 
 // this is the main function that fetches data from websites based on calendar
 async function rentamoning() {
-  // getting active website list
-  // TODO: add null for days in the main function if needed
-  // activeWebsites = await performAction("activeWebsites", null);
+  // Display loading overlay
   document.querySelector(".loading-overlay-calendar").style.display = "flex";
-  document
-    .querySelectorAll("form")
-    .forEach((form) => form.removeEventListener("submit", rentamoning));
 
-  // Show loading overlay
-  // document.querySelector(".loading-overlay-calendar").style.display = "flex";
+  // Remove event listeners from all forms
+  document.querySelectorAll("form").forEach(form => form.removeEventListener("submit", rentamoning));
 
   // Reset action inputs
-  document
-    .querySelectorAll('input[name="block"]')
-    .forEach((i) => (i.checked = false));
-  var availableDays = [];
+  document.querySelectorAll('input[name="block"]').forEach(i => i.checked = false);
 
-  // Select non-disabled days from the calendar
-  var allTds = document.querySelectorAll(
-    ".datepicker-day-view td:not(.disabled)"
-  );
-  allTds.forEach((td) => {
-    if (!td.firstElementChild.classList.contains("other-month")) {
-      availableDays.push(td);
-    } else {
-      td.classList.add("other-month");
-    }
-  });
-
-  if (availableDays.length > 0) {
-    var days = document.querySelectorAll(
-      ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
-    );
-    var range = [
-      new persianDate(
-        parseInt(availableDays[0].getAttribute("data-unix"))
-      ).format("YYYY-MM-DD"),
-      new persianDate(
-        parseInt(
-          availableDays[availableDays.length - 1].getAttribute("data-unix")
-        )
-      ).format("YYYY-MM-DD"),
-      new persianDate(
-        parseInt(
-          availableDays[availableDays.length - 1].getAttribute("data-unix")
-        )
-      ).format("YYYY-MM-DD"),
-    ];
-
-    // Fetch calendar data from the unified API
-    const authToken = getCookie("auth_token");
-    if (!authToken) {
-      throw new Error("No auth token found");
-    }
-    const headers = {
-      Authorization: `Bearer ${authToken}`,
-      "Content-Type": "application/json",
-    };
-
-    const user_info = await get_user_info();
-    replace_user_info(user_info);
-    panelsDropdown(user_info);
-    // Fetch calendar data from the unified API with headers
-    document.querySelector(".loading-overlay-calendar").style.display = "flex";
-    const response = await fetch(
-      `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
-      {
-        method: "GET",
-        headers: headers,
+  // Filter available days from the calendar, excluding disabled days and days from other months
+  const availableDays = Array.from(document.querySelectorAll(".datepicker-day-view td:not(.disabled)"))
+    .filter(td => {
+      if (td.firstElementChild.classList.contains("other-month")) {
+        td.classList.add("other-month");
+        return false;
       }
-    );
-    if (response.status == 200) {
-      document.querySelector(".loading-overlay-calendar").style.display =
-        "none";
-    } else {
-      document.querySelector(".loading-overlay-calendar").style.display =
-        "none";
-      console.log("خطایی رخ داده صفحه را مجددا بارگزاری نمایید");
-    }
-    const result = await response.json();
-
-    localStorage.setItem("calendar_data", JSON.stringify(result));
-    const calendarData = result.calendar;
-    activeWebsites = result.status;
-
-    for (let website in activeWebsites) {
-      if (activeWebsites[website]["status_code"] === 200) {
-        isActiveHandler(websiteWidgets[website].icon_selector, false);
-      } else if (activeWebsites[website]["status_code"] === 500) {
-        isActiveHandler(websiteWidgets[website].icon_selector, true);
-        check_is_valid(
-          websiteWidgets[website].icon_selector,
-          websiteWidgets[website].popup_id_selector
-        );
-      }
-      else {
-        isActiveHandler(websiteWidgets[website].icon_selector, true);
-        check_is_valid(
-          websiteWidgets[website].icon_selector,
-          websiteWidgets[website].popup_id_selector
-        );
-        document
-          .querySelector(websiteWidgets[website].popup_link_selector)
-          .click();
-      }
-    }
-
-    console.log(calendarData, "Fetched calendar data");
-
-    availableDays.forEach((day) => {
-      day.removeEventListener("click", handleDayClick);
-      day.addEventListener("click", handleDayClick);
+      return true;
     });
 
-    if (calendarData && calendarData.length > 0) {
-      for (let i = 0; i < availableDays.length; i++) {
-        let dayData = calendarData[i];
-        let status = dayData.status;
-        let price = dayData.price;
-        let discountPercentage = dayData.discount_percentage;
+  // If no available days, hide the loading overlay and return
+  if (availableDays.length === 0) {
+    document.querySelector(".loading-overlay-calendar").style.display = "none";
+    return;
+  }
 
-        let origPrice = parseInt(price) / 1000 || null;
-        let discountedPrice = 0;
+  // Select non-disabled, non-other-month, non-reserved, and non-price spans from the calendar
+  const days = document.querySelectorAll(
+    ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
+  );
 
-        // Apply discount if available
-        if (discountPercentage) {
-          discountedPrice = origPrice - (origPrice * discountPercentage) / 100;
-        }
+  // Define the date range based on available days
+  const range = [
+    new persianDate(parseInt(availableDays[0].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+    new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD")
+  ];
 
-        switch (status) {
-          case "blocked":
-            setBlockHelper([days[i]]);
-            // days[i].parentElement.classList.add("blocked-days");
-            // days[i].parentElement.querySelector(".price").innerHTML = "";
-            priceHandeler(days[i], status, origPrice, discountedPrice);
-            break;
+  // Get auth token from cookies
+  const authToken = getCookie("auth_token");
+  if (!authToken) {
+    throw new Error("No auth token found");
+  }
 
-          case "reserved":
-            setBookedkHelper([{ elem: days[i], website: dayData.website }]);
-            // days[i].parentElement.classList.add("booked-days");
-            // days[i].parentElement.querySelector(".reserved").innerHTML =
-            //   reservedViewer(dayData.website);
-            priceHandeler(days[i], status, origPrice, discountedPrice);
-            break;
+  // Define headers for the API request
+  const headers = {
+    Authorization: `Bearer ${authToken}`,
+    "Content-Type": "application/json"
+  };
 
-          default:
-            setAvailableHelper([days[i]]);
-            // days[i].parentElement.classList.remove("blocked-days");
-            // days[i].parentElement.classList.remove("booked-days");
-            priceHandeler(days[i], status, origPrice, discountedPrice);
-        }
+  // Fetch and replace user info
+  const user_info = await get_user_info();
+  replace_user_info(user_info);
+  panelsDropdown(user_info);
 
-        // Update day UI based on the status and price information
-        // if (status === "blocked") {
-        // days[i].parentElement.classList.add("blocked-days");
-        // days[i].parentElement.querySelector(".price").innerHTML = "";
-        // days[i].parentElement.style.border = "0px solid";
-        // } else {
-        // days[i].parentElement.classList.remove("blocked-days");
-        // days[i].parentElement.classList.remove("booked-days");
-        // if (discountedPrice !== 0) {
-        // days[i].parentElement.querySelector(".price").innerHTML =
-        //   convertToPersianNumber(
-        //     discountedPrice.toLocaleString().replace(/,/g, "/")
-        //   );
-        // days[i].parentElement.style.border = "2px solid #8165D6";
-        // } else {
-        // days[i].parentElement.querySelector(".price").innerHTML = "";
-        // days[i].parentElement.style.border = "0px solid";
-        // }
-        // }
+  // Fetch calendar data from the unified API
+  const response = await fetch(
+    `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[1]}&property_id=${propertyIdFromQueryParams}`,
+    { method: "GET", headers: headers }
+  );
 
-        // Update booking information
-        // if (status === "reserved") {
-        //   days[i].parentElement.classList.add("booked-days");
-        //   days[i].parentElement.querySelector(".reserved").innerHTML =
-        //     reservedViewer(dayData.website);
-        // }
-      }
+  // Hide the loading overlay
+  document.querySelector(".loading-overlay-calendar").style.display = "none";
+
+  // Handle non-200 response
+  if (!response.ok) {
+    console.log("خطایی رخ داده صفحه را مجددا بارگزاری نمایید");
+    return;
+  }
+
+  // Process the response data
+  const result = await response.json();
+  localStorage.setItem("calendar_data", JSON.stringify(result));
+  const { calendar: calendarData, status: activeWebsites } = result;
+
+  // Update the status of active websites
+  for (let website in activeWebsites) {
+    const statusCode = activeWebsites[website]["status_code"];
+    const iconSelector = websiteWidgets[website].icon_selector;
+    const popupIdSelector = websiteWidgets[website].popup_id_selector;
+    const popupLinkSelector = websiteWidgets[website].popup_link_selector;
+
+    isActiveHandler(iconSelector, statusCode !== 200);
+    if (statusCode === 500 || statusCode !== 200) {
+      check_is_valid(iconSelector, popupIdSelector);
+      document.querySelector(popupLinkSelector).click();
     }
+  }
 
-    document.querySelector(".loading-overlay-calendar").style.display = "none";
-  } else {
-    document.querySelector(".loading-overlay-calendar").style.display = "none";
+  // Log fetched calendar data
+  console.log(calendarData, "Fetched calendar data");
+
+  // Add event listeners for available days
+  availableDays.forEach(day => {
+    day.removeEventListener("click", handleDayClick);
+    day.addEventListener("click", handleDayClick);
+  });
+
+  // Process calendar data and update the UI
+  if (calendarData && calendarData.length > 0) {
+    calendarData.forEach((dayData, i) => {
+      const day = days[i];
+      const { status, price, discount_percentage: discountPercentage, website } = dayData;
+      const origPrice = parseInt(price) / 1000 || null;
+      const discountedPrice = discountPercentage ? origPrice - (origPrice * discountPercentage) / 100 : 0;
+
+      // Update day status and price
+      switch (status) {
+        case "blocked":
+          setBlockHelper([day]);
+          break;
+        case "reserved":
+          setBookedkHelper([{ elem: day, website }]);
+          break;
+        default:
+          setAvailableHelper([day]);
+      }
+      priceHandeler(day, status, origPrice, discountedPrice);
+    });
   }
 }
 
