@@ -430,21 +430,15 @@ async function rentamoning() {
         const result = await response.json();
         localStorage.setItem("calendar_data", JSON.stringify(result));
         const calendarData = result.calendar;
-        activeWebsites = result.status;
+        let websites = result.websites
+        websites.forEach((website)=> {
+          const widget = websiteWidgets[website];
+          isActiveHandler(widget.icon_selector, false);
+    
+        })
+         
 
-
-        for (let website in activeWebsites) {
-            const widget = websiteWidgets[website];
-            if (activeWebsites[website]["status_code"] === 200) {
-                isActiveHandler(widget.icon_selector, false);
-            } else {
-                isActiveHandler(widget.icon_selector, true);
-                check_is_valid(widget.icon_selector, widget.popup_id_selector);
-                if (activeWebsites[website]["status_code"] !== 500) {
-                    document.querySelector(widget.popup_link_selector).click();
-                }
-            }
-        }
+        websites_status_icons(activeWebsites);
 
         console.log(calendarData, "Fetched calendar data");
 
@@ -492,6 +486,20 @@ async function rentamoning() {
   }
 }
 
+function websites_status_icons(activeWebsites){
+  for (let website in activeWebsites) {
+    const widget = websiteWidgets[website];
+    const status = activeWebsites[website];
+    
+    if (status === "succeed") {
+        isActiveHandler(widget.icon_selector, false);
+    } else {
+        isActiveHandler(widget.icon_selector, true);
+        check_is_valid(widget.icon_selector, widget.popup_id_selector);
+    }
+}
+}
+
 
 // this is a function for when user selects a day, and that day need to get a class
 function handleDayClick(e) {
@@ -532,6 +540,7 @@ async function reserveOther() {
       });
     }
     setStatusStyle(final_response.status);
+    websites_status_icons(final_response.status);
     console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
@@ -581,6 +590,8 @@ function priceBtnClicked() {
         const calendar_data = localStorage.getItem("calendar_data");
         let jsonData = JSON.parse(calendar_data);
         setStatusStyle(final_response.data);
+        websites_status_icons(final_response.data);
+
         selected.forEach((z) => {
           z.classList.remove("selected");
           const filteredData = jsonData.calendar.find(
@@ -651,6 +662,7 @@ function discountBtnClicked() {
           discount
         );
         setStatusStyle(final_response.data);
+        websites_status_icons(final_response.data);
 
         const calendar_data = localStorage.getItem("calendar_data");
         let jsonData = JSON.parse(calendar_data);
@@ -717,6 +729,8 @@ async function blockBtnClicked() {
       setBlockHelper(spans);
     }
     setStatusStyle(final_response.status);
+    websites_status_icons(final_response.status);
+
     console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
@@ -796,6 +810,8 @@ async function unblockBtnClicked() {
       setAvailableHelper(spans, gregorianSelectedDate);
     }
     setStatusStyle(final_response.status);
+    websites_status_icons(final_response.status);
+
     console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
