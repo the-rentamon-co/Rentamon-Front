@@ -430,7 +430,7 @@ async function rentamoning() {
         const result = await response.json();
         localStorage.setItem("calendar_data", JSON.stringify(result));
         const calendarData = result.calendar;
-        let websites = result.websites
+        const websites = user_info.websites
         websites.forEach((website)=> {
           const widget = websiteWidgets[website];
           isActiveHandler(widget.icon_selector, false);
