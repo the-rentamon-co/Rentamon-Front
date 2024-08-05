@@ -430,12 +430,16 @@ async function rentamoning() {
         const result = await response.json();
         localStorage.setItem("calendar_data", JSON.stringify(result));
         const calendarData = result.calendar;
-        const websites = user_info.websites
-        websites.forEach((website)=> {
-          const widget = websiteWidgets[website];
-          isActiveHandler(widget.icon_selector, false);
-    
-        })
+        try{
+          const websites = user_info.user_info.websites
+          websites.forEach((website)=> {
+            const widget = websiteWidgets[website];
+            isActiveHandler(widget.icon_selector, false);
+          })
+        }catch{
+          console.log("Error in handling website statuses")
+        }
+       
          
 
         websites_status_icons(activeWebsites);
