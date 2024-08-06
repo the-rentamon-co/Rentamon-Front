@@ -439,9 +439,12 @@ async function rentamoning() {
         }catch{
           console.log("Error in handling website statuses")
         }
-        activeWebsites = user_info.user_info.websites
-
-         
+       
+        const active_websites = user_info.user_info.websites
+        activeWebsites = {};
+        active_websites.forEach(item => {
+          activeWebsites[item] = true;
+        });
 
         console.log(calendarData, "Fetched calendar data");
 
