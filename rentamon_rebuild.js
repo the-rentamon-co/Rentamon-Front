@@ -370,7 +370,6 @@ function panelsDropdown(responseData) {
 // this is the main function that fetches data from websites based on calendar
 async function rentamoning() {
   try {
-    document.querySelector(".loading-overlay-calendar").style.display = "flex";
     document.querySelectorAll("form").forEach((form) =>
         form.removeEventListener("submit", rentamoning)
     );
@@ -485,10 +484,8 @@ async function rentamoning() {
         }
     }
 
-    document.querySelector(".loading-overlay-calendar").style.display = "none";
   } catch (error) {
       console.error("An error occurred:", error.message);
-      document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
 }
 
@@ -741,7 +738,6 @@ async function blockBtnClicked() {
     console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
-    document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
 }
 
@@ -822,7 +818,6 @@ async function unblockBtnClicked() {
     console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
-    document.querySelector(".loading-overlay-calendar").style.display = "none";
   }
 }
 async function checkAuthOnLoad() {
