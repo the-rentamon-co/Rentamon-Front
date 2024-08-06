@@ -439,7 +439,8 @@ async function rentamoning() {
         }catch{
           console.log("Error in handling website statuses")
         }
-       
+        activeWebsites = info.user_info.websites
+
          
 
         console.log(calendarData, "Fetched calendar data");
