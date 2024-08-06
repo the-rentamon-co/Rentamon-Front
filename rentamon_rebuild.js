@@ -492,6 +492,7 @@ function websites_status_icons(activeWebsites){
   for (let website in activeWebsites) {
     const widget = websiteWidgets[website];
     const status = activeWebsites[website];
+    console.log(status, widget, "here here")
     
     if (status === "succeed") {
         isActiveHandler(widget.icon_selector, false);
