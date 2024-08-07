@@ -783,10 +783,10 @@ function setStatusStyleV2(responses) {
 
   for (var website in responses) {
     var status = responses[website].final_status;
-    var row_selector = `.website_row.${website}`;
     var status_selector = `.elementor-section.${website} ${response_mapper[status]}`;
+    var pending_selector = `.elementor-section.${website} ${response_mapper.pending}`;
     
-    setDisplay(row_selector, "block");
+    setDisplay(pending_selector, "none");
     setDisplay(status_selector, "block");
   }
 }
