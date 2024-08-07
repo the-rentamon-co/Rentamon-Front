@@ -504,6 +504,22 @@ function websites_status_icons(activeWebsites){
 }
 }
 
+function websites_status_iconsV2(activeWebsites) {
+  for (let website in activeWebsites) {
+    const widget = websiteWidgets[website];
+    const statusObj = activeWebsites[website];
+    const status = statusObj.final_status;
+    
+    console.log(status, widget, "here here");
+    
+    if (status === true) {
+      isActiveHandler(widget.icon_selector, false);
+    } else {
+      isActiveHandler(widget.icon_selector, true);
+      check_is_valid(widget.icon_selector, widget.popup_id_selector);
+    }
+  }
+}
 
 // this is a function for when user selects a day, and that day need to get a class
 function handleDayClick(e) {
@@ -594,7 +610,7 @@ function priceBtnClicked() {
         const calendar_data = localStorage.getItem("calendar_data");
         let jsonData = JSON.parse(calendar_data);
         setStatusStyleV2(final_response.data);
-        websites_status_icons(final_response.data);
+        websites_status_iconsV2(final_response.data);
 
         selected.forEach((z) => {
           z.classList.remove("selected");
