@@ -593,7 +593,7 @@ function priceBtnClicked() {
         );
         const calendar_data = localStorage.getItem("calendar_data");
         let jsonData = JSON.parse(calendar_data);
-        setStatusStyle(final_response.data);
+        setStatusStyleV2(final_response.data);
         websites_status_icons(final_response.data);
 
         selected.forEach((z) => {
@@ -773,6 +773,24 @@ function setStatusStyle(responses) {
     setDisplay(status_selector, "block");
   }
 }
+
+function setStatusStyleV2(responses) {
+  const response_mapper = {
+    true: ".status_true",
+    false: ".status_false",
+    pending: ".status_pending"
+  };
+
+  for (var website in responses) {
+    var status = responses[website].final_status;
+    var row_selector = `.website_row.${website}`;
+    var status_selector = `.elementor-section.${website} ${response_mapper[status]}`;
+    
+    setDisplay(row_selector, "block");
+    setDisplay(status_selector, "block");
+  }
+}
+
 // this function is called when unblock option is selected
 // if there are selected days, it starts requesting for unblock to each website
 async function unblockBtnClicked() {
