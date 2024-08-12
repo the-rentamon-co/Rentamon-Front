@@ -742,10 +742,10 @@ async function blockBtnClicked() {
       (property_id = propertyIdFromQueryParams)
     );
     console.log("Response Data: ", final_response);
-    status_responses = Object.values(final_response.data.final_status);
+    status_responses = Object.values(final_response.data);
     console.log("status Response Data: ", status_responses);
     // console.log(spans);
-    if (status_responses.every((rep) => rep === true)) {
+    if (status_responses.every((rep) => rep.final_status === true)) {
       setBlockHelper(spans);
     }
     setStatusStyleV2(final_response.data);
