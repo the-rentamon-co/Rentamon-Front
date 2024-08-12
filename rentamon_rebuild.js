@@ -553,7 +553,7 @@ async function reserveOther() {
       selectedDate,
       (property_id = propertyIdFromQueryParams)
     );
-    status_responses = Object.values(final_response.status);
+    status_responses = Object.values(final_response.data);
     if (status_responses.includes("succeed")) {
       spans.forEach((z) => {
         setBookedkHelper([{ elem: z, website: "host" }]);
@@ -742,7 +742,7 @@ async function blockBtnClicked() {
       (property_id = propertyIdFromQueryParams)
     );
     console.log("Response Data: ", final_response);
-    status_responses = Object.values(final_response.status);
+    status_responses = Object.values(final_response.data);
     console.log("status Response Data: ", status_responses);
     // console.log(spans);
     if (status_responses.every((rep) => rep === "succeed")) {
