@@ -554,7 +554,7 @@ async function reserveOther() {
       (property_id = propertyIdFromQueryParams)
     );
     status_responses = Object.values(final_response.data);
-    if (status_responses.includes(true)) {
+    if (status_responses.final_status.includes(true)) {
       spans.forEach((z) => {
         setBookedkHelper([{ elem: z, website: "host" }]);
       });
