@@ -559,8 +559,8 @@ async function reserveOther() {
         setBookedkHelper([{ elem: z, website: "host" }]);
       });
     }
-    setStatusStyleV2(final_response.status);
-    websites_status_iconsV2(final_response.status);
+    setStatusStyleV2(final_response.data);
+    websites_status_iconsV2(final_response.data);
     console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
@@ -748,8 +748,8 @@ async function blockBtnClicked() {
     if (status_responses.every((rep) => rep === "succeed")) {
       setBlockHelper(spans);
     }
-    setStatusStyleV2(final_response.status);
-    websites_status_iconsV2(final_response.status);
+    setStatusStyleV2(final_response.data);
+    websites_status_iconsV2(final_response.data);
 
     console.log("GOT HERE", final_response);
   } else {
