@@ -554,7 +554,7 @@ async function reserveOther() {
       (property_id = propertyIdFromQueryParams)
     );
     status_responses = Object.values(final_response.data);
-    if (status_responses.includes("true")) {
+    if (status_responses.includes(true)) {
       spans.forEach((z) => {
         setBookedkHelper([{ elem: z, website: "host" }]);
       });
@@ -745,7 +745,7 @@ async function blockBtnClicked() {
     status_responses = Object.values(final_response.data);
     console.log("status Response Data: ", status_responses);
     // console.log(spans);
-    if (status_responses.every((rep) => rep === "true")) {
+    if (status_responses.every((rep) => rep === true)) {
       setBlockHelper(spans);
     }
     setStatusStyleV2(final_response.data);
