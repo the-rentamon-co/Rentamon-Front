@@ -555,7 +555,7 @@ async function reserveOther() {
     );
     status_responses = Object.values(final_response.data);
     console.log(status_responses)
-    if (status_responses.includes("true")) {
+    if (status_responses.some(response => response.final_status === true)) {
       spans.forEach((z) => {
         setBookedkHelper([{ elem: z, website: "host" }]);
       });
