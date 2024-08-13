@@ -553,14 +553,15 @@ async function reserveOther() {
       selectedDate,
       (property_id = propertyIdFromQueryParams)
     );
-    status_responses = Object.values(final_response.status);
-    if (status_responses.includes("succeed")) {
+    status_responses = Object.values(final_response.data);
+    console.log(status_responses)
+    if (status_responses.some(response => response.final_status === true)) {
       spans.forEach((z) => {
         setBookedkHelper([{ elem: z, website: "host" }]);
       });
     }
-    setStatusStyle(final_response.status);
-    websites_status_icons(final_response.status);
+    setStatusStyleV2(final_response.data);
+    websites_status_iconsV2(final_response.data);
     console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
@@ -742,14 +743,14 @@ async function blockBtnClicked() {
       (property_id = propertyIdFromQueryParams)
     );
     console.log("Response Data: ", final_response);
-    status_responses = Object.values(final_response.status);
+    status_responses = Object.values(final_response.data);
     console.log("status Response Data: ", status_responses);
     // console.log(spans);
-    if (status_responses.every((rep) => rep === "succeed")) {
+    if (status_responses.every((rep) => rep.final_status === true)) {
       setBlockHelper(spans);
     }
-    setStatusStyle(final_response.status);
-    websites_status_icons(final_response.status);
+    setStatusStyleV2(final_response.data);
+    websites_status_iconsV2(final_response.data);
 
     console.log("GOT HERE", final_response);
   } else {
