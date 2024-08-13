@@ -221,3 +221,9 @@ td.passed-days.disabled {
   background-color: #E5E5E5 !important;
   color: #203647 !important;
 }
+
+@media screen and (max-width: 500px) {
+  .btnActionCont button {
+      padding:12px 100px; /* Adjust this to the padding you want for smaller devices */
+  }
+}
