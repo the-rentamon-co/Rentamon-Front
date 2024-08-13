@@ -843,12 +843,14 @@ async function unblockBtnClicked() {
       selectedDate,
       (property_id = propertyIdFromQueryParams)
     );
-    status_responses = Object.values(final_response.status);
-    if (status_responses.includes("succeed")) {
-      setAvailableHelper(spans, gregorianSelectedDate);
+    status_responses = Object.values(final_response.data);
+    if (status_responses.some(response => response.final_status === true)) {
+      spans.forEach((z) => {
+        setAvailableHelper(spans, gregorianSelectedDate);
+      });
     }
-    setStatusStyle(final_response.status);
-    websites_status_icons(final_response.status);
+    setStatusStyleV2(final_response.data);
+    websites_status_iconsV2(final_response.data);
 
     console.log("GOT HERE", final_response);
   } else {
