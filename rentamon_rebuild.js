@@ -291,11 +291,15 @@ async function get_user_info() {
       },
     }
   );
+  console.log(response.user_info.phone_number)
+  clarity('set', 'phone_number', response.user_info.phone_number);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
+  
   const result = await response.json();
   return result;
+  
 }
 
 function replace_user_info(user_info) {
