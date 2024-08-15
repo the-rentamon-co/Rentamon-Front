@@ -599,119 +599,82 @@ function checkAction() {
 async function priceBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   if (selected.length > 0) {
-    // this codes from here
     var price_div = document.createElement("div");
     price_div.style.display = "none";
     price_div.className = "price-submit2";
     document.body.appendChild(price_div);
     price_div.click();
-    // to here open price popup
-    // Adding retry funtionality
-    document
-      .querySelector("#popup_sumbit_price")
-      .addEventListener("click", async () => {
-        console.log("Got here!");
-        const dates = document.querySelector("#form-field-dates").value;
 
-        let price = document.querySelector("#form-field-price").value;
+    let retryBtn = document.getElementById('price-retry-btn');
+    if (!retryBtn) {
+        retryBtn = document.createElement('button');
+        retryBtn.id = 'price-retry-btn';
+        retryBtn.textContent = 'Retry';
+        retryBtn.style.display = 'none'; // Initially hidden
+        document.body.appendChild(retryBtn);
+    }
 
-        document.querySelector(".response_status_pop a").click();
-        setStyleToPending();
-        const final_response = await performAction(
-          "setPrice",
-          dates.split(","),
-          price
+    const handleResponse = async () => {
+      console.log("Got here!");
+      const dates = document.querySelector("#form-field-dates").value;
+      let price = document.querySelector("#form-field-price").value;
+
+      document.querySelector(".response_status_pop a").click();
+      setStyleToPending();
+
+      const final_response = await performAction(
+        "setPrice",
+        dates.split(","),
+        price
+      );
+      
+      const anyFinalStatusFalse = Object.values(final_response.data).some(service => service.final_status === false);
+      
+      if (anyFinalStatusFalse) {
+        alert('Price setting failed for some services. Please retry.');
+        retryBtn.style.display = 'inline';
+        retryBtn.replaceWith(retryBtn.cloneNode(true)); // Remove previous event listeners
+        retryBtn = document.getElementById('price-retry-btn');
+        retryBtn.addEventListener('click', handleResponse);
+        return; // Exit to wait for retry
+      }
+
+      const calendar_data = localStorage.getItem("calendar_data");
+      let jsonData = JSON.parse(calendar_data);
+      setStatusStyleV2(final_response.data);
+      websites_status_iconsV2(final_response.data);
+
+      selected.forEach((z) => {
+        z.classList.remove("selected");
+        const filteredData = jsonData.calendar.find(
+          (item) =>
+            item.date ===
+            new Date(parseInt(z.getAttribute("data-unix")))
+              .toISOString()
+              .substring(0, 10)
         );
-        const anyFinalStatusFalse = Object.values(final_response.data).some(service => service.final_status === false);
-        if (anyFinalStatusFalse){
-          let retryBtn = document.getElementById('retry-btn');
-          retryBtn.style.display = 'block';
-          console.log("Retrying the style for price");
-          retryBtn.replaceWith(retryBtn.cloneNode(true));
-          retryBtn.addEventListener('click', async() => {
-            console.log('Retry button clicked');
-            // Add your retry logic here
-            await performAction(
-              "setPrice",
-              dates.split(","),
-              price
-            )
-            .then(final_response => {
-                // Hide the retry button on success
-                retryBtn.style.display = 'none';
-                console.log('Retry successful!', response);
-                const calendar_data = localStorage.getItem("calendar_data");
-                let jsonData = JSON.parse(calendar_data);
-                setStatusStyleV2(final_response.data);
-                websites_status_iconsV2(final_response.data);
+        let discountedPrice = 0;
+        const discount_percentage = filteredData.discount_percentage;
 
-                selected.forEach((z) => {
-                  z.classList.remove("selected");
-                  const filteredData = jsonData.calendar.find(
-                    (item) =>
-                      item.date ===
-                      new Date(parseInt(z.getAttribute("data-unix")))
-                        .toISOString()
-                        .substring(0, 10)
-                  );
-                  let discountedPrice = 0;
-                  const discount_percentage = filteredData.discount_percentage;
-
-                  if (discount_percentage) {
-                    const price2 = price / 1000;
-                    discountedPrice = price2 - (price2 * discount_percentage) / 100;
-                  }
-                  filteredData.price = price;
-                  priceHandeler(
-                    z.querySelector("span"),
-                    "",
-                    price / 1000,
-                    discountedPrice
-                  );
-                });
-                jsonData = JSON.stringify(jsonData);
-                localStorage.setItem("calendar_data", jsonData);
-
-            })
-            .catch(error => {
-                console.error('Retry failed!', error);
-            });
-        });
-
+        if (discount_percentage) {
+          const price2 = price / 1000;
+          discountedPrice = price2 - (price2 * discount_percentage) / 100;
         }
-        const calendar_data = localStorage.getItem("calendar_data");
-        let jsonData = JSON.parse(calendar_data);
-        setStatusStyleV2(final_response.data);
-        websites_status_iconsV2(final_response.data);
-
-        selected.forEach((z) => {
-          z.classList.remove("selected");
-          const filteredData = jsonData.calendar.find(
-            (item) =>
-              item.date ===
-              new Date(parseInt(z.getAttribute("data-unix")))
-                .toISOString()
-                .substring(0, 10)
-          );
-          let discountedPrice = 0;
-          const discount_percentage = filteredData.discount_percentage;
-
-          if (discount_percentage) {
-            const price2 = price / 1000;
-            discountedPrice = price2 - (price2 * discount_percentage) / 100;
-          }
-          filteredData.price = price;
-          priceHandeler(
-            z.querySelector("span"),
-            "",
-            price / 1000,
-            discountedPrice
-          );
-        });
-        jsonData = JSON.stringify(jsonData);
-        localStorage.setItem("calendar_data", jsonData);
-        // setTimeout(rentamoning, 2000);
+        filteredData.price = price;
+        priceHandeler(
+          z.querySelector("span"),
+          "",
+          price / 1000,
+          discountedPrice
+        );
       });
+      jsonData = JSON.stringify(jsonData);
+      localStorage.setItem("calendar_data", jsonData);
+      retryBtn.style.display = 'none'; // Hide retry button on success
+    };
+
+    document.querySelector("#popup_sumbit_price").addEventListener('click', handleResponse);
+
   } else {
     alert(messages.notSelectedDay);
   }
