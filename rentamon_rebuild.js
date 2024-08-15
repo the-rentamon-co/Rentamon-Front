@@ -626,6 +626,7 @@ async function priceBtnClicked() {
         if (anyFinalStatusFalse){
           let retryBtn = document.getElementById('retry-btn');
           retryBtn.style.display = 'inline';
+          console.log("Retrying the style for price");
           retryBtn.replaceWith(retryBtn.cloneNode(true));
           retryBtn.addEventListener('click', async() => {
             console.log('Retry button clicked');
