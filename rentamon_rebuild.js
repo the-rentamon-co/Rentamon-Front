@@ -291,9 +291,7 @@ async function get_user_info() {
       },
     }
   );
-  res = response.json()
-  console.log(res.user_info.phone_number)
-  clarity('set', 'phone_number', response.user_info.phone_number);
+  
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
