@@ -596,85 +596,64 @@ function checkAction() {
   }
 }
 
-async function priceBtnClicked() {
+function priceBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   if (selected.length > 0) {
+    // this codes from here
     var price_div = document.createElement("div");
     price_div.style.display = "none";
     price_div.className = "price-submit2";
     document.body.appendChild(price_div);
     price_div.click();
+    // to here open price popup
+    document
+      .querySelector("#popup_sumbit_price")
+      .addEventListener("click", async () => {
+        console.log("Got here!");
+        const dates = document.querySelector("#form-field-dates").value;
 
-    let retryBtn = document.getElementById('price-retry-btn');
-    if (!retryBtn) {
-        retryBtn = document.createElement('button');
-        retryBtn.id = 'price-retry-btn';
-        retryBtn.textContent = 'Retry';
-        retryBtn.style.display = 'none'; // Initially hidden
-        document.body.appendChild(retryBtn);
-    }
+        let price = document.querySelector("#form-field-price").value;
 
-    const handleResponse = async () => {
-      console.log("Got here!");
-      const dates = document.querySelector("#form-field-dates").value;
-      let price = document.querySelector("#form-field-price").value;
-
-      document.querySelector(".response_status_pop a").click();
-      setStyleToPending();
-
-      const final_response = await performAction(
-        "setPrice",
-        dates.split(","),
-        price
-      );
-      
-      const anyFinalStatusFalse = Object.values(final_response.data).some(service => service.final_status === false);
-      
-      if (anyFinalStatusFalse) {
-        alert('Price setting failed for some services. Please retry.');
-        retryBtn.style.display = 'inline';
-        retryBtn.replaceWith(retryBtn.cloneNode(true)); // Remove previous event listeners
-        retryBtn = document.getElementById('price-retry-btn');
-        retryBtn.addEventListener('click', handleResponse);
-        return; // Exit to wait for retry
-      }
-
-      const calendar_data = localStorage.getItem("calendar_data");
-      let jsonData = JSON.parse(calendar_data);
-      setStatusStyleV2(final_response.data);
-      websites_status_iconsV2(final_response.data);
-
-      selected.forEach((z) => {
-        z.classList.remove("selected");
-        const filteredData = jsonData.calendar.find(
-          (item) =>
-            item.date ===
-            new Date(parseInt(z.getAttribute("data-unix")))
-              .toISOString()
-              .substring(0, 10)
+        document.querySelector(".response_status_pop a").click();
+        setStyleToPending();
+        const final_response = await performAction(
+          "setPrice",
+          dates.split(","),
+          price
         );
-        let discountedPrice = 0;
-        const discount_percentage = filteredData.discount_percentage;
+        const calendar_data = localStorage.getItem("calendar_data");
+        let jsonData = JSON.parse(calendar_data);
+        setStatusStyleV2(final_response.data);
+        websites_status_iconsV2(final_response.data);
 
-        if (discount_percentage) {
-          const price2 = price / 1000;
-          discountedPrice = price2 - (price2 * discount_percentage) / 100;
-        }
-        filteredData.price = price;
-        priceHandeler(
-          z.querySelector("span"),
-          "",
-          price / 1000,
-          discountedPrice
-        );
+        selected.forEach((z) => {
+          z.classList.remove("selected");
+          const filteredData = jsonData.calendar.find(
+            (item) =>
+              item.date ===
+              new Date(parseInt(z.getAttribute("data-unix")))
+                .toISOString()
+                .substring(0, 10)
+          );
+          let discountedPrice = 0;
+          const discount_percentage = filteredData.discount_percentage;
+
+          if (discount_percentage) {
+            const price2 = price / 1000;
+            discountedPrice = price2 - (price2 * discount_percentage) / 100;
+          }
+          filteredData.price = price;
+          priceHandeler(
+            z.querySelector("span"),
+            "",
+            price / 1000,
+            discountedPrice
+          );
+        });
+        jsonData = JSON.stringify(jsonData);
+        localStorage.setItem("calendar_data", jsonData);
+        // setTimeout(rentamoning, 2000);
       });
-      jsonData = JSON.stringify(jsonData);
-      localStorage.setItem("calendar_data", jsonData);
-      retryBtn.style.display = 'none'; // Hide retry button on success
-    };
-
-    document.querySelector("#popup_sumbit_price").addEventListener('click', handleResponse);
-
   } else {
     alert(messages.notSelectedDay);
   }
