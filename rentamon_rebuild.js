@@ -596,7 +596,7 @@ function checkAction() {
   }
 }
 
-function priceBtnClicked() {
+async function priceBtnClicked() {
   let selected = document.querySelectorAll(".selected");
   if (selected.length > 0) {
     // this codes from here
@@ -606,6 +606,7 @@ function priceBtnClicked() {
     document.body.appendChild(price_div);
     price_div.click();
     // to here open price popup
+    // Adding retry funtionality
     document
       .querySelector("#popup_sumbit_price")
       .addEventListener("click", async () => {
@@ -621,6 +622,62 @@ function priceBtnClicked() {
           dates.split(","),
           price
         );
+        const anyFinalStatusFalse = Object.values(final_response.data).some(service => service.final_status === false);
+        if (anyFinalStatusFalse){
+          let retryBtn = document.getElementById('retry-btn');
+          retryBtn.style.display = 'inline';
+          retryBtn.replaceWith(retryBtn.cloneNode(true));
+          retryBtn.addEventListener('click', async() => {
+            console.log('Retry button clicked');
+            // Add your retry logic here
+            await performAction(
+              "setPrice",
+              dates.split(","),
+              price
+            )
+            .then(final_response => {
+                // Hide the retry button on success
+                retryBtn.style.display = 'none';
+                console.log('Retry successful!', response);
+                const calendar_data = localStorage.getItem("calendar_data");
+                let jsonData = JSON.parse(calendar_data);
+                setStatusStyleV2(final_response.data);
+                websites_status_iconsV2(final_response.data);
+
+                selected.forEach((z) => {
+                  z.classList.remove("selected");
+                  const filteredData = jsonData.calendar.find(
+                    (item) =>
+                      item.date ===
+                      new Date(parseInt(z.getAttribute("data-unix")))
+                        .toISOString()
+                        .substring(0, 10)
+                  );
+                  let discountedPrice = 0;
+                  const discount_percentage = filteredData.discount_percentage;
+
+                  if (discount_percentage) {
+                    const price2 = price / 1000;
+                    discountedPrice = price2 - (price2 * discount_percentage) / 100;
+                  }
+                  filteredData.price = price;
+                  priceHandeler(
+                    z.querySelector("span"),
+                    "",
+                    price / 1000,
+                    discountedPrice
+                  );
+                });
+                jsonData = JSON.stringify(jsonData);
+                localStorage.setItem("calendar_data", jsonData);
+
+            })
+            .catch(error => {
+                console.error('Retry failed!', error);
+            });
+        });
+
+        }
         const calendar_data = localStorage.getItem("calendar_data");
         let jsonData = JSON.parse(calendar_data);
         setStatusStyleV2(final_response.data);
