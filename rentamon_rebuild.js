@@ -625,7 +625,7 @@ async function priceBtnClicked() {
         const anyFinalStatusFalse = Object.values(final_response.data).some(service => service.final_status === false);
         if (anyFinalStatusFalse){
           let retryBtn = document.getElementById('retry-btn');
-          retryBtn.style.display = 'inline';
+          retryBtn.style.display = 'block';
           console.log("Retrying the style for price");
           retryBtn.replaceWith(retryBtn.cloneNode(true));
           retryBtn.addEventListener('click', async() => {
