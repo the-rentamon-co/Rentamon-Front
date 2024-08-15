@@ -310,6 +310,7 @@ async function get_user_info() {
 }
 
 function replace_user_info(user_info) {
+  console.log(user_info.user_info.phone_number)
   clarity('set', 'phone_number', user_info.user_info.phone_number);
   const image = document.querySelector("#profilepic div img");
   const username = document.querySelector("#username div h1");
