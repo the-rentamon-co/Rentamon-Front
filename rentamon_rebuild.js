@@ -1,5 +1,5 @@
 let apiHostMainUrl = "https://api-rentamon.liara.run";
-
+let lastAction = {};
 // get prop_id from url for example:
 // rentamon.com/panel?prop_id=1
 const propertyIdFromQueryParams = new URL(
@@ -779,9 +779,15 @@ function setDisplay(selector, display) {
 function setStyleToPending(websites = activeWebsites) {
   for (var website in websites) {
     var row_selector = `.website_row.${website}`;
+
     var status_selector = `.elementor-section.${website} .status_pending`;
+    var status_selector_false = `.elementor-section.${website} .status_false`;
+    var status_selector_true = `.elementor-section.${website} .status_true`;    
     setDisplay(row_selector, "block");
     setDisplay(status_selector, "block");
+    setDisplay(status_selector_false, "none");
+    setDisplay(status_selector_true, "none");
+    
   }
 }
 
@@ -1110,7 +1116,13 @@ async function performAction(
     default:
       throw new Error("Invalid action type");
   }
-
+  lastAction = {
+    actionType,
+    days,
+    price,
+    discount,
+    property_id,
+  };
   try {
     data.property_id = propertyIdFromQueryParams;
     const response = await fetch(url, {
