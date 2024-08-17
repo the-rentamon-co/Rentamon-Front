@@ -1127,11 +1127,10 @@ async function performAction(
     }
 
     const result = await response.json();
-    const anyFinalStatusFalse = Object.values(response.data).some(service => service.final_status === false);
+    const anyFinalStatusFalse = Object.values(result.data).some(service => service.final_status === false);
     if (anyFinalStatusFalse){
       let retryBtn = document.getElementById('price-retry-btn');
       retryBtn.style.display = 'block'; // Make the button visible
-
     }
       
     return result;
