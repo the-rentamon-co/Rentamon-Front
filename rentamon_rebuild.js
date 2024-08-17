@@ -695,8 +695,8 @@ function discountBtnClicked() {
           price,
           discount
         );
-        setStatusStyleV2(final_response.status);
-        websites_status_iconsV2(final_response.status);
+        setStatusStyleV2(final_response.data);
+        websites_status_iconsV2(final_response.data);
 
         const calendar_data = localStorage.getItem("calendar_data");
         let jsonData = JSON.parse(calendar_data);
