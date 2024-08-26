@@ -435,7 +435,7 @@ async function rentamoning() {
               { method: "GET", headers: headers }
           )
         ]);
-
+        console.log(jabama_status);
         replace_user_info(user_info);
         panelsDropdown(user_info);
 
@@ -447,7 +447,7 @@ async function rentamoning() {
         localStorage.setItem("calendar_data", JSON.stringify(result));
         const calendarData = result.calendar;
         try{
-          const jabama_status_result = await jabama_status;
+          const jabama_status_result = jabama_status;
           console.log("got here in jabama : ", jabama_status_result.jabama_response)
           const websites = user_info.user_info.websites
           websites.forEach((website)=> {
