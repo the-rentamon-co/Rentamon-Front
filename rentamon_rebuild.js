@@ -424,16 +424,12 @@ async function rentamoning() {
         };
 
         // Fetch user info and calendar data in parallel
-        const [user_info, response,jabama_status] = await Promise.all([
+        const [user_info, response] = await Promise.all([
             get_user_info(),
             fetch(
                 `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
                 { method: "GET", headers: headers }
-            ),
-            fetch(
-              `https://rentamon-api.liara.run/api/get_jabama_status`,
-              { method: "GET", headers: headers }
-          )
+            )
         ]);
 
         replace_user_info(user_info);
@@ -444,27 +440,13 @@ async function rentamoning() {
         }
 
         const result = await response.json();
-        const jabama_status_result = await jabama_status.json();
         localStorage.setItem("calendar_data", JSON.stringify(result));
         const calendarData = result.calendar;
         try{
-          console.log("got here in jabama : ", jabama_status_result.jabama_response)
           const websites = user_info.user_info.websites
           websites.forEach((website)=> {
             const widget = websiteWidgets[website];
-            if(website == 'jabama'){
-              if(jabama_status_result.jabama_response == true){
-                isActiveHandler(widget.icon_selector, false);
-                console.log("got here in jabama true : ", jabama_status_result.jabama_response)
-              }else{
-                isActiveHandler(widget.icon_selector, true);
-                check_is_valid(widget.icon_selector, widget.popup_id_selector);
-                console.log("got here in jabama false : ", jabama_status_result.jabama_response)
-
-              }
-            }else{
             isActiveHandler(widget.icon_selector, false);
-            }
           })
         }catch{
           console.log("Error in handling website statuses")
