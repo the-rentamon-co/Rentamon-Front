@@ -424,12 +424,16 @@ async function rentamoning() {
         };
 
         // Fetch user info and calendar data in parallel
-        const [user_info, response] = await Promise.all([
+        const [user_info, response,jabama_status] = await Promise.all([
             get_user_info(),
             fetch(
                 `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
                 { method: "GET", headers: headers }
-            )
+            ),
+            fetch(
+              `https://rentamon-api.liara.run/api/get_jabama_status`,
+              { method: "GET", headers: headers }
+          )
         ]);
 
         replace_user_info(user_info);
@@ -446,6 +450,14 @@ async function rentamoning() {
           const websites = user_info.user_info.websites
           websites.forEach((website)=> {
             const widget = websiteWidgets[website];
+            if(website == 'jabama'){
+              if(jabama_status.jabama_response){
+                isActiveHandler(widget.icon_selector, false);
+              }else{
+                isActiveHandler(widget.icon_selector, true);
+                check_is_valid(widget.icon_selector, widget.popup_id_selector);
+              }
+            }
             isActiveHandler(widget.icon_selector, false);
           })
         }catch{
