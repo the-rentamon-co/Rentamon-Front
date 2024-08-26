@@ -444,10 +444,10 @@ async function rentamoning() {
         }
 
         const result = await response.json();
+        const jabama_status_result = await jabama_status.json();
         localStorage.setItem("calendar_data", JSON.stringify(result));
         const calendarData = result.calendar;
         try{
-          const jabama_status_result = jabama_status;
           console.log("got here in jabama : ", jabama_status_result.jabama_response)
           const websites = user_info.user_info.websites
           websites.forEach((website)=> {
