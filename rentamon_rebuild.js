@@ -447,6 +447,8 @@ async function rentamoning() {
         localStorage.setItem("calendar_data", JSON.stringify(result));
         const calendarData = result.calendar;
         try{
+          const jabama_status = await jabama_status;
+          console.log("got here in jabama : ", jabama_status.jabama_response)
           const websites = user_info.user_info.websites
           websites.forEach((website)=> {
             const widget = websiteWidgets[website];
