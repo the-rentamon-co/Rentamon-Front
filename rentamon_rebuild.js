@@ -447,6 +447,8 @@ async function rentamoning() {
           websites.forEach((website)=> {
             const widget = websiteWidgets[website];
             isActiveHandler(widget.icon_selector, false);
+            check_is_valid(widget.icon_selector, widget.popup_id_selector);
+
           })
         }catch{
           console.log("Error in handling website statuses")
