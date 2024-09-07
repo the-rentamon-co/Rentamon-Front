@@ -531,7 +531,6 @@ function websites_status_iconsV2(activeWebsites) {
       isActiveHandler(widget.icon_selector, false);
     } else {
       isActiveHandler(widget.icon_selector, true);
-      check_is_valid(widget.icon_selector, widget.popup_id_selector);
     }
   }
 }
