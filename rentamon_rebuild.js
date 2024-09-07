@@ -424,13 +424,22 @@ async function rentamoning() {
         };
 
         // Fetch user info and calendar data in parallel
-        const [user_info, response] = await Promise.all([
-            get_user_info(),
-            fetch(
-                `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
-                { method: "GET", headers: headers }
-            )
-        ]);
+        const [user_info, response, websiteStatusesResponse] = await Promise.all([
+          get_user_info(),
+          fetch(
+              `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
+              { method: "GET", headers: headers }
+          ),
+          fetch(
+              `https://rentamon-api.liara.run/api/website_statuses/?property_id=${propertyIdFromQueryParams}`,
+              {
+                  method: 'GET',
+                  headers: {
+                      'Authorization': headers.Authorization
+                  }
+              }
+          )
+      ]);
 
         replace_user_info(user_info);
         panelsDropdown(user_info);
@@ -442,18 +451,24 @@ async function rentamoning() {
         const result = await response.json();
         localStorage.setItem("calendar_data", JSON.stringify(result));
         const calendarData = result.calendar;
-        try{
-          const websites = user_info.user_info.websites
-          websites.forEach((website)=> {
-            const widget = websiteWidgets[website];
-            isActiveHandler(widget.icon_selector, false);
-            check_is_valid(widget.icon_selector, widget.popup_id_selector);
-
-          })
-        }catch{
-          console.log("Error in handling website statuses")
+        if (websiteStatusesResponse.status === 200) {
+          const websiteStatuses = await websiteStatusesResponse.json();
+          const statuses = websiteStatuses.status;
+          
+          // Apply styles based on website statuses without blocking the page load
+          Object.keys(statuses).forEach((website) => {
+              const widget = websiteWidgets[website];
+              if (statuses[website] === true) {
+                  isActiveHandler(widget.icon_selector, false);  // Active style
+                  check_is_valid(widget.icon_selector, widget.popup_id_selector);
+              } else {
+                  isActiveHandler(widget.icon_selector, true);   // Inactive style
+                  check_is_valid(widget.icon_selector, widget.popup_id_selector);
+              }
+          });
+        } else {
+            throw new Error("Failed to fetch website statuses");
         }
-       
         const active_websites = user_info.user_info.websites
         activeWebsites = {};
         active_websites.forEach(item => {
