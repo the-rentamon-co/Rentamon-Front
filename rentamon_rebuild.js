@@ -451,24 +451,6 @@ async function rentamoning() {
         const result = await response.json();
         localStorage.setItem("calendar_data", JSON.stringify(result));
         const calendarData = result.calendar;
-        if (websiteStatusesResponse.status === 200) {
-          const websiteStatuses = await websiteStatusesResponse.json();
-          const statuses = websiteStatuses.status;
-          
-          // Apply styles based on website statuses without blocking the page load
-          Object.keys(statuses).forEach((website) => {
-              const widget = websiteWidgets[website];
-              if (statuses[website] === true) {
-                  isActiveHandler(widget.icon_selector, false);  // Active style
-                  check_is_valid(widget.icon_selector, widget.popup_id_selector);
-              } else {
-                  isActiveHandler(widget.icon_selector, true);   // Inactive style
-                  check_is_valid(widget.icon_selector, widget.popup_id_selector);
-              }
-          });
-        } else {
-            throw new Error("Failed to fetch website statuses");
-        }
         const active_websites = user_info.user_info.websites
         activeWebsites = {};
         active_websites.forEach(item => {
@@ -511,6 +493,24 @@ async function rentamoning() {
                         priceHandeler(days[i], status, origPrice, discountedPrice);
                 }
             }
+        }
+        if (websiteStatusesResponse.status === 200) {
+          const websiteStatuses = await websiteStatusesResponse.json();
+          const statuses = websiteStatuses.status;
+          
+          // Apply styles based on website statuses without blocking the page load
+          Object.keys(statuses).forEach((website) => {
+              const widget = websiteWidgets[website];
+              if (statuses[website] === true) {
+                  isActiveHandler(widget.icon_selector, false);  // Active style
+                  check_is_valid(widget.icon_selector, widget.popup_id_selector);
+              } else {
+                  isActiveHandler(widget.icon_selector, true);   // Inactive style
+                  check_is_valid(widget.icon_selector, widget.popup_id_selector);
+              }
+          });
+        } else {
+            throw new Error("Failed to fetch website statuses");
         }
     }
 
