@@ -1098,28 +1098,28 @@ async function performAction(
 
   switch (actionType) {
     case "setPrice":
-      url = "https://rentamon-api.chbk.run/api/setprice";
+      url = "https://rentamon-api.liara.run/api/setprice";
       if (price === 0) throw new Error("Price is required for setPrice");
       data.price = price;
       break;
     case "setDiscount":
-      url = "https://rentamon-api.chbk.run/api/setdiscount";
+      url = "https://rentamon-api.liara.run/api/setdiscount";
       if (discount === null)
         throw new Error("Discount is required for setDiscount");
       data.discount = discount;
       break;
     case "setBlock":
-      url = "https://rentamon-api.chbk.run/api/setblock";
+      url = "https://rentamon-api.liara.run/api/setblock";
       data.requested_by = "user";
       data.request_for = "block";
       break;
     case "setReserve":
-      url = "https://rentamon-api.chbk.run/api/setblock";
+      url = "https://rentamon-api.liara.run/api/setblock";
       data.requested_by = "user";
       data.request_for = "reserve";
       break;
     case "setUnblock":
-      url = "https://rentamon-api.chbk.run/api/setunblock";
+      url = "https://rentamon-api.liara.run/api/setunblock";
       break;
     case "getCalendar":
       url = "https://rentamon-api.liara.run/api/getcalendar";
