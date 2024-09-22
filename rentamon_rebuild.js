@@ -326,21 +326,20 @@ function replace_user_info(user_info) {
   // });
   if (user_info.user_info.balance_info){
     var balance = user_info.user_info.balance_info.balance;
+    balance = formatPersianNumber(balance)
+    balance = convertToPersianNumber(balance)
+    balance = balance + " تومان";
   }
   else {
-    balance = ' خطای سرور '
+    balance = ' در حال بروزرسانی '
   }
   if (balance != "0") {
     balance = balance.slice(0, -1)
   }
-  console.log(balance)
-  balance = formatPersianNumber(balance)
-  console.log(balance)
-  balance = convertToPersianNumber(balance)
-  console.log(balance)
+  
 
   const renewal_date = a.join("/");
-  creditdate.innerText = "  اعتبار: " + balance + " تومان";
+  creditdate.innerText = "  اعتبار: " + balance;
 
 
   image.src = user_info.user_info.profile_pic_link;
