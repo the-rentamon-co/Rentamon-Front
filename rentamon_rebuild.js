@@ -328,13 +328,13 @@ function replace_user_info(user_info) {
     var balance = user_info.user_info.balance_info.balance;
     balance = formatPersianNumber(balance)
     balance = convertToPersianNumber(balance)
+    if (balance != "0") {
+    balance = balance.slice(0, -1)
+    }
     balance = balance + " تومان";
   }
   else {
     balance = ' در حال بروزرسانی '
-  }
-  if (balance != "0") {
-    balance = balance.slice(0, -1)
   }
   
 
