@@ -277,16 +277,12 @@ function setBookedkHelper(elements, selectedDate = true) {
 async function get_user_info() {
   const propertyId = new URL(window.location.href).searchParams.get("prop_id");
 
-  const authToken = getCookie("auth_token");
-  if (!authToken) {
-    throw new Error("No auth token found");
-  }
+
   const response = await fetch(
     `https://dev-rentamon-api.liara.run/api/user_info?property_id=${propertyId}`,
     {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${authToken}`,
         "Content-Type": "application/json",
       },
     }
@@ -412,13 +408,8 @@ async function rentamoning() {
             new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
         ];
 
-        const authToken = getCookie("auth_token");
-        if (!authToken) {
-            throw new Error("No auth token found");
-        }
 
         const headers = {
-            Authorization: `Bearer ${authToken}`,
             "Content-Type": "application/json",
         };
 
@@ -891,26 +882,9 @@ async function unblockBtnClicked() {
     alert(messages.notSelectedDay);
   }
 }
-async function checkAuthOnLoad() {
-  const accessToken = getCookie("auth_token");
-  const refreshToken = getCookie("refresh_token");
 
-  if (!accessToken || !refreshToken) {
-    return false;
-  }
 
-  const isAccessTokenValid = await verifyToken(accessToken, "access");
-  if (!isAccessTokenValid) {
-    const isRefreshTokenValid = await verifyToken(refreshToken, "refresh");
-    if (!isRefreshTokenValid) {
-      return false;
-    } else {
-      return false; // TODO : adding the refresh token handler
-    }
-  } else {
-    return true;
-  }
-}
+ 
 
 $(document).ready(function () {
   // price
@@ -1062,12 +1036,7 @@ function isActiveHandler(id, isRed) {
   }
 }
 
-// Function to get a cookie by name
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(";").shift();
-}
+
 
 // Function to perform the action
 async function performAction(
@@ -1077,10 +1046,7 @@ async function performAction(
   discount = null,
   property_id = 39
 ) {
-  const authToken = getCookie("auth_token");
-  if (!authToken) {
-    throw new Error("No auth token found");
-  }
+  
 
   let url = "";
   let method = "POST";
@@ -1143,7 +1109,6 @@ async function performAction(
     const response = await fetch(url, {
       method: method,
       headers: {
-        Authorization: `Bearer ${authToken}`,
         "Content-Type": "application/json",
       },
       body: method !== "GET" ? JSON.stringify(data) : undefined,
