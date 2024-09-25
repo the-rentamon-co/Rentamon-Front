@@ -282,7 +282,7 @@ async function get_user_info() {
     `https://dev-rentamon-api.liara.run/api/user_info?property_id=${propertyId}`,
     {
       method: "GET",
-      credentials: 'include',
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -419,15 +419,15 @@ async function rentamoning() {
           get_user_info(),
           fetch(
               `https://dev-rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
-              { method: "GET",credentials: 'include', headers: headers }
+              { method: "GET",credentials: "include" ,headers: {"Content-Type": "application/json" } }
           ),
           fetch(
               `https://dev-rentamon-api.liara.run/api/website_statuses/?property_id=${propertyIdFromQueryParams}`,
               {
                   method: 'GET',
-                  credentials: 'include',
-                  headers: {
-                      'Authorization': headers.Authorization
+                  credentials: "include",
+                  headers: { 
+                    "Content-Type": "application/json" 
                   }
               }
           )
@@ -1052,7 +1052,7 @@ async function performAction(
 
   let url = "";
   let method = "POST";
-  let credentials ='include';
+  let credentials ="include";
   let corrected_days = [];
   days.forEach((day) => {
     const x = [];
@@ -1111,7 +1111,7 @@ async function performAction(
     data.property_id = propertyIdFromQueryParams;
     const response = await fetch(url, {
       method: method,
-      credentials: 'include',  
+      credentials: "include",  
       headers: {
         "Content-Type": "application/json",
       },
