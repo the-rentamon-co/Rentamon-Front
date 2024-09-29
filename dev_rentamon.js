@@ -277,7 +277,6 @@ function setBookedkHelper(elements, selectedDate = true) {
 async function get_user_info() {
   const propertyId = new URL(window.location.href).searchParams.get("prop_id");
 
-
   const response = await fetch(
     `https://api.rentamon.com/api/user_info?property_id=${propertyId}`,
     {
@@ -288,23 +287,21 @@ async function get_user_info() {
       },
     }
   );
-  // try {
-  //   const res = await response.json()
-  //   console.log(res.user_info.phone_number)
-  //   clarity('set', 'phone_number', res.user_info.phone_number);
-  // } catch (error) {
-  //   console.log("got here in error")
 
-  // }
-  
+  // Check if the response is 404
+  if (response.status === 404) {
+    window.location.href = "https://rentamon.com/signup/"; // Replace with your desired redirect URL
+    return;
+  }
+
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
-  
+
   const result = await response.json();
   return result;
-  
 }
+
 
 function replace_user_info(user_info) {
   console.log(user_info.user_info.phone_number)
