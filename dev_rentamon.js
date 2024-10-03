@@ -404,17 +404,17 @@ async function rentamoning() {
       );
       const range = [
         new persianDate(
-          parseInt(availableDays[0].getAttribute("data-unix")) * 1000
+          parseInt(availableDays[0].getAttribute("data-unix"))
         ).format("YYYY-MM-DD"),
         new persianDate(
           parseInt(
             availableDays[availableDays.length - 1].getAttribute("data-unix")
-          ) * 1000
+          )
         ).format("YYYY-MM-DD"),
         new persianDate(
           parseInt(
             availableDays[availableDays.length - 1].getAttribute("data-unix")
-          ) * 1000
+          )
         ).format("YYYY-MM-DD"),
       ];
 
@@ -477,6 +477,7 @@ async function rentamoning() {
 
       // Process official holidays
       const holidaysData = await holidaysResponse.json();
+      console.log(holidaysData)
       const officialHolidays = holidaysData.result.events.map(
         (event) => event.gregorianDate
       );
@@ -524,25 +525,29 @@ async function rentamoning() {
               priceHandeler(days[i], status, origPrice, discountedPrice);
           }
 
-          // **Updated code to style weekends and official holidays**
+          // **Added code to style weekends and official holidays**
           // -------------------------------------------------
-          const unixTimestamp =
-            parseInt(availableDays[i].getAttribute("data-unix")) * 1000;
+          const unixTimestamp = parseInt(
+            availableDays[i].getAttribute("data-unix")
+          );
           const persianDateObj = new persianDate(unixTimestamp);
 
           // Check if the day is a Friday (weekend in Shamsi calendar)
           if (persianDateObj.format("dddd") === "جمعه") {
+            console.log("this date is weekend : ", availableDays[i].getAttribute("data-unix"))
             // Apply pastel red background to weekends
             availableDays[i].style.backgroundColor = "#FFCCCC";
           }
 
           // Get the Gregorian date from the Unix timestamp
           const dateObj = new Date(unixTimestamp);
-          const gregorianDateStr = dateObj.toISOString().split("T")[0]; // 'YYYY-MM-DD'
+          const gregorianDateStr = dateObj.toISOString().split('T')[0]; // 'YYYY-MM-DD'
 
           // Check if the day is an official holiday
           if (officialHolidays.includes(gregorianDateStr)) {
             // Apply pastel red background to official holidays
+            console.log("this date is in alibaba : ", availableDays[i].getAttribute("data-unix"))
+
             availableDays[i].style.backgroundColor = "#FFCCCC";
           }
           // -------------------------------------------------
@@ -553,7 +558,6 @@ async function rentamoning() {
     console.error("An error occurred:", error.message);
   }
 }
-
 
 
 function websites_status_icons(activeWebsites){
