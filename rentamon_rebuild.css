@@ -206,6 +206,10 @@ td.passed-days.disabled {
   text-align: center;
 }
 
+.weekends-holidays {
+  background-color: #FFEEEE;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

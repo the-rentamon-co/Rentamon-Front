@@ -436,7 +436,7 @@ async function rentamoning() {
         if (response.status !== 200) {
             throw new Error("Failed to fetch calendar data");
         }
-        allHolidays = await getAllHolidayTimestampsShamsi(range[0],range[2]);
+        holidayTimestamps = await getAllHolidayTimestampsShamsi(range[0],range[2]);
         const result = await response.json();
         localStorage.setItem("calendar_data", JSON.stringify(result));
         const calendarData = result.calendar;
@@ -500,6 +500,8 @@ async function rentamoning() {
                         // holidayHandler(days[i].parentElement,allHolidays)
                         setAvailableHelper([days[i]]);
                         priceHandeler(days[i], status, origPrice, discountedPrice);
+                        applyHolidayClass(days[i].parentElement, holidayTimestamps);
+
                 }
             }
         }
@@ -1190,6 +1192,22 @@ async function getAllHolidayTimestampsShamsi(startDateShamsi, endDateShamsi) {
   } catch (error) {
     console.error('Failed to fetch official holidays:', error);
     return [];
+  }
+}
+
+function applyHolidayClass(element, holidayTimestamps) {
+  // Get the Unix timestamp from the element's data-unix attribute
+  const unixTimestamp = parseInt(element.getAttribute("data-unix"));
+
+  // Normalize the timestamp to midnight UTC to match holidayTimestamps
+  const dateObj = new Date(unixTimestamp);
+  dateObj.setUTCHours(0, 0, 0, 0);
+  const normalizedTimestamp = dateObj.getTime();
+
+  // Check if the normalized timestamp is in the list of holiday timestamps
+  if (holidayTimestamps.includes(normalizedTimestamp)) {
+    // Add the 'weekends-holidays' CSS class to the element
+    element.classList.add("weekends-holidays");
   }
 }
 
