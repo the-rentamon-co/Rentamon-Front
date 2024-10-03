@@ -436,7 +436,8 @@ async function rentamoning() {
         if (response.status !== 200) {
             throw new Error("Failed to fetch calendar data");
         }
-        holidayTimestamps = await getAllHolidayTimestampsShamsi(range[0],range[2]);
+        const holidayTimestamps = await getAllHolidayTimestampsShamsi(range[0],range[2]);
+        console.log("this is time stamps:", holidayTimestamps);
         const result = await response.json();
         localStorage.setItem("calendar_data", JSON.stringify(result));
         const calendarData = result.calendar;
