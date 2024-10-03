@@ -183,7 +183,20 @@ function setBlockHelper(elements) {
   });
 }
 
-function setAvailableHelper(elements, selectedDate = "") {
+async function setAvailableHelper(elements, selectedDate = "") {
+  // Fetch official holidays if not already fetched
+  if (!window.officialHolidays) {
+    try {
+      const holidaysResponse = await fetch("https://ws.alibaba.ir/api/v2/basic-info/calendar-events");
+      const holidaysData = await holidaysResponse.json();
+      // Store official holidays in a global variable to avoid multiple API calls
+      window.officialHolidays = holidaysData.result.events.map((event) => event.gregorianDate);
+    } catch (error) {
+      console.error("Failed to fetch official holidays:", error);
+      window.officialHolidays = []; // Default to empty array on failure
+    }
+  }
+
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     let reserved = element.parentElement.querySelector(".reserved");
@@ -193,9 +206,7 @@ function setAvailableHelper(elements, selectedDate = "") {
         day = selectedDate[i];
         const storedData = localStorage.getItem("calendar_data");
         const jsonData = JSON.parse(storedData);
-        const filteredData = jsonData.calendar.find(
-          (item) => item.date === day
-        );
+        const filteredData = jsonData.calendar.find((item) => item.date === day);
         day = filteredData;
       }
 
@@ -213,15 +224,15 @@ function setAvailableHelper(elements, selectedDate = "") {
             const discount_percentage = day.discount_percentage;
             const price = parseInt(day.price) / 1000 || null;
             const discountedPrice = price - (price * discount_percentage) / 100;
-            element.parentElement.querySelector(".price").innerHTML =
-              persianNumberWithCommas(
-                convertToPersianNumber(String(discountedPrice))
-              );
+            element.parentElement.querySelector(".price").innerHTML = persianNumberWithCommas(
+              convertToPersianNumber(String(discountedPrice))
+            );
             element.parentElement.classList.add("discounted-days");
           } else {
             const price = parseInt(day.price) / 1000 || null;
-            element.parentElement.querySelector(".price").innerHTML =
-              persianNumberWithCommas(convertToPersianNumber(String(price)));
+            element.parentElement.querySelector(".price").innerHTML = persianNumberWithCommas(
+              convertToPersianNumber(String(price))
+            );
             element.parentElement.classList.remove("discounted-days");
           }
         }
@@ -230,6 +241,29 @@ function setAvailableHelper(elements, selectedDate = "") {
         element.parentElement.classList.remove("discounted-days");
       }
       reserved.innerHTML = "";
+
+      // **Added code to style weekends and official holidays**
+      // -------------------------------------------------
+      // Get the Unix timestamp from the element's data attribute
+      const unixTimestamp = parseInt(element.parentElement.getAttribute("data-unix"));
+      const dateObj = new Date(unixTimestamp);
+      const gregorianDateStr = dateObj.toISOString().split("T")[0]; // 'YYYY-MM-DD'
+
+      // Create a persianDate object to check the day of the week
+      const persianDateObj = new persianDate(unixTimestamp);
+
+      // Check if the day is a Friday (weekend in Shamsi calendar)
+      if (persianDateObj.format("dddd") === "جمعه") {
+        // Apply pastel red background to weekends
+        element.parentElement.style.backgroundColor = "#FFCCCC";
+      }
+
+      // Check if the day is an official holiday
+      if (window.officialHolidays.includes(gregorianDateStr)) {
+        // Apply pastel red background to official holidays
+        element.parentElement.style.backgroundColor = "#FFCCCC";
+      }
+      // -------------------------------------------------
     }
   }
 }
@@ -377,193 +411,136 @@ function panelsDropdown(responseData) {
 async function rentamoning() {
   try {
     document.querySelectorAll("form").forEach((form) =>
-      form.removeEventListener("submit", rentamoning)
+        form.removeEventListener("submit", rentamoning)
     );
 
     // Reset action inputs
-    document
-      .querySelectorAll('input[name="block"]')
-      .forEach((i) => (i.checked = false));
+    document.querySelectorAll('input[name="block"]').forEach((i) => (i.checked = false));
     let availableDays = [];
 
     // Select non-disabled days from the calendar
     const allTds = document.querySelectorAll(
-      ".datepicker-day-view td:not(.disabled)"
+        ".datepicker-day-view td:not(.disabled)"
     );
     allTds.forEach((td) => {
-      if (!td.firstElementChild.classList.contains("other-month")) {
-        availableDays.push(td);
-      } else {
-        td.classList.add("other-month");
-      }
+        if (!td.firstElementChild.classList.contains("other-month")) {
+            availableDays.push(td);
+        } else {
+            td.classList.add("other-month");
+        }
     });
 
     if (availableDays.length > 0) {
-      const days = document.querySelectorAll(
-        ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
-      );
-      const range = [
-        new persianDate(
-          parseInt(availableDays[0].getAttribute("data-unix"))
-        ).format("YYYY-MM-DD"),
-        new persianDate(
-          parseInt(
-            availableDays[availableDays.length - 1].getAttribute("data-unix")
-          )
-        ).format("YYYY-MM-DD"),
-        new persianDate(
-          parseInt(
-            availableDays[availableDays.length - 1].getAttribute("data-unix")
-          )
-        ).format("YYYY-MM-DD"),
-      ];
+        const days = document.querySelectorAll(
+            ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
+        );
+        const range = [
+            new persianDate(parseInt(availableDays[0].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+            new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+            new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+        ];
 
-      const headers = {
-        "Content-Type": "application/json",
-      };
 
-      // Fetch user info, calendar data, and official holidays in parallel
-      const [user_info, response, websiteStatusesResponse, holidaysResponse] =
-        await Promise.all([
+        const headers = {
+            "Content-Type": "application/json",
+        };
+
+        // Fetch user info and calendar data in parallel
+        const [user_info, response, websiteStatusesResponse] = await Promise.all([
           get_user_info(),
           fetch(
-            `https://api.rentamon.com/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
-            {
-              method: "GET",
-              credentials: "include",
-              headers: { "Content-Type": "application/json" },
-            }
+              `https://api.rentamon.com/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
+              { method: "GET",credentials: "include" ,headers: {"Content-Type": "application/json" } }
           ),
           fetch(
-            `https://api.rentamon.com/api/website_statuses/?property_id=${propertyIdFromQueryParams}`,
-            {
-              method: "GET",
-              credentials: "include",
-              headers: { "Content-Type": "application/json" },
-            }
-          ),
-          fetch("https://ws.alibaba.ir/api/v2/basic-info/calendar-events"),
-        ]);
+              `https://api.rentamon.com/api/website_statuses/?property_id=${propertyIdFromQueryParams}`,
+              {
+                  method: 'GET',
+                  credentials: "include",
+                  headers: { 
+                    "Content-Type": "application/json" 
+                  }
+              }
+          )
+      ]);
 
-      replace_user_info(user_info);
-      panelsDropdown(user_info);
+        replace_user_info(user_info);
+        panelsDropdown(user_info);
 
-      if (response.status !== 200) {
-        throw new Error("Failed to fetch calendar data");
-      }
-
-      const result = await response.json();
-      localStorage.setItem("calendar_data", JSON.stringify(result));
-      const calendarData = result.calendar;
-
-      if (websiteStatusesResponse.status === 200) {
-        const websiteStatuses = await websiteStatusesResponse.json();
-        const statuses = websiteStatuses.status;
-
-        // Apply styles based on website statuses without blocking the page load
-        Object.keys(statuses).forEach((website) => {
-          const widget = websiteWidgets[website];
-          if (statuses[website] === true) {
-            isActiveHandler(widget.icon_selector, false); // Active style
-            check_is_valid(widget.icon_selector, widget.popup_id_selector);
-          } else {
-            isActiveHandler(widget.icon_selector, true); // Inactive style
-            check_is_valid(widget.icon_selector, widget.popup_id_selector);
-          }
-        });
-      } else {
-        throw new Error("Failed to fetch website statuses");
-      }
-
-      // Process official holidays
-      const holidaysData = await holidaysResponse.json();
-      const officialHolidays = holidaysData.result.events.map(
-        (event) => event.gregorianDate
-      );
-
-      const active_websites = user_info.user_info.websites;
-      activeWebsites = {};
-      active_websites.forEach((item) => {
-        activeWebsites[item] = true;
-      });
-
-      console.log(calendarData, "Fetched calendar data");
-
-      availableDays.forEach((day) => {
-        day.removeEventListener("click", handleDayClick);
-        day.addEventListener("click", handleDayClick);
-      });
-
-      if (calendarData && calendarData.length > 0) {
-        for (let i = 0; i < availableDays.length; i++) {
-          const dayData = calendarData[i];
-          const status = dayData.status;
-          const price = dayData.price;
-          const discountPercentage = dayData.discount_percentage;
-
-          const origPrice = parseInt(price) / 1000 || null;
-          let discountedPrice = 0;
-
-          // Apply discount if available
-          if (discountPercentage) {
-            discountedPrice =
-              origPrice - (origPrice * discountPercentage) / 100;
-          }
-
-          switch (status) {
-            case "blocked":
-              setBlockHelper([days[i]]);
-              priceHandeler(days[i], status, origPrice, discountedPrice);
-              break;
-            case "reserved":
-              setBookedkHelper([{ elem: days[i], website: dayData.website }]);
-              priceHandeler(days[i], status, origPrice, discountedPrice);
-              break;
-            default:
-              setAvailableHelper([days[i]]);
-              priceHandeler(days[i], status, origPrice, discountedPrice);
-          }
-
-          // **Added code to style weekends and official holidays**
-          // -------------------------------------------------
-          // Get the Unix timestamp in milliseconds
-          const unixTimestamp = parseInt(
-            availableDays[i].getAttribute("data-unix")
-          );
-
-          // Create a persianDate object
-          const persianDateObj = new persianDate(unixTimestamp);
-          console.log(persianDateObj);
-
-          // Check if the day is a Friday (weekend in Shamsi calendar)
-          if (persianDateObj.format("dddd") === "جمعه") {
-            // Apply pastel red background to weekends
-            availableDays[i].style.backgroundColor = "#FFCCCC";
-          }
-          console.log(persianDateObj.format("dddd"));
-          console.log(availableDays[i]);
-
-
-
-          // Get the Gregorian date from the Unix timestamp
-          const dateObj = new Date(unixTimestamp);
-          const gregorianDateStr = dateObj.toISOString().split("T")[0]; // 'YYYY-MM-DD'
-
-          // Check if the day is an official holiday
-          if (officialHolidays.includes(gregorianDateStr)) {
-            // Apply pastel red background to official holidays
-            availableDays[i].style.backgroundColor = "#FFCCCC";
-          }
-          // -------------------------------------------------
+        if (response.status !== 200) {
+            throw new Error("Failed to fetch calendar data");
         }
-      }
+
+        const result = await response.json();
+        localStorage.setItem("calendar_data", JSON.stringify(result));
+        const calendarData = result.calendar;
+        if (websiteStatusesResponse.status === 200) {
+          const websiteStatuses = await websiteStatusesResponse.json();
+          const statuses = websiteStatuses.status;
+          
+          // Apply styles based on website statuses without blocking the page load
+          Object.keys(statuses).forEach((website) => {
+              const widget = websiteWidgets[website];
+              if (statuses[website] === true) {
+                  isActiveHandler(widget.icon_selector, false);  // Active style
+                  check_is_valid(widget.icon_selector, widget.popup_id_selector);
+              } else {
+                  isActiveHandler(widget.icon_selector, true);   // Inactive style
+                  check_is_valid(widget.icon_selector, widget.popup_id_selector);
+              }
+          });
+        } else {
+            throw new Error("Failed to fetch website statuses");
+        }
+        const active_websites = user_info.user_info.websites
+        activeWebsites = {};
+        active_websites.forEach(item => {
+          activeWebsites[item] = true;
+        });
+
+        console.log(calendarData, "Fetched calendar data");
+
+        availableDays.forEach((day) => {
+            day.removeEventListener("click", handleDayClick);
+            day.addEventListener("click", handleDayClick);
+        });
+
+        if (calendarData && calendarData.length > 0) {
+            for (let i = 0; i < availableDays.length; i++) {
+                const dayData = calendarData[i];
+                const status = dayData.status;
+                const price = dayData.price;
+                const discountPercentage = dayData.discount_percentage;
+
+                const origPrice = parseInt(price) / 1000 || null;
+                let discountedPrice = 0;
+
+                // Apply discount if available
+                if (discountPercentage) {
+                    discountedPrice = origPrice - (origPrice * discountPercentage) / 100;
+                }
+
+                switch (status) {
+                    case "blocked":
+                        setBlockHelper([days[i]]);
+                        priceHandeler(days[i], status, origPrice, discountedPrice);
+                        break;
+                    case "reserved":
+                        setBookedkHelper([{ elem: days[i], website: dayData.website }]);
+                        priceHandeler(days[i], status, origPrice, discountedPrice);
+                        break;
+                    default:
+                        setAvailableHelper([days[i]]);
+                        priceHandeler(days[i], status, origPrice, discountedPrice);
+                }
+            }
+        }
     }
+
   } catch (error) {
-    console.error("An error occurred:", error.message);
+      console.error("An error occurred:", error.message);
   }
 }
-
-
 
 function websites_status_icons(activeWebsites){
   for (let website in activeWebsites) {
