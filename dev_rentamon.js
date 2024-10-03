@@ -183,20 +183,7 @@ function setBlockHelper(elements) {
   });
 }
 
-async function setAvailableHelper(elements, selectedDate = "") {
-  // Fetch official holidays if not already fetched
-  if (!window.officialHolidays) {
-    try {
-      const holidaysResponse = await fetch("https://ws.alibaba.ir/api/v2/basic-info/calendar-events");
-      const holidaysData = await holidaysResponse.json();
-      // Store official holidays in a global variable to avoid multiple API calls
-      window.officialHolidays = holidaysData.result.events.map((event) => event.gregorianDate);
-    } catch (error) {
-      console.error("Failed to fetch official holidays:", error);
-      window.officialHolidays = []; // Default to empty array on failure
-    }
-  }
-
+function setAvailableHelper(elements, selectedDate = "") {
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     let reserved = element.parentElement.querySelector(".reserved");
@@ -206,7 +193,9 @@ async function setAvailableHelper(elements, selectedDate = "") {
         day = selectedDate[i];
         const storedData = localStorage.getItem("calendar_data");
         const jsonData = JSON.parse(storedData);
-        const filteredData = jsonData.calendar.find((item) => item.date === day);
+        const filteredData = jsonData.calendar.find(
+          (item) => item.date === day
+        );
         day = filteredData;
       }
 
@@ -224,15 +213,15 @@ async function setAvailableHelper(elements, selectedDate = "") {
             const discount_percentage = day.discount_percentage;
             const price = parseInt(day.price) / 1000 || null;
             const discountedPrice = price - (price * discount_percentage) / 100;
-            element.parentElement.querySelector(".price").innerHTML = persianNumberWithCommas(
-              convertToPersianNumber(String(discountedPrice))
-            );
+            element.parentElement.querySelector(".price").innerHTML =
+              persianNumberWithCommas(
+                convertToPersianNumber(String(discountedPrice))
+              );
             element.parentElement.classList.add("discounted-days");
           } else {
             const price = parseInt(day.price) / 1000 || null;
-            element.parentElement.querySelector(".price").innerHTML = persianNumberWithCommas(
-              convertToPersianNumber(String(price))
-            );
+            element.parentElement.querySelector(".price").innerHTML =
+              persianNumberWithCommas(convertToPersianNumber(String(price)));
             element.parentElement.classList.remove("discounted-days");
           }
         }
@@ -241,29 +230,6 @@ async function setAvailableHelper(elements, selectedDate = "") {
         element.parentElement.classList.remove("discounted-days");
       }
       reserved.innerHTML = "";
-
-      // **Added code to style weekends and official holidays**
-      // -------------------------------------------------
-      // Get the Unix timestamp from the element's data attribute
-      const unixTimestamp = parseInt(element.parentElement.getAttribute("data-unix"));
-      const dateObj = new Date(unixTimestamp);
-      const gregorianDateStr = dateObj.toISOString().split("T")[0]; // 'YYYY-MM-DD'
-
-      // Create a persianDate object to check the day of the week
-      const persianDateObj = new persianDate(unixTimestamp);
-
-      // Check if the day is a Friday (weekend in Shamsi calendar)
-      if (persianDateObj.format("dddd") === "جمعه") {
-        // Apply pastel red background to weekends
-        element.parentElement.style.backgroundColor = "#FFCCCC";
-      }
-
-      // Check if the day is an official holiday
-      if (window.officialHolidays.includes(gregorianDateStr)) {
-        // Apply pastel red background to official holidays
-        element.parentElement.style.backgroundColor = "#FFCCCC";
-      }
-      // -------------------------------------------------
     }
   }
 }
