@@ -477,6 +477,7 @@ async function rentamoning() {
 
       // Process official holidays
       const holidaysData = await holidaysResponse.json();
+      console.log(holidaysData)
       const officialHolidays = holidaysData.result.events.map(
         (event) => event.gregorianDate
       );
@@ -533,6 +534,7 @@ async function rentamoning() {
 
           // Check if the day is a Friday (weekend in Shamsi calendar)
           if (persianDateObj.format("dddd") === "جمعه") {
+            console.log("this date is weekend : ", availableDays[i].getAttribute("data-unix"))
             // Apply pastel red background to weekends
             availableDays[i].style.backgroundColor = "#FFCCCC";
           }
@@ -544,6 +546,8 @@ async function rentamoning() {
           // Check if the day is an official holiday
           if (officialHolidays.includes(gregorianDateStr)) {
             // Apply pastel red background to official holidays
+            console.log("this date is in alibaba : ", availableDays[i].getAttribute("data-unix"))
+
             availableDays[i].style.backgroundColor = "#FFCCCC";
           }
           // -------------------------------------------------
