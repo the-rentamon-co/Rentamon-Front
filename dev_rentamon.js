@@ -1138,62 +1138,59 @@ async function performAction(
 }
 // Ensure the 'persian-date' library is included in your project.
 
-async function getAllHolidayTimestampsShamsi(startDateShamsi, endDateShamsi) {
+// Function to get all holiday and weekend timestamps in Shamsi calendar
+async function getAllHolidayTimestampsShamsi() {
   try {
     // Fetch official holidays from the API
     const response = await fetch('https://ws.alibaba.ir/api/v2/basic-info/calendar-events');
     const data = await response.json();
 
-    // Extract the Gregorian dates of the holidays
+    // Extract Gregorian dates of the holidays
     const officialHolidaysGregorian = data.result.events.map((event) => event.gregorianDate);
 
-    // Convert Gregorian holiday dates to Unix timestamps (at midnight UTC)
+    // Convert Gregorian dates to Unix timestamps
     const officialHolidayTimestamps = officialHolidaysGregorian.map((gregorianDateStr) => {
       const [year, month, day] = gregorianDateStr.split('-').map(Number);
-      const date = new Date(Date.UTC(year, month - 1, day)); // Months are zero-based
-      return date.getTime();
+      const date = new Date(year, month - 1, day); // Create a UTC Date object
+      return date.getTime(); // Return Unix timestamp in milliseconds
     });
 
-    // Initialize the list to store holiday timestamps
-    const holidayTimestamps = [];
+    // Initialize the list to store holiday timestamps (including weekends)
+    const holidayTimestamps = [...officialHolidayTimestamps];
 
-    // Create persianDate objects for start and end dates
-    let currentDate = new persianDate(startDateShamsi);
-    const endDate = new persianDate(endDateShamsi);
+    // Iterate through the current Persian year to find all Fridays (weekends)
+    let currentDate = new persianDate(); // Start from today's date in Shamsi calendar
+    const endDate = currentDate.clone().endOf('year'); // End date is the end of the current Shamsi year
 
-    // Iterate through each date in the range
-    while (currentDate.isBefore(endDate) || currentDate.isSame(endDate)) {
-      const unixTimestamp = currentDate.valueOf();
-
-      // Check if the day is a Friday (weekend in Shamsi calendar)
-      const isWeekend = currentDate.format('dddd') === 'جمعه';
-
-      // Convert current Shamsi date to Gregorian date for comparison
-      const gregorianDateStr = currentDate.toLocale('en').format('YYYY-MM-DD');
-
-      // Convert Gregorian date string to Unix timestamp at midnight UTC
-      const [year, month, day] = gregorianDateStr.split('-').map(Number);
-      const date = new Date(Date.UTC(year, month - 1, day));
-      const currentDateTimestamp = date.getTime();
-
-      // Check if the current date is an official holiday
-      const isOfficialHoliday = officialHolidayTimestamps.includes(currentDateTimestamp);
-
-      // If it's a weekend or an official holiday, add the timestamp to the list
-      if (isWeekend || isOfficialHoliday) {
-        holidayTimestamps.push(unixTimestamp);
+    // Iterate through each day in the range and find weekends (Fridays)
+    while (currentDate <= endDate) {
+      if (currentDate.format('dddd') === 'جمعه') {
+        // Add Unix timestamp for Friday
+        holidayTimestamps.push(currentDate.valueOf());
       }
-
-      // Move to the next day
+      // Move to the next day in the Shamsi calendar
       currentDate = currentDate.add('1', 'day');
     }
 
-    return holidayTimestamps;
+    return holidayTimestamps; // Return the complete list of holiday timestamps
   } catch (error) {
     console.error('Failed to fetch official holidays:', error);
     return [];
   }
 }
+
+// Function to apply the 'weekends-holidays' CSS class to elements
+function applyHolidayClass(element, holidayTimestamps) {
+  // Get the Unix timestamp from the element's data-unix attribute
+  const unixTimestamp = parseInt(element.getAttribute('data-unix'), 10);
+
+  // Check if the element's timestamp is in the list of holiday timestamps
+  if (holidayTimestamps.includes(unixTimestamp)) {
+    // Apply the 'weekends-holidays' CSS class to the element
+    element.classList.add('weekends-holidays');
+  }
+}
+
 
 function applyHolidayClass(element, holidayTimestamps) {
   // Get the Unix timestamp from the element's data-unix attribute
