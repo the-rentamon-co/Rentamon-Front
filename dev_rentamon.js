@@ -1147,10 +1147,10 @@ async function getAllHolidayTimestampsShamsi(startDateShamsi, endDateShamsi) {
     // Extract the Gregorian dates of the holidays
     const officialHolidaysGregorian = data.result.events.map((event) => event.gregorianDate);
 
-    // Convert Gregorian holiday dates to normalized timestamps
+    // Convert Gregorian holiday dates to Unix timestamps (at midnight UTC)
     const officialHolidayTimestamps = officialHolidaysGregorian.map((gregorianDateStr) => {
       const [year, month, day] = gregorianDateStr.split('-').map(Number);
-      const date = new Date(Date.UTC(year, month - 1, day));
+      const date = new Date(Date.UTC(year, month - 1, day)); // Months are zero-based
       return date.getTime();
     });
 
@@ -1161,27 +1161,30 @@ async function getAllHolidayTimestampsShamsi(startDateShamsi, endDateShamsi) {
     let currentDate = new persianDate(startDateShamsi);
     const endDate = new persianDate(endDateShamsi);
 
-    // Iterate through each date in the range using direct timestamp comparison
-    while (currentDate.valueOf() <= endDate.valueOf()) {
+    // Iterate through each date in the range
+    while (currentDate.isBefore(endDate) || currentDate.isSame(endDate)) {
       const unixTimestamp = currentDate.valueOf();
-
-      // Normalize the timestamp to midnight UTC
-      const dateObj = new Date(unixTimestamp);
-      dateObj.setUTCHours(0, 0, 0, 0);
-      const normalizedTimestamp = dateObj.getTime();
 
       // Check if the day is a Friday (weekend in Shamsi calendar)
       const isWeekend = currentDate.format('dddd') === 'جمعه';
 
-      // Check if the current date is an official holiday
-      const isOfficialHoliday = officialHolidayTimestamps.includes(normalizedTimestamp);
+      // Convert current Shamsi date to Gregorian date for comparison
+      const gregorianDateStr = currentDate.toLocale('en').format('YYYY-MM-DD');
 
-      // If it's a weekend or an official holiday, add the normalized timestamp to the list
+      // Convert Gregorian date string to Unix timestamp at midnight UTC
+      const [year, month, day] = gregorianDateStr.split('-').map(Number);
+      const date = new Date(Date.UTC(year, month - 1, day));
+      const currentDateTimestamp = date.getTime();
+
+      // Check if the current date is an official holiday
+      const isOfficialHoliday = officialHolidayTimestamps.includes(currentDateTimestamp);
+
+      // If it's a weekend or an official holiday, add the timestamp to the list
       if (isWeekend || isOfficialHoliday) {
-        holidayTimestamps.push(normalizedTimestamp);
+        holidayTimestamps.push(unixTimestamp);
       }
 
-      // Move to the next day using `.add` (add 1 day to currentDate)
+      // Move to the next day
       currentDate = currentDate.add('1', 'day');
     }
 
@@ -1191,7 +1194,6 @@ async function getAllHolidayTimestampsShamsi(startDateShamsi, endDateShamsi) {
     return [];
   }
 }
-
 
 function applyHolidayClass(element, holidayTimestamps) {
   // Get the Unix timestamp from the element's data-unix attribute
