@@ -1183,6 +1183,8 @@ async function getAllHolidayTimestampsShamsi() {
 function applyHolidayClass(element, holidayTimestamps) {
   // Get the Unix timestamp from the element's data-unix attribute
   const unixTimestamp = parseInt(element.getAttribute('data-unix'), 10);
+  console.log('Holiday Timestamps:', holidayTimestamps);
+  console.log('Element Timestamp:', unixTimestamp);
 
   // Check if the element's timestamp is in the list of holiday timestamps
   if (holidayTimestamps.includes(unixTimestamp)) {
