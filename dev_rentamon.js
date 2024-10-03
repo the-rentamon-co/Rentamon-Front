@@ -496,6 +496,7 @@ async function rentamoning() {
                         priceHandeler(days[i], status, origPrice, discountedPrice);
                         break;
                     default:
+                        console.log('these are days : ', days[i])
                         setAvailableHelper([days[i]]);
                         priceHandeler(days[i], status, origPrice, discountedPrice);
                 }
@@ -1132,6 +1133,65 @@ async function performAction(
     throw error;
   }
 }
+// Ensure the 'persian-date' library is included in your project.
+
+async function getAllHolidayTimestampsShamsi(startDateShamsi, endDateShamsi) {
+  try {
+    // Fetch official holidays from the API
+    const response = await fetch('https://ws.alibaba.ir/api/v2/basic-info/calendar-events');
+    const data = await response.json();
+
+    // Extract the Gregorian dates of the holidays
+    const officialHolidaysGregorian = data.result.events.map((event) => event.gregorianDate);
+
+    // Convert Gregorian holiday dates to Unix timestamps (at midnight UTC)
+    const officialHolidayTimestamps = officialHolidaysGregorian.map((gregorianDateStr) => {
+      const [year, month, day] = gregorianDateStr.split('-').map(Number);
+      const date = new Date(Date.UTC(year, month - 1, day)); // Months are zero-based
+      return date.getTime();
+    });
+
+    // Initialize the list to store holiday timestamps
+    const holidayTimestamps = [];
+
+    // Create persianDate objects for start and end dates
+    let currentDate = new persianDate(startDateShamsi);
+    const endDate = new persianDate(endDateShamsi);
+
+    // Iterate through each date in the range
+    while (currentDate.isBefore(endDate) || currentDate.isSame(endDate)) {
+      const unixTimestamp = currentDate.valueOf();
+
+      // Check if the day is a Friday (weekend in Shamsi calendar)
+      const isWeekend = currentDate.format('dddd') === 'جمعه';
+
+      // Convert current Shamsi date to Gregorian date for comparison
+      const gregorianDateStr = currentDate.toLocale('en').format('YYYY-MM-DD');
+
+      // Convert Gregorian date string to Unix timestamp at midnight UTC
+      const [year, month, day] = gregorianDateStr.split('-').map(Number);
+      const date = new Date(Date.UTC(year, month - 1, day));
+      const currentDateTimestamp = date.getTime();
+
+      // Check if the current date is an official holiday
+      const isOfficialHoliday = officialHolidayTimestamps.includes(currentDateTimestamp);
+
+      // If it's a weekend or an official holiday, add the timestamp to the list
+      if (isWeekend || isOfficialHoliday) {
+        holidayTimestamps.push(unixTimestamp);
+      }
+
+      // Move to the next day
+      currentDate = currentDate.add('1', 'day');
+    }
+
+    return holidayTimestamps;
+  } catch (error) {
+    console.error('Failed to fetch official holidays:', error);
+    return [];
+  }
+}
+
 // for changing max date change value in maxDate: new persianDate
 $(".inline").pDatepicker({
   initialValue: false,
