@@ -533,12 +533,17 @@ async function rentamoning() {
 
           // Create a persianDate object
           const persianDateObj = new persianDate(unixTimestamp);
+          console.log(persianDateObj);
 
           // Check if the day is a Friday (weekend in Shamsi calendar)
           if (persianDateObj.format("dddd") === "جمعه") {
             // Apply pastel red background to weekends
             availableDays[i].style.backgroundColor = "#FFCCCC";
           }
+          console.log(persianDateObj.format("dddd"));
+          console.log(availableDays[i]);
+
+
 
           // Get the Gregorian date from the Unix timestamp
           const dateObj = new Date(unixTimestamp);
