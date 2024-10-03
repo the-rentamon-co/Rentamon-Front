@@ -436,7 +436,7 @@ async function rentamoning() {
         if (response.status !== 200) {
             throw new Error("Failed to fetch calendar data");
         }
-
+        allHolidays = await getAllHolidayTimestampsShamsi(range[0],range[2]);
         const result = await response.json();
         localStorage.setItem("calendar_data", JSON.stringify(result));
         const calendarData = result.calendar;
@@ -496,7 +496,8 @@ async function rentamoning() {
                         priceHandeler(days[i], status, origPrice, discountedPrice);
                         break;
                     default:
-                        console.log('these are days : ', days[i])
+                        console.log('these are days : ', days[i].parentElement)
+                        // holidayHandler(days[i].parentElement,allHolidays)
                         setAvailableHelper([days[i]]);
                         priceHandeler(days[i], status, origPrice, discountedPrice);
                 }
