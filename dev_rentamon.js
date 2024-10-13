@@ -1232,6 +1232,7 @@ function isShamsiWeekend(day,timestamp) {
   // Check if it's Friday (6) or Saturday (0)
   const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
   if(isWeekend){
+    console.log("Got here isShamsiWeekend");
     day.parentElement.classList.add("weekends-holidays");
   }
 
