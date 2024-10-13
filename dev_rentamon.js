@@ -501,8 +501,6 @@ async function rentamoning() {
                         // holidayHandler(days[i].parentElement,allHolidays)
                         setAvailableHelper([days[i]]);
                         priceHandeler(days[i], status, origPrice, discountedPrice);
-                        console.log("this is the day node : ", days[i])
-                        console.log("this is the day node parent : ", days[i].parentElement.getAttribute("data-unix"))
                         isShamsiWeekend(days[i], days[i].parentElement.getAttribute("data-unix"));
 
                 }
@@ -1201,17 +1199,13 @@ async function getAllHolidayTimestampsShamsi(startDateShamsi, endDateShamsi) {
 function applyHolidayClass(element, holidayTimestamps) {
   // Get the Unix timestamp from the element's data-unix attribute
   const unixTimestamp = parseInt(element.getAttribute("data-unix"));
-  console.log("these are unixTimestamp :  ", unixTimestamp)
 
 
   // Normalize the timestamp to midnight UTC to match holidayTimestamps
   const dateObj = new Date(unixTimestamp);
-  console.log("these are dateObj :  ", dateObj)
   dateObj.setUTCHours(0, 0, 0, 0);
   const normalizedTimestamp = dateObj.getTime();
-  console.log("these are normalizedTimestamp :  ", normalizedTimestamp)
   // Check if the normalized timestamp is in the list of holiday timestamps
-  console.log("these are holidayTimestamps :  ", holidayTimestamps)
 
   if (holidayTimestamps.includes(normalizedTimestamp)) {
     // Add the 'weekends-holidays' CSS class to the element
@@ -1221,8 +1215,6 @@ function applyHolidayClass(element, holidayTimestamps) {
 function isShamsiWeekend(day,timestamp) {
   // Convert the timestamp to a persianDate object
   const pd = new persianDate(timestamp);
-  console.log(day),
-  console.log(timestamp)
   // Get the Shamsi (Jalali) date
   const shamsiDate = pd.format('YYYY-MM-DD');
 
