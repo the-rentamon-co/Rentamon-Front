@@ -1221,7 +1221,8 @@ function applyHolidayClass(element, holidayTimestamps) {
 function isShamsiWeekend(day,timestamp) {
   // Convert the timestamp to a persianDate object
   const pd = new persianDate(timestamp);
-
+  console.log(day),
+  console.log(timestamp)
   // Get the Shamsi (Jalali) date
   const shamsiDate = pd.format('YYYY-MM-DD');
 
@@ -1231,7 +1232,7 @@ function isShamsiWeekend(day,timestamp) {
   // Check if it's Friday (6) or Saturday (0)
   const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
   if(isWeekend){
-    day.classList.add("weekends-holidays");
+    day.parentElement.classList.add("weekends-holidays");
   }
 
   // Return the result with the Shamsi date
