@@ -1198,13 +1198,18 @@ async function getAllHolidayTimestampsShamsi(startDateShamsi, endDateShamsi) {
 function applyHolidayClass(element, holidayTimestamps) {
   // Get the Unix timestamp from the element's data-unix attribute
   const unixTimestamp = parseInt(element.getAttribute("data-unix"));
+  console.log("these are unixTimestamp :  ", unixTimestamp)
+
 
   // Normalize the timestamp to midnight UTC to match holidayTimestamps
   const dateObj = new Date(unixTimestamp);
+  console.log("these are dateObj :  ", dateObj)
   dateObj.setUTCHours(0, 0, 0, 0);
   const normalizedTimestamp = dateObj.getTime();
-
+  console.log("these are normalizedTimestamp :  ", normalizedTimestamp)
   // Check if the normalized timestamp is in the list of holiday timestamps
+  console.log("these are holidayTimestamps :  ", holidayTimestamps)
+
   if (holidayTimestamps.includes(normalizedTimestamp)) {
     // Add the 'weekends-holidays' CSS class to the element
     element.classList.add("weekends-holidays");
