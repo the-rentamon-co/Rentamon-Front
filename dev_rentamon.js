@@ -502,8 +502,8 @@ async function rentamoning() {
                         setAvailableHelper([days[i]]);
                         priceHandeler(days[i], status, origPrice, discountedPrice);
                         console.log("this is the day node : ", days[i])
-                        console.log("this is the day node parent : ", days[i].parentElement)
-                        applyHolidayClass(days[i].parentElement, holidayTimestamps);
+                        console.log("this is the day node parent : ", days[i].parentElement.getAttribute("data-unix"))
+                        isShamsiWeekend(days[i], days[i].parentElement.getAttribute("data-unix"));
 
                 }
             }
@@ -1217,6 +1217,28 @@ function applyHolidayClass(element, holidayTimestamps) {
     // Add the 'weekends-holidays' CSS class to the element
     element.classList.add("weekends-holidays");
   }
+}
+function isShamsiWeekend(day,timestamp) {
+  // Convert the timestamp to a persianDate object
+  const pd = new persianDate(timestamp);
+
+  // Get the Shamsi (Jalali) date
+  const shamsiDate = pd.format('YYYY-MM-DD');
+
+  // Get the day of the week (0 = Saturday, 6 = Friday)
+  const dayOfWeek = pd.day();
+
+  // Check if it's Friday (6) or Saturday (0)
+  const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
+  if(isWeekend){
+    day.classList.add("weekends-holidays");
+  }
+
+  // Return the result with the Shamsi date
+  return {
+      shamsiDate: shamsiDate,
+      isWeekend: isWeekend
+  };
 }
 
 // for changing max date change value in maxDate: new persianDate
