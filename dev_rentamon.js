@@ -451,6 +451,7 @@ async function rentamoning() {
               if (statuses[website] === true) {
                   isActiveHandler(widget.icon_selector, false);  // Active style
                   check_is_valid(widget.icon_selector, widget.popup_id_selector);
+                  document.querySelector(widget.icon_selector).click();
               } else {
                   isActiveHandler(widget.icon_selector, true);   // Inactive style
                   check_is_valid(widget.icon_selector, widget.popup_id_selector);
