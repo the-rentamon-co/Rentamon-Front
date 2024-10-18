@@ -1257,7 +1257,7 @@ function isShamsiWeekend(dayElement, timestamp) {
   // Check if it's Thursday (5) or Friday (6)
   if (dayOfWeek === 6 || dayOfWeek === 7) {
     // Set the background color to red for weekends
-    dayElement.parentElement.classList.add('weekends-holidays');
+    dayElement.style.color = '#FF4E4E';
   }
 }
 
