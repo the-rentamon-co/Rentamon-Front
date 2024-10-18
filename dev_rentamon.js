@@ -230,6 +230,9 @@ function setAvailableHelper(elements, selectedDate = "") {
         element.parentElement.classList.remove("discounted-days");
       }
       reserved.innerHTML = "";
+
+      // Check if the day is a weekend and apply red background if true
+      isShamsiWeekend(element, element.parentElement.getAttribute("data-unix"));
     }
   }
 }
@@ -1214,28 +1217,20 @@ function applyHolidayClass(element, holidayTimestamps) {
     element.classList.add("weekends-holidays");
   }
 }
-function isShamsiWeekend(day,timestamp) {
-  // Convert the timestamp to a persianDate object
+function isShamsiWeekend(day, timestamp) {
+  // Convert the timestamp to a PersianDate object
   const pd = new persianDate(timestamp);
-  // Get the Shamsi (Jalali) date
-  const shamsiDate = pd.format('YYYY-MM-DD');
-
+  
   // Get the day of the week (0 = Saturday, 6 = Friday)
   const dayOfWeek = pd.day();
 
-  // Check if it's Friday (6) or Saturday (0)
-  const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
-  if(isWeekend){
-    console.log("Got here isShamsiWeekend");
-    day.parentElement.classList.add("weekends-holidays");
+  // Check if it's Thursday (5) or Friday (6)
+  if (dayOfWeek === 5 || dayOfWeek === 6) {
+    // Set the background color to red for weekends
+    day.style.backgroundColor = 'red';
   }
-
-  // Return the result with the Shamsi date
-  return {
-      shamsiDate: shamsiDate,
-      isWeekend: isWeekend
-  };
 }
+
 
 // for changing max date change value in maxDate: new persianDate
 $(".inline").pDatepicker({
