@@ -873,18 +873,25 @@ async function unblockBtnClicked() {
       document.querySelector(".response_status_pop a").click();
       setStyleToPending();
     }
-    // adding api calls if user has registered in the website
+
+    // Adding API calls if user has registered in the website
     final_response = await performAction(
       "setUnblock",
       selectedDate,
       (property_id = propertyIdFromQueryParams)
     );
     status_responses = Object.values(final_response.data);
+
     if (status_responses.some(response => response.final_status === true)) {
-      spans.forEach((z) => {
-        setAvailableHelper(spans, gregorianSelectedDate);
+      spans.forEach((span) => {
+        setAvailableHelper([span], gregorianSelectedDate);
+
+        // After setting available, check if it's a weekend and apply the weekend style
+        const unixTimestamp = span.parentElement.getAttribute("data-unix");
+        isShamsiWeekend(span, unixTimestamp);
       });
     }
+
     setStatusStyleV2(final_response.data);
     websites_status_iconsV2(final_response.data);
 
