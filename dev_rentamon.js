@@ -1227,7 +1227,7 @@ function isShamsiWeekend(dayElement, timestamp) {
   const dayOfWeek = pd.day();
 
   // Check if it's Thursday (5) or Friday (6)
-  if (dayOfWeek === 6 || dayOfWeek === 0) {
+  if (dayOfWeek === 6 || dayOfWeek === 7) {
     // Set the background color to red for weekends
     dayElement.style.color = '#FF4E4E';
   }
