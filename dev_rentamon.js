@@ -185,8 +185,12 @@ function setBlockHelper(elements) {
 
 function setAvailableHelper(elements, selectedDate = "") {
   for (let i = 0; i < elements.length; i++) {
-    const element = elements[i];
+    const element = elements[i]; // This should be the <span> element inside the <td>
     let reserved = element.parentElement.querySelector(".reserved");
+
+    // Logging the current element being processed
+    console.log("Processing element:", element);
+
     if (reserved.innerHTML === "" || reserved.innerHTML === "رزرو") {
       let day = "";
       if (selectedDate !== "") {
@@ -199,6 +203,7 @@ function setAvailableHelper(elements, selectedDate = "") {
         day = filteredData;
       }
 
+      // Reset classes before applying styles
       element.parentElement.classList.remove("blocked-days");
       element.parentElement.classList.remove("booked-days");
 
@@ -229,10 +234,18 @@ function setAvailableHelper(elements, selectedDate = "") {
         element.parentElement.querySelector(".price").innerHTML = "";
         element.parentElement.classList.remove("discounted-days");
       }
+
       reserved.innerHTML = "";
+
+      // Adding debug statement before calling isShamsiWeekend
+      console.log("Calling isShamsiWeekend for element:", element.parentElement);
+
+      // Check if the day is a weekend and apply red background if true
+      isShamsiWeekend(element, element.parentElement.getAttribute("data-unix"));
     }
   }
 }
+
 
 function setBookedkHelper(elements, selectedDate = true) {
   const persianNumberWithCommas = (persianNum) =>
@@ -1214,28 +1227,25 @@ function applyHolidayClass(element, holidayTimestamps) {
     element.classList.add("weekends-holidays");
   }
 }
-function isShamsiWeekend(day,timestamp) {
-  // Convert the timestamp to a persianDate object
-  const pd = new persianDate(timestamp);
-  // Get the Shamsi (Jalali) date
-  const shamsiDate = pd.format('YYYY-MM-DD');
+function isShamsiWeekend(dayElement, timestamp) {
+  // Convert the timestamp to a PersianDate object
+  const pd = new persianDate(parseInt(timestamp));
 
   // Get the day of the week (0 = Saturday, 6 = Friday)
   const dayOfWeek = pd.day();
 
-  // Check if it's Friday (6) or Saturday (0)
-  const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
-  if(isWeekend){
-    console.log("Got here isShamsiWeekend");
-    day.parentElement.classList.add("weekends-holidays");
-  }
+  // Debugging log to see the day of the week
+  console.log("Checking day of the week:", dayOfWeek);
 
-  // Return the result with the Shamsi date
-  return {
-      shamsiDate: shamsiDate,
-      isWeekend: isWeekend
-  };
+  // Check if it's Thursday (5) or Friday (6)
+  if (dayOfWeek === 5 || dayOfWeek === 6) {
+    // Set the background color to red for weekends
+    console.log("Setting background color to red for element:", dayElement.parentElement);
+    dayElement.parentElement.style.backgroundColor = 'red';
+  }
 }
+
+
 
 // for changing max date change value in maxDate: new persianDate
 $(".inline").pDatepicker({
