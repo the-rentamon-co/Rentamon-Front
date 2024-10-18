@@ -187,6 +187,7 @@ function setAvailableHelper(elements, selectedDate = "") {
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     let reserved = element.parentElement.querySelector(".reserved");
+
     if (reserved.innerHTML === "" || reserved.innerHTML === "رزرو") {
       let day = "";
       if (selectedDate !== "") {
@@ -232,7 +233,7 @@ function setAvailableHelper(elements, selectedDate = "") {
       reserved.innerHTML = "";
 
       // Check if the day is a weekend and apply red background if true
-      isShamsiWeekend(element, element.parentElement.getAttribute("data-unix"));
+      isShamsiWeekend(element.parentElement, element.parentElement.getAttribute("data-unix"));
     }
   }
 }
@@ -1217,19 +1218,20 @@ function applyHolidayClass(element, holidayTimestamps) {
     element.classList.add("weekends-holidays");
   }
 }
-function isShamsiWeekend(day, timestamp) {
+function isShamsiWeekend(dayElement, timestamp) {
   // Convert the timestamp to a PersianDate object
-  const pd = new persianDate(timestamp);
-  
+  const pd = new persianDate(parseInt(timestamp));
+
   // Get the day of the week (0 = Saturday, 6 = Friday)
   const dayOfWeek = pd.day();
 
   // Check if it's Thursday (5) or Friday (6)
   if (dayOfWeek === 5 || dayOfWeek === 6) {
     // Set the background color to red for weekends
-    day.style.backgroundColor = 'red';
+    dayElement.style.backgroundColor = 'red';
   }
 }
+
 
 
 // for changing max date change value in maxDate: new persianDate
