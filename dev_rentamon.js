@@ -187,6 +187,7 @@ function setAvailableHelper(elements, selectedDate = "") {
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     let reserved = element.parentElement.querySelector(".reserved");
+
     if (reserved.innerHTML === "" || reserved.innerHTML === "رزرو") {
       let day = "";
       if (selectedDate !== "") {
@@ -230,9 +231,13 @@ function setAvailableHelper(elements, selectedDate = "") {
         element.parentElement.classList.remove("discounted-days");
       }
       reserved.innerHTML = "";
+
+      // Check if the day is a weekend and apply red background if true
+      isShamsiWeekend(element.parentElement, element.parentElement.getAttribute("data-unix"));
     }
   }
 }
+
 
 function setBookedkHelper(elements, selectedDate = true) {
   const persianNumberWithCommas = (persianNum) =>
@@ -741,12 +746,14 @@ function discountBtnClicked() {
 // this function is called when block option is selected
 // if there are selected days, it starts requesting for block to each website
 async function blockBtnClicked() {
-  // document.querySelector(".loading-overlay-calendar").style.display = "flex";
-  console.log("got here ");
+  console.log("Block button clicked");
+
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
   let spans = [];
+
   if (selected.length > 0) {
+    // Apply the 'blocked-days' class to each selected day immediately to provide user feedback.
     selected.forEach((z) => {
       z.classList.remove("selected");
       selectedDate.push(
@@ -754,30 +761,56 @@ async function blockBtnClicked() {
           "YYYY-MM-DD"
         )
       );
-
       spans.push(z.querySelector("span"));
+
+      // Apply the "blocked-days" class to provide immediate feedback
+      z.classList.add("blocked-days");
+      z.querySelector(".price").innerHTML = ""; // Clear any existing price
+      z.querySelector(".reserved").innerHTML = ""; // Clear any reserved indicator
     });
+
     var response_status = document.querySelector(".response_status");
     if (response_status) {
       document.querySelector(".response_status_pop a").click();
       setStyleToPending();
     }
-    final_response = await performAction(
-      "setBlock",
-      selectedDate,
-      (property_id = propertyIdFromQueryParams)
-    );
-    console.log("Response Data: ", final_response);
-    status_responses = Object.values(final_response.data);
-    console.log("status Response Data: ", status_responses);
-    // console.log(spans);
-    if (status_responses.every((rep) => rep.final_status === true)) {
-      setBlockHelper(spans);
-    }
-    setStatusStyleV2(final_response.data);
-    websites_status_iconsV2(final_response.data);
 
-    console.log("GOT HERE", final_response);
+    try {
+      // Perform the blocking action on the server side.
+      const final_response = await performAction(
+        "setBlock",
+        selectedDate,
+        (property_id = propertyIdFromQueryParams)
+      );
+
+      console.log("Response Data: ", final_response);
+      const status_responses = Object.values(final_response.data);
+      console.log("Status Response Data: ", status_responses);
+
+      // Verify the response to see if all blocks were successful.
+      if (!status_responses.every((rep) => rep.final_status === true)) {
+        // In case some days failed to block, revert the "blocked-days" styling.
+        selected.forEach((z) => {
+          const tdElement = z; // Assuming z is the <td> element
+          if (!status_responses.find((res) => res.final_status === true)) {
+            tdElement.classList.remove("blocked-days");
+          }
+        });
+      }
+
+      setStatusStyleV2(final_response.data);
+      websites_status_iconsV2(final_response.data);
+
+      console.log("Blocking action completed", final_response);
+    } catch (error) {
+      console.error("An error occurred during block operation:", error.message);
+
+      // If there's an error, revert the blocked styles
+      selected.forEach((z) => {
+        const tdElement = z;
+        tdElement.classList.remove("blocked-days");
+      });
+    }
   } else {
     alert(messages.notSelectedDay);
   }
@@ -1214,28 +1247,20 @@ function applyHolidayClass(element, holidayTimestamps) {
     element.classList.add("weekends-holidays");
   }
 }
-function isShamsiWeekend(day,timestamp) {
-  // Convert the timestamp to a persianDate object
-  const pd = new persianDate(timestamp);
-  // Get the Shamsi (Jalali) date
-  const shamsiDate = pd.format('YYYY-MM-DD');
+function isShamsiWeekend(dayElement, timestamp) {
+  // Convert the timestamp to a PersianDate object
+  const pd = new persianDate(parseInt(timestamp));
 
   // Get the day of the week (0 = Saturday, 6 = Friday)
   const dayOfWeek = pd.day();
 
-  // Check if it's Friday (6) or Saturday (0)
-  const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
-  if(isWeekend){
-    console.log("Got here isShamsiWeekend");
-    day.parentElement.classList.add("weekends-holidays");
+  // Check if it's Thursday (5) or Friday (6)
+  if (dayOfWeek === 6 || dayOfWeek === 7) {
+    // Set the background color to red for weekends
+    dayElement.style.color = '#FF4E4E';
   }
-
-  // Return the result with the Shamsi date
-  return {
-      shamsiDate: shamsiDate,
-      isWeekend: isWeekend
-  };
 }
+
 
 // for changing max date change value in maxDate: new persianDate
 $(".inline").pDatepicker({
