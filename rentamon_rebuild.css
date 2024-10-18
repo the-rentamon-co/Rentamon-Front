@@ -207,7 +207,7 @@ td.passed-days.disabled {
 }
 
 .weekends-holidays {
-  background-color: #ffaaaa;
+  color: #FF4E4E !important;
 }
 
 @keyframes spin {
