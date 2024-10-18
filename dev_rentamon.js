@@ -185,11 +185,8 @@ function setBlockHelper(elements) {
 
 function setAvailableHelper(elements, selectedDate = "") {
   for (let i = 0; i < elements.length; i++) {
-    const element = elements[i]; // This should be the <span> element inside the <td>
+    const element = elements[i];
     let reserved = element.parentElement.querySelector(".reserved");
-
-    // Logging the current element being processed
-    console.log("Processing element:", element);
 
     if (reserved.innerHTML === "" || reserved.innerHTML === "رزرو") {
       let day = "";
@@ -203,7 +200,6 @@ function setAvailableHelper(elements, selectedDate = "") {
         day = filteredData;
       }
 
-      // Reset classes before applying styles
       element.parentElement.classList.remove("blocked-days");
       element.parentElement.classList.remove("booked-days");
 
@@ -234,14 +230,10 @@ function setAvailableHelper(elements, selectedDate = "") {
         element.parentElement.querySelector(".price").innerHTML = "";
         element.parentElement.classList.remove("discounted-days");
       }
-
       reserved.innerHTML = "";
 
-      // Adding debug statement before calling isShamsiWeekend
-      console.log("Calling isShamsiWeekend for element:", element.parentElement);
-
       // Check if the day is a weekend and apply red background if true
-      isShamsiWeekend(element, element.parentElement.getAttribute("data-unix"));
+      isShamsiWeekend(element.parentElement, element.parentElement.getAttribute("data-unix"));
     }
   }
 }
@@ -1234,17 +1226,12 @@ function isShamsiWeekend(dayElement, timestamp) {
   // Get the day of the week (0 = Saturday, 6 = Friday)
   const dayOfWeek = pd.day();
 
-  // Debugging log to see the day of the week
-  console.log("Checking day of the week:", dayOfWeek);
-
   // Check if it's Thursday (5) or Friday (6)
-  if (dayOfWeek === 5 || dayOfWeek === 6) {
+  if (dayOfWeek === 6 || dayOfWeek === 5) {
     // Set the background color to red for weekends
-    console.log("Setting background color to red for element:", dayElement.parentElement);
-    dayElement.parentElement.style.backgroundColor = 'red';
+    dayElement.style.color = '#FF4E4E';
   }
 }
-
 
 
 // for changing max date change value in maxDate: new persianDate
