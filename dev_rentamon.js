@@ -571,50 +571,33 @@ function setupPopupListeners() {
   const discountTargetElementId = "elementor-popup-modal-16027";
 
   const observerCallback = (mutationsList) => {
-      for (const mutation of mutationsList) {
-          if (mutation.type === "childList") {
-              const addedNodes = Array.from(mutation.addedNodes);
-              
-              // Handle Price Popup
-              const pricePopup = addedNodes.find(
-                  (node) => node.nodeType === Node.ELEMENT_NODE &&
-                             node.id.includes(priceTargetElementId)
-              );
-              if (pricePopup) {
-                  preventClickPropagation(pricePopup);
-                  let selected = document.querySelectorAll(".selected");
-                  let selectedDate = [];
-                  selected.forEach((z) => {
-                      z.classList.remove("selected");
-                      selectedDate.push(
-                          new persianDate(parseInt(z.getAttribute("data-unix"))).format("YYYY-MM-DD")
-                      );
-                  });
-                  document.querySelector('input[name="form_fields[dates]"').value = selectedDate;
-              }
+    for (const mutation of mutationsList) {
+      if (mutation.type === "childList") {
+        const addedNodes = Array.from(mutation.addedNodes);
 
-              // Handle Discount Popup
-              const discountPopup = addedNodes.find(
-                  (node) => node.nodeType === Node.ELEMENT_NODE &&
-                             node.id.includes(discountTargetElementId)
-              );
-              if (discountPopup) {
-                  preventClickPropagation(discountPopup);
-                  let selected = document.querySelectorAll(".selected");
-                  let selectedDate = [];
-                  let jabamaPrice = [];
-                  selected.forEach((z) => {
-                      z.classList.remove("selected");
-                      selectedDate.push(
-                          new persianDate(parseInt(z.getAttribute("data-unix"))).format("YYYY-MM-DD")
-                      );
-                      jabamaPrice.push(z.getAttribute("price-from-rentamon"));
-                  });
-                  document.querySelector('input[name="form_fields[dates]"').value = selectedDate;
-                  document.querySelector('input[name="form_fields[noDiscountPrice]"').value = jabamaPrice[0];
-              }
-          }
+        // Handle Price Popup
+        const pricePopup = addedNodes.find(
+          (node) =>
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.id.includes(priceTargetElementId)
+        );
+        if (pricePopup) {
+          preventClickPropagation(pricePopup);
+          initializePopupContent(pricePopup, "price");
+        }
+
+        // Handle Discount Popup
+        const discountPopup = addedNodes.find(
+          (node) =>
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.id.includes(discountTargetElementId)
+        );
+        if (discountPopup) {
+          preventClickPropagation(discountPopup);
+          initializePopupContent(discountPopup, "discount");
+        }
       }
+    }
   };
 
   // Observe body for dynamically added popups
@@ -623,28 +606,61 @@ function setupPopupListeners() {
 
   // Handle form submission MutationObserver
   let formSubmittedObserver = new MutationObserver((mutationsList) => {
-      for (const mutation of mutationsList) {
-          if (mutation.type === "childList") {
-              const removedNodes = Array.from(mutation.removedNodes);
-              if (removedNodes.length > 0) {
-                  const targetElement = removedNodes.find(
-                      (node) =>
-                          node.nodeType === Node.ELEMENT_NODE &&
-                          node.nodeName === "SPAN" &&
-                          node.className.includes("elementor-form-spinner") &&
-                          (mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes("7242") ||
-                              mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes("7426"))
-                  );
-                  if (targetElement) {
-                      setTimeout(rentamoning, 2000);
-                  }
-              }
+    for (const mutation of mutationsList) {
+      if (mutation.type === "childList") {
+        const removedNodes = Array.from(mutation.removedNodes);
+        if (removedNodes.length > 0) {
+          const targetElement = removedNodes.find(
+            (node) =>
+              node.nodeType === Node.ELEMENT_NODE &&
+              node.nodeName === "SPAN" &&
+              node.className.includes("elementor-form-spinner") &&
+              (mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes("7242") ||
+                mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes("7426"))
+          );
+          if (targetElement) {
+            setTimeout(rentamoning, 2000);
           }
+        }
       }
+    }
   });
   formSubmittedObserver.observe(document.body, { childList: true, subtree: true });
 }
 
+// Function to prevent event propagation
+function preventClickPropagation(popup) {
+  popup.addEventListener("click", (event) => {
+    event.stopPropagation();
+  });
+}
+
+
+// Function to reinitialize content of the popup
+function initializePopupContent(popup, type) {
+  setTimeout(() => {
+    let selected = document.querySelectorAll(".selected");
+    let selectedDate = [];
+    let jabamaPrice = [];
+
+    selected.forEach((z) => {
+      z.classList.remove("selected");
+      selectedDate.push(
+        new persianDate(parseInt(z.getAttribute("data-unix"))).format("YYYY-MM-DD")
+      );
+      if (type === "discount") {
+        jabamaPrice.push(z.getAttribute("price-from-rentamon"));
+      }
+    });
+
+    if (type === "price") {
+      document.querySelector('input[name="form_fields[dates]"').value = selectedDate;
+    } else if (type === "discount") {
+      document.querySelector('input[name="form_fields[dates]"').value = selectedDate;
+      document.querySelector('input[name="form_fields[noDiscountPrice]"').value = jabamaPrice[0];
+    }
+  }, 100); // Adding a small delay to ensure elements are fully rendered
+}
 
 async function reserveOther() {
   let selected = document.querySelectorAll(".selected");
@@ -1012,7 +1028,7 @@ async function unblockBtnClicked() {
 
  
 
-// Initialize everything when the document is ready
+// Initialize all functions when the document is ready
 $(document).ready(function () {
   // Initialize popup listeners
   setupPopupListeners();
@@ -1020,29 +1036,32 @@ $(document).ready(function () {
   // Add click listener for action buttons
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
-      elem.addEventListener("change", (e) => {
-          const actionBtn = document.querySelector(".btnActionCont button");
-          if (e.target.className === "discount") {
-              actionBtn.removeEventListener("click", checkAction);
-              actionBtn.removeEventListener("click", priceBtnClicked);
-              actionBtn.addEventListener("click", discountBtnClicked);
-          } else if (e.target.className === "price") {
-              actionBtn.removeEventListener("click", checkAction);
-              actionBtn.removeEventListener("click", discountBtnClicked);
-              actionBtn.addEventListener("click", priceBtnClicked);
-          } else {
-              actionBtn.addEventListener("click", checkAction);
-              document.querySelector(".btnActionCont button").className = "submit";
-              actionBtn.removeEventListener("click", discountBtnClicked);
-              actionBtn.removeEventListener("click", priceBtnClicked);
-          }
-      });
+    elem.addEventListener("change", (e) => {
+      const actionBtn = document.querySelector(".btnActionCont button");
+      if (e.target.className === "discount") {
+        actionBtn.removeEventListener("click", checkAction);
+        actionBtn.removeEventListener("click", priceBtnClicked);
+        actionBtn.addEventListener("click", discountBtnClicked);
+      } else if (e.target.className === "price") {
+        actionBtn.removeEventListener("click", checkAction);
+        actionBtn.removeEventListener("click", discountBtnClicked);
+        actionBtn.addEventListener("click", priceBtnClicked);
+      } else {
+        actionBtn.addEventListener("click", checkAction);
+        document.querySelector(".btnActionCont button").className = "submit";
+        actionBtn.removeEventListener("click", discountBtnClicked);
+        actionBtn.removeEventListener("click", priceBtnClicked);
+      }
+    });
   });
 });
 
+// Modify the check_is_valid function to add a delay before opening the popup
 function check_is_valid(id, pop_up_id) {
   document.querySelector(id).addEventListener("click", function () {
-    document.querySelector(`${pop_up_id} a`).click();
+    setTimeout(() => {
+      document.querySelector(`${pop_up_id} a`).click();
+    }, 100); // Adding a small delay to allow for any necessary setup
   });
 }
 
