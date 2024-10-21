@@ -554,11 +554,98 @@ function websites_status_iconsV2(activeWebsites) {
 // this is a function for when user selects a day, and that day need to get a class
 function handleDayClick(e) {
   if (e.target.parentElement.tagName === "TD") {
-    e.target.parentElement.classList.toggle("selected");
+      e.target.parentElement.classList.toggle("selected");
   } else if (e.target.tagName === "TD") {
-    e.target.classList.toggle("selected");
+      e.target.classList.toggle("selected");
   }
+
+  // Stop propagation to avoid unintentional closures
+  e.stopPropagation();
 }
+
+// Updated MutationObserver to ensure proper handling of dynamically added nodes
+// Setup popup listeners for price, discount, and form submission popups
+function setupPopupListeners() {
+  // Price popup
+  const priceTargetElementId = "elementor-popup-modal-16017";
+  const discountTargetElementId = "elementor-popup-modal-16027";
+
+  const observerCallback = (mutationsList) => {
+      for (const mutation of mutationsList) {
+          if (mutation.type === "childList") {
+              const addedNodes = Array.from(mutation.addedNodes);
+              
+              // Handle Price Popup
+              const pricePopup = addedNodes.find(
+                  (node) => node.nodeType === Node.ELEMENT_NODE &&
+                             node.id.includes(priceTargetElementId)
+              );
+              if (pricePopup) {
+                  preventClickPropagation(pricePopup);
+                  let selected = document.querySelectorAll(".selected");
+                  let selectedDate = [];
+                  selected.forEach((z) => {
+                      z.classList.remove("selected");
+                      selectedDate.push(
+                          new persianDate(parseInt(z.getAttribute("data-unix"))).format("YYYY-MM-DD")
+                      );
+                  });
+                  document.querySelector('input[name="form_fields[dates]"').value = selectedDate;
+              }
+
+              // Handle Discount Popup
+              const discountPopup = addedNodes.find(
+                  (node) => node.nodeType === Node.ELEMENT_NODE &&
+                             node.id.includes(discountTargetElementId)
+              );
+              if (discountPopup) {
+                  preventClickPropagation(discountPopup);
+                  let selected = document.querySelectorAll(".selected");
+                  let selectedDate = [];
+                  let jabamaPrice = [];
+                  selected.forEach((z) => {
+                      z.classList.remove("selected");
+                      selectedDate.push(
+                          new persianDate(parseInt(z.getAttribute("data-unix"))).format("YYYY-MM-DD")
+                      );
+                      jabamaPrice.push(z.getAttribute("price-from-rentamon"));
+                  });
+                  document.querySelector('input[name="form_fields[dates]"').value = selectedDate;
+                  document.querySelector('input[name="form_fields[noDiscountPrice]"').value = jabamaPrice[0];
+              }
+          }
+      }
+  };
+
+  // Observe body for dynamically added popups
+  const observer = new MutationObserver(observerCallback);
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  // Handle form submission MutationObserver
+  let formSubmittedObserver = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+          if (mutation.type === "childList") {
+              const removedNodes = Array.from(mutation.removedNodes);
+              if (removedNodes.length > 0) {
+                  const targetElement = removedNodes.find(
+                      (node) =>
+                          node.nodeType === Node.ELEMENT_NODE &&
+                          node.nodeName === "SPAN" &&
+                          node.className.includes("elementor-form-spinner") &&
+                          (mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes("7242") ||
+                              mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes("7426"))
+                  );
+                  if (targetElement) {
+                      setTimeout(rentamoning, 2000);
+                  }
+              }
+          }
+      }
+  });
+  formSubmittedObserver.observe(document.body, { childList: true, subtree: true });
+}
+
+
 async function reserveOther() {
   let selected = document.querySelectorAll(".selected");
   let selectedDate = [];
@@ -925,128 +1012,31 @@ async function unblockBtnClicked() {
 
  
 
+// Initialize everything when the document is ready
 $(document).ready(function () {
-  // price
-  // this mutationobserver handels price pop up
-  const priceTargetElementId = "elementor-popup-modal-16017";
-  const priceObserver = new MutationObserver((mutationsList) => {
-    for (const mutation of mutationsList) {
-      if (mutation.type === "childList") {
-        const addedNodes = Array.from(mutation.addedNodes);
-        const targetElement = addedNodes.find(
-          (node) =>
-            node.nodeType === Node.ELEMENT_NODE &&
-            node.id.includes(priceTargetElementId)
-        );
-        if (targetElement) {
-          let selected = document.querySelectorAll(".selected");
-          let selectedDate = [];
-          selected.forEach((z) => {
-            z.classList.remove("selected");
-            selectedDate.push(
-              new persianDate(parseInt(z.getAttribute("data-unix"))).format(
-                "YYYY-MM-DD"
-              )
-            );
-          });
-          document.querySelector('input[name="form_fields[dates]"').value =
-            selectedDate;
-        }
-      }
-    }
-  });
+  // Initialize popup listeners
+  setupPopupListeners();
 
-  priceObserver.observe(document.body, { childList: true, subtree: true });
-
-  //
-
-  // discount
-  // this mutationobserver handels discount pop up
-  const discountTargetElementId = "elementor-popup-modal-16027";
-  const discountObserver = new MutationObserver((mutationsList) => {
-    for (const mutation of mutationsList) {
-      if (mutation.type === "childList") {
-        const addedNodes = Array.from(mutation.addedNodes);
-        const targetElement = addedNodes.find(
-          (node) =>
-            node.nodeType === Node.ELEMENT_NODE &&
-            node.id.includes(discountTargetElementId)
-        );
-
-        if (targetElement) {
-          let selected = document.querySelectorAll(".selected");
-          let selectedDate = [];
-          let jabamaPrice = [];
-          selected.forEach((z) => {
-            z.classList.remove("selected");
-            selectedDate.push(
-              new persianDate(parseInt(z.getAttribute("data-unix"))).format(
-                "YYYY-MM-DD"
-              )
-            );
-            jabamaPrice.push(z.getAttribute("price-from-rentamon"));
-          });
-          document.querySelector('input[name="form_fields[dates]"').value =
-            selectedDate;
-          document.querySelector(
-            'input[name="form_fields[noDiscountPrice]"'
-          ).value = jabamaPrice[0];
-        }
-      }
-    }
-  });
-  discountObserver.observe(document.body, { childList: true, subtree: true });
-
-  //
-
-  // pop up form submited
-  // this mutationobserver handels rentamon login form
-  let form_submited = new MutationObserver((mutaionlist) => {
-    for (const mutation of mutaionlist) {
-      if (mutation.type === "childList") {
-        const removedNodes = Array.from(mutation.removedNodes);
-        if (removedNodes.length > 0) {
-          const targetElement = removedNodes.find(
-            (node) =>
-              node.nodeType === Node.ELEMENT_NODE &&
-              node.nodeName === "SPAN" &&
-              node.className.includes("elementor-form-spinner") &&
-              (mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes(
-                "7242"
-              ) ||
-                mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes(
-                  "7426"
-                ))
-          );
-          if (targetElement) {
-            setTimeout(rentamoning, 2000);
-          }
-        }
-      }
-    }
-  });
-
-  form_submited.observe(document.body, { childList: true, subtree: true });
-
+  // Add click listener for action buttons
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
-    elem.addEventListener("change", (e) => {
-      const actionBtn = document.querySelector(".btnActionCont button");
-      if (e.target.className === "discount") {
-        actionBtn.removeEventListener("click", checkAction);
-        actionBtn.removeEventListener("click", priceBtnClicked);
-        actionBtn.addEventListener("click", discountBtnClicked);
-      } else if (e.target.className === "price") {
-        actionBtn.removeEventListener("click", checkAction);
-        actionBtn.removeEventListener("click", discountBtnClicked);
-        actionBtn.addEventListener("click", priceBtnClicked);
-      } else {
-        actionBtn.addEventListener("click", checkAction);
-        document.querySelector(".btnActionCont button").className = "submit";
-        actionBtn.removeEventListener("click", discountBtnClicked);
-        actionBtn.removeEventListener("click", priceBtnClicked);
-      }
-    });
+      elem.addEventListener("change", (e) => {
+          const actionBtn = document.querySelector(".btnActionCont button");
+          if (e.target.className === "discount") {
+              actionBtn.removeEventListener("click", checkAction);
+              actionBtn.removeEventListener("click", priceBtnClicked);
+              actionBtn.addEventListener("click", discountBtnClicked);
+          } else if (e.target.className === "price") {
+              actionBtn.removeEventListener("click", checkAction);
+              actionBtn.removeEventListener("click", discountBtnClicked);
+              actionBtn.addEventListener("click", priceBtnClicked);
+          } else {
+              actionBtn.addEventListener("click", checkAction);
+              document.querySelector(".btnActionCont button").className = "submit";
+              actionBtn.removeEventListener("click", discountBtnClicked);
+              actionBtn.removeEventListener("click", priceBtnClicked);
+          }
+      });
   });
 });
 
@@ -1370,4 +1360,11 @@ try {
     });
 } catch (error) {
   console.log("padding gone");
+}
+
+// Helper function to prevent event propagation
+function preventClickPropagation(popup) {
+  popup.addEventListener('click', (event) => {
+      event.stopPropagation();
+  });
 }
