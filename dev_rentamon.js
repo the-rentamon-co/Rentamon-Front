@@ -1051,6 +1051,7 @@ $(document).ready(function () {
     });
   });
   // Add a slight delay to make sure all event listeners are fully initialized
+  console.log(popupsToOpen);
   setTimeout(() => {
     popupsToOpen.forEach((selector) => {
       document.querySelector(selector).click();
