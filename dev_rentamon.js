@@ -452,7 +452,6 @@ async function rentamoning() {
           const websiteStatuses = await websiteStatusesResponse.json();
           const statuses = websiteStatuses.status;
           
-          // Apply styles based on website statuses without blocking the page load
           Object.keys(statuses).forEach((website) => {
             const widget = websiteWidgets[website];
             if (statuses[website] === true) {
@@ -461,7 +460,7 @@ async function rentamoning() {
             } else {
               isActiveHandler(widget.icon_selector, true); // Inactive style
               check_is_valid(widget.icon_selector, widget.popup_id_selector);
-              popupsToOpen.push(widget.icon_selector); // Add to the list of popups to open later
+              popupsToOpen.push({ icon: widget.icon_selector, popup: widget.popup_id_selector });
             }
           });
         } else {
@@ -976,13 +975,18 @@ $(document).ready(function () {
       if (popupsToOpen.length > 0) {
         popupsToOpen.forEach(({ icon, popup }) => {
           console.log(icon);
-          check_is_valid(icon, popup); // Use the check_is_valid function to open popups properly
+          document.querySelector(icon).click(); // Trigger the icon click to open the popup
+          setTimeout(() => {
+            const popupLink = document.querySelector(`${popup} a`);
+            if (popupLink) {
+              popupLink.click(); // Open the popup link after ensuring it's loaded
+            }
+          }, 200); // Adding a delay to ensure popup content is fully loaded
         });
       }
     }, 1000); // Adding a delay of 1000ms to ensure everything is set up properly
   });
 });
-
 
 function check_is_valid(id, pop_up_id) {
   document.querySelector(id).addEventListener("click", function () {
