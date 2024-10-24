@@ -1,6 +1,5 @@
 let apiHostMainUrl = "https://api.rentamon.com";
 let lastAction = {};
-let popupsToOpen = [];
 // get prop_id from url for example:
 // rentamon.com/panel?prop_id=1
 const propertyIdFromQueryParams = new URL(
@@ -452,6 +451,7 @@ async function rentamoning() {
           const statuses = websiteStatuses.status;
           
           // Apply styles based on website statuses without blocking the page load
+          let popupsToOpen = [];
 
           Object.keys(statuses).forEach((website) => {
             const widget = websiteWidgets[website];
@@ -927,28 +927,116 @@ async function unblockBtnClicked() {
  
 
 $(document).ready(function () {
-  // Observer to check changes in the body for dynamically added content
-  const observerConfig = { childList: true, subtree: true };
-  const targetElement = document.body;
 
-  const observer = new MutationObserver((mutationsList) => {
+  // Add a slight delay to make sure all event listeners are fully initialized
+  setTimeout(() => {
+    popupsToOpen.forEach((selector) => {
+      document.querySelector(selector).click();
+    });
+  }, 100); // Adding a delay of 100ms to ensure everything is set up
+  
+  // price
+  // this mutationobserver handels price pop up
+  const priceTargetElementId = "elementor-popup-modal-16017";
+  const priceObserver = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
-      const addedNodes = Array.from(mutation.addedNodes);
-
-      addedNodes.forEach((node) => {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          // Attach listeners to elements added to popups after mutation
-          if (popupsToOpen.some((selector) => node.matches(selector) || node.closest(selector))) {
-            attachEventListenersToPopup(node);
-          }
+      if (mutation.type === "childList") {
+        const addedNodes = Array.from(mutation.addedNodes);
+        const targetElement = addedNodes.find(
+          (node) =>
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.id.includes(priceTargetElementId)
+        );
+        if (targetElement) {
+          let selected = document.querySelectorAll(".selected");
+          let selectedDate = [];
+          selected.forEach((z) => {
+            z.classList.remove("selected");
+            selectedDate.push(
+              new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+                "YYYY-MM-DD"
+              )
+            );
+          });
+          document.querySelector('input[name="form_fields[dates]"').value =
+            selectedDate;
         }
-      });
+      }
     }
   });
 
-  observer.observe(targetElement, observerConfig);
+  priceObserver.observe(document.body, { childList: true, subtree: true });
 
-  // Event listeners for action buttons
+  //
+
+  // discount
+  // this mutationobserver handels discount pop up
+  const discountTargetElementId = "elementor-popup-modal-16027";
+  const discountObserver = new MutationObserver((mutationsList) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === "childList") {
+        const addedNodes = Array.from(mutation.addedNodes);
+        const targetElement = addedNodes.find(
+          (node) =>
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.id.includes(discountTargetElementId)
+        );
+
+        if (targetElement) {
+          let selected = document.querySelectorAll(".selected");
+          let selectedDate = [];
+          let jabamaPrice = [];
+          selected.forEach((z) => {
+            z.classList.remove("selected");
+            selectedDate.push(
+              new persianDate(parseInt(z.getAttribute("data-unix"))).format(
+                "YYYY-MM-DD"
+              )
+            );
+            jabamaPrice.push(z.getAttribute("price-from-rentamon"));
+          });
+          document.querySelector('input[name="form_fields[dates]"').value =
+            selectedDate;
+          document.querySelector(
+            'input[name="form_fields[noDiscountPrice]"'
+          ).value = jabamaPrice[0];
+        }
+      }
+    }
+  });
+  discountObserver.observe(document.body, { childList: true, subtree: true });
+
+  //
+
+  // pop up form submited
+  // this mutationobserver handels rentamon login form
+  let form_submited = new MutationObserver((mutaionlist) => {
+    for (const mutation of mutaionlist) {
+      if (mutation.type === "childList") {
+        const removedNodes = Array.from(mutation.removedNodes);
+        if (removedNodes.length > 0) {
+          const targetElement = removedNodes.find(
+            (node) =>
+              node.nodeType === Node.ELEMENT_NODE &&
+              node.nodeName === "SPAN" &&
+              node.className.includes("elementor-form-spinner") &&
+              (mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes(
+                "7242"
+              ) ||
+                mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes(
+                  "7426"
+                ))
+          );
+          if (targetElement) {
+            setTimeout(rentamoning, 2000);
+          }
+        }
+      }
+    }
+  });
+
+  form_submited.observe(document.body, { childList: true, subtree: true });
+
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
     elem.addEventListener("change", (e) => {
@@ -969,48 +1057,7 @@ $(document).ready(function () {
       }
     });
   });
-
-  // Ensure all styles and scripts are fully loaded before opening popups
-  $(window).on('load', function () {
-    // Add a slight delay to make sure all event listeners are fully initialized
-    setTimeout(() => {
-      if (popupsToOpen.length > 0) {
-        popupsToOpen.forEach((selector) => {
-          // Trying different elements to trigger the popup
-          const popupTrigger = document.querySelector(selector);
-          if (popupTrigger) {
-            popupTrigger.click(); // Open popup
-          } else {
-            console.warn(`Popup trigger for ${selector} not found.`);
-          }
-        });
-      }
-    }, 500); // Adding a delay of 500ms to ensure everything is set up properly
-  });
 });
-
-// Function to attach event listeners to elements within popups
-function attachEventListenersToPopup(popupElement) {
-  // Example: Attach a click event listener to a button inside the popup
-  const popupButtons = popupElement.querySelectorAll("button");
-  popupButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      console.log("Button clicked inside popup!");
-      // Add more logic here depending on what the buttons are supposed to do
-    });
-  });
-
-  // Add event listeners for links inside popups, if any
-  const popupLinks = popupElement.querySelectorAll("a");
-  popupLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      console.log("Link clicked inside popup!");
-      // Add any specific logic if necessary
-    });
-  });
-
-  // You can add more listeners here as needed, depending on your popup content
-}
 
 function check_is_valid(id, pop_up_id) {
   document.querySelector(id).addEventListener("click", function () {
