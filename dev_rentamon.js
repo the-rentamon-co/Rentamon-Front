@@ -451,17 +451,18 @@ async function rentamoning() {
           const statuses = websiteStatuses.status;
           
           // Apply styles based on website statuses without blocking the page load
-          Object.keys(statuses).forEach((website) => {
-              const widget = websiteWidgets[website];
-              if (statuses[website] === true) {
-                  isActiveHandler(widget.icon_selector, false);  // Active style
-                  check_is_valid(widget.icon_selector, widget.popup_id_selector);
-              } else {
-                  isActiveHandler(widget.icon_selector, true);   // Inactive style
-                  check_is_valid(widget.icon_selector, widget.popup_id_selector);
-                  document.querySelector(widget.icon_selector).click();
+          let popupsToOpen = [];
 
-              }
+          Object.keys(statuses).forEach((website) => {
+            const widget = websiteWidgets[website];
+            if (statuses[website] === true) {
+              isActiveHandler(widget.icon_selector, false); // Active style
+              check_is_valid(widget.icon_selector, widget.popup_id_selector);
+            } else {
+              isActiveHandler(widget.icon_selector, true); // Inactive style
+              check_is_valid(widget.icon_selector, widget.popup_id_selector);
+              popupsToOpen.push(widget.icon_selector); // Add to the list of popups to open later
+            }
           });
         } else {
             throw new Error("Failed to fetch website statuses");
@@ -926,6 +927,14 @@ async function unblockBtnClicked() {
  
 
 $(document).ready(function () {
+
+  // Add a slight delay to make sure all event listeners are fully initialized
+  setTimeout(() => {
+    popupsToOpen.forEach((selector) => {
+      document.querySelector(selector).click();
+    });
+  }, 100); // Adding a delay of 100ms to ensure everything is set up
+  
   // price
   // this mutationobserver handels price pop up
   const priceTargetElementId = "elementor-popup-modal-16017";
@@ -1052,9 +1061,12 @@ $(document).ready(function () {
 
 function check_is_valid(id, pop_up_id) {
   document.querySelector(id).addEventListener("click", function () {
-    document.querySelector(`${pop_up_id} a`).click();
+    setTimeout(() => {
+      document.querySelector(`${pop_up_id} a`).click();
+    }, 100); // Add a 100ms delay to ensure the popup is fully initialized
   });
 }
+
 
 // a function to make our code clean
 function isActiveHandler(id, isRed) {
