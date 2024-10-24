@@ -976,7 +976,13 @@ $(document).ready(function () {
     setTimeout(() => {
       if (popupsToOpen.length > 0) {
         popupsToOpen.forEach((selector) => {
-          document.querySelector(`${selector} a`).click(); // Open popup
+          // Trying different elements to trigger the popup
+          const popupTrigger = document.querySelector(selector);
+          if (popupTrigger) {
+            popupTrigger.click(); // Open popup
+          } else {
+            console.warn(`Popup trigger for ${selector} not found.`);
+          }
         });
       }
     }, 500); // Adding a delay of 500ms to ensure everything is set up properly
@@ -994,9 +1000,17 @@ function attachEventListenersToPopup(popupElement) {
     });
   });
 
+  // Add event listeners for links inside popups, if any
+  const popupLinks = popupElement.querySelectorAll("a");
+  popupLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      console.log("Link clicked inside popup!");
+      // Add any specific logic if necessary
+    });
+  });
+
   // You can add more listeners here as needed, depending on your popup content
 }
-
 
 function check_is_valid(id, pop_up_id) {
   document.querySelector(id).addEventListener("click", function () {
