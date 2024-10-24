@@ -927,103 +927,26 @@ async function unblockBtnClicked() {
  
 
 $(document).ready(function () {
-  // price
-  // this mutationobserver handles price pop up
-  const priceTargetElementId = "elementor-popup-modal-16017";
-  const priceObserver = new MutationObserver((mutationsList) => {
+  // Observer to check changes in the body for dynamically added content
+  const observerConfig = { childList: true, subtree: true };
+  const targetElement = document.body;
+
+  const observer = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
-      if (mutation.type === "childList") {
-        const addedNodes = Array.from(mutation.addedNodes);
-        const targetElement = addedNodes.find(
-          (node) =>
-            node.nodeType === Node.ELEMENT_NODE &&
-            node.id.includes(priceTargetElementId)
-        );
-        if (targetElement) {
-          let selected = document.querySelectorAll(".selected");
-          let selectedDate = [];
-          selected.forEach((z) => {
-            z.classList.remove("selected");
-            selectedDate.push(
-              new persianDate(parseInt(z.getAttribute("data-unix"))).format(
-                "YYYY-MM-DD"
-              )
-            );
-          });
-          document.querySelector('input[name="form_fields[dates]"').value =
-            selectedDate;
-        }
-      }
-    }
-  });
+      const addedNodes = Array.from(mutation.addedNodes);
 
-  priceObserver.observe(document.body, { childList: true, subtree: true });
-
-  // discount
-  // this mutationobserver handles discount pop up
-  const discountTargetElementId = "elementor-popup-modal-16027";
-  const discountObserver = new MutationObserver((mutationsList) => {
-    for (const mutation of mutationsList) {
-      if (mutation.type === "childList") {
-        const addedNodes = Array.from(mutation.addedNodes);
-        const targetElement = addedNodes.find(
-          (node) =>
-            node.nodeType === Node.ELEMENT_NODE &&
-            node.id.includes(discountTargetElementId)
-        );
-
-        if (targetElement) {
-          let selected = document.querySelectorAll(".selected");
-          let selectedDate = [];
-          let jabamaPrice = [];
-          selected.forEach((z) => {
-            z.classList.remove("selected");
-            selectedDate.push(
-              new persianDate(parseInt(z.getAttribute("data-unix"))).format(
-                "YYYY-MM-DD"
-              )
-            );
-            jabamaPrice.push(z.getAttribute("price-from-rentamon"));
-          });
-          document.querySelector('input[name="form_fields[dates]"').value =
-            selectedDate;
-          document.querySelector(
-            'input[name="form_fields[noDiscountPrice]"'
-          ).value = jabamaPrice[0];
-        }
-      }
-    }
-  });
-
-  discountObserver.observe(document.body, { childList: true, subtree: true });
-
-  // pop up form submitted handling
-  let form_submitted = new MutationObserver((mutationList) => {
-    for (const mutation of mutationList) {
-      if (mutation.type === "childList") {
-        const removedNodes = Array.from(mutation.removedNodes);
-        if (removedNodes.length > 0) {
-          const targetElement = removedNodes.find(
-            (node) =>
-              node.nodeType === Node.ELEMENT_NODE &&
-              node.nodeName === "SPAN" &&
-              node.className.includes("elementor-form-spinner") &&
-              (mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes(
-                "7242"
-              ) ||
-                mutation.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id.includes(
-                  "7426"
-                ))
-          );
-          if (targetElement) {
-            setTimeout(rentamoning, 2000);
+      addedNodes.forEach((node) => {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          // Attach listeners to elements added to popups after mutation
+          if (popupsToOpen.some((selector) => node.matches(selector) || node.closest(selector))) {
+            attachEventListenersToPopup(node);
           }
         }
-      }
+      });
     }
   });
 
-  form_submitted.observe(document.body, { childList: true, subtree: true });
+  observer.observe(targetElement, observerConfig);
 
   // Event listeners for action buttons
   document.querySelector(".submit").addEventListener("click", checkAction);
@@ -1046,19 +969,34 @@ $(document).ready(function () {
       }
     });
   });
+
+  // Ensure all styles and scripts are fully loaded before opening popups
+  $(window).on('load', function () {
+    // Add a slight delay to make sure all event listeners are fully initialized
+    setTimeout(() => {
+      if (popupsToOpen.length > 0) {
+        popupsToOpen.forEach((selector) => {
+          document.querySelector(`${selector} a`).click(); // Open popup
+        });
+      }
+    }, 500); // Adding a delay of 500ms to ensure everything is set up properly
+  });
 });
 
-// Ensure all styles and scripts are fully loaded before opening popups
-window.onload = function () {
-  // Add a slight delay to make sure all event listeners are fully initialized
-  setTimeout(() => {
-    if (popupsToOpen.length > 0) {
-      popupsToOpen.forEach((selector) => {
-        document.querySelector(selector).click();
-      });
-    }
-  }, 500); // Adding a delay of 500ms to ensure everything is set up properly
-};
+// Function to attach event listeners to elements within popups
+function attachEventListenersToPopup(popupElement) {
+  // Example: Attach a click event listener to a button inside the popup
+  const popupButtons = popupElement.querySelectorAll("button");
+  popupButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      console.log("Button clicked inside popup!");
+      // Add more logic here depending on what the buttons are supposed to do
+    });
+  });
+
+  // You can add more listeners here as needed, depending on your popup content
+}
+
 
 function check_is_valid(id, pop_up_id) {
   document.querySelector(id).addEventListener("click", function () {
