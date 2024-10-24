@@ -1,5 +1,6 @@
 let apiHostMainUrl = "https://api.rentamon.com";
 let lastAction = {};
+let popupsToOpen = [];
 // get prop_id from url for example:
 // rentamon.com/panel?prop_id=1
 const propertyIdFromQueryParams = new URL(
@@ -451,7 +452,6 @@ async function rentamoning() {
           const statuses = websiteStatuses.status;
           
           // Apply styles based on website statuses without blocking the page load
-          let popupsToOpen = [];
 
           Object.keys(statuses).forEach((website) => {
             const widget = websiteWidgets[website];
@@ -934,7 +934,7 @@ $(document).ready(function () {
       document.querySelector(selector).click();
     });
   }, 100); // Adding a delay of 100ms to ensure everything is set up
-  
+
   // price
   // this mutationobserver handels price pop up
   const priceTargetElementId = "elementor-popup-modal-16017";
