@@ -927,9 +927,44 @@ async function unblockBtnClicked() {
  
 
 $(document).ready(function () {
+  // Observer to check if necessary styles and DOM changes are applied
+  const targetElement = document.body;
+  const observerConfig = { childList: true, subtree: true };
 
-  // price
-  // this mutationobserver handels price pop up
+  const observer = new MutationObserver((mutationsList) => {
+    let isStylesApplied = false;
+
+    // Check if the calendar and other elements have their styles applied
+    mutationsList.forEach((mutation) => {
+      if (mutation.type === "childList") {
+        const addedNodes = Array.from(mutation.addedNodes);
+        addedNodes.forEach((node) => {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            if (node.classList.contains("datepicker-day-view")) {
+              // Assuming "datepicker-day-view" or other identifiers are applied when styles are loaded
+              isStylesApplied = true;
+            }
+          }
+        });
+      }
+    });
+
+    // If styles are applied and popups need to be opened, do so
+    if (isStylesApplied && popupsToOpen.length > 0) {
+      setTimeout(() => {
+        popupsToOpen.forEach((selector) => {
+          document.querySelector(selector).click();
+        });
+      }, 100); // Adding a delay of 100ms to ensure everything is set up
+
+      // Disconnect observer after executing to prevent it from running indefinitely
+      observer.disconnect();
+    }
+  });
+
+  observer.observe(targetElement, observerConfig);
+
+  // price popup
   const priceTargetElementId = "elementor-popup-modal-16017";
   const priceObserver = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
@@ -960,10 +995,7 @@ $(document).ready(function () {
 
   priceObserver.observe(document.body, { childList: true, subtree: true });
 
-  //
-
-  // discount
-  // this mutationobserver handels discount pop up
+  // discount popup
   const discountTargetElementId = "elementor-popup-modal-16027";
   const discountObserver = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
@@ -997,14 +1029,12 @@ $(document).ready(function () {
       }
     }
   });
+
   discountObserver.observe(document.body, { childList: true, subtree: true });
 
-  //
-
-  // pop up form submited
-  // this mutationobserver handels rentamon login form
-  let form_submited = new MutationObserver((mutaionlist) => {
-    for (const mutation of mutaionlist) {
+  // pop up form submitted handling
+  let form_submitted = new MutationObserver((mutationList) => {
+    for (const mutation of mutationList) {
       if (mutation.type === "childList") {
         const removedNodes = Array.from(mutation.removedNodes);
         if (removedNodes.length > 0) {
@@ -1028,8 +1058,9 @@ $(document).ready(function () {
     }
   });
 
-  form_submited.observe(document.body, { childList: true, subtree: true });
+  form_submitted.observe(document.body, { childList: true, subtree: true });
 
+  // Event listeners for action buttons
   document.querySelector(".submit").addEventListener("click", checkAction);
   document.querySelectorAll('input[name="block"]').forEach((elem) => {
     elem.addEventListener("change", (e) => {
@@ -1050,14 +1081,6 @@ $(document).ready(function () {
       }
     });
   });
-  // Add a slight delay to make sure all event listeners are fully initialized
-  console.log(popupsToOpen);
-  setTimeout(() => {
-    popupsToOpen.forEach((selector) => {
-      document.querySelector(selector).click();
-    });
-  }, 100); // Adding a delay of 100ms to ensure everything is set up
-
 });
 
 function check_is_valid(id, pop_up_id) {
