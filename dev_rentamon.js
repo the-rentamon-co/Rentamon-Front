@@ -925,49 +925,6 @@ async function unblockBtnClicked() {
  
 
 $(document).ready(function () {
-  // Observer to check changes in the body for dynamically added content
-  const observerConfig = { childList: true, subtree: true };
-  const targetElement = document.body;
-
-  const observer = new MutationObserver((mutationsList) => {
-    for (const mutation of mutationsList) {
-      const addedNodes = Array.from(mutation.addedNodes);
-
-      addedNodes.forEach((node) => {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          // Attach listeners to elements added to popups after mutation
-          if (popupsToOpen.some((selector) => node.matches(selector.icon) || node.closest(selector.icon))) {
-            attachEventListenersToPopup(node);
-          }
-        }
-      });
-    }
-  });
-
-  observer.observe(targetElement, observerConfig);
-
-  // Event listeners for action buttons
-  document.querySelector(".submit").addEventListener("click", checkAction);
-  document.querySelectorAll('input[name="block"]').forEach((elem) => {
-    elem.addEventListener("change", (e) => {
-      const actionBtn = document.querySelector(".btnActionCont button");
-      if (e.target.className === "discount") {
-        actionBtn.removeEventListener("click", checkAction);
-        actionBtn.removeEventListener("click", priceBtnClicked);
-        actionBtn.addEventListener("click", discountBtnClicked);
-      } else if (e.target.className === "price") {
-        actionBtn.removeEventListener("click", checkAction);
-        actionBtn.removeEventListener("click", discountBtnClicked);
-        actionBtn.addEventListener("click", priceBtnClicked);
-      } else {
-        actionBtn.addEventListener("click", checkAction);
-        document.querySelector(".btnActionCont button").className = "submit";
-        actionBtn.removeEventListener("click", discountBtnClicked);
-        actionBtn.removeEventListener("click", priceBtnClicked);
-      }
-    });
-  });
-
   // Ensure all styles and scripts are fully loaded before opening popups
   $(window).on('load', function () {
     // Add a slight delay to make sure all event listeners are fully initialized
@@ -975,13 +932,16 @@ $(document).ready(function () {
       if (popupsToOpen.length > 0) {
         popupsToOpen.forEach(({ icon, popup }) => {
           console.log(icon);
-          document.querySelector(icon).click(); // Trigger the icon click to open the popup
-          setTimeout(() => {
-            const popupLink = document.querySelector(`${popup} a`);
-            if (popupLink) {
-              popupLink.click(); // Open the popup link after ensuring it's loaded
-            }
-          }, 200); // Adding a delay to ensure popup content is fully loaded
+          const iconElement = document.querySelector(icon);
+          if (iconElement) {
+            iconElement.click(); // Trigger the icon click to open the popup
+            setTimeout(() => {
+              const popupLink = document.querySelector(`${popup} a`);
+              if (popupLink) {
+                popupLink.click(); // Open the popup link after ensuring it's loaded
+              }
+            }, 500); // Adding a delay to ensure popup content is fully loaded
+          }
         });
       }
     }, 1000); // Adding a delay of 1000ms to ensure everything is set up properly
