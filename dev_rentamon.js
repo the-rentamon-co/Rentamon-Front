@@ -928,13 +928,6 @@ async function unblockBtnClicked() {
 
 $(document).ready(function () {
 
-  // Add a slight delay to make sure all event listeners are fully initialized
-  setTimeout(() => {
-    popupsToOpen.forEach((selector) => {
-      document.querySelector(selector).click();
-    });
-  }, 100); // Adding a delay of 100ms to ensure everything is set up
-
   // price
   // this mutationobserver handels price pop up
   const priceTargetElementId = "elementor-popup-modal-16017";
@@ -1057,6 +1050,13 @@ $(document).ready(function () {
       }
     });
   });
+  // Add a slight delay to make sure all event listeners are fully initialized
+  setTimeout(() => {
+    popupsToOpen.forEach((selector) => {
+      document.querySelector(selector).click();
+    });
+  }, 100); // Adding a delay of 100ms to ensure everything is set up
+
 });
 
 function check_is_valid(id, pop_up_id) {
