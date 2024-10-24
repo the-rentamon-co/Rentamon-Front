@@ -1378,10 +1378,14 @@ try {
 $(window).on('load', function () {
   // Add a slight delay to make sure all event listeners are fully initialized
   setTimeout(() => {
-    popupsToOpen.forEach((selector) => {
-      console.log(selector)
-      document.querySelector(selector).click();
-    });
-  }, 100); // Adding a delay of 100ms to ensure everything is set up
-  
+    if (popupsToOpen.length > 0) {
+      popupsToOpen.forEach((selector) => {
+        console.log(selector);
+        const popupLink = document.querySelector(`${selector} a`);
+        if (popupLink) {
+          popupLink.click(); // Open popup link
+        }
+      });
+    }
+  }, 1000); // Adding a delay of 1000ms to ensure everything is set up properly
 });
