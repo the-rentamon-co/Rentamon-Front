@@ -927,44 +927,8 @@ async function unblockBtnClicked() {
  
 
 $(document).ready(function () {
-  // Observer to check if necessary styles and DOM changes are applied
-  const targetElement = document.body;
-  const observerConfig = { childList: true, subtree: true };
-
-  const observer = new MutationObserver((mutationsList) => {
-    let isStylesApplied = false;
-
-    // Check if the calendar and other elements have their styles applied
-    mutationsList.forEach((mutation) => {
-      if (mutation.type === "childList") {
-        const addedNodes = Array.from(mutation.addedNodes);
-        addedNodes.forEach((node) => {
-          if (node.nodeType === Node.ELEMENT_NODE) {
-            if (node.classList.contains("datepicker-day-view")) {
-              // Assuming "datepicker-day-view" or other identifiers are applied when styles are loaded
-              isStylesApplied = true;
-            }
-          }
-        });
-      }
-    });
-
-    // If styles are applied and popups need to be opened, do so
-    if (isStylesApplied && popupsToOpen.length > 0) {
-      setTimeout(() => {
-        popupsToOpen.forEach((selector) => {
-          document.querySelector(selector).click();
-        });
-      }, 100); // Adding a delay of 100ms to ensure everything is set up
-
-      // Disconnect observer after executing to prevent it from running indefinitely
-      observer.disconnect();
-    }
-  });
-
-  observer.observe(targetElement, observerConfig);
-
-  // price popup
+  // price
+  // this mutationobserver handles price pop up
   const priceTargetElementId = "elementor-popup-modal-16017";
   const priceObserver = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
@@ -995,7 +959,8 @@ $(document).ready(function () {
 
   priceObserver.observe(document.body, { childList: true, subtree: true });
 
-  // discount popup
+  // discount
+  // this mutationobserver handles discount pop up
   const discountTargetElementId = "elementor-popup-modal-16027";
   const discountObserver = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
@@ -1082,6 +1047,18 @@ $(document).ready(function () {
     });
   });
 });
+
+// Ensure all styles and scripts are fully loaded before opening popups
+window.onload = function () {
+  // Add a slight delay to make sure all event listeners are fully initialized
+  setTimeout(() => {
+    if (popupsToOpen.length > 0) {
+      popupsToOpen.forEach((selector) => {
+        document.querySelector(selector).click();
+      });
+    }
+  }, 500); // Adding a delay of 500ms to ensure everything is set up properly
+};
 
 function check_is_valid(id, pop_up_id) {
   document.querySelector(id).addEventListener("click", function () {
