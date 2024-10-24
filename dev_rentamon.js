@@ -930,21 +930,20 @@ $(document).ready(function () {
     // Add a slight delay to make sure all event listeners are fully initialized
     setTimeout(() => {
       if (popupsToOpen.length > 0) {
-        popupsToOpen.forEach(({ icon, popup }) => {
-          console.log(icon);
-          const iconElement = document.querySelector(icon);
-          if (iconElement) {
-            iconElement.click(); // Trigger the icon click to open the popup
-            setTimeout(() => {
-              const popupLink = document.querySelector(`${popup} a`);
-              if (popupLink) {
-                popupLink.click(); // Open the popup link after ensuring it's loaded
-              }
-            }, 500); // Adding a delay to ensure popup content is fully loaded
-          }
-        });
+        const { icon, popup } = popupsToOpen[0]; // #2 Modified to open only the first popup in the list
+        console.log(icon);
+        const iconElement = document.querySelector(icon);
+        if (iconElement) {
+          iconElement.click(); // #3 Trigger the icon click to open the popup
+          setTimeout(() => {
+            const popupLink = document.querySelector(`${popup} a`);
+            if (popupLink) {
+              popupLink.click(); // #4 Open the popup link after ensuring it's loaded
+            }
+          }, 500); // #5 Adding a delay to ensure popup content is fully loaded
+        }
       }
-    }, 1000); // Adding a delay of 1000ms to ensure everything is set up properly
+    }, 1000); // #6 Adding a delay of 1000ms to ensure everything is set up 
   });
 });
 
