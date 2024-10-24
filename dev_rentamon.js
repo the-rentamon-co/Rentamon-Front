@@ -518,6 +518,7 @@ async function rentamoning() {
    // Add a slight delay to make sure all event listeners are fully initialized
    setTimeout(() => {
     popupsToOpen.forEach((selector) => {
+      console.log(selector)
       document.querySelector(selector).click();
     });
   }, 100); // Adding a delay of 100ms to ensure everything is set up
