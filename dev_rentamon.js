@@ -1287,17 +1287,3 @@ try {
 } catch (error) {
   console.log("padding gone");
 }
-$(window).on('load', function () {
-  // Add a slight delay to make sure all event listeners are fully initialized
-    setTimeout(() => {
-      if (popupsToOpen.length > 0) {
-        popupsToOpen.forEach((selector) => {
-          console.log(selector);
-          const popupLink = document.querySelector(`${selector} a`);
-          if (popupLink) {
-            popupLink.click(); // Open popup link
-          }
-        });
-      }
-    }, 1000); // Adding a delay of 1000ms to ensure everything is set up properly
-});
