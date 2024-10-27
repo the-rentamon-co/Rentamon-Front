@@ -1,4 +1,4 @@
-let apiHostMainUrl = "https://api-rentamon.liara.run";
+let apiHostMainUrl = "https://api.rentamon.com";
 let lastAction = {};
 // get prop_id from url for example:
 // rentamon.com/panel?prop_id=1
@@ -277,37 +277,31 @@ function setBookedkHelper(elements, selectedDate = true) {
 async function get_user_info() {
   const propertyId = new URL(window.location.href).searchParams.get("prop_id");
 
-  const authToken = getCookie("auth_token");
-  if (!authToken) {
-    throw new Error("No auth token found");
-  }
   const response = await fetch(
-    `https://rentamon-api.liara.run/api/user_info?property_id=${propertyId}`,
+    `https://api.rentamon.com/api/user_info?property_id=${propertyId}`,
     {
       method: "GET",
+      credentials: "include",
       headers: {
-        Authorization: `Bearer ${authToken}`,
         "Content-Type": "application/json",
       },
     }
   );
-  // try {
-  //   const res = await response.json()
-  //   console.log(res.user_info.phone_number)
-  //   clarity('set', 'phone_number', res.user_info.phone_number);
-  // } catch (error) {
-  //   console.log("got here in error")
 
-  // }
-  
+  // Check if the response is 404
+  if (response.status === 404) {
+    window.location.href = "https://rentamon.com/signup/"; // Replace with your desired redirect URL
+    return;
+  }
+
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
-  
+
   const result = await response.json();
   return result;
-  
 }
+
 
 function replace_user_info(user_info) {
   console.log(user_info.user_info.phone_number)
@@ -412,13 +406,8 @@ async function rentamoning() {
             new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
         ];
 
-        const authToken = getCookie("auth_token");
-        if (!authToken) {
-            throw new Error("No auth token found");
-        }
 
         const headers = {
-            Authorization: `Bearer ${authToken}`,
             "Content-Type": "application/json",
         };
 
@@ -426,15 +415,16 @@ async function rentamoning() {
         const [user_info, response, websiteStatusesResponse] = await Promise.all([
           get_user_info(),
           fetch(
-              `https://rentamon-api.liara.run/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
-              { method: "GET", headers: headers }
+              `https://api.rentamon.com/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
+              { method: "GET",credentials: "include" ,headers: {"Content-Type": "application/json" } }
           ),
           fetch(
-              `https://rentamon-api.liara.run/api/website_statuses/?property_id=${propertyIdFromQueryParams}`,
+              `https://api.rentamon.com/api/website_statuses/?property_id=${propertyIdFromQueryParams}`,
               {
                   method: 'GET',
-                  headers: {
-                      'Authorization': headers.Authorization
+                  credentials: "include",
+                  headers: { 
+                    "Content-Type": "application/json" 
                   }
               }
           )
@@ -891,26 +881,9 @@ async function unblockBtnClicked() {
     alert(messages.notSelectedDay);
   }
 }
-async function checkAuthOnLoad() {
-  const accessToken = getCookie("auth_token");
-  const refreshToken = getCookie("refresh_token");
 
-  if (!accessToken || !refreshToken) {
-    return false;
-  }
 
-  const isAccessTokenValid = await verifyToken(accessToken, "access");
-  if (!isAccessTokenValid) {
-    const isRefreshTokenValid = await verifyToken(refreshToken, "refresh");
-    if (!isRefreshTokenValid) {
-      return false;
-    } else {
-      return false; // TODO : adding the refresh token handler
-    }
-  } else {
-    return true;
-  }
-}
+ 
 
 $(document).ready(function () {
   // price
@@ -1062,12 +1035,7 @@ function isActiveHandler(id, isRed) {
   }
 }
 
-// Function to get a cookie by name
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(";").shift();
-}
+
 
 // Function to perform the action
 async function performAction(
@@ -1077,13 +1045,11 @@ async function performAction(
   discount = null,
   property_id = 39
 ) {
-  const authToken = getCookie("auth_token");
-  if (!authToken) {
-    throw new Error("No auth token found");
-  }
+  
 
   let url = "";
   let method = "POST";
+  let credentials ="include";
   let corrected_days = [];
   days.forEach((day) => {
     const x = [];
@@ -1097,35 +1063,35 @@ async function performAction(
 
   switch (actionType) {
     case "setPrice":
-      url = "https://rentamon-api.liara.run/api/setprice";
+      url = "https://api.rentamon.com/api/setprice";
       if (price === 0) throw new Error("Price is required for setPrice");
       data.price = price;
       break;
     case "setDiscount":
-      url = "https://rentamon-api.liara.run/api/setdiscount";
+      url = "https://api.rentamon.com/api/setdiscount";
       if (discount === null)
         throw new Error("Discount is required for setDiscount");
       data.discount = discount;
       break;
     case "setBlock":
-      url = "https://rentamon-api.liara.run/api/setblock";
+      url = "https://api.rentamon.com/api/setblock";
       data.requested_by = "user";
       data.request_for = "block";
       break;
     case "setReserve":
-      url = "https://rentamon-api.liara.run/api/setblock";
+      url = "https://api.rentamon.com/api/setblock";
       data.requested_by = "user";
       data.request_for = "reserve";
       break;
     case "setUnblock":
-      url = "https://rentamon-api.liara.run/api/setunblock";
+      url = "https://api.rentamon.com/api/setunblock";
       break;
     case "getCalendar":
-      url = "https://rentamon-api.liara.run/api/getcalendar";
+      url = "https://api.rentamon.com/api/getcalendar";
       method = "GET";
       break;
     case "activeWebsites":
-      url = "https://rentamon-api.liara.run/api/websites";
+      url = "https://api.rentamon.com/api/websites";
       method = "GET";
       break;
     default:
@@ -1142,8 +1108,8 @@ async function performAction(
     data.property_id = propertyIdFromQueryParams;
     const response = await fetch(url, {
       method: method,
+      credentials: "include",  
       headers: {
-        Authorization: `Bearer ${authToken}`,
         "Content-Type": "application/json",
       },
       body: method !== "GET" ? JSON.stringify(data) : undefined,
