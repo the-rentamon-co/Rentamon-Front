@@ -378,11 +378,10 @@ function panelsDropdown(responseData) {
   }
 }
 
-// this is the main function that fetches data from websites based on calendar
 async function rentamoning() {
   try {
     document.querySelectorAll("form").forEach((form) =>
-        form.removeEventListener("submit", rentamoning)
+      form.removeEventListener("submit", rentamoning)
     );
 
     // Reset action inputs
@@ -390,166 +389,131 @@ async function rentamoning() {
     let availableDays = [];
 
     // Select non-disabled days from the calendar
-    const allTds = document.querySelectorAll(
-        ".datepicker-day-view td:not(.disabled)"
-    );
+    const allTds = document.querySelectorAll(".datepicker-day-view td:not(.disabled)");
     allTds.forEach((td) => {
-        if (!td.firstElementChild.classList.contains("other-month")) {
-            availableDays.push(td);
-        } else {
-            td.classList.add("other-month");
-        }
+      if (!td.firstElementChild.classList.contains("other-month")) {
+        availableDays.push(td);
+      } else {
+        td.classList.add("other-month");
+      }
     });
 
     if (availableDays.length > 0) {
-        const days = document.querySelectorAll(
-            ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
-        );
-        const range = [
-            new persianDate(parseInt(availableDays[0].getAttribute("data-unix"))).format("YYYY-MM-DD"),
-            new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
-            new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
-        ];
+      const days = document.querySelectorAll(
+        ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
+      );
+      const range = [
+        new persianDate(parseInt(availableDays[0].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+      ];
 
+      const headers = {
+        "Content-Type": "application/json",
+      };
 
-        const headers = {
-            "Content-Type": "application/json",
-        };
-
-        // Fetch user info and calendar data in parallel
-        const [user_info, response, websiteStatusesResponse] = await Promise.all([
-          get_user_info(),
-          fetch(
-              `https://api.rentamon.com/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
-              { method: "GET",credentials: "include" ,headers: {"Content-Type": "application/json" } }
-          ),
-          fetch(
-              `https://api.rentamon.com/api/website_statuses/?property_id=${propertyIdFromQueryParams}`,
-              {
-                  method: 'GET',
-                  credentials: "include",
-                  headers: { 
-                    "Content-Type": "application/json" 
-                  }
-              }
-          )
+      // Fetch user info and calendar data in parallel
+      const [user_info, response] = await Promise.all([
+        get_user_info(),
+        fetch(
+          `https://api.rentamon.com/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
+          { method: "GET", credentials: "include", headers: { "Content-Type": "application/json" } }
+        ),
       ]);
 
-        replace_user_info(user_info);
-        panelsDropdown(user_info);
+      replace_user_info(user_info);
+      panelsDropdown(user_info);
 
-        if (response.status !== 200) {
-            throw new Error("Failed to fetch calendar data");
+      if (response.status !== 200) {
+        throw new Error("Failed to fetch calendar data");
+      }
+
+      holidayTimestamps = await getAllHolidayTimestampsShamsi(range[0], range[2]);
+
+      const result = await response.json();
+      localStorage.setItem("calendar_data", JSON.stringify(result));
+      const calendarData = result.calendar;
+
+      // Set active websites from user info
+      const active_websites = user_info.user_info.websites;
+      activeWebsites = {};
+      active_websites.forEach(item => {
+        activeWebsites[item] = true;
+      });
+
+      console.log(calendarData, "Fetched calendar data");
+
+      availableDays.forEach((day) => {
+        day.removeEventListener("click", handleDayClick);
+        day.addEventListener("click", handleDayClick);
+      });
+
+      if (calendarData && calendarData.length > 0) {
+        for (let i = 0; i < availableDays.length; i++) {
+          const dayData = calendarData[i];
+          const status = dayData.status;
+          const price = dayData.price;
+          const discountPercentage = dayData.discount_percentage;
+
+          const origPrice = parseInt(price) / 1000 || null;
+          let discountedPrice = 0;
+
+          // Apply discount if available
+          if (discountPercentage) {
+            discountedPrice = origPrice - (origPrice * discountPercentage) / 100;
+          }
+
+          switch (status) {
+            case "blocked":
+              setBlockHelper([days[i]]);
+              priceHandeler(days[i], status, origPrice, discountedPrice);
+              break;
+            case "reserved":
+              setBookedkHelper([{ elem: days[i], website: dayData.website }]);
+              priceHandeler(days[i], status, origPrice, discountedPrice);
+              break;
+            default:
+              setAvailableHelper([days[i]]);
+              priceHandeler(days[i], status, origPrice, discountedPrice);
+              isShamsiWeekend(days[i], days[i].parentElement.getAttribute("data-unix"));
+          }
         }
-        holidayTimestamps = await getAllHolidayTimestampsShamsi(range[0],range[2]);
-
-        const result = await response.json();
-        localStorage.setItem("calendar_data", JSON.stringify(result));
-        const calendarData = result.calendar;
-        if (websiteStatusesResponse.status === 200) {
-          const websiteStatuses = await websiteStatusesResponse.json();
-          const statuses = websiteStatuses.status;
-          
-          // Apply styles based on website statuses without blocking the page load
-          Object.keys(statuses).forEach((website) => {
-              const widget = websiteWidgets[website];
-              if (statuses[website] === true) {
-                  isActiveHandler(widget.icon_selector, false);  // Active style
-                  check_is_valid(widget.icon_selector, widget.popup_id_selector);
-              } else {
-                  isActiveHandler(widget.icon_selector, true);   // Inactive style
-                  check_is_valid(widget.icon_selector, widget.popup_id_selector);
-                  document.querySelector(widget.icon_selector).click();
-
-              }
-          });
-        } else {
-            throw new Error("Failed to fetch website statuses");
-        }
-        const active_websites = user_info.user_info.websites
-        activeWebsites = {};
-        active_websites.forEach(item => {
-          activeWebsites[item] = true;
-        });
-
-        console.log(calendarData, "Fetched calendar data");
-
-        availableDays.forEach((day) => {
-            day.removeEventListener("click", handleDayClick);
-            day.addEventListener("click", handleDayClick);
-        });
-
-        if (calendarData && calendarData.length > 0) {
-            for (let i = 0; i < availableDays.length; i++) {
-                const dayData = calendarData[i];
-                const status = dayData.status;
-                const price = dayData.price;
-                const discountPercentage = dayData.discount_percentage;
-
-                const origPrice = parseInt(price) / 1000 || null;
-                let discountedPrice = 0;
-
-                // Apply discount if available
-                if (discountPercentage) {
-                    discountedPrice = origPrice - (origPrice * discountPercentage) / 100;
-                }
-
-                switch (status) {
-                    case "blocked":
-                        setBlockHelper([days[i]]);
-                        priceHandeler(days[i], status, origPrice, discountedPrice);
-                        break;
-                    case "reserved":
-                        setBookedkHelper([{ elem: days[i], website: dayData.website }]);
-                        priceHandeler(days[i], status, origPrice, discountedPrice);
-                        break;
-                    default:
-                        console.log('these are days : ', days[i].parentElement)
-                        // holidayHandler(days[i].parentElement,allHolidays)
-                        setAvailableHelper([days[i]]);
-                        priceHandeler(days[i], status, origPrice, discountedPrice);
-                        isShamsiWeekend(days[i], days[i].parentElement.getAttribute("data-unix"));
-
-                }
-            }
-        }
+      }
     }
-
   } catch (error) {
-      console.error("An error occurred:", error.message);
+    console.error("An error occurred:", error.message);
   }
 }
+// function websites_status_icons(activeWebsites){
+//   for (let website in activeWebsites) {
+//     const widget = websiteWidgets[website];
+//     const status = activeWebsites[website];
+//     console.log(status, widget, "here here")
+    
+//     if (status === "succeed") {
+//         isActiveHandler(widget.icon_selector, false);
+//     } else {
+//         isActiveHandler(widget.icon_selector, true);
+//         check_is_valid(widget.icon_selector, widget.popup_id_selector);
+//     }
+// }
+// }
 
-function websites_status_icons(activeWebsites){
-  for (let website in activeWebsites) {
-    const widget = websiteWidgets[website];
-    const status = activeWebsites[website];
-    console.log(status, widget, "here here")
+// function websites_status_iconsV2(activeWebsites) {
+//   for (let website in activeWebsites) {
+//     const widget = websiteWidgets[website];
+//     const statusObj = activeWebsites[website];
+//     const status = statusObj.final_status;
     
-    if (status === "succeed") {
-        isActiveHandler(widget.icon_selector, false);
-    } else {
-        isActiveHandler(widget.icon_selector, true);
-        check_is_valid(widget.icon_selector, widget.popup_id_selector);
-    }
-}
-}
-
-function websites_status_iconsV2(activeWebsites) {
-  for (let website in activeWebsites) {
-    const widget = websiteWidgets[website];
-    const statusObj = activeWebsites[website];
-    const status = statusObj.final_status;
+//     console.log(status, widget, "here here");
     
-    console.log(status, widget, "here here");
-    
-    if (status === true) {
-      isActiveHandler(widget.icon_selector, false);
-    } else {
-      isActiveHandler(widget.icon_selector, true);
-    }
-  }
-}
+//     if (status === true) {
+//       isActiveHandler(widget.icon_selector, false);
+//     } else {
+//       isActiveHandler(widget.icon_selector, true);
+//     }
+//   }
+// }
 
 // this is a function for when user selects a day, and that day need to get a class
 function handleDayClick(e) {
@@ -591,7 +555,7 @@ async function reserveOther() {
       });
     }
     setStatusStyleV2(final_response.data);
-    websites_status_iconsV2(final_response.data);
+    // websites_status_iconsV2(final_response.data);
     console.log("GOT HERE", final_response);
   } else {
     alert(messages.notSelectedDay);
@@ -641,7 +605,7 @@ function priceBtnClicked() {
         const calendar_data = localStorage.getItem("calendar_data");
         let jsonData = JSON.parse(calendar_data);
         setStatusStyleV2(final_response.data);
-        websites_status_iconsV2(final_response.data);
+        // websites_status_iconsV2(final_response.data);
 
         selected.forEach((z) => {
           z.classList.remove("selected");
@@ -713,7 +677,7 @@ function discountBtnClicked() {
           discount
         );
         setStatusStyleV2(final_response.data);
-        websites_status_iconsV2(final_response.data);
+        // websites_status_iconsV2(final_response.data);
 
         const calendar_data = localStorage.getItem("calendar_data");
         let jsonData = JSON.parse(calendar_data);
@@ -799,7 +763,7 @@ async function blockBtnClicked() {
       }
 
       setStatusStyleV2(final_response.data);
-      websites_status_iconsV2(final_response.data);
+      // websites_status_iconsV2(final_response.data);
 
       console.log("Blocking action completed", final_response);
     } catch (error) {
@@ -914,7 +878,7 @@ async function unblockBtnClicked() {
       });
     }
     setStatusStyleV2(final_response.data);
-    websites_status_iconsV2(final_response.data);
+    // websites_status_iconsV2(final_response.data);
 
     console.log("GOT HERE", final_response);
   } else {
