@@ -295,7 +295,7 @@ async function get_user_info() {
 
   // Check if the response is 404
   if (response.status === 404) {
-    window.location.href = "https://app.rentamon.com/activation"; // Replace with your desired redirect URL
+    window.location.href = "https://app.rentamon.com/activation/1"; // Replace with your desired redirect URL
     return;
   }
 
