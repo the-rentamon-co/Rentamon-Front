@@ -120,12 +120,10 @@ td span:last-child {
   margin-top: 20px;
 
   /* Yalda */
-  background-image: url('https://rentamon.com/wp-content/uploads/2024/12/WATERmelon.svg');
-  background-color: rgb(0 0 0 / 0%) !important;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  border-radius: 6px 6px 100px 100px !important;
+  border-radius: 30px !important;
   border: none;
   outline: none;
   color: white; /* رنگ نوشته‌ی داخل دکمه */
