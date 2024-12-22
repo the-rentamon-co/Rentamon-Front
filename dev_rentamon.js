@@ -1117,7 +1117,6 @@ async function performAction(
         "Content-Type": "application/json",
       },
       body: method !== "GET" ? JSON.stringify(data) : undefined,
-      signal: AbortSignal.timeout(8000),
     });
 
     if (!response.ok) {
