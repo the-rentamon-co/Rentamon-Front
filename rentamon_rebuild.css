@@ -115,21 +115,11 @@ td span:last-child {
   width: 100%;
   margin: 0;
   padding: 12px 120px;
-  border-radius: 6px 6px 100px 100px !important;
+  border-radius: 30px !important;
   box-sizing: border-box;
   margin-top: 20px;
 
-  /* Yalda */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 30px !important;
-  border: none;
-  outline: none;
-  color: white; /* رنگ نوشته‌ی داخل دکمه */
-  cursor: pointer;
-/* Yalda */
-  
+
 }
 
 .form {
