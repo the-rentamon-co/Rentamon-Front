@@ -393,10 +393,10 @@ async function rentamoning() {
     allTds.forEach((td) => {
       if (!td.firstElementChild.classList.contains("other-month")) {
         availableDays.push(td);
-        console.log("log in if:",range)
+        console.log("log in if:",td)
       } else {
         td.classList.add("other-month");
-        console.log("log in else:",range)
+        console.log("log in else:",td)
       }
     });
 
