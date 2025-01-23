@@ -97,7 +97,7 @@ function formatPersianNumber(input) {
   let formattedNumber = input.replace(/\B(?=(\d{3})+(?!\d))/g, '/');
 
   // Add the dash and space at the beginning if the number was negative
-  return isNegative ? ${formattedNumber} - : formattedNumber;
+  return isNegative ? `${formattedNumber} -` : formattedNumber;
 }
 // convert numbers into persian number string
 function convertToPersianNumber(number) {
@@ -283,7 +283,7 @@ async function get_user_info() {
   const propertyId = new URL(window.location.href).searchParams.get("prop_id");
 
   const response = await fetch(
-    https://api.rentamon.com/api/user_info?property_id=${propertyId},
+    `https://api.rentamon.com/api/user_info?property_id=${propertyId}`,
     {
       method: "GET",
       credentials: "include",
@@ -300,7 +300,7 @@ async function get_user_info() {
   }
 
   if (!response.ok) {
-    throw new Error(HTTP error! status: ${response.status});
+    throw new Error(`HTTP error! status: ${response.status}`);
   }
 
   const result = await response.json();
@@ -393,10 +393,13 @@ async function rentamoning() {
     allTds.forEach((td) => {
       if (!td.firstElementChild.classList.contains("other-month")) {
         availableDays.push(td);
+        console.log("log in if:",td)
       } else {
         td.classList.add("other-month");
+        console.log("log in else:",td)
       }
     });
+
 
     if (availableDays.length > 0) {
       const days = document.querySelectorAll(
@@ -404,10 +407,10 @@ async function rentamoning() {
       );
       const range = [
         new persianDate(parseInt(availableDays[0].getAttribute("data-unix"))).format("YYYY-MM-DD"),
-        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
-        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") == "۱۲" ? "۱۴۰۳-۱۲-۳۰" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") == "۱۲" ? "۱۴۰۳-۱۲-۳۰" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
       ];
-
+      
       const headers = {
         "Content-Type": "application/json",
       };
@@ -416,7 +419,7 @@ async function rentamoning() {
       const [user_info, response] = await Promise.all([
         get_user_info(),
         fetch(
-          https://api.rentamon.com/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams},
+          `https://api.rentamon.com/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
           { method: "GET", credentials: "include", headers: { "Content-Type": "application/json" } }
         ),
       ]);
@@ -787,11 +790,11 @@ function setDisplay(selector, display) {
 
 function setStyleToPending(websites = activeWebsites) {
   for (var website in websites) {
-    var row_selector = .website_row.${website};
+    var row_selector = `.website_row.${website}`;
 
-    var status_selector = .elementor-section.${website} .status_pending;
-    var status_selector_false = .elementor-section.${website} .status_false;
-    var status_selector_true = .elementor-section.${website} .status_true;    
+    var status_selector = `.elementor-section.${website} .status_pending`;
+    var status_selector_false = `.elementor-section.${website} .status_false`;
+    var status_selector_true = `.elementor-section.${website} .status_true`;    
     setDisplay(row_selector, "block");
     setDisplay(status_selector, "block");
     setDisplay(status_selector_false, "none");
@@ -808,10 +811,10 @@ function setStatusStyle(responses) {
   };
 
   for (var website in responses) {
-    // var row_selector = .website_row.${website};
+    // var row_selector = `.website_row.${website}`;
     var status = responses[website];
-    var status_selector = .elementor-section.${website} ${response_mapper[status]};
-    var pending_selector = .elementor-section.${website} ${response_mapper.pending};
+    var status_selector = `.elementor-section.${website} ${response_mapper[status]}`;
+    var pending_selector = `.elementor-section.${website} ${response_mapper.pending}`;
 
     // setDisplay(row_selector, "block");
     setDisplay(pending_selector, "none");
@@ -828,8 +831,8 @@ function setStatusStyleV2(responses) {
 
   for (var website in responses) {
     var status = responses[website].final_status;
-    var status_selector = .elementor-section.${website} ${response_mapper[status]};
-    var pending_selector = .elementor-section.${website} ${response_mapper.pending};
+    var status_selector = `.elementor-section.${website} ${response_mapper[status]}`;
+    var pending_selector = `.elementor-section.${website} ${response_mapper.pending}`;
     
     setDisplay(pending_selector, "none");
     setDisplay(status_selector, "block");
@@ -1016,25 +1019,25 @@ $(document).ready(function () {
 
 function check_is_valid(id, pop_up_id) {
   document.querySelector(id).addEventListener("click", function () {
-    document.querySelector(${pop_up_id} a).click();
+    document.querySelector(`${pop_up_id} a`).click();
   });
 }
 
 // a function to make our code clean
 function isActiveHandler(id, isRed) {
   if (isRed) {
-    document.querySelector(${id}).style.display = "block";
-    document.querySelector(${id} div div div).style.border =
+    document.querySelector(`${id}`).style.display = "block";
+    document.querySelector(`${id} div div div`).style.border =
       "4px #d71d1d solid";
-    document.querySelector(${id} div div div).style.borderRadius = "20px";
-    document.querySelector(${id} div div div img).style.filter =
+    document.querySelector(`${id} div div div`).style.borderRadius = "20px";
+    document.querySelector(`${id} div div div img`).style.filter =
       "grayscale(1)";
   } else if (isRed === false) {
-    document.querySelector(${id}).style.display = "block";
-    document.querySelector(${id} div div div).style.border =
+    document.querySelector(`${id}`).style.display = "block";
+    document.querySelector(`${id} div div div`).style.border =
       "4px #0c9d61 solid";
-    document.querySelector(${id} div div div).style.borderRadius = "20px";
-    document.querySelector(${id} div div div img).style.filter =
+    document.querySelector(`${id} div div div`).style.borderRadius = "20px";
+    document.querySelector(`${id} div div div img`).style.filter =
       "grayscale(0)";
   }
 }
@@ -1120,7 +1123,7 @@ async function performAction(
     });
 
     if (!response.ok) {
-      throw new Error(HTTP error! status: ${response.status});
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const result = await response.json();
@@ -1262,7 +1265,7 @@ $(".inline").pDatepicker({
   },
   format: "YYYY-MM-DD",
   resoinsive: true,
-  template: 
+  template: `
       <div id="plotId" class="datepicker-plot-area datepicker-plot-area-inline-view">
       <div class="navigator">
       <div class="datepicker-header">
@@ -1300,7 +1303,7 @@ $(".inline").pDatepicker({
                   </td>
                   {{/enabled}} {{^enabled}}
                   <td data-unix="{{dataUnix}}" class="disabled">
-                    <span class="{{#otherMonth}}other-month{{/otherMonth}}"
+                    <span class="{{#otherMonth}}{{/otherMonth}}"
                       >{{title}}</span
                     ><span
                       class="reserved {{#otherMonth}}other-month{{/otherMonth}}"
@@ -1316,7 +1319,7 @@ $(".inline").pDatepicker({
         {{/days.viewMode}} {{/days.enabled}}
       </div>
     </div>
-    ,
+    `,
 });
 try {
   document
