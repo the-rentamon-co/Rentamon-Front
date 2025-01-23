@@ -390,16 +390,15 @@ async function rentamoning() {
 
     // Select non-disabled days from the calendar
     const allTds = document.querySelectorAll(".datepicker-day-view td:not(.disabled)");
-  allTds.forEach((td) => {
-  const timestamp = parseInt(td.getAttribute("data-unix")); // گرفتن مقدار تایم‌استمپ از data-unix
-  if (!td.firstElementChild.classList.contains("other-month") || timestamp === 1742462999000) {
-    availableDays.push(td);
-    console.log("log in if:", td);
-  } else {
-    td.classList.add("other-month");
-    console.log("log in else:", td);
-  }
-});
+    allTds.forEach((td) => {
+      if (!td.firstElementChild.classList.contains("other-month")) {
+        availableDays.push(td);
+        console.log("log in if:",td)
+      } else {
+        td.classList.add("other-month");
+        console.log("log in else:",td)
+      }
+    });
 
 
     if (availableDays.length > 0) {
