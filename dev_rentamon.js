@@ -404,8 +404,8 @@ async function rentamoning() {
       );
       const range = [
         new persianDate(parseInt(availableDays[0].getAttribute("data-unix"))).format("YYYY-MM-DD"),
-        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") == "۱۲" ? "۱۴۰۳/۱۲/۳۰" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
-        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") == "۱۲" ? "۱۴۰۳/۱۲/۳۰" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") == "۱۲" ? "۱۴۰۳-۱۲-۳۰" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") == "۱۲" ? "۱۴۰۳-۱۲-۳۰" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
       ];
       console.log("range:",range)
       const headers = {
