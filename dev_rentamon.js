@@ -407,7 +407,7 @@ async function rentamoning() {
         new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") === "12" ? "1403-12-30" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
         new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") === "12" ? "1403-12-30" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
       ];
-
+    console.log(range)
       const headers = {
         "Content-Type": "application/json",
       };
