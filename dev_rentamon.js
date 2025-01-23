@@ -393,8 +393,10 @@ async function rentamoning() {
     allTds.forEach((td) => {
       if (!td.firstElementChild.classList.contains("other-month")) {
         availableDays.push(td);
+        console.log("log in if:",range)
       } else {
         td.classList.add("other-month");
+        console.log("log in else:",range)
       }
     });
 
@@ -407,7 +409,7 @@ async function rentamoning() {
         new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") == "۱۲" ? "۱۴۰۳-۱۲-۳۰" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
         new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") == "۱۲" ? "۱۴۰۳-۱۲-۳۰" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
       ];
-      console.log("range:",range)
+      
       const headers = {
         "Content-Type": "application/json",
       };
