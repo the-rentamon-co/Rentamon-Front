@@ -571,7 +571,7 @@
                * @default 'algorithmic'
                * @since 1.0.0
                */
-              leapYearMode: "algorithmic", // "astronomical"
+              leapYearMode: "astronomical", // "algorithmic"
             },
 
             /**
