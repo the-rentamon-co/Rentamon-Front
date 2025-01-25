@@ -393,13 +393,10 @@ async function rentamoning() {
     allTds.forEach((td) => {
       if (!td.firstElementChild.classList.contains("other-month")) {
         availableDays.push(td);
-        console.log("log in if:",td)
       } else {
         td.classList.add("other-month");
-        console.log("log in else:",td)
       }
     });
-
 
     if (availableDays.length > 0) {
       const days = document.querySelectorAll(
@@ -407,10 +404,9 @@ async function rentamoning() {
       );
       const range = [
         new persianDate(parseInt(availableDays[0].getAttribute("data-unix"))).format("YYYY-MM-DD"),
-        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") == "۱۲" ? "۱۴۰۳-۱۲-۳۰" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
-        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") == "۱۲" ? "۱۴۰۳-۱۲-۳۰" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") == "۱۲" ? "۱۴۰۳/۱۲/۳۰" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") == "۱۲" ? "۱۴۰۳/۱۲/۳۰" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
       ];
-      
       const headers = {
         "Content-Type": "application/json",
       };
@@ -1303,7 +1299,7 @@ $(".inline").pDatepicker({
                   </td>
                   {{/enabled}} {{^enabled}}
                   <td data-unix="{{dataUnix}}" class="disabled">
-                    <span class="{{#otherMonth}}{{/otherMonth}}"
+                    <span class="{{#otherMonth}}other-month{{/otherMonth}}"
                       >{{title}}</span
                     ><span
                       class="reserved {{#otherMonth}}other-month{{/otherMonth}}"
