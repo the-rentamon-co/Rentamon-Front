@@ -418,7 +418,7 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 const [user_info, response] = await Promise.all([
   get_user_info(),
   (async () => {
-    await delay(2000);  // ۲ ثانیه صبر کن
+    await delay(10000);  // ۲ ثانیه صبر کن
     return fetch(
       `https://api.rentamon.com/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
       { method: "GET", credentials: "include", headers: { "Content-Type": "application/json" } }
