@@ -1,4 +1,4 @@
-let apiHostMainUrl = "https://api.rentamon.com";
+let apiHostMainUrl = "https://api-v2.rentamon.com";
 let lastAction = {};
 // get prop_id from url for example:
 // rentamon.com/panel?prop_id=1
@@ -283,7 +283,7 @@ async function get_user_info() {
   const propertyId = new URL(window.location.href).searchParams.get("prop_id");
 
   const response = await fetch(
-    `https://api.rentamon.com/api/user_info?property_id=${propertyId}`,
+    `https://api-v2.rentamon.com/api/user_info?property_id=${propertyId}`,
     {
       method: "GET",
       credentials: "include",
@@ -420,7 +420,7 @@ const [user_info, response] = await Promise.all([
   (async () => {
     await delay(4000);  // ۲ ثانیه صبر کن
     return fetch(
-      `https://api.rentamon.com/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
+      `https://api-v2.rentamon.com/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
       { method: "GET", credentials: "include", headers: { "Content-Type": "application/json" } }
     );
   })(),
@@ -1072,35 +1072,35 @@ async function performAction(
 
   switch (actionType) {
     case "setPrice":
-      url = "https://api.rentamon.com/api/setprice";
+      url = "https://api-v2.rentamon.com/api/setprice";
       if (price === 0) throw new Error("Price is required for setPrice");
       data.price = price;
       break;
     case "setDiscount":
-      url = "https://api.rentamon.com/api/setdiscount";
+      url = "https://api-v2.rentamon.com/api/setdiscount";
       if (discount === null)
         throw new Error("Discount is required for setDiscount");
       data.discount = discount;
       break;
     case "setBlock":
-      url = "https://api.rentamon.com/api/setblock";
+      url = "https://api-v2.rentamon.com/api/setblock";
       data.requested_by = "user";
       data.request_for = "block";
       break;
     case "setReserve":
-      url = "https://api.rentamon.com/api/setblock";
+      url = "https://api-v2.rentamon.com/api/setblock";
       data.requested_by = "user";
       data.request_for = "reserve";
       break;
     case "setUnblock":
-      url = "https://api.rentamon.com/api/setunblock";
+      url = "https://api-v2.rentamon.com/api/setunblock";
       break;
     case "getCalendar":
-      url = "https://api.rentamon.com/api/getcalendar";
+      url = "https://api-v2.rentamon.com/api/getcalendar";
       method = "GET";
       break;
     case "activeWebsites":
-      url = "https://api.rentamon.com/api/websites";
+      url = "https://api-v2.rentamon.com/api/websites";
       method = "GET";
       break;
     default:
