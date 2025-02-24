@@ -60,7 +60,6 @@ const fetchData = async (url) => {
   return data;
 };
 
-
 // converting persian number into integer
 function persianToInteger(persianString) {
   const persianNumerals = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
@@ -88,13 +87,13 @@ function persianToInteger(persianString) {
 // formater for credit
 function formatPersianNumber(input) {
   // Check if the number is negative
-  let isNegative = input.includes('-');
-  
+  let isNegative = input.includes("-");
+
   // Remove any existing dashes or spaces
-  input = input.replace(/[-\s]/g, '');
+  input = input.replace(/[-\s]/g, "");
 
   // Insert the slashes and format the number
-  let formattedNumber = input.replace(/\B(?=(\d{3})+(?!\d))/g, '/');
+  let formattedNumber = input.replace(/\B(?=(\d{3})+(?!\d))/g, "/");
 
   // Add the dash and space at the beginning if the number was negative
   return isNegative ? `${formattedNumber} -` : formattedNumber;
@@ -233,11 +232,13 @@ function setAvailableHelper(elements, selectedDate = "") {
       reserved.innerHTML = "";
 
       // Check if the day is a weekend and apply red background if true
-      isShamsiWeekend(element.parentElement, element.parentElement.getAttribute("data-unix"));
+      isShamsiWeekend(
+        element.parentElement,
+        element.parentElement.getAttribute("data-unix")
+      );
     }
   }
 }
-
 
 function setBookedkHelper(elements, selectedDate = true) {
   const persianNumberWithCommas = (persianNum) =>
@@ -307,39 +308,35 @@ async function get_user_info() {
   return result;
 }
 
-
 function replace_user_info(user_info) {
-  console.log(user_info.user_info.phone_number)
-  clarity('set', 'phone_number', user_info.user_info.phone_number);
+  console.log(user_info.user_info.phone_number);
+  clarity("set", "phone_number", user_info.user_info.phone_number);
   const image = document.querySelector("#profilepic div img");
   const username = document.querySelector("#username div h1");
   const creditdate = document.querySelector("#creditdate div h1");
 
   username.innerText =
-  user_info.user_info.first_name + " " + user_info.user_info.last_name;
+    user_info.user_info.first_name + " " + user_info.user_info.last_name;
   let a = [];
   // const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   // const credit_gregorian_date = user_info.user_info.renewal_date.split("-");
   // credit_gregorian_date.forEach((number) => {
   //   a.push(number.replace(/\d/g, (digit) => persianDigits[digit]));
   // });
-  if (user_info.user_info.balance_info){
+  if (user_info.user_info.balance_info) {
     var balance = user_info.user_info.balance_info.balance;
     if (balance != "0") {
-    balance = balance.slice(0, -1)
+      balance = balance.slice(0, -1);
     }
-    balance = formatPersianNumber(balance)
-    balance = convertToPersianNumber(balance)
+    balance = formatPersianNumber(balance);
+    balance = convertToPersianNumber(balance);
     balance = balance + " تومان";
+  } else {
+    balance = " در حال بروزرسانی ";
   }
-  else {
-    balance = ' در حال بروزرسانی '
-  }
-  
 
   const renewal_date = a.join("/");
   creditdate.innerText = "  اعتبار: " + balance;
-
 
   image.src = user_info.user_info.profile_pic_link;
   image.srcset = user_info.user_info.profile_pic_link;
@@ -380,16 +377,20 @@ function panelsDropdown(responseData) {
 
 async function rentamoning() {
   try {
-    document.querySelectorAll("form").forEach((form) =>
-      form.removeEventListener("submit", rentamoning)
-    );
+    document
+      .querySelectorAll("form")
+      .forEach((form) => form.removeEventListener("submit", rentamoning));
 
     // Reset action inputs
-    document.querySelectorAll('input[name="block"]').forEach((i) => (i.checked = false));
+    document
+      .querySelectorAll('input[name="block"]')
+      .forEach((i) => (i.checked = false));
     let availableDays = [];
 
     // Select non-disabled days from the calendar
-    const allTds = document.querySelectorAll(".datepicker-day-view td:not(.disabled)");
+    const allTds = document.querySelectorAll(
+      ".datepicker-day-view td:not(.disabled)"
+    );
     allTds.forEach((td) => {
       if (!td.firstElementChild.classList.contains("other-month")) {
         availableDays.push(td);
@@ -403,28 +404,58 @@ async function rentamoning() {
         ".datepicker-plot-area-inline-view .table-days td:not(.disabled) span:not(.other-month):not(.reserved):not(.price)"
       );
       const range = [
-        new persianDate(parseInt(availableDays[0].getAttribute("data-unix"))).format("YYYY-MM-DD"),
-        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") == "۱۲" ? "۱۴۰۳-۱۲-۳۰" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
-        new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("MM") == "۱۲" ? "۱۴۰۳-۱۲-۳۰" : new persianDate(parseInt(availableDays[availableDays.length - 1].getAttribute("data-unix"))).format("YYYY-MM-DD"),
+        new persianDate(
+          parseInt(availableDays[0].getAttribute("data-unix"))
+        ).format("YYYY-MM-DD"),
+        new persianDate(
+          parseInt(
+            availableDays[availableDays.length - 1].getAttribute("data-unix")
+          )
+        ).format("MM") == "۱۲"
+          ? "۱۴۰۳-۱۲-۳۰"
+          : new persianDate(
+              parseInt(
+                availableDays[availableDays.length - 1].getAttribute(
+                  "data-unix"
+                )
+              )
+            ).format("YYYY-MM-DD"),
+        new persianDate(
+          parseInt(
+            availableDays[availableDays.length - 1].getAttribute("data-unix")
+          )
+        ).format("MM") == "۱۲"
+          ? "۱۴۰۳-۱۲-۳۰"
+          : new persianDate(
+              parseInt(
+                availableDays[availableDays.length - 1].getAttribute(
+                  "data-unix"
+                )
+              )
+            ).format("YYYY-MM-DD"),
       ];
       const headers = {
         "Content-Type": "application/json",
       };
 
       // Fetch user info and calendar data in parallel
-// تابعی که ۲ ثانیه منتظر می‌ماند
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+      // تابعی که ۲ ثانیه منتظر می‌ماند
+      const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const [user_info, response] = await Promise.all([
-  get_user_info(),
-  (async () => {
-    await delay(4000);  // ۲ ثانیه صبر کن
-    return fetch(
-      `https://api-v2.rentamon.com/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
-      { method: "GET", credentials: "include", headers: { "Content-Type": "application/json" } }
-    );
-  })(),
-]);
+      const [user_info, response] = await Promise.all([
+        get_user_info(),
+        (async () => {
+          await delay(4000); // ۲ ثانیه صبر کن
+          return fetch(
+            `https://api-v2.rentamon.com/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
+            {
+              method: "GET",
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+        })(),
+      ]);
 
       replace_user_info(user_info);
       panelsDropdown(user_info);
@@ -433,7 +464,10 @@ const [user_info, response] = await Promise.all([
         throw new Error("Failed to fetch calendar data");
       }
 
-      holidayTimestamps = await getAllHolidayTimestampsShamsi(range[0], range[2]);
+      holidayTimestamps = await getAllHolidayTimestampsShamsi(
+        range[0],
+        range[2]
+      );
 
       const result = await response.json();
       localStorage.setItem("calendar_data", JSON.stringify(result));
@@ -442,7 +476,7 @@ const [user_info, response] = await Promise.all([
       // Set active websites from user info
       const active_websites = user_info.user_info.websites;
       activeWebsites = {};
-      active_websites.forEach(item => {
+      active_websites.forEach((item) => {
         activeWebsites[item] = true;
       });
 
@@ -465,7 +499,8 @@ const [user_info, response] = await Promise.all([
 
           // Apply discount if available
           if (discountPercentage) {
-            discountedPrice = origPrice - (origPrice * discountPercentage) / 100;
+            discountedPrice =
+              origPrice - (origPrice * discountPercentage) / 100;
           }
 
           switch (status) {
@@ -480,7 +515,10 @@ const [user_info, response] = await Promise.all([
             default:
               setAvailableHelper([days[i]]);
               priceHandeler(days[i], status, origPrice, discountedPrice);
-              isShamsiWeekend(days[i], days[i].parentElement.getAttribute("data-unix"));
+              isShamsiWeekend(
+                days[i],
+                days[i].parentElement.getAttribute("data-unix")
+              );
           }
         }
       }
@@ -494,7 +532,7 @@ const [user_info, response] = await Promise.all([
 //     const widget = websiteWidgets[website];
 //     const status = activeWebsites[website];
 //     console.log(status, widget, "here here")
-    
+
 //     if (status === "succeed") {
 //         isActiveHandler(widget.icon_selector, false);
 //     } else {
@@ -509,9 +547,9 @@ const [user_info, response] = await Promise.all([
 //     const widget = websiteWidgets[website];
 //     const statusObj = activeWebsites[website];
 //     const status = statusObj.final_status;
-    
+
 //     console.log(status, widget, "here here");
-    
+
 //     if (status === true) {
 //       isActiveHandler(widget.icon_selector, false);
 //     } else {
@@ -553,8 +591,8 @@ async function reserveOther() {
       (property_id = propertyIdFromQueryParams)
     );
     status_responses = Object.values(final_response.data);
-    console.log(status_responses)
-    if (status_responses.some(response => response.final_status === true)) {
+    console.log(status_responses);
+    if (status_responses.some((response) => response.final_status === true)) {
       spans.forEach((z) => {
         setBookedkHelper([{ elem: z, website: "host" }]);
       });
@@ -796,12 +834,11 @@ function setStyleToPending(websites = activeWebsites) {
 
     var status_selector = `.elementor-section.${website} .status_pending`;
     var status_selector_false = `.elementor-section.${website} .status_false`;
-    var status_selector_true = `.elementor-section.${website} .status_true`;    
+    var status_selector_true = `.elementor-section.${website} .status_true`;
     setDisplay(row_selector, "block");
     setDisplay(status_selector, "block");
     setDisplay(status_selector_false, "none");
     setDisplay(status_selector_true, "none");
-    
   }
 }
 
@@ -828,14 +865,14 @@ function setStatusStyleV2(responses) {
   const response_mapper = {
     true: ".status_true",
     false: ".status_false",
-    pending: ".status_pending"
+    pending: ".status_pending",
   };
 
   for (var website in responses) {
     var status = responses[website].final_status;
     var status_selector = `.elementor-section.${website} ${response_mapper[status]}`;
     var pending_selector = `.elementor-section.${website} ${response_mapper.pending}`;
-    
+
     setDisplay(pending_selector, "none");
     setDisplay(status_selector, "block");
   }
@@ -877,7 +914,7 @@ async function unblockBtnClicked() {
       (property_id = propertyIdFromQueryParams)
     );
     status_responses = Object.values(final_response.data);
-    if (status_responses.some(response => response.final_status === true)) {
+    if (status_responses.some((response) => response.final_status === true)) {
       spans.forEach((z) => {
         setAvailableHelper(spans, gregorianSelectedDate);
       });
@@ -890,9 +927,6 @@ async function unblockBtnClicked() {
     alert(messages.notSelectedDay);
   }
 }
-
-
- 
 
 $(document).ready(function () {
   // price
@@ -1044,8 +1078,6 @@ function isActiveHandler(id, isRed) {
   }
 }
 
-
-
 // Function to perform the action
 async function performAction(
   actionType,
@@ -1054,11 +1086,9 @@ async function performAction(
   discount = null,
   property_id = 39
 ) {
-  
-
   let url = "";
   let method = "POST";
-  let credentials ="include";
+  let credentials = "include";
   let corrected_days = [];
   days.forEach((day) => {
     const x = [];
@@ -1117,7 +1147,7 @@ async function performAction(
     data.property_id = propertyIdFromQueryParams;
     const response = await fetch(url, {
       method: method,
-      credentials: "include",  
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -1129,12 +1159,14 @@ async function performAction(
     }
 
     const result = await response.json();
-    const anyFinalStatusFalse = Object.values(result.data).some(service => service.final_status === false);
-    if (anyFinalStatusFalse){
-      let retryBtn = document.getElementById('retry-btn');
-      retryBtn.style.display = 'block'; // Make the button visible
+    const anyFinalStatusFalse = Object.values(result.data).some(
+      (service) => service.final_status === false
+    );
+    if (anyFinalStatusFalse) {
+      let retryBtn = document.getElementById("retry-btn");
+      retryBtn.style.display = "block"; // Make the button visible
     }
-      
+
     return result;
   } catch (error) {
     console.error("Error performing action:", error);
@@ -1146,18 +1178,24 @@ async function performAction(
 async function getAllHolidayTimestampsShamsi(startDateShamsi, endDateShamsi) {
   try {
     // Fetch official holidays from the API
-    const response = await fetch('https://ws.alibaba.ir/api/v2/basic-info/calendar-events');
+    const response = await fetch(
+      "https://ws.alibaba.ir/api/v2/basic-info/calendar-events"
+    );
     const data = await response.json();
 
     // Extract the Gregorian dates of the holidays
-    const officialHolidaysGregorian = data.result.events.map((event) => event.gregorianDate);
+    const officialHolidaysGregorian = data.result.events.map(
+      (event) => event.gregorianDate
+    );
 
     // Convert Gregorian holiday dates to Unix timestamps (at midnight UTC)
-    const officialHolidayTimestamps = officialHolidaysGregorian.map((gregorianDateStr) => {
-      const [year, month, day] = gregorianDateStr.split('-').map(Number);
-      const date = new Date(Date.UTC(year, month - 1, day)); // Months are zero-based
-      return date.getTime();
-    });
+    const officialHolidayTimestamps = officialHolidaysGregorian.map(
+      (gregorianDateStr) => {
+        const [year, month, day] = gregorianDateStr.split("-").map(Number);
+        const date = new Date(Date.UTC(year, month - 1, day)); // Months are zero-based
+        return date.getTime();
+      }
+    );
 
     // Initialize the list to store holiday timestamps
     const holidayTimestamps = [];
@@ -1171,18 +1209,19 @@ async function getAllHolidayTimestampsShamsi(startDateShamsi, endDateShamsi) {
       const unixTimestamp = currentDate.valueOf();
 
       // Check if the day is a Friday (weekend in Shamsi calendar)
-      const isWeekend = currentDate.format('dddd') === 'جمعه';
+      const isWeekend = currentDate.format("dddd") === "جمعه";
 
       // Convert current Shamsi date to Gregorian date for comparison
-      const gregorianDateStr = currentDate.toLocale('en').format('YYYY-MM-DD');
+      const gregorianDateStr = currentDate.toLocale("en").format("YYYY-MM-DD");
 
       // Convert Gregorian date string to Unix timestamp at midnight UTC
-      const [year, month, day] = gregorianDateStr.split('-').map(Number);
+      const [year, month, day] = gregorianDateStr.split("-").map(Number);
       const date = new Date(Date.UTC(year, month - 1, day));
       const currentDateTimestamp = date.getTime();
 
       // Check if the current date is an official holiday
-      const isOfficialHoliday = officialHolidayTimestamps.includes(currentDateTimestamp);
+      const isOfficialHoliday =
+        officialHolidayTimestamps.includes(currentDateTimestamp);
 
       // If it's a weekend or an official holiday, add the timestamp to the list
       if (isWeekend || isOfficialHoliday) {
@@ -1190,12 +1229,12 @@ async function getAllHolidayTimestampsShamsi(startDateShamsi, endDateShamsi) {
       }
 
       // Move to the next day
-      currentDate = currentDate.add('1', 'day');
+      currentDate = currentDate.add("1", "day");
     }
 
     return holidayTimestamps;
   } catch (error) {
-    console.error('Failed to fetch official holidays:', error);
+    console.error("Failed to fetch official holidays:", error);
     return [];
   }
 }
@@ -1203,7 +1242,6 @@ async function getAllHolidayTimestampsShamsi(startDateShamsi, endDateShamsi) {
 function applyHolidayClass(element, holidayTimestamps) {
   // Get the Unix timestamp from the element's data-unix attribute
   const unixTimestamp = parseInt(element.getAttribute("data-unix"));
-
 
   // Normalize the timestamp to midnight UTC to match holidayTimestamps
   const dateObj = new Date(unixTimestamp);
@@ -1226,10 +1264,9 @@ function isShamsiWeekend(dayElement, timestamp) {
   // Check if it's Thursday (5) or Friday (6)
   if (dayOfWeek === 6 || dayOfWeek === 7) {
     // Set the background color to red for weekends
-    dayElement.style.color = '#FF4E4E';
+    dayElement.style.color = "#FF4E4E";
   }
 }
-
 
 // for changing max date change value in maxDate: new persianDate
 $(".inline").pDatepicker({
@@ -1248,7 +1285,7 @@ $(".inline").pDatepicker({
   },
   inline: true,
   minDate: new persianDate().startOf("day"),
-  maxDate: new persianDate([1404, 1, 31]),
+  maxDate: new persianDate([1404, 2, 31]),
   // maxDate: new persianDate().add("years", 1).month(2).endOf("month"),
   // maxDate: new persianDate().
   // maxDate: new persianDate()
