@@ -93,7 +93,7 @@ function formatPersianNumber(input) {
   input = input.replace(/[-\s]/g, "");
 
   // Insert the slashes and format the number
-  let formattedNumber = input.replace(/\B(?=(\d{3})+(?!\d))/g, "/");
+  let formattedNumber = input.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
   // Add the dash and space at the beginning if the number was negative
   return isNegative ? `${formattedNumber} -` : formattedNumber;
