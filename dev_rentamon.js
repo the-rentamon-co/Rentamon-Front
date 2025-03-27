@@ -122,6 +122,8 @@ function reservedViewer(text) {
       return "مهمانشو";
     case "otaghak":
       return "اتاقک";
+    case "Colleague":
+      return "همکار";
   }
 }
 
