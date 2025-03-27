@@ -124,6 +124,16 @@ function reservedViewer(text) {
       return "اتاقک";
     case "Colleague":
       return "همکار";
+    case "divar":
+      return "دیوار";
+    case "Broker":
+      return "واسطه";
+    case "Returning_Guest":
+      return "مهمان قبلی";
+    case "instagram":
+      return "اینستاگرام";
+    case "others":
+      return "سایر";
   }
 }
 
