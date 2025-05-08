@@ -457,7 +457,7 @@ async function rentamoning() {
       const [user_info, response] = await Promise.all([
         get_user_info(),
         (async () => {
-          await delay(4000); // ۲ ثانیه صبر کن
+          await delay(2000); // ۲ ثانیه صبر کن
           return fetch(
             `https://api-v2.rentamon.com/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
             {
