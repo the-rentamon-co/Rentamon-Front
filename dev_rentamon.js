@@ -128,10 +128,14 @@ function reservedViewer(text) {
       return "دیوار";
     case "Broker":
       return "واسطه";
+    case "Broker or Colleague":
+      return "واسطه یا همکار";
+    case "offline":
+      return "حضوری";
     case "Returning_Guest":
-      return "مهمان قبلی";
-    case "instagram":
-      return "اینستاگرام";
+      return "قبلی";
+    case "social":
+      return "پیام‌‌رسان";
     case "others":
       return "سایر";
   }
