@@ -1300,7 +1300,7 @@ $(".inline").pDatepicker({
   },
   inline: true,
   minDate: new persianDate().startOf("day"),
-  maxDate: new persianDate([1404, 5, 31]),
+  maxDate: new persianDate([1404, 6, 31]),
   // maxDate: new persianDate().add("years", 1).month(2).endOf("month"),
   // maxDate: new persianDate().
   // maxDate: new persianDate()
