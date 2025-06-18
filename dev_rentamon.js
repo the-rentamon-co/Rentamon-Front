@@ -479,7 +479,6 @@ async function rentamoning() {
       // Fetch user info and calendar data in parallel (without artificial delay)
       const [user_info, response] = await Promise.all([
         get_user_info(),
-        process_calendar_followUp(),
         fetch(
           `https://api-v2.rentamon.com/api/getcalendar?start_date=${range[0]}&end_date=${range[2]}&property_id=${propertyIdFromQueryParams}`,
           {
@@ -493,6 +492,7 @@ async function rentamoning() {
 // Now you can process `user_info` and `response` as usual
 
 
+      process_calendar_followUp(),
       replace_user_info(user_info);
       panelsDropdown(user_info);
 
