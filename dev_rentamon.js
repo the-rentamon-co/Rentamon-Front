@@ -324,7 +324,7 @@ async function get_user_info() {
   return result;
 }
 
-async function process_calendar_followUp() {
+ function process_calendar_followUp() {
   // Read prop_id from the page's query string
   console.log("process_calendar_followUp")
   const params = new URLSearchParams(window.location.search);
