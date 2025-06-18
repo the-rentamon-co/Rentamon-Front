@@ -324,25 +324,6 @@ async function get_user_info() {
   return result;
 }
 
- function process_calendar_followUp() {
-  // Read prop_id from the page's query string
-  console.log("process_calendar_followUp")
-  const params = new URLSearchParams(window.location.search);
-  console.log("params",params)
-  const prop_id = params.get("prop_id");
-
-  // Fire POST request without waiting for the response
-  fetch("https://dev.rentamon.com/webhook/process_calendar_followUp", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ prop_id }),
-  }).catch(() => {
-    // Ignore any errors
-  });
-}
 
 function replace_user_info(user_info) {
   console.log(user_info.user_info.phone_number);
@@ -492,7 +473,6 @@ async function rentamoning() {
 // Now you can process `user_info` and `response` as usual
 
 
-      process_calendar_followUp(),
       replace_user_info(user_info);
       panelsDropdown(user_info);
 
